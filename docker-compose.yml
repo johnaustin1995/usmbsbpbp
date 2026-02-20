@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ncaabsb:latest
     restart: unless-stopped
     env_file:
       - .env
