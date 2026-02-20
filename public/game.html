@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Dashboard • NCAA Baseball</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-bg"></div>
+    <main class="layout game-layout">
+      <header class="game-topbar">
+        <a id="back-link" class="back-link" href="/">&larr; Back to Scoreboard</a>
+
+        <div class="game-headline">
+          <p class="eyebrow">Live Stats Dashboard</p>
+          <h1 id="game-title">Loading Game...</h1>
+          <p id="game-meta" class="meta">Fetching live data</p>
+        </div>
+
+        <div class="game-actions">
+          <label class="auto-refresh-label">
+            <input id="auto-refresh" type="checkbox" checked />
+            Auto refresh (20s)
+          </label>
+          <a class="ghost-btn game-action-link" href="/teams.html">Teams</a>
+          <a id="play-viewer-link" class="ghost-btn game-action-link" href="#">Play Viewer</a>
+          <button id="refresh-btn" class="load-btn" type="button">Refresh Now</button>
+        </div>
+      </header>
+
+      <section id="score-strip" class="score-strip"></section>
+
+      <section class="view-controls-wrap">
+        <h2>Stats Views</h2>
+        <div id="view-controls" class="view-controls"></div>
+      </section>
+
+      <section>
+        <div id="stats-root" class="stats-root"></div>
+      </section>
+    </main>
+
+    <script src="/branding.js" defer></script>
+    <script src="/game.js" defer></script>
+  </body>
+</html>

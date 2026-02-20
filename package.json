@@ -1,0 +1,45 @@
+{
+  "name": "ncaabsb",
+  "version": "1.0.0",
+  "description": "NCAA baseball scores API using D1 Baseball and StatBroadcast",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "pdf:json": "tsx src/tools/statbroadcast-pdf-to-json.ts",
+    "teams:json": "tsx src/tools/d1-teams-to-json.ts",
+    "x:feed": "tsx src/tools/x-play-by-play-feed.ts",
+    "x:preview": "tsx src/tools/x-play-by-play-preview.ts",
+    "x:daemon": "tsx src/tools/x-southern-miss-daemon.ts",
+    "x:verify": "tsx src/tools/x-verify.ts",
+    "import:branding": "node scripts/import-team-branding.mjs",
+    "import:branding:meta": "node scripts/import-team-branding.mjs --skip-logos"
+  },
+  "keywords": [
+    "ncaa",
+    "baseball",
+    "statbroadcast",
+    "d1baseball",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.13.5",
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^5.2.1",
+    "he": "^1.2.0",
+    "pdfjs-dist": "^3.11.174"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/he": "^1.2.3",
+    "@types/node": "^25.2.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^0.34.6"
+  }
+}

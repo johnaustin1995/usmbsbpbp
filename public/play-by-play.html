@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Play By Play Viewer • NCAA Baseball</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-bg"></div>
+    <main class="layout pbp-layout">
+      <header class="pbp-topbar">
+        <a id="pbp-back-link" class="back-link" href="/">&larr; Back</a>
+        <div class="pbp-headline">
+          <p class="eyebrow">Baseball Visualizer</p>
+          <h1 id="pbp-title">Loading Play By Play...</h1>
+          <p id="pbp-meta" class="meta">Fetching scorekeeping data</p>
+        </div>
+        <div class="pbp-controls">
+          <button id="pbp-prev" class="nav-btn" type="button" aria-label="Previous play">&larr;</button>
+          <button id="pbp-next" class="nav-btn" type="button" aria-label="Next play">&rarr;</button>
+          <a class="ghost-btn game-action-link" href="/teams.html">Teams</a>
+          <button id="pbp-autoplay" class="load-btn" type="button">Autoplay</button>
+          <button id="pbp-refresh" class="ghost-btn" type="button">Reload</button>
+        </div>
+      </header>
+
+      <section class="pbp-scoreboard" id="pbp-scoreboard"></section>
+
+      <section class="pbp-main">
+        <article class="pbp-visual-card">
+          <div class="pbp-play-meta">
+            <p id="pbp-play-index" class="pbp-play-index">Play 0 / 0</p>
+            <p id="pbp-inning" class="pbp-inning">-</p>
+          </div>
+
+          <div class="pbp-diamond-wrap">
+            <svg id="pbp-diamond-svg" class="pbp-diamond-svg" viewBox="0 0 600 600" aria-label="Baseball diamond">
+              <defs>
+                <linearGradient id="pbpGrass" x1="0%" x2="100%" y1="0%" y2="100%">
+                  <stop offset="0%" stop-color="#245f37"></stop>
+                  <stop offset="100%" stop-color="#1a4a2d"></stop>
+                </linearGradient>
+                <linearGradient id="pbpDirt" x1="0%" x2="100%" y1="0%" y2="100%">
+                  <stop offset="0%" stop-color="#bf8a57"></stop>
+                  <stop offset="100%" stop-color="#9f6f44"></stop>
+                </linearGradient>
+              </defs>
+
+              <rect x="0" y="0" width="600" height="600" fill="url(#pbpGrass)"></rect>
+              <polygon points="300,524 454,370 300,216 146,370" fill="url(#pbpDirt)"></polygon>
+              <line x1="300" y1="524" x2="454" y2="370" class="pbp-base-path"></line>
+              <line x1="454" y1="370" x2="300" y2="216" class="pbp-base-path"></line>
+              <line x1="300" y1="216" x2="146" y2="370" class="pbp-base-path"></line>
+              <line x1="146" y1="370" x2="300" y2="524" class="pbp-base-path"></line>
+
+              <rect x="440" y="356" width="28" height="28" class="pbp-base" transform="rotate(45 454 370)"></rect>
+              <rect x="286" y="202" width="28" height="28" class="pbp-base" transform="rotate(45 300 216)"></rect>
+              <rect x="132" y="356" width="28" height="28" class="pbp-base" transform="rotate(45 146 370)"></rect>
+              <polygon points="300,532 312,520 300,508 288,520" class="pbp-home"></polygon>
+
+              <text x="300" y="95" text-anchor="middle" class="pbp-field-label">CF</text>
+              <text x="98" y="195" text-anchor="middle" class="pbp-field-label">LF</text>
+              <text x="502" y="195" text-anchor="middle" class="pbp-field-label">RF</text>
+
+              <line id="pbp-ball-line" x1="300" y1="520" x2="300" y2="520" class="pbp-ball-line" opacity="0"></line>
+              <text id="pbp-ball-label" x="300" y="505" text-anchor="middle" class="pbp-ball-label" opacity="0"></text>
+            </svg>
+
+            <div id="pbp-ball-layer" class="pbp-ball-layer" aria-hidden="true"></div>
+            <div id="pbp-runner-layer" class="pbp-runner-layer" aria-label="Base runners"></div>
+          </div>
+
+          <div class="pbp-details">
+            <p id="pbp-matchup" class="pbp-kv">-</p>
+            <p id="pbp-atbat" class="pbp-kv">-</p>
+            <p id="pbp-count" class="pbp-kv">Count: -</p>
+            <p id="pbp-play-text" class="pbp-play-text">-</p>
+            <div id="pbp-pitches" class="pbp-pitches"></div>
+          </div>
+        </article>
+
+        <aside class="pbp-feed-card">
+          <h2>Play Feed</h2>
+          <ol id="pbp-feed" class="pbp-feed"></ol>
+        </aside>
+      </section>
+    </main>
+
+    <script src="/branding.js" defer></script>
+    <script src="/play-by-play.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teams Directory • NCAA Baseball</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-bg"></div>
+    <main class="layout teams-layout">
+      <header class="teams-topbar">
+        <a class="back-link" href="/">&larr; Back to Scoreboard</a>
+
+        <div class="teams-headline">
+          <p class="eyebrow">D1 Database</p>
+          <h1>Teams Directory</h1>
+          <p id="teams-meta" class="meta">Loading teams data...</p>
+        </div>
+
+        <form id="teams-filters" class="teams-filters" autocomplete="off">
+          <input
+            id="teams-search"
+            type="search"
+            placeholder="Search team name"
+            aria-label="Search teams"
+          />
+          <select id="teams-conference" aria-label="Filter by conference">
+            <option value="">All conferences</option>
+          </select>
+          <button id="teams-clear" class="ghost-btn" type="button">Clear</button>
+        </form>
+      </header>
+
+      <section class="teams-shell">
+        <aside class="teams-directory-card">
+          <div class="section-head teams-directory-head">
+            <h2>Teams</h2>
+            <p id="teams-count" class="count">0 teams</p>
+          </div>
+          <div id="teams-list" class="teams-list"></div>
+        </aside>
+
+        <article class="team-detail-card">
+          <div id="team-detail" class="team-detail"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="/branding.js" defer></script>
+    <script src="/teams.js" defer></script>
+  </body>
+</html>

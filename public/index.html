@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NCAA Baseball Scoreboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-bg"></div>
+    <main class="layout">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">NCAA Baseball</p>
+          <h1>Daily Scoreboard</h1>
+          <p id="meta" class="meta">Select a date to load games.</p>
+        </div>
+
+        <form id="date-form" class="date-controls" autocomplete="off">
+          <button type="button" id="prev-day" class="nav-btn" aria-label="Previous day">&larr;</button>
+          <input id="date-input" name="date" type="date" required />
+          <button type="button" id="next-day" class="nav-btn" aria-label="Next day">&rarr;</button>
+          <button type="submit" class="load-btn">Load Games</button>
+          <button type="button" id="today-btn" class="ghost-btn">Today</button>
+          <a href="/teams.html" class="ghost-btn link-btn">Teams</a>
+          <label class="auto-refresh-label">
+            <input id="auto-refresh-index" type="checkbox" checked />
+            Auto refresh (60s)
+          </label>
+        </form>
+      </header>
+
+      <section class="ticker-wrap" aria-label="Game ticker">
+        <div id="ticker" class="ticker"></div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Games</h2>
+          <p id="count" class="count">0 games</p>
+        </div>
+        <div id="games" class="games-grid"></div>
+      </section>
+    </main>
+
+    <template id="game-card-template">
+      <article class="game-card">
+        <div class="card-head">
+          <span class="phase-chip"></span>
+          <span class="status"></span>
+        </div>
+
+        <div class="teams">
+          <div class="team-row away">
+            <div class="team-name-wrap">
+              <span class="team-rank"></span>
+              <span class="team-name"></span>
+            </div>
+            <span class="team-score"></span>
+          </div>
+          <div class="team-row home">
+            <div class="team-name-wrap">
+              <span class="team-rank"></span>
+              <span class="team-name"></span>
+            </div>
+            <span class="team-score"></span>
+          </div>
+        </div>
+
+        <section class="live-snapshot" hidden>
+          <div class="live-snapshot-frame">
+            <div class="live-snapshot-main">
+              <div class="live-state-pane">
+                <div class="live-bases" aria-label="Base runners">
+                  <span class="base base-second"></span>
+                  <span class="base base-third"></span>
+                  <span class="base base-first"></span>
+                </div>
+                <p class="live-count-line">
+                  <span class="live-count"></span>
+                </p>
+                <div class="live-outs-dots" aria-label="Outs">
+                  <span class="out-dot"></span>
+                  <span class="out-dot"></span>
+                  <span class="out-dot"></span>
+                </div>
+              </div>
+              <div class="live-score-pane">
+                <div class="live-score-row away">
+                  <img class="live-score-watermark" alt="" hidden />
+                  <div class="live-score-team">
+                    <span class="live-score-code"></span>
+                  </div>
+                  <span class="live-score-value"></span>
+                </div>
+                <div class="live-score-row home">
+                  <img class="live-score-watermark" alt="" hidden />
+                  <div class="live-score-team">
+                    <span class="live-score-code"></span>
+                  </div>
+                  <span class="live-score-value"></span>
+                </div>
+              </div>
+            </div>
+            <div class="live-detail-bar">
+              <span class="live-batter-line"></span>
+              <span class="live-pitcher-line"></span>
+              <span class="live-inning"></span>
+            </div>
+          </div>
+        </section>
+
+        <footer class="card-foot">
+          <p class="time"></p>
+          <p class="location"></p>
+          <a class="live-link" target="_blank" rel="noopener noreferrer">Live Stats</a>
+        </footer>
+      </article>
+    </template>
+
+    <script src="/branding.js" defer></script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
