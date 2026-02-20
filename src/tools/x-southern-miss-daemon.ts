@@ -222,7 +222,8 @@ function shouldStartFeed(game: D1Game, startLeadSeconds: number): boolean {
 }
 
 function startFeedProcess(gameId: number, options: CliOptions): ChildProcess {
-  const args = ["run", "x:feed", "--", "--id", String(gameId), "--bootstrap", "latest"];
+  const nodeBinary = process.execPath || "node";
+  const args = ["dist/tools/x-play-by-play-feed.js", "--id", String(gameId), "--bootstrap", "latest"];
 
   if (options.feedDryRun) {
     args.push("--dry-run");
@@ -233,9 +234,9 @@ function startFeedProcess(gameId: number, options: CliOptions): ChildProcess {
   }
 
   // eslint-disable-next-line no-console
-  console.log(`# Starting feed process for game ${gameId}: npm ${args.join(" ")}`);
+  console.log(`# Starting feed process for game ${gameId}: ${nodeBinary} ${args.join(" ")}`);
 
-  return spawn("npm", args, {
+  return spawn(nodeBinary, args, {
     cwd: process.cwd(),
     env: process.env,
     stdio: "inherit",
