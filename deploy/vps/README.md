@@ -52,6 +52,9 @@ Fill:
 - `X_API_SECRET`
 - `X_ACCESS_TOKEN`
 - `X_ACCESS_TOKEN_SECRET`
+- `X_DAEMON_SCHEDULE_FILE` (recommended): `data/schedules/southern-miss-2026.json`
+- `X_FEED_THREAD_MODE`: `none` (standalone posts) or `reply` (thread)
+- `X_FEED_FINAL_GRACE_SECONDS`: e.g. `120`
 
 Then restart:
 

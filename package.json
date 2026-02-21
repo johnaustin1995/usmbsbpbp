@@ -15,6 +15,7 @@
     "x:preview": "tsx src/tools/x-play-by-play-preview.ts",
     "x:daemon": "tsx src/tools/x-southern-miss-daemon.ts",
     "x:verify": "tsx src/tools/x-verify.ts",
+    "schedule:usm": "tsx src/tools/build-southern-miss-schedule.ts",
     "import:branding": "node scripts/import-team-branding.mjs",
     "import:branding:meta": "node scripts/import-team-branding.mjs --skip-logos"
   },

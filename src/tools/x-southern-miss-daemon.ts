@@ -1,4 +1,6 @@
 import { spawn, type ChildProcess } from "child_process";
+import fs from "fs/promises";
+import path from "path";
 import type { D1Game } from "../types";
 import { getD1Scores } from "../scrapers/d1";
 import { normalizeScoreDate } from "../utils/date";
@@ -12,10 +14,12 @@ interface CliOptions {
   feedDryRun: boolean;
   feedIntervalSeconds: number | null;
   manualGameIds: number[];
+  schedulePath: string | null;
 }
 
 const DEFAULT_DISCOVERY_INTERVAL_SECONDS = 60;
 const DEFAULT_START_LEAD_SECONDS = 30 * 60;
+const SCHEDULE_LOOKBACK_SECONDS = 12 * 60 * 60;
 
 async function main(): Promise<void> {
   loadDotEnv();
@@ -53,6 +57,10 @@ async function main(): Promise<void> {
     // eslint-disable-next-line no-console
     console.log(`# Manual game IDs enabled: ${options.manualGameIds.join(", ")} (D1 discovery bypassed)`);
   }
+  if (options.schedulePath) {
+    // eslint-disable-next-line no-console
+    console.log(`# Schedule mode enabled: ${options.schedulePath} (D1 discovery bypassed)`);
+  }
 
   do {
     if (stopping) {
@@ -60,22 +68,40 @@ async function main(): Promise<void> {
     }
 
     try {
+      if (options.schedulePath) {
+        const scheduledGames = await loadScheduledGameIds(options.schedulePath);
+        const dueGames = scheduledGames.filter((game) =>
+          shouldStartScheduledGame(game.startTimeEpoch, options.startLeadSeconds)
+        );
+
+        // eslint-disable-next-line no-console
+        console.log(
+          `# ${new Date().toISOString()} | Scheduled games loaded: ${scheduledGames.length} | Due now: ${dueGames.length}`
+        );
+
+        for (const game of dueGames) {
+          if (activeFeeds.has(game.gameId)) {
+            continue;
+          }
+
+          startFeedForGame(game.gameId, options, activeFeeds);
+        }
+
+        if (options.once) {
+          break;
+        }
+
+        await sleep(options.discoveryIntervalMs);
+        continue;
+      }
+
       if (options.manualGameIds.length > 0) {
         for (const gameId of options.manualGameIds) {
           if (activeFeeds.has(gameId)) {
             continue;
           }
 
-          const child = startFeedProcess(gameId, options);
-          activeFeeds.set(gameId, child);
-
-          child.on("exit", (code, signal) => {
-            activeFeeds.delete(gameId);
-            // eslint-disable-next-line no-console
-            console.log(
-              `# Feed process for game ${gameId} exited (code=${code ?? "null"}, signal=${signal ?? "null"})`
-            );
-          });
+          startFeedForGame(gameId, options, activeFeeds);
         }
 
         if (options.once) {
@@ -115,16 +141,7 @@ async function main(): Promise<void> {
           continue;
         }
 
-        const child = startFeedProcess(gameId, options);
-        activeFeeds.set(gameId, child);
-
-        child.on("exit", (code, signal) => {
-          activeFeeds.delete(gameId);
-          // eslint-disable-next-line no-console
-          console.log(
-            `# Feed process for game ${gameId} exited (code=${code ?? "null"}, signal=${signal ?? "null"})`
-          );
-        });
+        startFeedForGame(gameId, options, activeFeeds);
       }
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -148,6 +165,7 @@ function parseArgs(argv: string[], env: NodeJS.ProcessEnv): CliOptions {
   const feedDryRunRaw = firstNonEmpty(env.X_DAEMON_FEED_DRY_RUN);
   const feedIntervalRaw = firstNonEmpty(env.X_DAEMON_FEED_INTERVAL_SECONDS);
   const manualGameIdsRaw = firstNonEmpty(env.X_DAEMON_MANUAL_GAME_IDS);
+  const schedulePathRaw = firstNonEmpty(env.X_DAEMON_SCHEDULE_FILE);
 
   let discoveryIntervalMs =
     Math.max(5_000, (parsePositiveInteger(intervalRaw) ?? DEFAULT_DISCOVERY_INTERVAL_SECONDS) * 1000);
@@ -156,6 +174,7 @@ function parseArgs(argv: string[], env: NodeJS.ProcessEnv): CliOptions {
   let feedDryRun = feedDryRunRaw ? isTruthy(feedDryRunRaw) : false;
   let feedIntervalSeconds = parsePositiveInteger(feedIntervalRaw);
   let manualGameIds = parsePositiveIntegerList(manualGameIdsRaw);
+  let schedulePath = schedulePathRaw ? path.resolve(schedulePathRaw) : null;
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
@@ -230,6 +249,15 @@ function parseArgs(argv: string[], env: NodeJS.ProcessEnv): CliOptions {
       continue;
     }
 
+    if (arg === "--schedule") {
+      if (!next) {
+        throw new Error("Missing value for --schedule");
+      }
+      schedulePath = path.resolve(next);
+      index += 1;
+      continue;
+    }
+
     if (arg === "--game-ids") {
       if (!next) {
         throw new Error("Missing value for --game-ids");
@@ -262,6 +290,7 @@ function parseArgs(argv: string[], env: NodeJS.ProcessEnv): CliOptions {
     feedDryRun,
     feedIntervalSeconds,
     manualGameIds,
+    schedulePath,
   };
 }
 
@@ -307,6 +336,94 @@ function startFeedProcess(gameId: number, options: CliOptions): ChildProcess {
     env: process.env,
     stdio: "inherit",
   });
+}
+
+function startFeedForGame(gameId: number, options: CliOptions, activeFeeds: Map<number, ChildProcess>): void {
+  const child = startFeedProcess(gameId, options);
+  activeFeeds.set(gameId, child);
+
+  child.on("exit", (code, signal) => {
+    activeFeeds.delete(gameId);
+    // eslint-disable-next-line no-console
+    console.log(`# Feed process for game ${gameId} exited (code=${code ?? "null"}, signal=${signal ?? "null"})`);
+  });
+}
+
+interface ScheduledGameEntry {
+  gameId: number;
+  startTimeEpoch: number | null;
+}
+
+async function loadScheduledGameIds(schedulePath: string): Promise<ScheduledGameEntry[]> {
+  const raw = await fs.readFile(schedulePath, "utf8");
+  const parsed = JSON.parse(raw) as {
+    games?: Array<Record<string, unknown>>;
+  };
+
+  const games = Array.isArray(parsed.games) ? parsed.games : [];
+  const deduped = new Map<number, ScheduledGameEntry>();
+
+  for (const game of games) {
+    const gameId = toPositiveInt(game.gameId ?? game.statbroadcastId ?? game.id);
+    if (!gameId) {
+      continue;
+    }
+
+    const startTimeEpoch = toNullableInt(
+      game.startTimeEpochEt ?? game.startTimeEpoch ?? game.matchupTimeEpoch ?? game.epoch
+    );
+    if (!deduped.has(gameId)) {
+      deduped.set(gameId, { gameId, startTimeEpoch });
+    }
+  }
+
+  return Array.from(deduped.values()).sort((a, b) => {
+    const aEpoch = a.startTimeEpoch ?? Number.MAX_SAFE_INTEGER;
+    const bEpoch = b.startTimeEpoch ?? Number.MAX_SAFE_INTEGER;
+    if (aEpoch !== bEpoch) {
+      return aEpoch - bEpoch;
+    }
+    return a.gameId - b.gameId;
+  });
+}
+
+function shouldStartScheduledGame(startTimeEpoch: number | null, startLeadSeconds: number): boolean {
+  if (startTimeEpoch === null) {
+    return true;
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  if (startTimeEpoch < now - SCHEDULE_LOOKBACK_SECONDS) {
+    return false;
+  }
+
+  return startTimeEpoch <= now + startLeadSeconds;
+}
+
+function toPositiveInt(value: unknown): number | null {
+  const parsed = toNullableInt(value);
+  if (parsed === null || parsed < 1) {
+    return null;
+  }
+  return parsed;
+}
+
+function toNullableInt(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return Math.trunc(value);
+  }
+
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const text = value.trim();
+  if (!text) {
+    return null;
+  }
+
+  const parsed = Number.parseInt(text, 10);
+  return Number.isFinite(parsed) ? parsed : null;
 }
 
 function describeGame(game: D1Game): string {
@@ -374,7 +491,7 @@ function sleep(ms: number): Promise<void> {
 function printUsage(): void {
   // eslint-disable-next-line no-console
   console.log(
-    "Usage: npm run x:daemon -- [--interval 60] [--start-lead 1800] [--feed-interval 20] [--feed-dry-run|--feed-live] [--game-id 651247] [--game-ids 651247,651255] [--once]"
+    "Usage: npm run x:daemon -- [--interval 60] [--start-lead 1800] [--feed-interval 20] [--feed-dry-run|--feed-live] [--schedule data/schedules/southern-miss-2026.json] [--game-id 651247] [--game-ids 651247,651255] [--once]"
   );
 }
 
