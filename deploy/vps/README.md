@@ -81,6 +81,17 @@ sudo docker compose ps
 sudo docker compose logs -f usmbsb-x-daemon
 ```
 
+Web UI/API run in container `usmbsb-web` on port `8787`:
+
+```bash
+sudo docker compose logs -f usmbsb-web
+curl http://localhost:8787/health
+```
+
+Southern Miss live frontend URL:
+
+- `http://YOUR_SERVER_IP:8787/usm-live.html`
+
 ### systemd
 
 ```bash

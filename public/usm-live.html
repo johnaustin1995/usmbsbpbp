@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Southern Miss Live Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/usm-live.css" />
+  </head>
+  <body>
+    <div class="bg-noise"></div>
+    <main class="layout">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Southern Miss Baseball</p>
+          <h1>Live Game Center</h1>
+          <p id="status-meta" class="status-meta">Loading live data...</p>
+        </div>
+        <div class="toolbar">
+          <label class="control">
+            <span>Game</span>
+            <select id="game-select"></select>
+          </label>
+          <label class="control check">
+            <input id="auto-refresh" type="checkbox" checked />
+            Auto refresh
+          </label>
+          <button id="refresh-btn" type="button">Refresh</button>
+        </div>
+      </header>
+
+      <section class="dashboard-grid">
+        <aside class="panel feed-panel">
+          <div class="panel-head">
+            <h2>Live Feed</h2>
+            <p id="feed-count"></p>
+          </div>
+          <div id="play-feed" class="feed-list"></div>
+        </aside>
+
+        <section class="panel center-panel">
+          <div class="score-banner">
+            <div class="team-block" id="away-block">
+              <p class="team-code" id="away-code">AWAY</p>
+              <p class="team-record" id="away-record"></p>
+            </div>
+            <div class="team-score" id="away-score">0</div>
+            <div class="game-state">
+              <p id="game-status">Pregame</p>
+              <p id="count-status">0-0 | 0 Outs</p>
+            </div>
+            <div class="team-score" id="home-score">0</div>
+            <div class="team-block" id="home-block">
+              <p class="team-code" id="home-code">HOME</p>
+              <p class="team-record" id="home-record"></p>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <svg id="field-svg" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="grassGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#4f8f2f" />
+                  <stop offset="100%" stop-color="#2e6d1b" />
+                </linearGradient>
+                <linearGradient id="dirtGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#c38e59" />
+                  <stop offset="100%" stop-color="#9d6a3d" />
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="1000" height="640" fill="#0a0f1f" />
+              <path d="M120 500 Q500 160 880 500 L500 610 Z" fill="url(#grassGrad)" stroke="#d3e4a5" stroke-width="4" />
+              <path d="M360 500 L500 375 L640 500 L500 610 Z" fill="url(#dirtGrad)" stroke="#f6d4ac" stroke-width="4" />
+              <path d="M500 610 L500 540" stroke="#f3f6ff" stroke-width="6" stroke-linecap="round" />
+              <line x1="240" y1="500" x2="500" y2="610" stroke="#f7f7f7" stroke-width="3" opacity="0.9" />
+              <line x1="760" y1="500" x2="500" y2="610" stroke="#f7f7f7" stroke-width="3" opacity="0.9" />
+              <rect x="490" y="600" width="20" height="20" fill="#fff3de" stroke="#241b12" />
+              <rect x="627" y="486" width="16" height="16" transform="rotate(45 635 494)" fill="#fff3de" stroke="#241b12" />
+              <rect x="492" y="368" width="16" height="16" transform="rotate(45 500 376)" fill="#fff3de" stroke="#241b12" />
+              <rect x="357" y="486" width="16" height="16" transform="rotate(45 365 494)" fill="#fff3de" stroke="#241b12" />
+              <g id="spray-layer"></g>
+            </svg>
+          </div>
+
+          <div class="duel-strip">
+            <div>
+              <p class="duel-label">Pitcher</p>
+              <p id="pitcher-name" class="duel-name">-</p>
+            </div>
+            <div>
+              <p class="duel-label">Batter</p>
+              <p id="batter-name" class="duel-name">-</p>
+            </div>
+            <div>
+              <p class="duel-label">Bases</p>
+              <p id="base-state" class="duel-name">Empty</p>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel stats-panel">
+          <div class="panel-head">
+            <h2>Box</h2>
+          </div>
+          <section class="stats-card">
+            <h3>Line Score</h3>
+            <div id="line-score"></div>
+          </section>
+          <section class="stats-card">
+            <h3>Batting Order</h3>
+            <div id="batting-table"></div>
+          </section>
+          <section class="stats-card">
+            <h3>Pitching</h3>
+            <div id="pitching-table"></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+    <script src="/usm-live.js" defer></script>
+  </body>
+</html>
