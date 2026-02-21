@@ -216,25 +216,36 @@ export function buildFinalTweetText(input: BuildFinalTweetTextInput): string {
   const awayScore = formatScore(input.summary.visitorScore);
   const homeScore = formatScore(input.summary.homeScore);
 
-  const winning = normalizeDisplayName(cleanText(input.pitcherDecisions?.winning ?? "")) || "TBD";
-  const save = normalizeDisplayName(cleanText(input.pitcherDecisions?.save ?? "")) || "TBD";
-  const losing = normalizeDisplayName(cleanText(input.pitcherDecisions?.losing ?? "")) || "TBD";
+  const winning = toOptionalFinalPitcherName(input.pitcherDecisions?.winning);
+  const save = toOptionalFinalPitcherName(input.pitcherDecisions?.save);
+  const losing = toOptionalFinalPitcherName(input.pitcherDecisions?.losing);
 
   const lines = [
     "Final",
     `${away} - ${awayScore}`,
     `${home} - ${homeScore}`,
-    "",
-    `W - ${winning}`,
-    `S - ${save}`,
-    `L - ${losing}`,
   ];
+
+  const decisionLines = [
+    winning ? `W - ${winning}` : null,
+    save ? `S - ${save}` : null,
+    losing ? `L - ${losing}` : null,
+  ].filter((line): line is string => Boolean(line));
+
+  if (decisionLines.length > 0) {
+    lines.push("", ...decisionLines);
+  }
 
   if (input.appendTag) {
     lines.push(input.appendTag.trim());
   }
 
   return trimToTweetLength(lines.join("\n"), maxLength);
+}
+
+function toOptionalFinalPitcherName(value: string | null | undefined): string | null {
+  const normalized = normalizeDisplayName(cleanText(value ?? ""));
+  return normalized.length > 0 ? normalized : null;
 }
 
 export function isFinalStatus(summary: StatBroadcastLiveSummary): boolean {
