@@ -191,7 +191,7 @@ export function buildPlayTweetText(input: BuildPlayTweetTextInput): string {
   blocks.push(
     `${cleanText(input.summary.visitorTeam)} - ${formatScore(awayScore)}\n${cleanText(input.summary.homeTeam)} - ${formatScore(homeScore)}`
   );
-  blocks.push(normalizeNamesInText(cleanText(input.play.text)));
+  blocks.push(normalizeNamesInText(cleanText(input.play.text), [input.play.batter, input.play.pitcher]));
 
   if (pitcherName && pitchCount !== null) {
     blocks.push(`Pitching | ${pitcherName} - P ${pitchCount}`);
@@ -439,18 +439,146 @@ function formatHeaderLine(inningLabel: string, outs: number | null): string {
   return `${inningLabel} | ${formatOutsLabel(outs)}`;
 }
 
-function normalizeNamesInText(value: string): string {
-  return value.replace(/\b([A-Z][A-Za-z'.-]+),([A-Z][A-Za-z'.-]+)\b/g, "$2 $1");
+function normalizeNamesInText(value: string, explicitNames: Array<string | null | undefined> = []): string {
+  let text = value.replace(
+    /\b([A-Za-z][A-Za-z'.-]+),\s*([A-Za-z][A-Za-z'.-]+)\b/g,
+    (_, last: string, first: string) => `${toTitleCasePersonName(first)} ${toTitleCasePersonName(last)}`
+  );
+  text = text.replace(
+    /\b([A-Za-z]\.)\s+([A-Za-z][A-Za-z'.-]+)\b/g,
+    (_, initial: string, last: string) => `${initial.toUpperCase()} ${toTitleCasePersonName(last)}`
+  );
+  text = normalizeUppercaseSurnameContext(text);
+
+  const replacements = new Map<string, string>();
+  for (const rawName of explicitNames) {
+    const raw = cleanText(rawName ?? "");
+    if (!raw) {
+      continue;
+    }
+
+    const normalized = normalizeDisplayName(raw);
+    if (!normalized) {
+      continue;
+    }
+
+    replacements.set(raw, normalized);
+    replacements.set(raw.toUpperCase(), normalized);
+    replacements.set(raw.toLowerCase(), normalized);
+    replacements.set(normalized, normalized);
+    replacements.set(normalized.toUpperCase(), normalized);
+  }
+
+  const variants = Array.from(replacements.entries()).sort((a, b) => b[0].length - a[0].length);
+  for (const [variant, normalized] of variants) {
+    if (!variant || variant === normalized) {
+      continue;
+    }
+    text = replaceNameVariant(text, variant, normalized);
+  }
+
+  return text;
 }
 
 function normalizeDisplayName(value: string): string {
   const text = cleanText(value);
-  const match = text.match(/^([A-Z][A-Za-z'.-]+),([A-Z][A-Za-z'.-]+)$/);
+  const match = text.match(/^([A-Za-z][A-Za-z'.-]+),\s*([A-Za-z][A-Za-z'.-]+)$/);
   if (!match) {
-    return text;
+    return toTitleCasePersonName(text);
   }
 
-  return `${match[2]} ${match[1]}`;
+  return `${toTitleCasePersonName(match[2])} ${toTitleCasePersonName(match[1])}`;
+}
+
+function replaceNameVariant(text: string, variant: string, normalized: string): string {
+  const pattern = escapeRegExp(variant).replace(/\s+/g, "\\s+");
+  const regex = new RegExp(`(^|[^A-Za-z0-9])(${pattern})(?=[^A-Za-z0-9]|$)`, "g");
+  return text.replace(regex, `$1${normalized}`);
+}
+
+const NAME_UPPERCASE_EXCLUSIONS = new Set([
+  "RBI",
+  "RISP",
+  "OPS",
+  "ERA",
+  "WHIP",
+  "BABIP",
+  "HBP",
+  "LOB",
+  "AB",
+  "BB",
+  "SO",
+  "IP",
+  "HR",
+  "SB",
+  "CS",
+  "DP",
+  "TP",
+  "K",
+  "KKFK",
+]);
+
+const NAME_ACTION_HINT_PATTERN =
+  /^(struck|grounded|flied|lined|popped|fouled|walked|singled|doubled|tripled|homered|reached|advanced|stole|to|pinch|out)\b/i;
+
+function normalizeUppercaseSurnameContext(text: string): string {
+  return text.replace(/\b([A-Z][A-Z'.-]{3,})\b/g, (full, word: string, offset: number, source: string) => {
+    if (NAME_UPPERCASE_EXCLUSIONS.has(word)) {
+      return word;
+    }
+
+    const before = source.slice(0, offset);
+    const after = source.slice(offset + word.length).trimStart();
+    const previousToken = before.match(/([A-Za-z.]+)\s*$/)?.[1]?.toLowerCase() ?? "";
+
+    if (previousToken === "for" || previousToken === "to" || previousToken === "by") {
+      return toTitleCasePersonName(word);
+    }
+
+    if (NAME_ACTION_HINT_PATTERN.test(after)) {
+      return toTitleCasePersonName(word);
+    }
+
+    return word;
+  });
+}
+
+function toTitleCasePersonName(value: string): string {
+  return cleanText(value)
+    .split(/\s+/)
+    .map((token) => formatNameToken(token))
+    .join(" ")
+    .trim();
+}
+
+function formatNameToken(token: string): string {
+  if (/^[A-Za-z]\.$/.test(token)) {
+    return token.toUpperCase();
+  }
+
+  if (/^(jr|sr|ii|iii|iv|v)$/i.test(token)) {
+    return token.toUpperCase();
+  }
+
+  const segments = token.split(/([-'`])/);
+  return segments
+    .map((segment) => {
+      if (segment.length === 0 || /^[-'`]$/.test(segment)) {
+        return segment;
+      }
+
+      const lower = segment.toLowerCase();
+      if (lower.startsWith("mc") && lower.length > 2) {
+        return `Mc${capitalize(lower.slice(2))}`;
+      }
+
+      return capitalize(lower);
+    })
+    .join("");
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function trimToTweetLength(text: string, maxLength: number): string {
