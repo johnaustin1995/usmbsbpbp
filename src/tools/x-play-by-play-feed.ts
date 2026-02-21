@@ -8,7 +8,7 @@ import {
   extractLivePlayEvents,
   isFinalStatus,
 } from "../pipelines/live-play-feed";
-import { getLiveStats, getLiveSummary } from "../scrapers/statbroadcast";
+import { getFinalGame, getLiveStats, getLiveSummary } from "../scrapers/statbroadcast";
 import { isSouthernMissGame } from "../utils/team-filter";
 import { loadDotEnv } from "../utils/env";
 
@@ -154,8 +154,10 @@ async function runCycle(options: CliOptions, state: FeedState, xClient: XClient 
     (isOfficialFinal || (isLikelyFinalFromPlays && graceSatisfied));
 
   if (shouldPostFinalNow) {
+    const pitcherDecisions = await resolveFinalPitcherDecisions(options.gameId);
     const text = buildFinalTweetText({
       summary,
+      pitcherDecisions,
       appendTag: options.appendTag,
     });
 
@@ -312,6 +314,39 @@ function detectLikelyFinalFromPlays(
   }
 
   return false;
+}
+
+async function resolveFinalPitcherDecisions(gameId: number): Promise<{
+  winning: string | null;
+  save: string | null;
+  losing: string | null;
+}> {
+  try {
+    const finalGame = await getFinalGame(gameId);
+    return {
+      winning: toOptionalDecisionName(finalGame.pitcherDecisions.winning?.player),
+      save: toOptionalDecisionName(finalGame.pitcherDecisions.save?.player),
+      losing: toOptionalDecisionName(finalGame.pitcherDecisions.losing?.player),
+    };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    // eslint-disable-next-line no-console
+    console.warn(`[final] Could not load pitcher decisions for game ${gameId}: ${message}`);
+    return {
+      winning: null,
+      save: null,
+      losing: null,
+    };
+  }
+}
+
+function toOptionalDecisionName(value: string | null | undefined): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const normalized = value.trim();
+  return normalized.length > 0 ? normalized : null;
 }
 
 function parseArgs(argv: string[], env: NodeJS.ProcessEnv): CliOptions {

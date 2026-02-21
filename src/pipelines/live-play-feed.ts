@@ -31,6 +31,11 @@ export interface BuildPlayTweetTextInput {
 
 export interface BuildFinalTweetTextInput {
   summary: StatBroadcastLiveSummary;
+  pitcherDecisions?: {
+    winning: string | null;
+    save: string | null;
+    losing: string | null;
+  } | null;
   maxLength?: number;
   appendTag?: string | null;
 }
@@ -211,18 +216,18 @@ export function buildFinalTweetText(input: BuildFinalTweetTextInput): string {
   const awayScore = formatScore(input.summary.visitorScore);
   const homeScore = formatScore(input.summary.homeScore);
 
-  let winnerLine = "Final";
-  if (input.summary.visitorScore !== null && input.summary.homeScore !== null) {
-    if (input.summary.visitorScore > input.summary.homeScore) {
-      winnerLine = `Final: ${away} wins`;
-    } else if (input.summary.homeScore > input.summary.visitorScore) {
-      winnerLine = `Final: ${home} wins`;
-    }
-  }
+  const winning = normalizeDisplayName(cleanText(input.pitcherDecisions?.winning ?? "")) || "TBD";
+  const save = normalizeDisplayName(cleanText(input.pitcherDecisions?.save ?? "")) || "TBD";
+  const losing = normalizeDisplayName(cleanText(input.pitcherDecisions?.losing ?? "")) || "TBD";
 
   const lines = [
-    winnerLine,
-    `${away} ${awayScore} - ${home} ${homeScore}`,
+    "Final",
+    `${away} - ${awayScore}`,
+    `${home} - ${homeScore}`,
+    "",
+    `W - ${winning}`,
+    `S - ${save}`,
+    `L - ${losing}`,
   ];
 
   if (input.appendTag) {
