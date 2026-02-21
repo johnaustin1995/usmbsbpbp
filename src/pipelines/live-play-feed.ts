@@ -271,7 +271,21 @@ function parsePlayRow(table: StatsTable, row: StatsTableRow): ParsedRow | null {
 
   const aligned = alignCellsToHeaders(table.headers, row.cells);
   const firstCell = toOptionalString(aligned[0] ?? row.cells[0] ?? null);
-  const play = toOptionalString(readTableCellByHeader(table, row, /^play$/i));
+  const fallback = inferPlayRowFields(row.cells);
+
+  let play = toOptionalString(readTableCellByHeader(table, row, /^play$/i));
+  let scoringDecision = toOptionalString(readTableCellByHeader(table, row, /^scoring dec\.?$/i));
+  let batter = toOptionalString(readTableCellByHeader(table, row, /^batter$/i));
+  let pitcher = toOptionalString(readTableCellByHeader(table, row, /^pitcher$/i));
+  let outs = toOptionalNumber(readTableCellByHeader(table, row, /^outs$/i));
+
+  if (isInvalidParsedPlay(play, firstCell, batter, pitcher, outs)) {
+    play = fallback.play ?? play;
+    scoringDecision = fallback.scoringDecision ?? scoringDecision;
+    batter = fallback.batter ?? batter;
+    pitcher = fallback.pitcher ?? pitcher;
+    outs = fallback.outs ?? outs;
+  }
 
   if (firstCell && /^top of the|^bottom of the/i.test(firstCell)) {
     return {
@@ -299,11 +313,165 @@ function parsePlayRow(table: StatsTable, row: StatsTableRow): ParsedRow | null {
     half: halfAndInning?.half ?? null,
     text: play,
     isSubstitution: isSubstitutionText(play),
-    scoringDecision: toOptionalString(readTableCellByHeader(table, row, /^scoring dec\.?$/i)),
-    batter: toOptionalString(readTableCellByHeader(table, row, /^batter$/i)),
-    pitcher: toOptionalString(readTableCellByHeader(table, row, /^pitcher$/i)),
-    outs: toOptionalNumber(readTableCellByHeader(table, row, /^outs$/i)),
+    scoringDecision,
+    batter,
+    pitcher,
+    outs,
   };
+}
+
+interface FallbackPlayFields {
+  play: string | null;
+  scoringDecision: string | null;
+  batter: string | null;
+  pitcher: string | null;
+  outs: number | null;
+}
+
+function inferPlayRowFields(cells: Array<string | number | null>): FallbackPlayFields {
+  const values = cells
+    .map((cell) => toOptionalString(cell))
+    .filter((cell): cell is string => Boolean(cell));
+
+  if (values.length === 0) {
+    return {
+      play: null,
+      scoringDecision: null,
+      batter: null,
+      pitcher: null,
+      outs: null,
+    };
+  }
+
+  let outs: number | null = null;
+  const last = values[values.length - 1];
+  if (/^\d$/u.test(last)) {
+    const parsedOuts = Number.parseInt(last, 10);
+    if (Number.isFinite(parsedOuts) && parsedOuts >= 0 && parsedOuts <= 3) {
+      outs = parsedOuts;
+      values.pop();
+    }
+  }
+
+  if (values.length === 0) {
+    return {
+      play: null,
+      scoringDecision: null,
+      batter: null,
+      pitcher: null,
+      outs,
+    };
+  }
+
+  if (values.length >= 2 && isLikelyActionCode(values[0]) && isLikelyPlayText(values[1])) {
+    values.shift();
+  }
+
+  const play = values[0] ?? null;
+  const remainder = values.slice(1);
+
+  let scoringDecision: string | null = null;
+  let batter: string | null = null;
+  let pitcher: string | null = null;
+
+  if (remainder.length >= 2 && isLikelyPlayerName(remainder[remainder.length - 1])) {
+    const maybePitcher = remainder[remainder.length - 1];
+    const maybeBatter = remainder[remainder.length - 2] ?? null;
+    if (maybeBatter && isLikelyPlayerName(maybeBatter)) {
+      pitcher = maybePitcher;
+      batter = maybeBatter;
+      const scoringParts = remainder.slice(0, -2).filter((entry) => !isLikelyActionCode(entry));
+      scoringDecision = scoringParts.length > 0 ? scoringParts.join(" ") : null;
+    }
+  }
+
+  if (!scoringDecision && remainder.length > 0) {
+    const candidate = remainder[0];
+    if (!isLikelyPlayerName(candidate)) {
+      scoringDecision = candidate;
+    }
+  }
+
+  return {
+    play,
+    scoringDecision,
+    batter,
+    pitcher,
+    outs,
+  };
+}
+
+function isInvalidParsedPlay(
+  play: string | null,
+  firstCell: string | null,
+  batter: string | null,
+  pitcher: string | null,
+  outs: number | null
+): boolean {
+  if (!play || /^\d+$/u.test(play)) {
+    return true;
+  }
+
+  if (batter && /^\d+$/u.test(batter)) {
+    return true;
+  }
+
+  if (firstCell && play === batter && firstCell.length > play.length + 6) {
+    return true;
+  }
+
+  if (firstCell && play !== firstCell && isLikelyPlayText(firstCell) && !isLikelyPlayText(play)) {
+    return true;
+  }
+
+  if (play && !play.includes(" ") && !pitcher && outs === null && firstCell && isLikelyPlayText(firstCell)) {
+    return true;
+  }
+
+  return false;
+}
+
+function isLikelyPlayText(value: string): boolean {
+  const text = cleanText(value);
+  if (!text) {
+    return false;
+  }
+
+  if (isLikelyActionCode(text)) {
+    return false;
+  }
+
+  return /\s/.test(text) || /[.();]/.test(text);
+}
+
+function isLikelyActionCode(value: string): boolean {
+  const text = cleanText(value);
+  if (!text) {
+    return false;
+  }
+
+  if (text.includes(" ")) {
+    return false;
+  }
+
+  return /^[A-Z0-9]{1,4}$/u.test(text);
+}
+
+function isLikelyPlayerName(value: string): boolean {
+  const text = cleanText(value);
+  if (!text) {
+    return false;
+  }
+
+  if (/^\d+$/u.test(text)) {
+    return false;
+  }
+
+  if (isLikelyActionCode(text)) {
+    return false;
+  }
+
+  return /^[A-Za-z][A-Za-z'. -]*$/u.test(text);
 }
 
 function parseHalfAndInning(
