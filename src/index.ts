@@ -79,7 +79,7 @@ app.get("/api/usm/live", async (req, res, next) => {
     const scheduleGames = normalizeUsmScheduleGames(schedule.payload.games);
     const nowEpoch = Math.floor(Date.now() / 1000);
 
-    const selectedGameId = pickUsmGameId(scheduleGames, requestedId, nowEpoch);
+    const selectedGameId = pickUsmGameId(scheduleGames, requestedId, nowEpoch, true);
     if (!selectedGameId) {
       res.status(404).json({
         error: "No Southern Miss game is available in schedule file.",
@@ -160,9 +160,26 @@ app.get("/api/usm/live", async (req, res, next) => {
     const upcomingGames = scheduleGames
       .filter((game) => game.startEpochResolved === null || game.startEpochResolved >= nowEpoch - 8 * 60 * 60)
       .slice(0, 14);
+    const selectedGameForUi: UsmScheduleGameNormalized | null =
+      selectedGame ??
+      (requestedId && selectedGameId === requestedId
+        ? {
+            date: null,
+            gameId: selectedGameId,
+            awayTeam: summary?.visitorTeam ?? "Away",
+            homeTeam: summary?.homeTeam ?? "Home",
+            statusText: summary?.statusText ?? "External game",
+            startTimeEpochEt: null,
+            startTimeIsoEt: null,
+            startTimeEpoch: null,
+            startTimeIso: null,
+            startEpochResolved: null,
+          }
+        : null);
+
     const scheduleForUi = [...upcomingGames];
-    if (selectedGame && !scheduleForUi.some((game) => game.gameId === selectedGame.gameId)) {
-      scheduleForUi.unshift(selectedGame);
+    if (selectedGameForUi && !scheduleForUi.some((game) => game.gameId === selectedGameForUi.gameId)) {
+      scheduleForUi.unshift(selectedGameForUi);
     }
 
     res.json({
@@ -764,12 +781,16 @@ function normalizeUsmScheduleGames(games: UsmScheduleGameRaw[]): UsmScheduleGame
 function pickUsmGameId(
   games: UsmScheduleGameNormalized[],
   requestedId: number | null,
-  nowEpoch: number
+  nowEpoch: number,
+  allowAnyRequestedId = false
 ): number | null {
   if (requestedId) {
     const explicit = games.find((game) => game.gameId === requestedId);
     if (explicit) {
       return explicit.gameId;
+    }
+    if (allowAnyRequestedId) {
+      return requestedId;
     }
   }
 
