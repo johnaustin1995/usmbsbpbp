@@ -15,6 +15,7 @@ import { loadDotEnv } from "../utils/env";
 interface CliOptions {
   gameId: number;
   intervalMs: number;
+  finalGraceMs: number;
   statePath: string;
   once: boolean;
   dryRun: boolean;
@@ -35,6 +36,7 @@ interface FeedState {
   lastTweetId: string | null;
   rootTweetId: string | null;
   finalPosted: boolean;
+  finalCandidateAt: string | null;
 }
 
 const MAX_STORED_KEYS = 20_000;
@@ -121,8 +123,37 @@ async function runCycle(options: CliOptions, state: FeedState, xClient: XClient 
     console.log(`[play] ${play.key} | ${text.replace(/\s+/g, " ").slice(0, 140)}`);
   }
 
-  const isFinal = isFinalStatus(summary);
-  if (options.postFinal && isFinal && !state.finalPosted) {
+  const pendingPlays = plays.some((play) => !postedSet.has(play.key));
+  const isOfficialFinal = isFinalStatus(summary);
+  const isLikelyFinalFromPlays = detectLikelyFinalFromPlays(plays, playStates);
+
+  if (isOfficialFinal) {
+    state.finalCandidateAt = null;
+  } else if (isLikelyFinalFromPlays) {
+    if (!state.finalCandidateAt) {
+      state.finalCandidateAt = new Date().toISOString();
+      // eslint-disable-next-line no-console
+      console.log(
+        `[final-candidate] Likely final play detected for game ${options.gameId}; waiting ${Math.floor(
+          options.finalGraceMs / 1000
+        )}s confirmation window.`
+      );
+    }
+  } else {
+    state.finalCandidateAt = null;
+  }
+
+  const graceSatisfied =
+    state.finalCandidateAt !== null &&
+    Date.now() - new Date(state.finalCandidateAt).getTime() >= options.finalGraceMs;
+
+  const shouldPostFinalNow =
+    options.postFinal &&
+    !state.finalPosted &&
+    !pendingPlays &&
+    (isOfficialFinal || (isLikelyFinalFromPlays && graceSatisfied));
+
+  if (shouldPostFinalNow) {
     const text = buildFinalTweetText({
       summary,
       appendTag: options.appendTag,
@@ -142,15 +173,15 @@ async function runCycle(options: CliOptions, state: FeedState, xClient: XClient 
 
     state.lastTweetId = tweetId;
     state.finalPosted = true;
+    state.finalCandidateAt = null;
 
     // eslint-disable-next-line no-console
     console.log(`[final] ${text.replace(/\s+/g, " ").slice(0, 140)}`);
   }
 
   state.updatedAt = new Date().toISOString();
-
-  const pendingPlays = plays.some((play) => !postedSet.has(play.key));
-  return isFinal && (!options.postFinal || state.finalPosted) && !pendingPlays;
+  const shouldExitForFinal = isOfficialFinal || (isLikelyFinalFromPlays && graceSatisfied);
+  return shouldExitForFinal && (!options.postFinal || state.finalPosted) && !pendingPlays;
 }
 
 async function sendTweet(
@@ -198,6 +229,7 @@ async function loadOrCreateState(statePath: string, gameId: number): Promise<Fee
       lastTweetId: typeof parsed.lastTweetId === "string" ? parsed.lastTweetId : null,
       rootTweetId: typeof parsed.rootTweetId === "string" ? parsed.rootTweetId : null,
       finalPosted: Boolean(parsed.finalPosted),
+      finalCandidateAt: typeof parsed.finalCandidateAt === "string" ? parsed.finalCandidateAt : null,
     };
   } catch (error) {
     const code = (error as NodeJS.ErrnoException).code;
@@ -217,6 +249,7 @@ async function loadOrCreateState(statePath: string, gameId: number): Promise<Fee
     lastTweetId: null,
     rootTweetId: null,
     finalPosted: false,
+    finalCandidateAt: null,
   };
 }
 
@@ -234,9 +267,57 @@ function compactPostedKeys(keys: string[]): string[] {
   return unique.slice(unique.length - MAX_STORED_KEYS);
 }
 
+function detectLikelyFinalFromPlays(
+  plays: ReturnType<typeof extractLivePlayEvents>,
+  playStates: ReturnType<typeof deriveLivePlayStates>
+): boolean {
+  const lastMeaningfulPlay = [...plays].reverse().find((play) => !play.isSubstitution) ?? plays[plays.length - 1];
+  if (!lastMeaningfulPlay) {
+    return false;
+  }
+
+  const state = playStates.get(lastMeaningfulPlay.key);
+  if (!state) {
+    return false;
+  }
+
+  const inning = lastMeaningfulPlay.inning;
+  const half = lastMeaningfulPlay.half;
+  const outs = state.outsAfterPlay;
+  const awayScore = state.awayScore;
+  const homeScore = state.homeScore;
+
+  if (
+    inning === null ||
+    half === null ||
+    outs === null ||
+    awayScore === null ||
+    homeScore === null ||
+    inning < 9 ||
+    awayScore === homeScore
+  ) {
+    return false;
+  }
+
+  if (half === "top" && outs === 3 && homeScore > awayScore) {
+    return true;
+  }
+
+  if (half === "bottom" && outs === 3) {
+    return true;
+  }
+
+  if (half === "bottom" && homeScore > awayScore) {
+    return true;
+  }
+
+  return false;
+}
+
 function parseArgs(argv: string[], env: NodeJS.ProcessEnv): CliOptions {
   const idRaw = firstNonEmpty(env.X_FEED_GAME_ID);
   const intervalRaw = firstNonEmpty(env.X_FEED_INTERVAL_SECONDS);
+  const finalGraceRaw = firstNonEmpty(env.X_FEED_FINAL_GRACE_SECONDS);
   const bootstrapRaw = firstNonEmpty(env.X_FEED_BOOTSTRAP);
   const threadModeRaw = firstNonEmpty(env.X_FEED_THREAD_MODE);
   const maxPostsRaw = firstNonEmpty(env.X_FEED_MAX_POSTS_PER_CYCLE);
@@ -246,6 +327,7 @@ function parseArgs(argv: string[], env: NodeJS.ProcessEnv): CliOptions {
   const options: Omit<CliOptions, "gameId" | "statePath"> & { gameId: number | null; statePath: string | null } = {
     gameId: parsePositiveInteger(idRaw),
     intervalMs: Math.max(5_000, (parsePositiveInteger(intervalRaw) ?? 20) * 1000),
+    finalGraceMs: Math.max(30_000, (parsePositiveInteger(finalGraceRaw) ?? 120) * 1000),
     statePath: null,
     once: false,
     dryRun: false,
@@ -278,6 +360,19 @@ function parseArgs(argv: string[], env: NodeJS.ProcessEnv): CliOptions {
         throw new Error("Expected a positive integer for --interval");
       }
       options.intervalMs = Math.max(5_000, seconds * 1000);
+      index += 1;
+      continue;
+    }
+
+    if (arg === "--final-grace") {
+      if (!next) {
+        throw new Error("Missing value for --final-grace");
+      }
+      const seconds = parsePositiveInteger(next);
+      if (!seconds) {
+        throw new Error("Expected a positive integer for --final-grace");
+      }
+      options.finalGraceMs = Math.max(30_000, seconds * 1000);
       index += 1;
       continue;
     }
@@ -376,6 +471,7 @@ function parseArgs(argv: string[], env: NodeJS.ProcessEnv): CliOptions {
   return {
     gameId: options.gameId,
     intervalMs: options.intervalMs,
+    finalGraceMs: options.finalGraceMs,
     statePath,
     once: options.once,
     dryRun: options.dryRun,
@@ -422,7 +518,7 @@ function sleep(ms: number): Promise<void> {
 function printUsage(): void {
   // eslint-disable-next-line no-console
   console.log(
-    "Usage: npm run x:feed -- --id 636528 [--interval 20] [--state data/tmp/x-feed/game.json] [--once] [--dry-run] [--bootstrap latest|all] [--thread-mode reply|none] [--max-posts 6] [--post-final|--no-post-final] [--tag '#NCAABaseball']"
+    "Usage: npm run x:feed -- --id 636528 [--interval 20] [--final-grace 120] [--state data/tmp/x-feed/game.json] [--once] [--dry-run] [--bootstrap latest|all] [--thread-mode reply|none] [--max-posts 6] [--post-final|--no-post-final] [--tag '#NCAABaseball']"
   );
 }
 
