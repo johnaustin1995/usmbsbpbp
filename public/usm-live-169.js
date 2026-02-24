@@ -1476,11 +1476,8 @@ function resolvePitcherProfile(team, activePitcherName, summary) {
     rosterName: rosterPlayer?.name,
     number: rosterPlayer?.number,
   });
-  const shouldPreferRosterName = Boolean(rosterName && (!activeName || isSingleTokenName(activeName)));
-
-  const fullName = shouldPreferRosterName
-    ? rosterName
-    : activeName || pitchingName || rosterName || "";
+  // StatBroadcast identifies who is pitching; roster is the source of truth for identity shown in UI.
+  const fullName = rosterName || activeName || pitchingName || "";
   const displayName = (formatFirstLastName(fullName) || "-").toUpperCase();
   const pitchCountFromSituation = summary?.situation?.pitcher?.pitchCount ?? null;
   const pitchCountFromTable = parseFiniteInt(pitching?.statMap?.PC);
@@ -1546,8 +1543,20 @@ function resolveBoxPitcherStats(team, options = {}) {
 }
 
 function resolveBatterProfile(team, lineupEntry, fallbackBatterName) {
-  const rosterPlayer = lineupEntry?.rosterPlayer || findRosterPlayer(team.roster, lineupEntry) || null;
-  const fullName = normalizePersonName(lineupEntry?.fullName || fallbackBatterName || rosterPlayer?.name || "");
+  const rosterPlayer =
+    lineupEntry?.rosterPlayer ||
+    findRosterPlayer(team.roster, lineupEntry) ||
+    findRosterPlayer(team.roster, {
+      name: fallbackBatterName,
+      fullName: fallbackBatterName,
+      number: null,
+    }) ||
+    null;
+  const rosterName = normalizePersonName(rosterPlayer?.name);
+  const lineupName = normalizePersonName(lineupEntry?.fullName || lineupEntry?.name || "");
+  const fallbackName = normalizePersonName(fallbackBatterName || "");
+  // StatBroadcast identifies current batter; roster is the source of truth for displayed identity/details.
+  const fullName = rosterName || lineupName || fallbackName || "";
 
   return {
     fullName,
@@ -2028,14 +2037,7 @@ function findLineupEntry(lineup, playerName) {
     return null;
   }
 
-  const normalizedTarget = normalizePersonName(playerName);
-  const targetLast = toLastName(normalizedTarget);
-
-  return (
-    lineup.find((entry) => normalizePersonName(entry.fullName || entry.name) === normalizedTarget) ||
-    lineup.find((entry) => toLastName(entry.fullName || entry.name) === targetLast) ||
-    null
-  );
+  return lineup.find((entry) => isLikelySamePlayerName(entry.fullName || entry.name, playerName)) || null;
 }
 
 function findLineupEntryByPlayOrder(lineup, play) {
@@ -2165,6 +2167,32 @@ function parseCountFromPlay(text) {
     balls: Number.parseInt(match[1], 10),
     strikes: Number.parseInt(match[2], 10),
   };
+}
+
+function isLikelySamePlayerName(leftValue, rightValue) {
+  const left = normalizePersonName(leftValue);
+  const right = normalizePersonName(rightValue);
+  if (!left || !right) {
+    return false;
+  }
+
+  if (left === right) {
+    return true;
+  }
+
+  const leftLast = toLastName(left);
+  const rightLast = toLastName(right);
+  if (!leftLast || !rightLast || leftLast !== rightLast) {
+    return false;
+  }
+
+  const leftFirst = left.split(" ")[0] || "";
+  const rightFirst = right.split(" ")[0] || "";
+  if (!leftFirst || !rightFirst) {
+    return false;
+  }
+
+  return leftFirst.charAt(0) === rightFirst.charAt(0);
 }
 
 function getLineInningHeaders(lineScore) {
