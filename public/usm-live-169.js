@@ -158,7 +158,8 @@ function renderDashboard(payload, context) {
   const gameSections = Array.isArray(payload?.live?.gameSections) ? payload.live.gameSections : [];
   const plays = Array.isArray(payload?.live?.plays) ? payload.live.plays : [];
 
-  const gameData = parseGameSections(gameSections, summary, context.awayTeam, context.homeTeam);
+  const lineupsSections = Array.isArray(payload?.live?.lineupsSections) ? payload.live.lineupsSections : [];
+  const gameData = parseGameSections(gameSections, lineupsSections, summary, context.awayTeam, context.homeTeam);
   const lineScore = summary?.lineScore || gameData.lineScore || null;
 
   const inningContext = getInningContext(summary, plays);
@@ -393,7 +394,7 @@ function renderLineupTable(lineup, activeEntry) {
   [
     { label: "#", className: "spot" },
     { label: "POS", className: "pos" },
-    { label: "B/T", className: "bats" },
+    { label: "BATS", className: "bats" },
     { label: "PLAYER", className: "player" },
     { label: "TOD", className: "today" },
     { label: "AVG", className: "avg" },
@@ -415,7 +416,7 @@ function renderLineupTable(lineup, activeEntry) {
     tr.append(
       buildCell("spot", entry.spot !== null ? String(entry.spot) : "-"),
       buildCell("pos", normalizePosition(entry.position || entry.rosterPlayer?.position || "-")),
-      buildCell("bats", formatBatsThrows(entry)),
+      buildCell("bats", formatLineupBats(entry)),
       buildCell("player", toLastName(entry.fullName || entry.name || "-")),
       buildCell("today", entry.today || "-"),
       buildCell("avg", entry.avg || "-")
@@ -440,7 +441,7 @@ function computeLineupColumnSizing(lineup) {
   lineup.forEach((entry) => {
     maxChars.spot = Math.max(maxChars.spot, String(entry.spot ?? "-").length);
     maxChars.pos = Math.max(maxChars.pos, normalizePosition(entry.position || entry.rosterPlayer?.position || "-").length);
-    maxChars.bats = Math.max(maxChars.bats, formatBatsThrows(entry).length);
+    maxChars.bats = Math.max(maxChars.bats, formatLineupBats(entry).length);
     maxChars.player = Math.max(maxChars.player, toLastName(entry.fullName || entry.name || "-").length);
     maxChars.today = Math.max(maxChars.today, String(entry.today || "-").length);
     maxChars.avg = Math.max(maxChars.avg, String(entry.avg || "-").length);
@@ -716,7 +717,7 @@ function parseSubstitutionEnteringName(text) {
   return null;
 }
 
-function parseGameSections(sections, summary, awayTeamName, homeTeamName) {
+function parseGameSections(sections, lineupsSections, summary, awayTeamName, homeTeamName) {
   const result = {
     lineScore: null,
     pitching: {
@@ -756,15 +757,6 @@ function parseGameSections(sections, summary, awayTeamName, homeTeamName) {
       return;
     }
 
-    if (/batting order/i.test(lower)) {
-      const side = resolveSectionSide(title, { awayKey, homeKey, awayCode, homeCode });
-      if (!side) {
-        return;
-      }
-      result.lineups[side] = parseLineupSection(section);
-      return;
-    }
-
     if (/offensive leaders/i.test(lower)) {
       const side = resolveSectionSide(title, { awayKey, homeKey, awayCode, homeCode });
       if (!side) {
@@ -772,6 +764,22 @@ function parseGameSections(sections, summary, awayTeamName, homeTeamName) {
       }
       result.offensiveLeaders[side] = parseOffensiveLeaders(section);
     }
+  });
+
+  const lineupSource = Array.isArray(lineupsSections) && lineupsSections.length > 0 ? lineupsSections : sections;
+  lineupSource.forEach((section) => {
+    const title = String(section?.title || "");
+    const lower = title.toLowerCase();
+    if (!/batting order|line\s*up/i.test(lower)) {
+      return;
+    }
+
+    const side = resolveSectionSide(title, { awayKey, homeKey, awayCode, homeCode });
+    if (!side) {
+      return;
+    }
+
+    result.lineups[side] = parseLineupSection(section);
   });
 
   return result;
@@ -886,24 +894,75 @@ function parseLineupSection(section) {
 
   return table.rows
     .map((row) => {
-      const cells = Array.isArray(row?.cells) ? row.cells : [];
-      const spot = parseFiniteInt(cells[0]);
-      const parsedPlayer = parseLineupPlayerCell(cells[1]);
+      const spot =
+        parseFiniteInt(readLineupCellByHeader(table, row, /^spot$/i)) ??
+        parseFiniteInt(readLineupCellByHeader(table, row, /^#$/i)) ??
+        parseFiniteInt(row?.values?.spot) ??
+        parseFiniteInt(row?.cells?.[0]);
+      const parsedPlayer = parseLineupPlayerCell(
+        readLineupCellByHeader(table, row, /^#?\s*player$/i) ??
+          readLineupCellByHeader(table, row, /^player$/i) ??
+          row?.values?.player ??
+          row?.cells?.[1]
+      );
+      const position = normalizeCell(
+        readLineupCellByHeader(table, row, /^pos(?:ition)?$/i) ?? row?.values?.pos ?? row?.values?.position
+      );
+      const bats = normalizeCell(readLineupCellByHeader(table, row, /^bats?$/i) ?? row?.values?.bats);
+      const today = normalizeCell(readLineupCellByHeader(table, row, /^today$/i) ?? row?.values?.today);
+      const avg = normalizeCell(readLineupCellByHeader(table, row, /^avg$/i) ?? row?.values?.avg);
+      const classYear = normalizeCell(
+        readLineupCellByHeader(table, row, /^class$|^year$/i) ?? row?.values?.class ?? row?.values?.year
+      );
 
       return {
         spot,
         number: parsedPlayer.number,
         name: parsedPlayer.name,
         fullName: parsedPlayer.fullName,
-        bats: normalizeCell(cells[2]),
-        classYear: normalizeCell(cells[3]),
-        today: normalizeCell(cells[4]),
-        avg: normalizeCell(cells[5]),
-        position: null,
+        bats,
+        classYear,
+        today,
+        avg,
+        position,
         rosterPlayer: null,
       };
     })
     .filter((entry) => Boolean(entry.name));
+}
+
+function readLineupCellByHeader(table, row, headerPattern) {
+  if (!table || !row || !Array.isArray(table.headers) || !Array.isArray(row.cells)) {
+    return null;
+  }
+
+  const index = table.headers.findIndex((header) => headerPattern.test(String(header || "").trim()));
+  if (index === -1) {
+    return null;
+  }
+
+  const aligned = alignLineupRowCells(table.headers, row.cells);
+  return aligned[index] ?? null;
+}
+
+function alignLineupRowCells(headers, cells) {
+  if (headers.length === cells.length) {
+    return cells;
+  }
+
+  if (headers.length === cells.length + 1 && String(headers[0] || "").trim() === "") {
+    return [null, ...cells];
+  }
+
+  if (headers.length > cells.length) {
+    const padded = [...cells];
+    while (padded.length < headers.length) {
+      padded.push(null);
+    }
+    return padded;
+  }
+
+  return cells.slice(0, headers.length);
 }
 
 function parseLineupPlayerCell(rawValue) {
@@ -962,7 +1021,7 @@ function enrichLineupWithRoster(lineup, roster) {
     return {
       ...entry,
       rosterPlayer,
-      position: rosterPlayer?.position || null,
+      position: entry.position || rosterPlayer?.position || null,
       fullName: rosterPlayer?.name || entry.fullName || entry.name,
     };
   });
@@ -1615,13 +1674,9 @@ function formatScore(score) {
   return Number.isFinite(score) ? String(score) : "-";
 }
 
-function formatBatsThrows(entry) {
-  const bats = normalizeCell(entry?.rosterPlayer?.bats || entry?.bats || "-");
-  const throws = normalizeCell(entry?.rosterPlayer?.throws || "-");
-  if (throws && throws !== "-") {
-    return `${bats}/${throws}`;
-  }
-  return bats;
+function formatLineupBats(entry) {
+  const bats = normalizeCell(entry?.bats || entry?.rosterPlayer?.bats || "-");
+  return bats || "-";
 }
 
 function normalizePosition(value) {

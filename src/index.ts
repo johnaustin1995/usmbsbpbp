@@ -118,13 +118,16 @@ app.get("/api/usm/live", async (req, res, next) => {
 
     let playsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let gameSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
+    let lineupsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let playsError: string | null = null;
     let gameError: string | null = null;
+    let lineupsError: string | null = null;
 
     if (summary) {
-      const [playsResult, gameResult] = await Promise.allSettled([
+      const [playsResult, gameResult, lineupsResult] = await Promise.allSettled([
         getLiveStats(selectedGameId, "plays"),
         getLiveStats(selectedGameId, "game"),
+        getLiveStats(selectedGameId, "lineups"),
       ]);
 
       if (playsResult.status === "fulfilled") {
@@ -156,6 +159,12 @@ app.get("/api/usm/live", async (req, res, next) => {
         gameSections = gameResult.value.sections;
       } else {
         gameError = gameResult.reason instanceof Error ? gameResult.reason.message : String(gameResult.reason);
+      }
+
+      if (lineupsResult.status === "fulfilled") {
+        lineupsSections = lineupsResult.value.sections;
+      } else {
+        lineupsError = lineupsResult.reason instanceof Error ? lineupsResult.reason.message : String(lineupsResult.reason);
       }
     }
 
@@ -201,6 +210,8 @@ app.get("/api/usm/live", async (req, res, next) => {
         playsError,
         gameSections,
         gameError,
+        lineupsSections,
+        lineupsError,
       },
     });
   } catch (error) {
