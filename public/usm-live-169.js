@@ -1379,14 +1379,14 @@ function resolvePitcherProfile(team, activePitcherName, summary) {
     : activeName || pitchingName || rosterName || "";
   const displayName = (formatFirstLastName(fullName) || "-").toUpperCase();
   const pitchCountFromSituation = summary?.situation?.pitcher?.pitchCount ?? null;
-  const pitchCountFromBox = parseFiniteInt(boxPitching?.statMap?.PC);
   const pitchCountFromTable = parseFiniteInt(pitching?.statMap?.PC);
+  const pitchCountFromBox = parseFiniteInt(boxPitching?.statMap?.PC);
   const pitchCount =
     pitchCountFromSituation !== null && pitchCountFromSituation !== undefined
       ? pitchCountFromSituation
-      : pitchCountFromBox ?? pitchCountFromTable;
+      : pitchCountFromTable ?? pitchCountFromBox;
 
-  const statsSource = boxPitching?.statMap || pitching?.statMap || {};
+  const statsSource = pitching?.statMap || boxPitching?.statMap || {};
 
   const statMap = {
     ...pickPitchingStats(statsSource),
