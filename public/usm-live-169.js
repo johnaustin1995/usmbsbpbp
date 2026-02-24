@@ -555,7 +555,7 @@ function renderLineScore(lineScore, selectedGame) {
 
     inningNumbers.forEach((inning) => {
       const inningValue = row.innings?.find((entry) => entry.inning === inning)?.value;
-      tr.append(buildValueCell(formatLineCell(inningValue)));
+      tr.append(buildValueCell(formatInningCell(inningValue)));
     });
 
     const totals = row.totals || {};
@@ -2168,14 +2168,14 @@ function parseCountFromPlay(text) {
 }
 
 function getLineInningHeaders(lineScore) {
+  const innings = new Set(Array.from({ length: 9 }, (_, index) => index + 1));
   if (!lineScore || !Array.isArray(lineScore.rows)) {
-    return [];
+    return [...innings];
   }
 
-  const innings = new Set();
   lineScore.rows.forEach((row) => {
     (row.innings || []).forEach((entry) => {
-      if (Number.isFinite(entry.inning)) {
+      if (Number.isFinite(entry.inning) && entry.inning > 9) {
         innings.add(entry.inning);
       }
     });
@@ -2229,6 +2229,14 @@ function formatHalfLabel(half, inning) {
 function formatLineCell(value) {
   if (value === null || value === undefined || value === "") {
     return "-";
+  }
+
+  return String(value);
+}
+
+function formatInningCell(value) {
+  if (value === null || value === undefined || value === "") {
+    return "";
   }
 
   return String(value);
