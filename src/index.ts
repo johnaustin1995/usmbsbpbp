@@ -119,15 +119,21 @@ app.get("/api/usm/live", async (req, res, next) => {
     let playsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let gameSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let lineupsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
+    let awaySeasonSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
+    let homeSeasonSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let playsError: string | null = null;
     let gameError: string | null = null;
     let lineupsError: string | null = null;
+    let awaySeasonError: string | null = null;
+    let homeSeasonError: string | null = null;
 
     if (summary) {
-      const [playsResult, gameResult, lineupsResult] = await Promise.allSettled([
+      const [playsResult, gameResult, lineupsResult, awaySeasonResult, homeSeasonResult] = await Promise.allSettled([
         getLiveStats(selectedGameId, "plays"),
         getLiveStats(selectedGameId, "game"),
         getLiveStats(selectedGameId, "lineups"),
+        getLiveStats(selectedGameId, "away_season"),
+        getLiveStats(selectedGameId, "home_season"),
       ]);
 
       if (playsResult.status === "fulfilled") {
@@ -165,6 +171,20 @@ app.get("/api/usm/live", async (req, res, next) => {
         lineupsSections = lineupsResult.value.sections;
       } else {
         lineupsError = lineupsResult.reason instanceof Error ? lineupsResult.reason.message : String(lineupsResult.reason);
+      }
+
+      if (awaySeasonResult.status === "fulfilled") {
+        awaySeasonSections = awaySeasonResult.value.sections;
+      } else {
+        awaySeasonError =
+          awaySeasonResult.reason instanceof Error ? awaySeasonResult.reason.message : String(awaySeasonResult.reason);
+      }
+
+      if (homeSeasonResult.status === "fulfilled") {
+        homeSeasonSections = homeSeasonResult.value.sections;
+      } else {
+        homeSeasonError =
+          homeSeasonResult.reason instanceof Error ? homeSeasonResult.reason.message : String(homeSeasonResult.reason);
       }
     }
 
@@ -212,6 +232,10 @@ app.get("/api/usm/live", async (req, res, next) => {
         gameError,
         lineupsSections,
         lineupsError,
+        awaySeasonSections,
+        awaySeasonError,
+        homeSeasonSections,
+        homeSeasonError,
       },
     });
   } catch (error) {

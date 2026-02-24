@@ -159,7 +159,16 @@ function renderDashboard(payload, context) {
   const plays = Array.isArray(payload?.live?.plays) ? payload.live.plays : [];
 
   const lineupsSections = Array.isArray(payload?.live?.lineupsSections) ? payload.live.lineupsSections : [];
-  const gameData = parseGameSections(gameSections, lineupsSections, summary, context.awayTeam, context.homeTeam);
+  const awaySeasonSections = Array.isArray(payload?.live?.awaySeasonSections) ? payload.live.awaySeasonSections : [];
+  const homeSeasonSections = Array.isArray(payload?.live?.homeSeasonSections) ? payload.live.homeSeasonSections : [];
+  const gameData = parseGameSections(
+    gameSections,
+    lineupsSections,
+    { away: awaySeasonSections, home: homeSeasonSections },
+    summary,
+    context.awayTeam,
+    context.homeTeam
+  );
   const lineScore = summary?.lineScore || gameData.lineScore || null;
 
   const inningContext = getInningContext(summary, plays);
@@ -176,6 +185,7 @@ function renderDashboard(payload, context) {
       lineup: enrichLineupWithRoster(gameData.lineups.away, context.awayRoster),
       pitching: gameData.pitching.away,
       leaders: gameData.offensiveLeaders.away,
+      seasonBatting: gameData.seasonBatting.away,
     },
     home: {
       side: "home",
@@ -186,6 +196,7 @@ function renderDashboard(payload, context) {
       lineup: enrichLineupWithRoster(gameData.lineups.home, context.homeRoster),
       pitching: gameData.pitching.home,
       leaders: gameData.offensiveLeaders.home,
+      seasonBatting: gameData.seasonBatting.home,
     },
   };
 
@@ -330,18 +341,27 @@ function renderBatterCard(profile) {
 }
 
 function renderBatterStats(profile, team) {
+  const season = resolveSeasonBatterStats(team, profile);
   const row = profile.lineupEntry;
   const today = parseTodayLine(row?.today || "");
   const highlights = (team.leaders.get(normalizePersonName(profile.fullName || profile.displayName)) || "").toUpperCase();
 
   const headers = ["AB", "H", "HR", "RBI", "AVG"];
-  const values = [
-    today.ab !== null ? String(today.ab) : "-",
-    today.h !== null ? String(today.h) : "-",
-    String(extractStatFromHighlights(highlights, "HR") ?? 0),
-    String(extractStatFromHighlights(highlights, "RBI") ?? 0),
-    row?.avg || "-",
-  ];
+  const values = season
+    ? [
+        formatSeasonStatValue(season.ab),
+        formatSeasonStatValue(season.h),
+        formatSeasonStatValue(season.hr),
+        formatSeasonStatValue(season.rbi),
+        formatSeasonStatValue(season.avg),
+      ]
+    : [
+        today.ab !== null ? String(today.ab) : "-",
+        today.h !== null ? String(today.h) : "-",
+        String(extractStatFromHighlights(highlights, "HR") ?? 0),
+        String(extractStatFromHighlights(highlights, "RBI") ?? 0),
+        row?.avg || "-",
+      ];
 
   elements.batterStats.innerHTML = "";
   const thead = document.createElement("thead");
@@ -717,7 +737,7 @@ function parseSubstitutionEnteringName(text) {
   return null;
 }
 
-function parseGameSections(sections, lineupsSections, summary, awayTeamName, homeTeamName) {
+function parseGameSections(sections, lineupsSections, seasonSections, summary, awayTeamName, homeTeamName) {
   const result = {
     lineScore: null,
     pitching: {
@@ -729,6 +749,10 @@ function parseGameSections(sections, lineupsSections, summary, awayTeamName, hom
       home: [],
     },
     offensiveLeaders: {
+      away: new Map(),
+      home: new Map(),
+    },
+    seasonBatting: {
       away: new Map(),
       home: new Map(),
     },
@@ -781,6 +805,32 @@ function parseGameSections(sections, lineupsSections, summary, awayTeamName, hom
 
     result.lineups[side] = parseLineupSection(section);
   });
+
+  const awaySeasonSource = Array.isArray(seasonSections?.away) && seasonSections.away.length > 0 ? seasonSections.away : null;
+  const homeSeasonSource = Array.isArray(seasonSections?.home) && seasonSections.home.length > 0 ? seasonSections.home : null;
+
+  if (awaySeasonSource) {
+    result.seasonBatting.away = parseSeasonBattingSource(awaySeasonSource);
+  }
+  if (homeSeasonSource) {
+    result.seasonBatting.home = parseSeasonBattingSource(homeSeasonSource);
+  }
+
+  if ((!awaySeasonSource || !homeSeasonSource) && (result.seasonBatting.away.size === 0 || result.seasonBatting.home.size === 0)) {
+    sections.forEach((section) => {
+      const title = String(section?.title || "");
+      if (!/season team stats/i.test(title)) {
+        return;
+      }
+
+      const side = resolveSectionSide(title, { awayKey, homeKey, awayCode, homeCode });
+      if (!side || result.seasonBatting[side].size > 0) {
+        return;
+      }
+
+      result.seasonBatting[side] = parseSeasonBattingSection(section);
+    });
+  }
 
   return result;
 }
@@ -1009,6 +1059,114 @@ function parseOffensiveLeaders(section) {
   });
 
   return map;
+}
+
+function parseSeasonBattingSource(sections) {
+  const map = new Map();
+  if (!Array.isArray(sections)) {
+    return map;
+  }
+
+  sections.forEach((section) => {
+    if (!/season team stats/i.test(String(section?.title || ""))) {
+      return;
+    }
+
+    const parsed = parseSeasonBattingSection(section);
+    parsed.forEach((value, key) => {
+      if (!map.has(key)) {
+        map.set(key, value);
+      }
+    });
+  });
+
+  return map;
+}
+
+function parseSeasonBattingSection(section) {
+  const map = new Map();
+  const table = section?.tables?.[0];
+  if (!table || !Array.isArray(table.rows)) {
+    return map;
+  }
+
+  table.rows.forEach((row) => {
+    const number = normalizeCell(readLineupCellByHeader(table, row, /^#$/i) ?? row?.cells?.[0]);
+    const rawPlayer =
+      normalizeCell(readLineupCellByHeader(table, row, /^player$/i) ?? row?.values?.player ?? row?.cells?.[1]) || null;
+    if (!rawPlayer) {
+      return;
+    }
+
+    const normalizedPlayer = normalizePersonName(rawPlayer);
+    const lastName = toLastName(normalizedPlayer || rawPlayer);
+    const entry = {
+      player: normalizedPlayer || rawPlayer,
+      number,
+      ab: readLineupCellByHeader(table, row, /^ab$/i) ?? row?.values?.ab ?? null,
+      h: readLineupCellByHeader(table, row, /^h$/i) ?? row?.values?.h ?? null,
+      hr: readLineupCellByHeader(table, row, /^hr$/i) ?? row?.values?.hr ?? null,
+      rbi: readLineupCellByHeader(table, row, /^rbi$/i) ?? row?.values?.rbi ?? null,
+      avg: readLineupCellByHeader(table, row, /^avg$/i) ?? row?.values?.avg ?? null,
+    };
+
+    if (number) {
+      map.set(`#${number}`, entry);
+    }
+    if (normalizedPlayer) {
+      map.set(`name:${normalizedPlayer}`, entry);
+    }
+    if (lastName) {
+      map.set(`last:${lastName}`, entry);
+    }
+  });
+
+  return map;
+}
+
+function resolveSeasonBatterStats(team, profile) {
+  const statsMap = team?.seasonBatting;
+  if (!(statsMap instanceof Map) || statsMap.size === 0) {
+    return null;
+  }
+
+  const number = normalizeCell(profile?.number || profile?.lineupEntry?.number);
+  const fullName = normalizePersonName(profile?.fullName || profile?.displayName || "");
+  const lineupName = normalizePersonName(profile?.lineupEntry?.fullName || profile?.lineupEntry?.name || "");
+
+  const keys = [];
+  if (number) {
+    keys.push(`#${number}`);
+  }
+  if (fullName) {
+    keys.push(`name:${fullName}`);
+    const last = toLastName(fullName);
+    if (last) {
+      keys.push(`last:${last}`);
+    }
+  }
+  if (lineupName && lineupName !== fullName) {
+    keys.push(`name:${lineupName}`);
+    const lineupLast = toLastName(lineupName);
+    if (lineupLast) {
+      keys.push(`last:${lineupLast}`);
+    }
+  }
+
+  for (const key of keys) {
+    if (statsMap.has(key)) {
+      return statsMap.get(key);
+    }
+  }
+
+  return null;
+}
+
+function formatSeasonStatValue(value) {
+  if (value === null || value === undefined || value === "") {
+    return "-";
+  }
+  return String(value);
 }
 
 function enrichLineupWithRoster(lineup, roster) {
