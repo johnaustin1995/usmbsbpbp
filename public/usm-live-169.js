@@ -9,6 +9,7 @@ const state = {
 };
 
 const elements = {
+  bodyGrid: document.querySelector(".body-grid"),
   awayLogo: document.getElementById("away-logo"),
   homeLogo: document.getElementById("home-logo"),
   awayScore: document.getElementById("away-score"),
@@ -209,6 +210,8 @@ function renderDashboard(payload, context) {
   const pitcherProfile = resolvePitcherProfile(pitcherTeam, activePitcherName, summary);
   const batterProfile = resolveBatterProfile(batterTeam, batterEntry, activeBatterName);
 
+  applySideColumnSwap(battingSide);
+
   renderTopScoreboard({
     away: teamPack.away,
     home: teamPack.home,
@@ -231,6 +234,15 @@ function renderDashboard(payload, context) {
   renderFieldAlignment(pitcherTeam, pitcherProfile);
   renderLineScore(lineScore, selectedGame);
   renderTimeline(plays, teamPack);
+}
+
+function applySideColumnSwap(battingSide) {
+  if (!elements.bodyGrid) {
+    return;
+  }
+
+  const shouldSwap = battingSide === "away";
+  elements.bodyGrid.classList.toggle("swap-side-panels", shouldSwap);
 }
 
 function renderTopScoreboard(input) {

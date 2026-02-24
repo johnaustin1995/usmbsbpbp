@@ -220,6 +220,7 @@ body {
 .body-grid {
   display: grid;
   grid-template-columns: 33% 34% 33%;
+  grid-template-areas: "left center right";
   min-height: 0;
   background: var(--body);
 }
@@ -235,6 +236,22 @@ body {
 .right-column {
   padding-left: 30px;
   padding-right: 30px;
+}
+
+.left-column {
+  grid-area: left;
+}
+
+.center-column {
+  grid-area: center;
+}
+
+.right-column {
+  grid-area: right;
+}
+
+.body-grid.swap-side-panels {
+  grid-template-areas: "right center left";
 }
 
 .column-title {
