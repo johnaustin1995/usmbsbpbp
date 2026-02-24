@@ -431,6 +431,8 @@ function parseLiveSituation(
     return null;
   }
 
+  const bases = parseRunnersOnBaseCard($, baseMask) ?? decodeBaseOccupancy(baseMask);
+
   return {
     inningText,
     half,
@@ -440,18 +442,118 @@ function parseLiveSituation(
       strikes,
     },
     outs,
-    bases: {
-      first: baseMask !== null ? (baseMask & 1) === 1 : false,
-      second: baseMask !== null ? (baseMask & 2) === 2 : false,
-      third: baseMask !== null ? (baseMask & 4) === 4 : false,
-      mask: baseMask,
-    },
+    bases,
     battingTeam,
     batter,
     pitcher: {
       name: pitcherName,
       pitchCount: pitcherPitchCount,
     },
+  };
+}
+
+function decodeBaseOccupancy(baseMask: number | null): LiveSituation["bases"] {
+  if (baseMask === null) {
+    return {
+      first: false,
+      second: false,
+      third: false,
+      mask: null,
+      firstRunner: null,
+      secondRunner: null,
+      thirdRunner: null,
+    };
+  }
+
+  // StatBroadcast renders base state as an enum (0-7), not a bitmask.
+  // Observed mapping:
+  // 0 = empty, 1 = 1B, 2 = 2B, 3 = 3B, 4 = 1B+2B, 5 = 2B+3B, 6 = 1B+3B, 7 = loaded.
+  const mappedByIcon: Record<number, { first: boolean; second: boolean; third: boolean }> = {
+    0: { first: false, second: false, third: false },
+    1: { first: true, second: false, third: false },
+    2: { first: false, second: true, third: false },
+    3: { first: false, second: false, third: true },
+    4: { first: true, second: true, third: false },
+    5: { first: false, second: true, third: true },
+    6: { first: true, second: false, third: true },
+    7: { first: true, second: true, third: true },
+  };
+
+  const fromEnum = mappedByIcon[baseMask];
+  if (fromEnum) {
+    return {
+      ...fromEnum,
+      mask: baseMask,
+      firstRunner: null,
+      secondRunner: null,
+      thirdRunner: null,
+    };
+  }
+
+  return {
+    first: (baseMask & 1) === 1,
+    second: (baseMask & 2) === 2,
+    third: (baseMask & 4) === 4,
+    mask: baseMask,
+    firstRunner: null,
+    secondRunner: null,
+    thirdRunner: null,
+  };
+}
+
+function parseRunnersOnBaseCard(
+  $: ReturnType<typeof load>,
+  baseMask: number | null
+): LiveSituation["bases"] | null {
+  const runnersCard = $(".card")
+    .filter((_: number, node: Element) =>
+      /^runners on base$/i.test(cleanText($(node).find(".card-header").first().text()))
+    )
+    .first();
+
+  if (runnersCard.length === 0) {
+    return null;
+  }
+
+  let first = false;
+  let second = false;
+  let third = false;
+  let firstRunner: string | null = null;
+  let secondRunner: string | null = null;
+  let thirdRunner: string | null = null;
+
+  runnersCard.find("tbody tr").each((_: number, row: Element) => {
+    const baseLabel = cleanText($(row).find("td").first().text()).toUpperCase();
+    const runnerCell = cleanText($(row).find("td").eq(1).text());
+    const runnerName = cleanPlayerName(runnerCell);
+    if (baseLabel === "1B") {
+      first = true;
+      firstRunner = runnerName;
+      return;
+    }
+    if (baseLabel === "2B") {
+      second = true;
+      secondRunner = runnerName;
+      return;
+    }
+    if (baseLabel === "3B") {
+      third = true;
+      thirdRunner = runnerName;
+    }
+  });
+
+  if (!first && !second && !third) {
+    return null;
+  }
+
+  return {
+    first,
+    second,
+    third,
+    mask: baseMask,
+    firstRunner,
+    secondRunner,
+    thirdRunner,
   };
 }
 

@@ -137,6 +137,9 @@ export interface LiveBases {
   second: boolean;
   third: boolean;
   mask: number | null;
+  firstRunner?: string | null;
+  secondRunner?: string | null;
+  thirdRunner?: string | null;
 }
 
 export interface LiveBatter {
