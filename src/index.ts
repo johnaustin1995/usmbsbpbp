@@ -24,6 +24,7 @@ const publicDir = path.resolve(__dirname, "../public");
 const teamsDataDir = path.resolve(__dirname, "../data/tmp/teams");
 const teamsFileCache = new Map<string, { mtimeMs: number; payload: D1TeamsDatabasePayload; loadedAt: string }>();
 const usmSchedulePath = resolveUsmSchedulePath(process.env);
+const rosterDataDir = path.resolve(process.cwd(), "data/rosters");
 const usmScheduleCache = new Map<
   string,
   {
@@ -32,6 +33,7 @@ const usmScheduleCache = new Map<
     payload: UsmSchedulePayload;
   }
 >();
+const rosterFileCache = new Map<string, { mtimeMs: number; loadedAt: string; payload: RosterPayload }>();
 
 app.use(express.json());
 app.use(express.static(publicDir));
@@ -200,6 +202,66 @@ app.get("/api/usm/live", async (req, res, next) => {
         gameSections,
         gameError,
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/roster", async (req, res, next) => {
+  try {
+    const teamQuery = cleanQueryString(req.query.team);
+    const sportQuery = cleanQueryString(req.query.sport) ?? "baseball";
+    const seasonQuery = cleanQueryString(req.query.season);
+    const requestedFile = safeFileName(req.query.file);
+
+    if (requestedFile) {
+      const fullPath = path.resolve(rosterDataDir, requestedFile);
+      if (!fullPath.startsWith(rosterDataDir)) {
+        res.status(400).json({ error: "Invalid roster file path." });
+        return;
+      }
+
+      const loaded = await loadRosterPayload(fullPath);
+      res.json({
+        file: path.basename(fullPath),
+        loadedAt: loaded.loadedAt,
+        roster: loaded.payload,
+      });
+      return;
+    }
+
+    if (!teamQuery) {
+      res.status(400).json({
+        error: "Missing required query parameter: team",
+      });
+      return;
+    }
+
+    const candidates = await loadRosterCandidates();
+    const best = findBestRosterMatch(candidates, {
+      team: teamQuery,
+      sport: sportQuery,
+      season: seasonQuery,
+    });
+
+    if (!best) {
+      res.status(404).json({
+        error: `No roster file matched team "${teamQuery}".`,
+        search: {
+          team: teamQuery,
+          sport: sportQuery,
+          season: seasonQuery,
+        },
+      });
+      return;
+    }
+
+    res.json({
+      file: path.basename(best.path),
+      loadedAt: best.loadedAt,
+      score: best.score,
+      roster: best.payload,
     });
   } catch (error) {
     next(error);
@@ -670,6 +732,10 @@ function normalizeLookupName(value: string): string {
     .trim();
 }
 
+function toSlug(value: string): string {
+  return normalizeLookupName(value).replace(/\s+/g, "-");
+}
+
 interface UsmScheduleGameRaw {
   date?: string;
   gameId?: number | null;
@@ -708,6 +774,34 @@ interface LoadedUsmSchedulePayload {
   payload: UsmSchedulePayload;
 }
 
+interface RosterPayload {
+  sourceUrl?: string;
+  fetchedAt?: string;
+  pageTitle?: string | null;
+  teamName?: string | null;
+  sport?: string | null;
+  season?: string | null;
+  playerCount?: number;
+  players?: Array<Record<string, unknown>>;
+  [key: string]: unknown;
+}
+
+interface LoadedRosterPayload {
+  path: string;
+  loadedAt: string;
+  payload: RosterPayload;
+}
+
+interface FindRosterMatchOptions {
+  team: string;
+  sport: string;
+  season: string | null;
+}
+
+interface RankedRosterMatch extends LoadedRosterPayload {
+  score: number;
+}
+
 async function loadUsmSchedulePayload(): Promise<LoadedUsmSchedulePayload> {
   const stats = await fs.stat(usmSchedulePath);
   const cached = usmScheduleCache.get(usmSchedulePath);
@@ -737,6 +831,118 @@ async function loadUsmSchedulePayload(): Promise<LoadedUsmSchedulePayload> {
     loadedAt,
     payload: parsed,
   };
+}
+
+async function loadRosterCandidates(): Promise<LoadedRosterPayload[]> {
+  let directoryEntries: string[];
+  try {
+    directoryEntries = await fs.readdir(rosterDataDir);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException)?.code === "ENOENT") {
+      return [];
+    }
+    throw error;
+  }
+
+  const jsonFiles = directoryEntries
+    .filter((entry) => entry.toLowerCase().endsWith(".json"))
+    .map((entry) => path.resolve(rosterDataDir, entry));
+
+  const loaded = await Promise.all(
+    jsonFiles.map(async (filePath) => {
+      try {
+        return await loadRosterPayload(filePath);
+      } catch {
+        return null;
+      }
+    })
+  );
+
+  return loaded.filter((entry): entry is LoadedRosterPayload => entry !== null);
+}
+
+async function loadRosterPayload(filePath: string): Promise<LoadedRosterPayload> {
+  const stats = await fs.stat(filePath);
+  const cached = rosterFileCache.get(filePath);
+  if (cached && cached.mtimeMs === stats.mtimeMs) {
+    return {
+      path: filePath,
+      loadedAt: cached.loadedAt,
+      payload: cached.payload,
+    };
+  }
+
+  const raw = await fs.readFile(filePath, "utf8");
+  const parsed = JSON.parse(raw) as RosterPayload;
+  if (!Array.isArray(parsed?.players)) {
+    throw new Error(`Invalid roster payload in ${filePath}`);
+  }
+
+  const loadedAt = new Date().toISOString();
+  rosterFileCache.set(filePath, {
+    mtimeMs: stats.mtimeMs,
+    loadedAt,
+    payload: parsed,
+  });
+
+  return {
+    path: filePath,
+    loadedAt,
+    payload: parsed,
+  };
+}
+
+function findBestRosterMatch(
+  candidates: LoadedRosterPayload[],
+  options: FindRosterMatchOptions
+): RankedRosterMatch | null {
+  const normalizedTeam = normalizeLookupName(options.team);
+  const normalizedSport = normalizeLookupName(options.sport);
+  const normalizedSeason = options.season ? options.season.trim() : null;
+  const teamSlug = toSlug(options.team);
+
+  let best: RankedRosterMatch | null = null;
+
+  for (const candidate of candidates) {
+    const fileName = path.basename(candidate.path).toLowerCase();
+    const candidateTeamName = normalizeLookupName(String(candidate.payload.teamName ?? ""));
+    const candidateSport = normalizeLookupName(String(candidate.payload.sport ?? ""));
+    const candidateSeason = cleanQueryString(candidate.payload.season);
+
+    let score = 0;
+
+    if (candidateTeamName && normalizedTeam === candidateTeamName) {
+      score += 120;
+    } else if (candidateTeamName && (candidateTeamName.includes(normalizedTeam) || normalizedTeam.includes(candidateTeamName))) {
+      score += 80;
+    } else if (fileName.includes(teamSlug)) {
+      score += 45;
+    }
+
+    if (candidateSport && normalizedSport === candidateSport) {
+      score += 30;
+    } else if (candidateSport && (candidateSport.includes(normalizedSport) || normalizedSport.includes(candidateSport))) {
+      score += 18;
+    } else if (fileName.includes(toSlug(options.sport))) {
+      score += 8;
+    }
+
+    if (normalizedSeason && candidateSeason === normalizedSeason) {
+      score += 20;
+    } else if (normalizedSeason && fileName.includes(normalizedSeason)) {
+      score += 10;
+    }
+
+    if (score <= 0) {
+      continue;
+    }
+
+    if (!best || score > best.score) {
+      best = { ...candidate, score };
+    }
+  }
+
+  return best;
 }
 
 function normalizeUsmScheduleGames(games: UsmScheduleGameRaw[]): UsmScheduleGameNormalized[] {
