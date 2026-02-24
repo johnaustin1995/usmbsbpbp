@@ -159,11 +159,14 @@ function renderDashboard(payload, context) {
   const plays = Array.isArray(payload?.live?.plays) ? payload.live.plays : [];
 
   const lineupsSections = Array.isArray(payload?.live?.lineupsSections) ? payload.live.lineupsSections : [];
+  const awayBoxSections = Array.isArray(payload?.live?.awayBoxSections) ? payload.live.awayBoxSections : [];
+  const homeBoxSections = Array.isArray(payload?.live?.homeBoxSections) ? payload.live.homeBoxSections : [];
   const awaySeasonSections = Array.isArray(payload?.live?.awaySeasonSections) ? payload.live.awaySeasonSections : [];
   const homeSeasonSections = Array.isArray(payload?.live?.homeSeasonSections) ? payload.live.homeSeasonSections : [];
   const gameData = parseGameSections(
     gameSections,
     lineupsSections,
+    { away: awayBoxSections, home: homeBoxSections },
     { away: awaySeasonSections, home: homeSeasonSections },
     summary,
     context.awayTeam,
@@ -184,6 +187,7 @@ function renderDashboard(payload, context) {
       branding: lookupBranding(context.awayTeam),
       lineup: enrichLineupWithRoster(gameData.lineups.away, context.awayRoster),
       pitching: gameData.pitching.away,
+      boxPitching: gameData.boxPitching.away,
       leaders: gameData.offensiveLeaders.away,
       seasonBatting: gameData.seasonBatting.away,
     },
@@ -195,6 +199,7 @@ function renderDashboard(payload, context) {
       branding: lookupBranding(context.homeTeam),
       lineup: enrichLineupWithRoster(gameData.lineups.home, context.homeRoster),
       pitching: gameData.pitching.home,
+      boxPitching: gameData.boxPitching.home,
       leaders: gameData.offensiveLeaders.home,
       seasonBatting: gameData.seasonBatting.home,
     },
@@ -737,7 +742,7 @@ function parseSubstitutionEnteringName(text) {
   return null;
 }
 
-function parseGameSections(sections, lineupsSections, seasonSections, summary, awayTeamName, homeTeamName) {
+function parseGameSections(sections, lineupsSections, boxSections, seasonSections, summary, awayTeamName, homeTeamName) {
   const result = {
     lineScore: null,
     pitching: {
@@ -749,6 +754,10 @@ function parseGameSections(sections, lineupsSections, seasonSections, summary, a
       home: [],
     },
     offensiveLeaders: {
+      away: new Map(),
+      home: new Map(),
+    },
+    boxPitching: {
       away: new Map(),
       home: new Map(),
     },
@@ -805,6 +814,31 @@ function parseGameSections(sections, lineupsSections, seasonSections, summary, a
 
     result.lineups[side] = parseLineupSection(section);
   });
+
+  const awayBoxSource = Array.isArray(boxSections?.away) && boxSections.away.length > 0 ? boxSections.away : null;
+  const homeBoxSource = Array.isArray(boxSections?.home) && boxSections.home.length > 0 ? boxSections.home : null;
+  if (awayBoxSource) {
+    result.boxPitching.away = parseBoxPitchingSource(awayBoxSource);
+  }
+  if (homeBoxSource) {
+    result.boxPitching.home = parseBoxPitchingSource(homeBoxSource);
+  }
+
+  if ((!awayBoxSource || !homeBoxSource) && (result.boxPitching.away.size === 0 || result.boxPitching.home.size === 0)) {
+    sections.forEach((section) => {
+      const title = String(section?.title || "");
+      if (!/pitching stats/i.test(title)) {
+        return;
+      }
+
+      const side = resolveSectionSide(title, { awayKey, homeKey, awayCode, homeCode });
+      if (!side || result.boxPitching[side].size > 0) {
+        return;
+      }
+
+      result.boxPitching[side] = parseBoxPitchingSection(section);
+    });
+  }
 
   const awaySeasonSource = Array.isArray(seasonSections?.away) && seasonSections.away.length > 0 ? seasonSections.away : null;
   const homeSeasonSource = Array.isArray(seasonSections?.home) && seasonSections.home.length > 0 ? seasonSections.home : null;
@@ -1061,6 +1095,87 @@ function parseOffensiveLeaders(section) {
   return map;
 }
 
+function parseBoxPitchingSource(sections) {
+  const map = new Map();
+  if (!Array.isArray(sections)) {
+    return map;
+  }
+
+  sections.forEach((section) => {
+    if (!/pitching stats/i.test(String(section?.title || ""))) {
+      return;
+    }
+
+    const parsed = parseBoxPitchingSection(section);
+    parsed.forEach((value, key) => {
+      if (!map.has(key)) {
+        map.set(key, value);
+      }
+    });
+  });
+
+  return map;
+}
+
+function parseBoxPitchingSection(section) {
+  const map = new Map();
+  const table = section?.tables?.[0];
+  if (!table || !Array.isArray(table.rows)) {
+    return map;
+  }
+
+  table.rows.forEach((row) => {
+    const rawPlayer =
+      normalizeCell(readLineupCellByHeader(table, row, /^player$/i) ?? row?.values?.player ?? row?.cells?.[1]) || null;
+    if (!rawPlayer) {
+      return;
+    }
+
+    if (/^totals?$/i.test(rawPlayer)) {
+      return;
+    }
+
+    const number = normalizeCell(readLineupCellByHeader(table, row, /^#$/i) ?? row?.cells?.[0]);
+    const normalizedPlayer = normalizePersonName(rawPlayer);
+    const lastName = toLastName(normalizedPlayer || rawPlayer);
+    const statMap = buildPitchingRowStatMap(table, row);
+
+    const entry = {
+      player: normalizedPlayer || rawPlayer,
+      number,
+      statMap,
+    };
+
+    if (number) {
+      map.set(`#${number}`, entry);
+    }
+    if (normalizedPlayer) {
+      map.set(`name:${normalizedPlayer}`, entry);
+    }
+    if (lastName) {
+      map.set(`last:${lastName}`, entry);
+    }
+  });
+
+  return map;
+}
+
+function buildPitchingRowStatMap(table, row) {
+  const headers = Array.isArray(table?.headers) ? table.headers : [];
+  const cells = alignLineupRowCells(headers, Array.isArray(row?.cells) ? row.cells : []);
+  const statMap = {};
+  headers.forEach((header, index) => {
+    const key = String(header || "")
+      .trim()
+      .toUpperCase();
+    if (!key || key === "#" || key === "PLAYER" || key === "DEC") {
+      return;
+    }
+    statMap[key] = cells[index] ?? null;
+  });
+  return statMap;
+}
+
 function parseSeasonBattingSource(sections) {
   const map = new Map();
   if (!Array.isArray(sections)) {
@@ -1251,6 +1366,12 @@ function resolvePitcherProfile(team, activePitcherName, summary) {
   const activeName = normalizePersonName(activePitcherName);
   const pitchingName = normalizePersonName(pitching?.fullName);
   const rosterName = normalizePersonName(rosterPlayer?.name);
+  const boxPitching = resolveBoxPitcherStats(team, {
+    activeName: activePitcherName,
+    pitchingName: pitching?.fullName,
+    rosterName: rosterPlayer?.name,
+    number: rosterPlayer?.number,
+  });
   const shouldPreferRosterName = Boolean(rosterName && (!activeName || isSingleTokenName(activeName)));
 
   const fullName = shouldPreferRosterName
@@ -1258,16 +1379,19 @@ function resolvePitcherProfile(team, activePitcherName, summary) {
     : activeName || pitchingName || rosterName || "";
   const displayName = (formatFirstLastName(fullName) || "-").toUpperCase();
   const pitchCountFromSituation = summary?.situation?.pitcher?.pitchCount ?? null;
+  const pitchCountFromBox = parseFiniteInt(boxPitching?.statMap?.PC);
   const pitchCountFromTable = parseFiniteInt(pitching?.statMap?.PC);
   const pitchCount =
     pitchCountFromSituation !== null && pitchCountFromSituation !== undefined
       ? pitchCountFromSituation
-      : pitchCountFromTable;
+      : pitchCountFromBox ?? pitchCountFromTable;
+
+  const statsSource = boxPitching?.statMap || pitching?.statMap || {};
 
   const statMap = {
-    ...pickPitchingStats(pitching?.statMap || {}),
+    ...pickPitchingStats(statsSource),
     PC: pitchCount ?? "--",
-    ERA: pitching?.statMap?.ERA ?? pitching?.era ?? null,
+    ERA: statsSource.ERA ?? pitching?.era ?? null,
   };
 
   return {
@@ -1283,6 +1407,38 @@ function resolvePitcherProfile(team, activePitcherName, summary) {
     statMap,
     pitchCount,
   };
+}
+
+function resolveBoxPitcherStats(team, options = {}) {
+  const statsMap = team?.boxPitching;
+  if (!(statsMap instanceof Map) || statsMap.size === 0) {
+    return null;
+  }
+
+  const keys = [];
+  const number = normalizeCell(options.number);
+  if (number) {
+    keys.push(`#${number}`);
+  }
+
+  const names = [options.activeName, options.pitchingName, options.rosterName]
+    .map((name) => normalizePersonName(name))
+    .filter(Boolean);
+  names.forEach((name) => {
+    keys.push(`name:${name}`);
+    const last = toLastName(name);
+    if (last) {
+      keys.push(`last:${last}`);
+    }
+  });
+
+  for (const key of keys) {
+    if (statsMap.has(key)) {
+      return statsMap.get(key);
+    }
+  }
+
+  return null;
 }
 
 function resolveBatterProfile(team, lineupEntry, fallbackBatterName) {

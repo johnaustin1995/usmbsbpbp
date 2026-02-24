@@ -119,19 +119,33 @@ app.get("/api/usm/live", async (req, res, next) => {
     let playsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let gameSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let lineupsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
+    let awayBoxSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
+    let homeBoxSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let awaySeasonSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let homeSeasonSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
     let playsError: string | null = null;
     let gameError: string | null = null;
     let lineupsError: string | null = null;
+    let awayBoxError: string | null = null;
+    let homeBoxError: string | null = null;
     let awaySeasonError: string | null = null;
     let homeSeasonError: string | null = null;
 
     if (summary) {
-      const [playsResult, gameResult, lineupsResult, awaySeasonResult, homeSeasonResult] = await Promise.allSettled([
+      const [
+        playsResult,
+        gameResult,
+        lineupsResult,
+        awayBoxResult,
+        homeBoxResult,
+        awaySeasonResult,
+        homeSeasonResult,
+      ] = await Promise.allSettled([
         getLiveStats(selectedGameId, "plays"),
         getLiveStats(selectedGameId, "game"),
         getLiveStats(selectedGameId, "lineups"),
+        getLiveStats(selectedGameId, "away_box"),
+        getLiveStats(selectedGameId, "home_box"),
         getLiveStats(selectedGameId, "away_season"),
         getLiveStats(selectedGameId, "home_season"),
       ]);
@@ -171,6 +185,18 @@ app.get("/api/usm/live", async (req, res, next) => {
         lineupsSections = lineupsResult.value.sections;
       } else {
         lineupsError = lineupsResult.reason instanceof Error ? lineupsResult.reason.message : String(lineupsResult.reason);
+      }
+
+      if (awayBoxResult.status === "fulfilled") {
+        awayBoxSections = awayBoxResult.value.sections;
+      } else {
+        awayBoxError = awayBoxResult.reason instanceof Error ? awayBoxResult.reason.message : String(awayBoxResult.reason);
+      }
+
+      if (homeBoxResult.status === "fulfilled") {
+        homeBoxSections = homeBoxResult.value.sections;
+      } else {
+        homeBoxError = homeBoxResult.reason instanceof Error ? homeBoxResult.reason.message : String(homeBoxResult.reason);
       }
 
       if (awaySeasonResult.status === "fulfilled") {
@@ -232,6 +258,10 @@ app.get("/api/usm/live", async (req, res, next) => {
         gameError,
         lineupsSections,
         lineupsError,
+        awayBoxSections,
+        awayBoxError,
+        homeBoxSections,
+        homeBoxError,
         awaySeasonSections,
         awaySeasonError,
         homeSeasonSections,
