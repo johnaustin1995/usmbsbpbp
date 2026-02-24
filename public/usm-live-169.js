@@ -1019,8 +1019,15 @@ function resolvePitcherProfile(team, activePitcherName, summary) {
     lineupMatch?.rosterPlayer ||
     null;
 
-  const fullName = normalizePersonName(activePitcherName || pitching?.fullName || rosterPlayer?.name || "");
-  const displayName = formatFirstLastName(fullName) || "-";
+  const activeName = normalizePersonName(activePitcherName);
+  const pitchingName = normalizePersonName(pitching?.fullName);
+  const rosterName = normalizePersonName(rosterPlayer?.name);
+  const shouldPreferRosterName = Boolean(rosterName && (!activeName || isSingleTokenName(activeName)));
+
+  const fullName = shouldPreferRosterName
+    ? rosterName
+    : activeName || pitchingName || rosterName || "";
+  const displayName = (formatFirstLastName(fullName) || "-").toUpperCase();
   const pitchCountFromSituation = summary?.situation?.pitcher?.pitchCount ?? null;
   const pitchCountFromTable = parseFiniteInt(pitching?.statMap?.PC);
   const pitchCount =
@@ -1055,7 +1062,7 @@ function resolveBatterProfile(team, lineupEntry, fallbackBatterName) {
 
   return {
     fullName,
-    displayName: formatFirstLastName(fullName) || "-",
+    displayName: (formatFirstLastName(fullName) || "-").toUpperCase(),
     number: normalizeCell(rosterPlayer?.number) || normalizeCell(lineupEntry?.number) || "--",
     photoUrl: normalizeCell(rosterPlayer?.photoUrl) || EMPTY_PHOTO,
     metaLine: buildMetaLine(rosterPlayer, {
@@ -1726,6 +1733,10 @@ function formatFirstLastName(name) {
   }
 
   return `${parts[0]} ${parts[parts.length - 1]}`;
+}
+
+function isSingleTokenName(name) {
+  return String(name || "").trim().split(/\s+/).filter(Boolean).length === 1;
 }
 
 function formatInitialLast(name) {
