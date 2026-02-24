@@ -986,7 +986,7 @@ function mergePitchingTableStatMap(target, priorityMap, table) {
   const directPriority = hasTodayHeader ? 3 : hasThrowsHeader ? 2 : hasSeasonHeader ? 1 : 2;
   const directRow = table.rows[0] ?? null;
   if (directRow && headers.length > 0) {
-    const aligned = alignLineupRowCells(headers, Array.isArray(directRow.cells) ? directRow.cells : []);
+    const aligned = alignPitchingStatRowCells(headers, Array.isArray(directRow.cells) ? directRow.cells : []);
     headers.forEach((header, index) => {
       setPitchingStat(target, priorityMap, header, aligned[index] ?? null, directPriority);
     });
@@ -1009,11 +1009,16 @@ function mergePitchingTableStatMap(target, priorityMap, table) {
     }
 
     const rowPriority = rowType === "TODAY" ? 3 : rowType === "THROWS" ? 2 : 1;
-    const alignedValues = alignLineupRowCells(headerCells, nextRow.cells);
+    const alignedValues = alignPitchingStatRowCells(headerCells, nextRow.cells);
     headerCells.forEach((header, cellIndex) => {
       setPitchingStat(target, priorityMap, header, alignedValues[cellIndex] ?? null, rowPriority);
     });
   });
+
+  // Fallback normalization for formats where IP may appear under TODAY due source quirks.
+  if ((target.IP === null || target.IP === undefined || target.IP === "") && target.TODAY != null) {
+    target.IP = target.TODAY;
+  }
 }
 
 function toPitchingStatKey(value) {
@@ -1021,6 +1026,21 @@ function toPitchingStatKey(value) {
     .trim()
     .replace(/\s+/g, " ")
     .toUpperCase();
+}
+
+function alignPitchingStatRowCells(headers, cells) {
+  if (!Array.isArray(headers) || !Array.isArray(cells)) {
+    return [];
+  }
+
+  if (headers.length === cells.length + 1) {
+    const firstHeader = toPitchingStatKey(headers[0]);
+    if (firstHeader === "TODAY" || firstHeader === "SEASON") {
+      return [null, ...cells];
+    }
+  }
+
+  return alignLineupRowCells(headers, cells);
 }
 
 function setPitchingStat(target, priorityMap, key, value, priority) {
