@@ -333,6 +333,9 @@ function parseLineScoreRow(
       totals[key] = columns[key];
     }
   }
+  if (!("lob" in totals) && "l" in columns) {
+    totals.lob = columns.l;
+  }
 
   return {
     team: String(columns.team ?? ""),
@@ -1460,6 +1463,10 @@ function normalizeColumnKey(header: string, index: number): string {
 
   if (text === "r" || text === "h" || text === "e" || text === "lob") {
     return text;
+  }
+
+  if (text === "l") {
+    return "lob";
   }
 
   if (text.length === 0) {
