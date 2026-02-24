@@ -1,0 +1,1397 @@
+{
+  "sourceUrl": "https://astateredwolves.com/sports/baseball/roster",
+  "fetchedAt": "2026-02-24T21:46:02.525Z",
+  "pageTitle": "2026 Baseball Roster - Arkansas State University",
+  "teamName": "Arkansas State",
+  "sport": "Baseball",
+  "season": "2026",
+  "playerCount": 46,
+  "parser": {
+    "strategy": "profile-links",
+    "candidateRecords": 230,
+    "dedupedRecords": 46
+  },
+  "players": [
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/kaden-amundson/7909",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/kaden-amundson/7909",
+      "name": "Kaden Amundson",
+      "firstName": "Kaden",
+      "lastName": "Amundson",
+      "number": "1",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Amundson_Kaden.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "190",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Otsego, Minn.",
+      "from": "Otsego, Minn.",
+      "lastSchool": null,
+      "previousSchool": "Nicholls",
+      "previousSchools": [
+        "Nicholls"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Senior",
+        "Hometown": "Otsego, Minn.",
+        "Ht./Wt.": "5-10 / 190",
+        "Position": "Catcher",
+        "Previous School": "Nicholls"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/drew-gartman/7949",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/drew-gartman/7949",
+      "name": "Drew Gartman",
+      "firstName": "Drew",
+      "lastName": "Gartman",
+      "number": "2",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Gartman_Andrew.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Freshman",
+      "height": "6-3",
+      "weight": "175",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Jonesboro, Ark.",
+      "from": "Jonesboro, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Valley View HS",
+      "previousSchools": [
+        "Valley View HS"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Freshman",
+        "Hometown": "Jonesboro, Ark.",
+        "Ht./Wt.": "6-3 / 175",
+        "Position": "Infield",
+        "Previous School": "Valley View HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/jackson-illingworth/7961",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/jackson-illingworth/7961",
+      "name": "Jackson Illingworth",
+      "firstName": "Jackson",
+      "lastName": "Illingworth",
+      "number": "3",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Illingworth_Jackson.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Redshirt Senior",
+      "height": "6-1",
+      "weight": "208",
+      "bats": "L",
+      "throws": "R",
+      "hometown": "Marshall, Texas",
+      "from": "Marshall, Texas",
+      "lastSchool": null,
+      "previousSchool": "Cisco College",
+      "previousSchools": [
+        "Cisco College"
+      ],
+      "sourceFields": {
+        "B/T": "L/R",
+        "Class": "Redshirt Senior",
+        "Hometown": "Marshall, Texas",
+        "Ht./Wt.": "6-1 / 208",
+        "Position": "Outfield",
+        "Previous School": "Cisco College"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/joey-mclaughlin-iii/7964",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/joey-mclaughlin-iii/7964",
+      "name": "Joey Mclaughlin Iii",
+      "firstName": "Joey Mclaughlin",
+      "lastName": "Iii",
+      "number": "5",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/McLaughlin_Joey.jpg?width=80&quality=90",
+      "position": "Outfield/Infield",
+      "classYear": "Freshman",
+      "height": "6-1",
+      "weight": "200",
+      "bats": "L",
+      "throws": "B",
+      "hometown": "Harrah, Okla.",
+      "from": "Harrah, Okla.",
+      "lastSchool": null,
+      "previousSchool": "Harrah HS",
+      "previousSchools": [
+        "Harrah HS"
+      ],
+      "sourceFields": {
+        "B/T": "L/B",
+        "Class": "Freshman",
+        "Hometown": "Harrah, Okla.",
+        "Ht./Wt.": "6-1 / 200",
+        "Position": "Outfield/Infield",
+        "Previous School": "Harrah HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/lane-walton/7966",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/lane-walton/7966",
+      "name": "Lane Walton",
+      "firstName": "Lane",
+      "lastName": "Walton",
+      "number": "6",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Walton_Lane.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Sophomore",
+      "height": "6-4",
+      "weight": "200",
+      "bats": "L",
+      "throws": "R",
+      "hometown": "Sugar Land, Texas",
+      "from": "Sugar Land, Texas",
+      "lastSchool": null,
+      "previousSchool": "Hill College",
+      "previousSchools": [
+        "Hill College"
+      ],
+      "sourceFields": {
+        "B/T": "L/R",
+        "Class": "Sophomore",
+        "Hometown": "Sugar Land, Texas",
+        "Ht./Wt.": "6-4 / 200",
+        "Position": "Infield",
+        "Previous School": "Hill College"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/cason-campbell/7911",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/cason-campbell/7911",
+      "name": "Cason Campbell",
+      "firstName": "Cason",
+      "lastName": "Campbell",
+      "number": "7",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Campbell_Cason.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Senior",
+      "height": "6-0",
+      "weight": "190",
+      "bats": "L",
+      "throws": "R",
+      "hometown": "McCrory, Ark.",
+      "from": "McCrory, Ark.",
+      "lastSchool": null,
+      "previousSchool": "McCrory HS",
+      "previousSchools": [
+        "McCrory HS"
+      ],
+      "sourceFields": {
+        "B/T": "L/R",
+        "Class": "Senior",
+        "Hometown": "McCrory, Ark.",
+        "Ht./Wt.": "6-0 / 190",
+        "Position": "Infield",
+        "Previous School": "McCrory HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/cross-jumper/7959",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/cross-jumper/7959",
+      "name": "Cross Jumper",
+      "firstName": "Cross",
+      "lastName": "Jumper",
+      "number": "9",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Jumper_Cross.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Redshirt Senior",
+      "height": "6-2",
+      "weight": "200",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Jonesboro, Ark.",
+      "from": "Jonesboro, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Tennessee",
+      "previousSchools": [
+        "Tennessee"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Redshirt Senior",
+        "Hometown": "Jonesboro, Ark.",
+        "Ht./Wt.": "6-2 / 200",
+        "Position": "Outfield",
+        "Previous School": "Tennessee"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/cougar-cooke/7955",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/cougar-cooke/7955",
+      "name": "Cougar Cooke",
+      "firstName": "Cougar",
+      "lastName": "Cooke",
+      "number": "10",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Cooke_Cougar.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Redshirt Junior",
+      "height": "6-2",
+      "weight": "195",
+      "bats": "S",
+      "throws": "R",
+      "hometown": "Show Low, Ariz.",
+      "from": "Show Low, Ariz.",
+      "lastSchool": null,
+      "previousSchool": "Utah Valley",
+      "previousSchools": [
+        "Utah Valley"
+      ],
+      "sourceFields": {
+        "B/T": "S/R",
+        "Class": "Redshirt Junior",
+        "Hometown": "Show Low, Ariz.",
+        "Ht./Wt.": "6-2 / 195",
+        "Position": "Infield",
+        "Previous School": "Utah Valley"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/evan-griffis/7958",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/evan-griffis/7958",
+      "name": "Evan Griffis",
+      "firstName": "Evan",
+      "lastName": "Griffis",
+      "number": "11",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Griffis_Evan.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Senior",
+      "height": "6-3",
+      "weight": "218",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Longwood, Fla.",
+      "from": "Longwood, Fla.",
+      "lastSchool": null,
+      "previousSchool": "Stetson",
+      "previousSchools": [
+        "Stetson"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Senior",
+        "Hometown": "Longwood, Fla.",
+        "Ht./Wt.": "6-3 / 218",
+        "Position": "Outfield",
+        "Previous School": "Stetson"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/patrick-engskov/7931",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/patrick-engskov/7931",
+      "name": "Patrick Engskov",
+      "firstName": "Patrick",
+      "lastName": "Engskov",
+      "number": "12",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Engskov_Patrick.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Senior",
+      "height": "6-0",
+      "weight": "185",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Little Rock, Ark.",
+      "from": "Little Rock, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Oklahoma",
+      "previousSchools": [
+        "Oklahoma"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Senior",
+        "Hometown": "Little Rock, Ark.",
+        "Ht./Wt.": "6-0 / 185",
+        "Position": "Infield",
+        "Previous School": "Oklahoma"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/aj-mustow/7946",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/aj-mustow/7946",
+      "name": "Aj Mustow",
+      "firstName": "Aj",
+      "lastName": "Mustow",
+      "number": "13",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Mustow_Adam.jpg?width=80&quality=90",
+      "position": "Outfield/Infield",
+      "classYear": "Senior",
+      "height": "6-4",
+      "weight": "215",
+      "bats": "L",
+      "throws": "R",
+      "hometown": "Sydney, Australia",
+      "from": "Sydney, Australia",
+      "lastSchool": null,
+      "previousSchool": "Hutchinson CC",
+      "previousSchools": [
+        "Hutchinson CC"
+      ],
+      "sourceFields": {
+        "B/T": "L/R",
+        "Class": "Senior",
+        "Hometown": "Sydney, Australia",
+        "Ht./Wt.": "6-4 / 215",
+        "Position": "Outfield/Infield",
+        "Previous School": "Hutchinson CC"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/myles-mayse/7968",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/myles-mayse/7968",
+      "name": "Myles Mayse",
+      "firstName": "Myles",
+      "lastName": "Mayse",
+      "number": "14",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Mayse_Myles.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Freshman",
+      "height": "5-10",
+      "weight": "199",
+      "bats": "S",
+      "throws": "R",
+      "hometown": "Dallas, Texas",
+      "from": "Dallas, Texas",
+      "lastSchool": null,
+      "previousSchool": "PDG Academy",
+      "previousSchools": [
+        "PDG Academy"
+      ],
+      "sourceFields": {
+        "B/T": "S/R",
+        "Class": "Freshman",
+        "Hometown": "Dallas, Texas",
+        "Ht./Wt.": "5-10 / 199",
+        "Position": "Catcher",
+        "Previous School": "PDG Academy"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/derek-martinez/7956",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/derek-martinez/7956",
+      "name": "Derek Martinez",
+      "firstName": "Derek",
+      "lastName": "Martinez",
+      "number": "15",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Martinez_Derek.jpg?width=80&quality=90",
+      "position": "Catcher/Infield",
+      "classYear": "Freshman",
+      "height": "6-4",
+      "weight": "205",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Clermont, Fla.",
+      "from": "Clermont, Fla.",
+      "lastSchool": null,
+      "previousSchool": "TNXL Academy",
+      "previousSchools": [
+        "TNXL Academy"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Freshman",
+        "Hometown": "Clermont, Fla.",
+        "Ht./Wt.": "6-4 / 205",
+        "Position": "Catcher/Infield",
+        "Previous School": "TNXL Academy"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/cooper-garrison/7933",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/cooper-garrison/7933",
+      "name": "Cooper Garrison",
+      "firstName": "Cooper",
+      "lastName": "Garrison",
+      "number": "16",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Garrison_Cooper.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Senior",
+      "height": "5-11",
+      "weight": "165",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Gulfport, Miss.",
+      "from": "Gulfport, Miss.",
+      "lastSchool": null,
+      "previousSchool": "East Mississippi CC",
+      "previousSchools": [
+        "East Mississippi CC"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Senior",
+        "Hometown": "Gulfport, Miss.",
+        "Ht./Wt.": "5-11 / 165",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "East Mississippi CC"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/jake-henry-williams/7926",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/jake-henry-williams/7926",
+      "name": "Jake Henry Williams",
+      "firstName": "Jake Henry",
+      "lastName": "Williams",
+      "number": "17",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Williams_Jake_Henry.jpg?width=80&quality=90",
+      "position": "Outfield/Right-handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "6-1",
+      "weight": "220",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Jonesboro, Ark",
+      "from": "Jonesboro, Ark",
+      "lastSchool": null,
+      "previousSchool": "Connors State College",
+      "previousSchools": [
+        "Connors State College"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Graduate Student",
+        "Hometown": "Jonesboro, Ark",
+        "Ht./Wt.": "6-1 / 220",
+        "Position": "Outfield/Right-handed Pitcher",
+        "Previous School": "Connors State College"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/jack-nelson/7937",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/jack-nelson/7937",
+      "name": "Jack Nelson",
+      "firstName": "Jack",
+      "lastName": "Nelson",
+      "number": "18",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Nelson_Jack.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "6-4",
+      "weight": "220",
+      "bats": "L",
+      "throws": "L",
+      "hometown": "Zionsville, Ind.",
+      "from": "Zionsville, Ind.",
+      "lastSchool": null,
+      "previousSchool": "Nicholls",
+      "previousSchools": [
+        "Nicholls"
+      ],
+      "sourceFields": {
+        "B/T": "L/L",
+        "Class": "Graduate Student",
+        "Hometown": "Zionsville, Ind.",
+        "Ht./Wt.": "6-4 / 220",
+        "Position": "Left-handed Pitcher",
+        "Previous School": "Nicholls"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/adam-wade/7947",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/adam-wade/7947",
+      "name": "Adam Wade",
+      "firstName": "Adam",
+      "lastName": "Wade",
+      "number": "19",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Wade_Adam.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-8",
+      "weight": "260",
+      "bats": "L",
+      "throws": "L",
+      "hometown": "Missouri City, Texas",
+      "from": "Missouri City, Texas",
+      "lastSchool": null,
+      "previousSchool": "Alvin CC",
+      "previousSchools": [
+        "Alvin CC"
+      ],
+      "sourceFields": {
+        "B/T": "L/L",
+        "Class": "Redshirt Junior",
+        "Hometown": "Missouri City, Texas",
+        "Ht./Wt.": "6-8 / 260",
+        "Position": "Left-handed Pitcher",
+        "Previous School": "Alvin CC"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/aidan-houseworth/7935",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/aidan-houseworth/7935",
+      "name": "Aidan Houseworth",
+      "firstName": "Aidan",
+      "lastName": "Houseworth",
+      "number": "20",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Houseworth_Aidan.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Redshirt Sophomore",
+      "height": "6-3",
+      "weight": "210",
+      "bats": "L",
+      "throws": "R",
+      "hometown": "St. Louis, Mo.",
+      "from": "St. Louis, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Chaminade HS",
+      "previousSchools": [
+        "Chaminade HS"
+      ],
+      "sourceFields": {
+        "B/T": "L/R",
+        "Class": "Redshirt Sophomore",
+        "Hometown": "St. Louis, Mo.",
+        "Ht./Wt.": "6-3 / 210",
+        "Position": "Infield",
+        "Previous School": "Chaminade HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/chase-richter/8028",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/chase-richter/8028",
+      "name": "Chase Richter",
+      "firstName": "Chase",
+      "lastName": "Richter",
+      "number": "21",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Richter_Chase.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "6-1",
+      "weight": "195",
+      "bats": "L",
+      "throws": "L",
+      "hometown": "Tomball, Texas",
+      "from": "Tomball, Texas",
+      "lastSchool": null,
+      "previousSchool": "Nicholls",
+      "previousSchools": [
+        "Nicholls"
+      ],
+      "sourceFields": {
+        "B/T": "L/L",
+        "Class": "Graduate Student",
+        "Hometown": "Tomball, Texas",
+        "Ht./Wt.": "6-1 / 195",
+        "Position": "Left-handed Pitcher",
+        "Previous School": "Nicholls"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/wes-pritchard/7973",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/wes-pritchard/7973",
+      "name": "Wes Pritchard",
+      "firstName": "Wes",
+      "lastName": "Pritchard",
+      "number": "22",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Pritchard_Wes.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher",
+      "classYear": "Redshirt Freshman",
+      "height": "6-4",
+      "weight": "165",
+      "bats": "L",
+      "throws": "L",
+      "hometown": "Meridian, Miss.",
+      "from": "Meridian, Miss.",
+      "lastSchool": null,
+      "previousSchool": "Mississippi State",
+      "previousSchools": [
+        "Mississippi State"
+      ],
+      "sourceFields": {
+        "B/T": "L/L",
+        "Class": "Redshirt Freshman",
+        "Hometown": "Meridian, Miss.",
+        "Ht./Wt.": "6-4 / 165",
+        "Position": "Left-handed Pitcher",
+        "Previous School": "Mississippi State"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/sam-peterson/7920",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/sam-peterson/7920",
+      "name": "Sam Peterson",
+      "firstName": "Sam",
+      "lastName": "Peterson",
+      "number": "23",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Peterson_Sam.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-5",
+      "weight": "210",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Lindale, Texas",
+      "from": "Lindale, Texas",
+      "lastSchool": null,
+      "previousSchool": "Tyler JC",
+      "previousSchools": [
+        "Tyler JC"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Senior",
+        "Hometown": "Lindale, Texas",
+        "Ht./Wt.": "6-5 / 210",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Tyler JC"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/cole-manuel/7953",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/cole-manuel/7953",
+      "name": "Cole Manuel",
+      "firstName": "Cole",
+      "lastName": "Manuel",
+      "number": "25",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Manuel_Cole.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher/Infield",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "220",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Clinton, Miss.",
+      "from": "Clinton, Miss.",
+      "lastSchool": null,
+      "previousSchool": "Jones College",
+      "previousSchools": [
+        "Jones College"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Junior",
+        "Hometown": "Clinton, Miss.",
+        "Ht./Wt.": "6-0 / 220",
+        "Position": "Right-handed Pitcher/Infield",
+        "Previous School": "Jones College"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/ryan-ursery/7970",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/ryan-ursery/7970",
+      "name": "Ryan Ursery",
+      "firstName": "Ryan",
+      "lastName": "Ursery",
+      "number": "26",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Ursery_Ryan.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "190",
+      "bats": "L",
+      "throws": "L",
+      "hometown": "White Hall, Ark.",
+      "from": "White Hall, Ark.",
+      "lastSchool": null,
+      "previousSchool": "South Arkansas CC",
+      "previousSchools": [
+        "South Arkansas CC"
+      ],
+      "sourceFields": {
+        "B/T": "L/L",
+        "Class": "Junior",
+        "Hometown": "White Hall, Ark.",
+        "Ht./Wt.": "6-1 / 190",
+        "Position": "Left-handed Pitcher",
+        "Previous School": "South Arkansas CC"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/jalen-foxx/7962",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/jalen-foxx/7962",
+      "name": "Jalen Foxx",
+      "firstName": "Jalen",
+      "lastName": "Foxx",
+      "number": "27",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Foxx_Jalen.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher/Outfield",
+      "classYear": "Freshman",
+      "height": "6-2",
+      "weight": "193",
+      "bats": "R",
+      "throws": "L",
+      "hometown": "Sanford, Fla,",
+      "from": "Sanford, Fla,",
+      "lastSchool": null,
+      "previousSchool": "TNXL Academy",
+      "previousSchools": [
+        "TNXL Academy"
+      ],
+      "sourceFields": {
+        "B/T": "R/L",
+        "Class": "Freshman",
+        "Hometown": "Sanford, Fla,",
+        "Ht./Wt.": "6-2 / 193",
+        "Position": "Left-handed Pitcher/Outfield",
+        "Previous School": "TNXL Academy"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/dylan-farley/7957",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/dylan-farley/7957",
+      "name": "Dylan Farley",
+      "firstName": "Dylan",
+      "lastName": "Farley",
+      "number": "28",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Farley_Dylan.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "6-3",
+      "weight": "235",
+      "bats": "L",
+      "throws": "L",
+      "hometown": "Zuid-Scharwoude, The Netherlands",
+      "from": "Zuid-Scharwoude, The Netherlands",
+      "lastSchool": null,
+      "previousSchool": "Delta State",
+      "previousSchools": [
+        "Delta State"
+      ],
+      "sourceFields": {
+        "B/T": "L/L",
+        "Class": "Graduate Student",
+        "Hometown": "Zuid-Scharwoude, The Netherlands",
+        "Ht./Wt.": "6-3 / 235",
+        "Position": "Left-handed Pitcher",
+        "Previous School": "Delta State"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/taylor-seay/7975",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/taylor-seay/7975",
+      "name": "Taylor Seay",
+      "firstName": "Taylor",
+      "lastName": "Seay",
+      "number": "29",
+      "photoUrl": "https://astateredwolves.com/images/2026/2/2/Taylor_Seay.jpeg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-2",
+      "weight": "195",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Lake Jackson, Texas",
+      "from": "Lake Jackson, Texas",
+      "lastSchool": null,
+      "previousSchool": "Texas State",
+      "previousSchools": [
+        "Texas State"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Redshirt Junior",
+        "Hometown": "Lake Jackson, Texas",
+        "Ht./Wt.": "6-2 / 195",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Texas State"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/brett-foss/7913",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/brett-foss/7913",
+      "name": "Brett Foss",
+      "firstName": "Brett",
+      "lastName": "Foss",
+      "number": "30",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Foss_Brett.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-4",
+      "weight": "185",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Prosper, Texas",
+      "from": "Prosper, Texas",
+      "lastSchool": null,
+      "previousSchool": "South Arkansas CC",
+      "previousSchools": [
+        "South Arkansas CC"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Senior",
+        "Hometown": "Prosper, Texas",
+        "Ht./Wt.": "6-4 / 185",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "South Arkansas CC"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/collin-maloney/7917",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/collin-maloney/7917",
+      "name": "Collin Maloney",
+      "firstName": "Collin",
+      "lastName": "Maloney",
+      "number": "31",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Maloney_Collin.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": "210",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "St. Louis, Mo.",
+      "from": "St. Louis, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Mehlville HS",
+      "previousSchools": [
+        "Mehlville HS"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Junior",
+        "Hometown": "St. Louis, Mo.",
+        "Ht./Wt.": "6-3 / 210",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Mehlville HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/chase-armstrong/7929",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/chase-armstrong/7929",
+      "name": "Chase Armstrong",
+      "firstName": "Chase",
+      "lastName": "Armstrong",
+      "number": "32",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Armstrong_Chase.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-3",
+      "weight": "208",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Marion, Ark.",
+      "from": "Marion, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Marion HS",
+      "previousSchools": [
+        "Marion HS"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Redshirt Junior",
+        "Hometown": "Marion, Ark.",
+        "Ht./Wt.": "6-3 / 208",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Marion HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/james-trimble/7963",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/james-trimble/7963",
+      "name": "James Trimble",
+      "firstName": "James",
+      "lastName": "Trimble",
+      "number": "33",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Trimble_James.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-0",
+      "weight": "187",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Galveston, Texas",
+      "from": "Galveston, Texas",
+      "lastSchool": null,
+      "previousSchool": "Texas A&M-Corpus Christi",
+      "previousSchools": [
+        "Texas A&M-Corpus Christi"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Senior",
+        "Hometown": "Galveston, Texas",
+        "Ht./Wt.": "6-0 / 187",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Texas A&M-Corpus Christi"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/isaac-sewell/7922",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/isaac-sewell/7922",
+      "name": "Isaac Sewell",
+      "firstName": "Isaac",
+      "lastName": "Sewell",
+      "number": "34",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Sewell_Isaac.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-2",
+      "weight": "228",
+      "bats": "L",
+      "throws": "L",
+      "hometown": "Clermont, Fla.",
+      "from": "Clermont, Fla.",
+      "lastSchool": null,
+      "previousSchool": "College of Central Florida",
+      "previousSchools": [
+        "College of Central Florida"
+      ],
+      "sourceFields": {
+        "B/T": "L/L",
+        "Class": "Senior",
+        "Hometown": "Clermont, Fla.",
+        "Ht./Wt.": "6-2 / 228",
+        "Position": "Left-handed Pitcher",
+        "Previous School": "College of Central Florida"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/ashton-quiller/7940",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/ashton-quiller/7940",
+      "name": "Ashton Quiller",
+      "firstName": "Ashton",
+      "lastName": "Quiller",
+      "number": "35",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Quiller_Ashton.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Redshirt Sophomore",
+      "height": "5-9",
+      "weight": "190",
+      "bats": "R",
+      "throws": "L",
+      "hometown": "Lake Charles, La.",
+      "from": "Lake Charles, La.",
+      "lastSchool": null,
+      "previousSchool": "Nicholls",
+      "previousSchools": [
+        "Nicholls"
+      ],
+      "sourceFields": {
+        "B/T": "R/L",
+        "Class": "Redshirt Sophomore",
+        "Hometown": "Lake Charles, La.",
+        "Ht./Wt.": "5-9 / 190",
+        "Position": "Outfield",
+        "Previous School": "Nicholls"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/tyler-weimer/7951",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/tyler-weimer/7951",
+      "name": "Tyler Weimer",
+      "firstName": "Tyler",
+      "lastName": "Weimer",
+      "number": "36",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Weimer_Tyler.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-2",
+      "weight": "205",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Raceland, La.",
+      "from": "Raceland, La.",
+      "lastSchool": null,
+      "previousSchool": "E.D. White HS",
+      "previousSchools": [
+        "E.D. White HS"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Sophomore",
+        "Hometown": "Raceland, La.",
+        "Ht./Wt.": "6-2 / 205",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "E.D. White HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/jack-hibbard/7915",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/jack-hibbard/7915",
+      "name": "Jack Hibbard",
+      "firstName": "Jack",
+      "lastName": "Hibbard",
+      "number": "37",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Hibbard_Jack.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-0",
+      "weight": "175",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Memphis, Tenn.",
+      "from": "Memphis, Tenn.",
+      "lastSchool": null,
+      "previousSchool": "Arlington HS",
+      "previousSchools": [
+        "Arlington HS"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Sophomore",
+        "Hometown": "Memphis, Tenn.",
+        "Ht./Wt.": "6-0 / 175",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Arlington HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/jelle-van-der-lelie/7944",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/jelle-van-der-lelie/7944",
+      "name": "Jelle Van Der Lelie",
+      "firstName": "Jelle Van Der",
+      "lastName": "Lelie",
+      "number": "38",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/van_der_Lelie_Jelle.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "6-5",
+      "weight": "210",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Leiden, South Holland, The Netherlands",
+      "from": "Leiden, South Holland, The Netherlands",
+      "lastSchool": null,
+      "previousSchool": "Hill College",
+      "previousSchools": [
+        "Hill College"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Graduate Student",
+        "Hometown": "Leiden, South Holland, The Netherlands",
+        "Ht./Wt.": "6-5 / 210",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Hill College"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/kole-turner/7924",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/kole-turner/7924",
+      "name": "Kole Turner",
+      "firstName": "Kole",
+      "lastName": "Turner",
+      "number": "39",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Turner_Kole.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "6-2",
+      "weight": "190",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "White Rock, B.C., Canada",
+      "from": "White Rock, B.C., Canada",
+      "lastSchool": null,
+      "previousSchool": "Three Rivers College",
+      "previousSchools": [
+        "Three Rivers College"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Graduate Student",
+        "Hometown": "White Rock, B.C., Canada",
+        "Ht./Wt.": "6-2 / 190",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Three Rivers College"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/cole-huebner/7954",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/cole-huebner/7954",
+      "name": "Cole Huebner",
+      "firstName": "Cole",
+      "lastName": "Huebner",
+      "number": "40",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Huebner_Cole.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": "225",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Edmonton, Alberta",
+      "from": "Edmonton, Alberta",
+      "lastSchool": null,
+      "previousSchool": "Indian Hills CC",
+      "previousSchools": [
+        "Indian Hills CC"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Junior",
+        "Hometown": "Edmonton, Alberta",
+        "Ht./Wt.": "6-3 / 225",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Indian Hills CC"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/tatem-telfer/7972",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/tatem-telfer/7972",
+      "name": "Tatem Telfer",
+      "firstName": "Tatem",
+      "lastName": "Telfer",
+      "number": "41",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Telfer_Tatem.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher",
+      "classYear": "Freshman",
+      "height": "6-1",
+      "weight": "215",
+      "bats": "L",
+      "throws": "L",
+      "hometown": "Hedrick, Iowa",
+      "from": "Hedrick, Iowa",
+      "lastSchool": null,
+      "previousSchool": "Mid-Prairie HS",
+      "previousSchools": [
+        "Mid-Prairie HS"
+      ],
+      "sourceFields": {
+        "B/T": "L/L",
+        "Class": "Freshman",
+        "Hometown": "Hedrick, Iowa",
+        "Ht./Wt.": "6-1 / 215",
+        "Position": "Left-handed Pitcher",
+        "Previous School": "Mid-Prairie HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/raul-torres/7942",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/raul-torres/7942",
+      "name": "Raul Torres",
+      "firstName": "Raul",
+      "lastName": "Torres",
+      "number": "43",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Torres_Raul.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Senior",
+      "height": "5-11",
+      "weight": "174",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "San Lorenzo, Puerto Rico",
+      "from": "San Lorenzo, Puerto Rico",
+      "lastSchool": null,
+      "previousSchool": "Indian Hills CC",
+      "previousSchools": [
+        "Indian Hills CC"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Senior",
+        "Hometown": "San Lorenzo, Puerto Rico",
+        "Ht./Wt.": "5-11 / 174",
+        "Position": "Infield",
+        "Previous School": "Indian Hills CC"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/andrew-allen/7927",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/andrew-allen/7927",
+      "name": "Andrew Allen",
+      "firstName": "Andrew",
+      "lastName": "Allen",
+      "number": "44",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Allen_Andrew.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-2",
+      "weight": "210",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Ohatchee, Ala.",
+      "from": "Ohatchee, Ala.",
+      "lastSchool": null,
+      "previousSchool": "Alexandria HS",
+      "previousSchools": [
+        "Alexandria HS"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Sophomore",
+        "Hometown": "Ohatchee, Ala.",
+        "Ht./Wt.": "6-2 / 210",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Alexandria HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/ckyler-tengler/7952",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/ckyler-tengler/7952",
+      "name": "Ckyler Tengler",
+      "firstName": "Ckyler",
+      "lastName": "Tengler",
+      "number": "45",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Tengler_Ckyler.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-5",
+      "weight": "205",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Searcy, Ark.",
+      "from": "Searcy, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Arkansas State-Mountain Home",
+      "previousSchools": [
+        "Arkansas State-Mountain Home"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Redshirt Junior",
+        "Hometown": "Searcy, Ark.",
+        "Ht./Wt.": "6-5 / 205",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Arkansas State-Mountain Home"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/will-leslie/7974",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/will-leslie/7974",
+      "name": "Will Leslie",
+      "firstName": "Will",
+      "lastName": "Leslie",
+      "number": "46",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Leslie_Will.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Freshman",
+      "height": "6-5",
+      "weight": "188",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Cabot, Ark.",
+      "from": "Cabot, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Cabot HS",
+      "previousSchools": [
+        "Cabot HS"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Freshman",
+        "Hometown": "Cabot, Ark.",
+        "Ht./Wt.": "6-5 / 188",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Cabot HS"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/ryan-ashford/7969",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/ryan-ashford/7969",
+      "name": "Ryan Ashford",
+      "firstName": "Ryan",
+      "lastName": "Ashford",
+      "number": "47",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Ashford_Ryan.jpg?width=80&quality=90",
+      "position": "Left-handed Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-2",
+      "weight": "205",
+      "bats": "L",
+      "throws": "L",
+      "hometown": "Lake Mary, Fla.",
+      "from": "Lake Mary, Fla.",
+      "lastSchool": null,
+      "previousSchool": "Miami (Fla.)",
+      "previousSchools": [
+        "Miami (Fla.)"
+      ],
+      "sourceFields": {
+        "B/T": "L/L",
+        "Class": "Sophomore",
+        "Hometown": "Lake Mary, Fla.",
+        "Ht./Wt.": "6-2 / 205",
+        "Position": "Left-handed Pitcher",
+        "Previous School": "Miami (Fla.)"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/houston-tomlinson/7960",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/houston-tomlinson/7960",
+      "name": "Houston Tomlinson",
+      "firstName": "Houston",
+      "lastName": "Tomlinson",
+      "number": "48",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Tomlinson_Houston.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Redshirt Freshman",
+      "height": "6-0",
+      "weight": "200",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Spring, Texas",
+      "from": "Spring, Texas",
+      "lastSchool": null,
+      "previousSchool": "Texas A&M",
+      "previousSchools": [
+        "Texas A&M"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Redshirt Freshman",
+        "Hometown": "Spring, Texas",
+        "Ht./Wt.": "6-0 / 200",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Texas A&M"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/tate-collins/7971",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/tate-collins/7971",
+      "name": "Tate Collins",
+      "firstName": "Tate",
+      "lastName": "Collins",
+      "number": "49",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Collins_Tate.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-3",
+      "weight": "215",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Little Rock, Ark.",
+      "from": "Little Rock, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Central Arkansas",
+      "previousSchools": [
+        "Central Arkansas"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Sophomore",
+        "Hometown": "Little Rock, Ark.",
+        "Ht./Wt.": "6-3 / 215",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Central Arkansas"
+      }
+    },
+    {
+      "key": "https://astateredwolves.com/sports/baseball/roster/drew-erdmann/7948",
+      "profileUrl": "https://astateredwolves.com/sports/baseball/roster/drew-erdmann/7948",
+      "name": "Drew Erdmann",
+      "firstName": "Drew",
+      "lastName": "Erdmann",
+      "number": "51",
+      "photoUrl": "https://astateredwolves.com/images/2026/1/25/Erdmann_Andrew.jpg?width=80&quality=90",
+      "position": "Right-handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-4",
+      "weight": "220",
+      "bats": "R",
+      "throws": "R",
+      "hometown": "Twinsburg, Ohio",
+      "from": "Twinsburg, Ohio",
+      "lastSchool": null,
+      "previousSchool": "Ohio State",
+      "previousSchools": [
+        "Cincinnati",
+        "Ohio State"
+      ],
+      "sourceFields": {
+        "B/T": "R/R",
+        "Class": "Junior",
+        "Hometown": "Twinsburg, Ohio",
+        "Ht./Wt.": "6-4 / 220",
+        "Position": "Right-handed Pitcher",
+        "Previous School": "Cincinnati / Ohio State"
+      }
+    }
+  ]
+}

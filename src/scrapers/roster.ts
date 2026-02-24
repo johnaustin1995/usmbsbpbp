@@ -100,6 +100,7 @@ export async function scrapeRosterPage(options: ScrapeRosterOptions): Promise<Sc
   }
 
   const merged = mergeCandidateRecords(candidates);
+  await enrichCandidateRecordsFromProfiles(merged, timeoutMs);
   const players = merged
     .map((record) => toScrapedPlayer(record))
     .filter((player): player is ScrapedRosterPlayer => player !== null)
@@ -282,6 +283,34 @@ function extractLabeledFields($: CheerioAPI, container: Cheerio<AnyNode>): Map<s
     }
 
     const value = cleanText(dd.text());
+    if (!value) {
+      return;
+    }
+
+    setLabeledField(fields, label, value);
+  });
+
+  container.find("[class*='field-label']").each((_, labelNode) => {
+    const label = cleanText($(labelNode).text());
+    if (!isLikelyDataLabel(label)) {
+      return;
+    }
+
+    const parent = $(labelNode).parent();
+    let value =
+      cleanText($(labelNode).siblings("[class*='field-value']").first().text()) ||
+      cleanText(parent.find("[class*='field-value']").first().text());
+
+    if (!value) {
+      value = cleanText(parent.clone().find("[class*='field-label']").remove().end().text());
+      value = stripRepeatedLabelPrefix(value, label);
+    }
+
+    if (!value) {
+      const rowValue = cleanText($(labelNode).closest("li, tr, .columns, .row, div").text());
+      value = stripRepeatedLabelPrefix(rowValue, label);
+    }
+
     if (!value) {
       return;
     }
@@ -530,6 +559,147 @@ function mergeCandidateRecords(records: CandidatePlayerRecord[]): CandidatePlaye
   return Array.from(byKey.values());
 }
 
+async function enrichCandidateRecordsFromProfiles(records: CandidatePlayerRecord[], timeoutMs: number): Promise<void> {
+  const profiles = records.filter((record) => record.profileUrl);
+  if (profiles.length === 0) {
+    return;
+  }
+
+  await runWithConcurrency(profiles, 6, async (record) => {
+    if (!record.profileUrl) {
+      return;
+    }
+
+    const details = await scrapePlayerProfile(record.profileUrl, timeoutMs);
+    if (!details) {
+      return;
+    }
+
+    if (details.name && !record.name) {
+      record.name = details.name;
+    }
+    if (details.number && !record.number) {
+      record.number = details.number;
+    }
+    if (details.photoUrl && !record.photoUrl) {
+      record.photoUrl = details.photoUrl;
+    }
+
+    for (const [label, value] of details.fields.entries()) {
+      setLabeledField(record.fields, label, value);
+    }
+  });
+}
+
+async function scrapePlayerProfile(profileUrl: string, timeoutMs: number): Promise<CandidatePlayerRecord | null> {
+  try {
+    const response = await axios.get<string>(profileUrl, {
+      headers: BASE_BROWSER_HEADERS,
+      timeout: timeoutMs,
+      responseType: "text",
+      validateStatus: (status) => status >= 200 && status < 400,
+    });
+
+    const $ = load(response.data);
+    const header = $(".sidearm-roster-player-header").first();
+    const detailsContainer = $(".sidearm-roster-player-header-details").first();
+    const fieldsContainer = $(".sidearm-roster-player-fields").first();
+    const parseRoot = fieldsContainer.length > 0 ? fieldsContainer : detailsContainer.length > 0 ? detailsContainer : header;
+
+    const fields = extractLabeledFields($, parseRoot);
+    const name = findProfileName($);
+    const number = parseJerseyNumber(findProfileJerseyNumber($)) ?? parseJerseyNumber(getFieldValue(fields, isNumberLabel));
+    const photoUrl = extractProfilePhotoUrl($, profileUrl);
+
+    return {
+      profileUrl,
+      name,
+      number,
+      photoUrl,
+      fields,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function findProfileName($: CheerioAPI): string | null {
+  const firstName = cleanText($(".sidearm-roster-player-first-name").first().text());
+  const lastName = cleanText($(".sidearm-roster-player-last-name").first().text());
+  const combined = cleanPersonName(`${firstName} ${lastName}`.trim());
+  if (isLikelyPersonName(combined)) {
+    return combined;
+  }
+
+  const fallback = cleanPersonName(cleanText($(".sidearm-roster-player-name").first().text()));
+  if (isLikelyPersonName(fallback)) {
+    return fallback;
+  }
+
+  return null;
+}
+
+function findProfileJerseyNumber($: CheerioAPI): string | null {
+  const jerseyText = cleanText($(".sidearm-roster-player-jersey-number").first().text());
+  if (jerseyText) {
+    return jerseyText;
+  }
+
+  const labelNode = $(".sidearm-roster-player-field-label")
+    .toArray()
+    .find((node) => /^(number|jersey number|no\.?)$/i.test(cleanText($(node).text())));
+  if (!labelNode) {
+    return null;
+  }
+
+  return cleanText(
+    $(labelNode)
+      .siblings("[class*='field-value'], span")
+      .not(labelNode)
+      .first()
+      .text()
+  );
+}
+
+function extractProfilePhotoUrl($: CheerioAPI, pageUrl: string): string | null {
+  const profileImage = $(".sidearm-roster-player-image img").first();
+  if (profileImage.length > 0) {
+    const raw =
+      cleanText(profileImage.attr("src")) ||
+      cleanText(profileImage.attr("data-src")) ||
+      cleanText(profileImage.attr("data-lazy-src")) ||
+      cleanText(profileImage.attr("data-original"));
+    if (raw) {
+      return unwrapSidearmCropUrl(toAbsoluteUrl(raw, pageUrl), pageUrl);
+    }
+  }
+
+  return null;
+}
+
+async function runWithConcurrency<T>(
+  items: T[],
+  concurrency: number,
+  worker: (item: T, index: number) => Promise<void>
+): Promise<void> {
+  if (items.length === 0) {
+    return;
+  }
+
+  const size = Math.max(1, Math.min(concurrency, items.length));
+  let index = 0;
+
+  const runners = Array.from({ length: size }, async () => {
+    while (index < items.length) {
+      const currentIndex = index;
+      index += 1;
+      await worker(items[currentIndex], currentIndex);
+    }
+  });
+
+  await Promise.all(runners);
+}
+
 function buildMergeKey(record: CandidatePlayerRecord): string {
   if (record.profileUrl) {
     return `profile:${record.profileUrl}`;
@@ -563,8 +733,7 @@ function toScrapedPlayer(record: CandidatePlayerRecord): ScrapedRosterPlayer | n
   }
 
   const classYear = cleanNullable(getFieldValue(record.fields, isClassLabel));
-  const height = cleanNullable(getFieldValue(record.fields, isHeightLabel));
-  const weight = cleanNullable(getFieldValue(record.fields, isWeightLabel));
+  const { height, weight } = resolveHeightWeight(record.fields);
   const hometown = cleanNullable(getFieldValue(record.fields, isHometownLabel));
   const lastSchool = cleanNullable(getFieldValue(record.fields, isLastSchoolLabel));
   const previousSchoolRaw = cleanNullable(getFieldValue(record.fields, isPreviousSchoolLabel));
@@ -689,6 +858,50 @@ function resolveHandedness(fields: Map<string, string>): { bats: string | null; 
     bats: bats ?? null,
     throws: throwsHand ?? null,
   };
+}
+
+function resolveHeightWeight(fields: Map<string, string>): { height: string | null; weight: string | null } {
+  let height = cleanNullable(getFieldValue(fields, isHeightLabel));
+  let weight = cleanNullable(getFieldValue(fields, isWeightLabel));
+
+  if (!height || !weight) {
+    const combinedRaw = cleanNullable(getFieldValue(fields, isCombinedHeightWeightLabel));
+    const combined = parseCombinedHeightWeight(combinedRaw);
+    height = height ?? combined.height;
+    weight = weight ?? combined.weight;
+  }
+
+  return { height: height ?? null, weight: weight ?? null };
+}
+
+function parseCombinedHeightWeight(rawValue: string | null): { height: string | null; weight: string | null } {
+  const value = cleanText(rawValue || "");
+  if (!value) {
+    return { height: null, weight: null };
+  }
+
+  const slashMatch = value.match(/([0-9]{1,2}\s*[-']\s*[0-9]{1,2})\s*(?:\/|\|)\s*([0-9]{2,3})/i);
+  if (slashMatch) {
+    return {
+      height: cleanText(slashMatch[1].replace(/\s+/g, "")),
+      weight: cleanText(slashMatch[2]),
+    };
+  }
+
+  const tokens = value
+    .split(/\s*\/\s*|\s*\|\s*|\s+-\s+/)
+    .map((entry) => cleanText(entry))
+    .filter(Boolean);
+  if (tokens.length >= 2) {
+    const maybeHeight = tokens[0].match(/[0-9]{1,2}\s*[-']\s*[0-9]{1,2}/) ? cleanText(tokens[0].replace(/\s+/g, "")) : null;
+    const maybeWeight = tokens[1].match(/[0-9]{2,3}/) ? cleanText(tokens[1].match(/[0-9]{2,3}/)?.[0] || "") : null;
+    return {
+      height: maybeHeight,
+      weight: maybeWeight,
+    };
+  }
+
+  return { height: null, weight: null };
 }
 
 function parseCombinedHandedness(
@@ -874,6 +1087,10 @@ function isHeightLabel(normalizedLabel: string): boolean {
 
 function isWeightLabel(normalizedLabel: string): boolean {
   return normalizedLabel === "weight" || normalizedLabel === "wt";
+}
+
+function isCombinedHeightWeightLabel(normalizedLabel: string): boolean {
+  return normalizedLabel === "ht wt" || normalizedLabel === "height weight";
 }
 
 function isHometownLabel(normalizedLabel: string): boolean {
