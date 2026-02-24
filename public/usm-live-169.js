@@ -505,17 +505,21 @@ function renderTimeline(plays, teams) {
     wrap.append(heading);
 
     group.plays.forEach((play) => {
-      const side = inferSideFromPlay(play);
-      const lineup = side ? teams[side].lineup : [];
-      const lineupEntry = findLineupEntry(lineup, normalizePersonName(play.batter));
-      const badgeValue = lineupEntry?.spot ?? "?";
+      const badgeInfo = resolveTimelineBadge(play, teams, groupIndex === 0);
 
       const item = document.createElement("article");
       item.className = "timeline-item";
 
       const badge = document.createElement("span");
       badge.className = `timeline-badge ${groupIndex === 0 ? "current" : "previous"}`;
-      badge.textContent = String(badgeValue);
+      badge.textContent = badgeInfo.value;
+      if (badgeInfo.backgroundColor) {
+        badge.style.backgroundColor = badgeInfo.backgroundColor;
+        badge.style.color = badgeInfo.textColor;
+      } else {
+        badge.style.removeProperty("background-color");
+        badge.style.removeProperty("color");
+      }
 
       const text = document.createElement("p");
       text.className = "timeline-text";
@@ -530,6 +534,129 @@ function renderTimeline(plays, teams) {
 
   elements.timeline.innerHTML = "";
   elements.timeline.append(scroll);
+}
+
+function resolveTimelineBadge(play, teams, isCurrentGroup) {
+  const defaultValue = "?";
+  const defaultBackground = isCurrentGroup ? "#f0c425" : "#b7b7b7";
+  const defaultTextColor = "#111111";
+
+  const battingSide = inferSideFromPlay(play);
+  const defensiveSide = battingSide === "away" ? "home" : battingSide === "home" ? "away" : null;
+  const substitutionType = classifySubstitutionType(play?.text || "");
+
+  let teamSide = battingSide;
+  if (play?.isSubstitution && substitutionType === "defensive") {
+    teamSide = defensiveSide;
+  }
+
+  const team = teamSide ? teams[teamSide] : null;
+  const candidateNames = buildBadgeCandidateNames(play);
+  const lineup = Array.isArray(team?.lineup) ? team.lineup : [];
+
+  let lineupEntry = null;
+  for (const name of candidateNames) {
+    lineupEntry = findLineupEntry(lineup, name);
+    if (lineupEntry) {
+      break;
+    }
+  }
+
+  let jerseyNumber = normalizeCell(lineupEntry?.number || lineupEntry?.rosterPlayer?.number) || null;
+  if (!jerseyNumber && team?.roster?.players && candidateNames.length > 0) {
+    for (const name of candidateNames) {
+      const rosterMatch = findRosterPlayer(team.roster, {
+        name,
+        fullName: name,
+        number: null,
+      });
+      const fromRoster = normalizeCell(rosterMatch?.number);
+      if (fromRoster) {
+        jerseyNumber = fromRoster;
+        break;
+      }
+    }
+  }
+
+  if (play?.isSubstitution && substitutionType === "defensive" && team) {
+    const teamColor = safeHex(team?.branding?.colors?.primary) || defaultBackground;
+    return {
+      value: jerseyNumber || defaultValue,
+      backgroundColor: teamColor,
+      textColor: getReadableTextColor(teamColor),
+    };
+  }
+
+  return {
+    value: jerseyNumber || defaultValue,
+    backgroundColor: defaultBackground,
+    textColor: defaultTextColor,
+  };
+}
+
+function buildBadgeCandidateNames(play) {
+  const names = [];
+  const entering = parseSubstitutionEnteringName(play?.text || "");
+  const batter = normalizePersonName(play?.batter);
+  const pitcher = normalizePersonName(play?.pitcher);
+
+  if (entering) {
+    names.push(entering);
+  }
+  if (batter) {
+    names.push(batter);
+  }
+  if (pitcher) {
+    names.push(pitcher);
+  }
+
+  return Array.from(new Set(names.filter(Boolean)));
+}
+
+function classifySubstitutionType(text) {
+  const lower = String(text || "").toLowerCase();
+  if (!lower) {
+    return null;
+  }
+
+  if (/pinch\s*(hit|ran)|pinch[-\s]hitter|pinch[-\s]runner/.test(lower)) {
+    return "offensive";
+  }
+
+  if (/\bto\s+(p|c|1b|2b|3b|ss|lf|cf|rf|of|dh)\b/.test(lower)) {
+    return "defensive";
+  }
+
+  if (/defensive substitution|defensive switch/.test(lower)) {
+    return "defensive";
+  }
+
+  return null;
+}
+
+function parseSubstitutionEnteringName(text) {
+  const raw = String(text || "").trim();
+  if (!raw) {
+    return null;
+  }
+
+  const patterns = [
+    /^(.+?)\s+to\s+[a-z0-9]+(?:\s+for\s+.+)?[.;]?$/i,
+    /^(.+?)\s+pinch\s+(?:hit|ran)\s+for\s+.+[.;]?$/i,
+    /^(.+?)\s+entered\s+the\s+game/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = raw.match(pattern);
+    if (match?.[1]) {
+      const parsed = normalizePersonName(match[1]);
+      if (parsed) {
+        return parsed;
+      }
+    }
+  }
+
+  return null;
 }
 
 function parseGameSections(sections, summary, awayTeamName, homeTeamName) {
