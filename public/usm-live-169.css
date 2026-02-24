@@ -75,9 +75,9 @@ body {
 
 .team-score {
   margin: 0;
-  font-size: clamp(72px, 7.8vw, 116px);
+  font-size: clamp(60px, 6.8vw, 96px);
   line-height: 1;
-  font-weight: 800;
+  font-weight: 500;
   letter-spacing: 0;
 }
 
@@ -97,16 +97,16 @@ body {
 }
 
 .inning-arrow {
-  font-size: clamp(30px, 3.1vw, 52px);
+  font-size: clamp(24px, 2.4vw, 38px);
   line-height: 1;
-  font-weight: 700;
+  font-weight: 500;
   transform: translateY(-1px);
 }
 
 .inning-value {
-  font-size: clamp(68px, 6.8vw, 110px);
+  font-size: clamp(56px, 5.4vw, 84px);
   line-height: 1;
-  font-weight: 800;
+  font-weight: 500;
 }
 
 .base-count-wrap {
@@ -162,9 +162,9 @@ body {
 
 .count-status {
   margin: 0;
-  font-size: clamp(33px, 3.3vw, 58px);
+  font-size: clamp(26px, 2.7vw, 42px);
   line-height: 1;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .outs-status {
@@ -198,8 +198,8 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0 14px;
-  font-size: clamp(24px, 2.25vw, 40px);
-  font-weight: 600;
+  font-size: clamp(19px, 1.7vw, 30px);
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.012em;
   white-space: nowrap;
@@ -234,9 +234,9 @@ body {
 .column-title {
   margin: 2px 0 12px;
   text-align: center;
-  font-size: clamp(30px, 2.25vw, 42px);
+  font-size: clamp(24px, 1.75vw, 32px);
   line-height: 1;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.11em;
 }
 
@@ -276,8 +276,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .hero-content {
@@ -286,9 +286,9 @@ body {
 
 .hero-name {
   margin: 0;
-  font-size: clamp(40px, 3.5vw, 70px);
+  font-size: clamp(30px, 2.45vw, 44px);
   line-height: 1;
-  font-weight: 800;
+  font-weight: 500;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
@@ -297,9 +297,9 @@ body {
 
 .hero-meta {
   margin: 8px 0 0;
-  font-size: clamp(16px, 1.05vw, 21px);
+  font-size: clamp(14px, 0.88vw, 17px);
   line-height: 1.15;
-  font-weight: 500;
+  font-weight: 300;
   color: #242424;
   text-transform: uppercase;
 }
@@ -310,9 +310,9 @@ body {
 
 .stats-title {
   margin: 0 0 5px;
-  font-size: clamp(27px, 1.62vw, 34px);
+  font-size: clamp(22px, 1.3vw, 28px);
   line-height: 1;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.045em;
   text-transform: uppercase;
 }
@@ -331,15 +331,15 @@ body {
 }
 
 .stat-table thead th {
-  font-size: clamp(15px, 0.92vw, 19px);
-  font-weight: 500;
+  font-size: clamp(13px, 0.78vw, 15px);
+  font-weight: 400;
   text-transform: uppercase;
   color: #191919;
 }
 
 .stat-table tbody td {
-  font-size: clamp(18px, 1.14vw, 25px);
-  font-weight: 600;
+  font-size: clamp(15px, 0.95vw, 18px);
+  font-weight: 400;
 }
 
 .stat-table tbody td:first-child,
@@ -375,8 +375,8 @@ body {
   height: 32px;
   border-radius: 8px;
   padding: 0 8px;
-  font-size: clamp(18px, 0.98vw, 23px);
-  font-weight: 600;
+  font-size: clamp(15px, 0.82vw, 18px);
+  font-weight: 400;
   letter-spacing: 0.01em;
   color: #ffffff;
   text-transform: uppercase;
@@ -453,26 +453,26 @@ body {
   border: 2px solid #292929;
   text-align: center;
   padding: 7px 6px;
-  font-size: clamp(15px, 1.02vw, 23px);
+  font-size: clamp(13px, 0.8vw, 17px);
   white-space: nowrap;
 }
 
 .linescore-wrap th {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .linescore-wrap td {
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .linescore-wrap td.team-cell {
   text-align: left;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .linescore-wrap td.total-cell {
-  font-weight: 800;
-  font-size: clamp(20px, 1.22vw, 28px);
+  font-weight: 500;
+  font-size: clamp(16px, 1vw, 21px);
 }
 
 .timeline {
@@ -502,9 +502,9 @@ body {
 
 .inning-label {
   margin: 0 0 10px;
-  font-size: clamp(24px, 1.45vw, 32px);
+  font-size: clamp(19px, 1.12vw, 24px);
   line-height: 1;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
 }
 
@@ -541,9 +541,9 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(24px, 1.28vw, 30px);
+  font-size: clamp(19px, 1vw, 24px);
   line-height: 1;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .timeline-badge.current {
@@ -558,15 +558,15 @@ body {
 
 .timeline-text {
   margin: 0;
-  font-size: clamp(30px, 1.95vw, 48px);
+  font-size: clamp(22px, 1.38vw, 34px);
   line-height: 1.12;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.003em;
   text-transform: uppercase;
 }
 
 .timeline-text .name {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .runners-card {
@@ -583,9 +583,9 @@ body {
 
 .runner-heads span {
   text-align: center;
-  font-size: clamp(26px, 1.62vw, 34px);
+  font-size: clamp(20px, 1.2vw, 26px);
   line-height: 1;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
 }
 
@@ -595,9 +595,9 @@ body {
 
 .runner-values span {
   text-align: center;
-  font-size: clamp(32px, 1.78vw, 42px);
+  font-size: clamp(23px, 1.3vw, 31px);
   line-height: 1.06;
-  font-weight: 500;
+  font-weight: 400;
   text-transform: uppercase;
   min-height: 42px;
 }
@@ -616,32 +616,32 @@ body {
 .lineup-table td {
   border: none;
   padding: 3px 6px;
-  font-size: clamp(20px, 1.13vw, 25px);
+  font-size: clamp(15px, 0.9vw, 19px);
   line-height: 1.1;
   white-space: nowrap;
 }
 
 .lineup-table th {
-  font-size: clamp(15px, 0.86vw, 18px);
-  font-weight: 600;
+  font-size: clamp(12px, 0.72vw, 14px);
+  font-weight: 400;
   color: #2f2f2f;
   text-transform: uppercase;
 }
 
 .lineup-table td {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .lineup-table td.spot {
   width: 34px;
   text-align: right;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .lineup-table td.pos {
   width: 56px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .lineup-table td.bats {
@@ -670,7 +670,8 @@ body {
 
 .placeholder {
   margin: 0;
-  font-size: clamp(17px, 1vw, 22px);
+  font-size: clamp(14px, 0.82vw, 17px);
+  font-weight: 300;
   color: #3d3d3d;
 }
 
