@@ -116,7 +116,7 @@ body {
 
 .bases-diamond {
   --base-size: 36px;
-  --base-gap: 16px;
+  --base-gap: 4px;
   display: grid;
   grid-template-columns: repeat(3, var(--base-size));
   grid-template-rows: repeat(2, var(--base-size));
