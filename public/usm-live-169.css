@@ -231,6 +231,12 @@ body {
   background: var(--body);
 }
 
+.left-column,
+.right-column {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 .column-title {
   margin: 2px 0 12px;
   text-align: center;
