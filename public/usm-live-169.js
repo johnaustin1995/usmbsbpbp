@@ -538,8 +538,7 @@ function renderTimeline(plays, teams) {
 
 function resolveTimelineBadge(play, teams, isCurrentGroup) {
   const defaultValue = "?";
-  const defaultBackground = isCurrentGroup ? "#f0c425" : "#b7b7b7";
-  const defaultTextColor = "#111111";
+  const defaultBackground = isCurrentGroup ? "#707070" : "#8e8e8e";
 
   const battingSide = inferSideFromPlay(play);
   const defensiveSide = battingSide === "away" ? "home" : battingSide === "home" ? "away" : null;
@@ -578,19 +577,15 @@ function resolveTimelineBadge(play, teams, isCurrentGroup) {
     }
   }
 
-  if (play?.isSubstitution && substitutionType === "defensive" && team) {
-    const teamColor = safeHex(team?.branding?.colors?.primary) || defaultBackground;
-    return {
-      value: jerseyNumber || defaultValue,
-      backgroundColor: teamColor,
-      textColor: getReadableTextColor(teamColor),
-    };
-  }
+  const teamColor =
+    safeHex(team?.branding?.colors?.primary) ||
+    safeHex(team?.branding?.colors?.espnPrimary) ||
+    defaultBackground;
 
   return {
     value: jerseyNumber || defaultValue,
-    backgroundColor: defaultBackground,
-    textColor: defaultTextColor,
+    backgroundColor: teamColor,
+    textColor: getReadableTextColor(teamColor),
   };
 }
 
