@@ -607,13 +607,13 @@ body {
 .lineup-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .lineup-table th,
 .lineup-table td {
   border: none;
-  padding: 3px 6px;
+  padding: 3px 4px;
   font-size: clamp(15px, 0.9vw, 19px);
   line-height: 1.1;
   white-space: nowrap;
@@ -632,31 +632,61 @@ body {
 }
 
 .lineup-table td.spot {
-  width: 34px;
+  width: var(--lineup-col-spot, 2ch);
   font-weight: 500;
 }
 
 .lineup-table td.pos {
-  width: 56px;
+  width: var(--lineup-col-pos, 3ch);
   text-align: center;
   font-weight: 400;
 }
 
 .lineup-table td.bats {
-  width: 44px;
+  width: var(--lineup-col-bats, 3ch);
   text-align: center;
 }
 
 .lineup-table td.player {
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  min-width: var(--lineup-col-player, 7ch);
+  text-align: left;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 .lineup-table td.today,
 .lineup-table td.avg {
-  width: 68px;
+  width: var(--lineup-col-today, 3ch);
   text-align: center;
+}
+
+.lineup-table td.avg {
+  width: var(--lineup-col-avg, 4ch);
+}
+
+.lineup-table th.spot {
+  width: var(--lineup-col-spot, 2ch);
+}
+
+.lineup-table th.pos {
+  width: var(--lineup-col-pos, 3ch);
+}
+
+.lineup-table th.bats {
+  width: var(--lineup-col-bats, 3ch);
+}
+
+.lineup-table th.player {
+  min-width: var(--lineup-col-player, 7ch);
+  text-align: left;
+}
+
+.lineup-table th.today {
+  width: var(--lineup-col-today, 3ch);
+}
+
+.lineup-table th.avg {
+  width: var(--lineup-col-avg, 4ch);
 }
 
 .lineup-table tr.active {

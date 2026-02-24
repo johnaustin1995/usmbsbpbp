@@ -368,39 +368,89 @@ function renderLineupTable(lineup, activeEntry) {
     return;
   }
 
+  const sortedLineup = lineup
+    .slice()
+    .sort((a, b) => (a.spot ?? 99) - (b.spot ?? 99));
+
+  const columnSizing = computeLineupColumnSizing(sortedLineup);
+  applyLineupColumnSizing(elements.lineupTable, columnSizing);
+
   elements.lineupTable.innerHTML = "";
   const thead = document.createElement("thead");
   const headRow = document.createElement("tr");
-  ["#", "POS", "B/T", "PLAYER", "TOD", "AVG"].forEach((label) => {
+  [
+    { label: "#", className: "spot" },
+    { label: "POS", className: "pos" },
+    { label: "B/T", className: "bats" },
+    { label: "PLAYER", className: "player" },
+    { label: "TOD", className: "today" },
+    { label: "AVG", className: "avg" },
+  ].forEach((column) => {
     const th = document.createElement("th");
-    th.textContent = label;
+    th.className = column.className;
+    th.textContent = column.label;
     headRow.append(th);
   });
   thead.append(headRow);
 
   const tbody = document.createElement("tbody");
-  lineup
-    .slice()
-    .sort((a, b) => (a.spot ?? 99) - (b.spot ?? 99))
-    .forEach((entry) => {
-      const tr = document.createElement("tr");
-      if (activeEntry && isSamePlayer(activeEntry.name, entry.name)) {
-        tr.classList.add("active");
-      }
+  sortedLineup.forEach((entry) => {
+    const tr = document.createElement("tr");
+    if (activeEntry && isSamePlayer(activeEntry.name, entry.name)) {
+      tr.classList.add("active");
+    }
 
-      tr.append(
-        buildCell("spot", entry.spot !== null ? String(entry.spot) : "-"),
-        buildCell("pos", normalizePosition(entry.position || entry.rosterPlayer?.position || "-")),
-        buildCell("bats", formatBatsThrows(entry)),
-        buildCell("player", toLastName(entry.fullName || entry.name || "-")),
-        buildCell("today", entry.today || "-"),
-        buildCell("avg", entry.avg || "-")
-      );
+    tr.append(
+      buildCell("spot", entry.spot !== null ? String(entry.spot) : "-"),
+      buildCell("pos", normalizePosition(entry.position || entry.rosterPlayer?.position || "-")),
+      buildCell("bats", formatBatsThrows(entry)),
+      buildCell("player", toLastName(entry.fullName || entry.name || "-")),
+      buildCell("today", entry.today || "-"),
+      buildCell("avg", entry.avg || "-")
+    );
 
-      tbody.append(tr);
-    });
+    tbody.append(tr);
+  });
 
   elements.lineupTable.append(thead, tbody);
+}
+
+function computeLineupColumnSizing(lineup) {
+  const maxChars = {
+    spot: 1,
+    pos: 3,
+    bats: 3,
+    player: 6,
+    today: 3,
+    avg: 4,
+  };
+
+  lineup.forEach((entry) => {
+    maxChars.spot = Math.max(maxChars.spot, String(entry.spot ?? "-").length);
+    maxChars.pos = Math.max(maxChars.pos, normalizePosition(entry.position || entry.rosterPlayer?.position || "-").length);
+    maxChars.bats = Math.max(maxChars.bats, formatBatsThrows(entry).length);
+    maxChars.player = Math.max(maxChars.player, toLastName(entry.fullName || entry.name || "-").length);
+    maxChars.today = Math.max(maxChars.today, String(entry.today || "-").length);
+    maxChars.avg = Math.max(maxChars.avg, String(entry.avg || "-").length);
+  });
+
+  return {
+    spot: `${Math.max(2, maxChars.spot)}ch`,
+    pos: `${Math.max(3, maxChars.pos)}ch`,
+    bats: `${Math.max(3, maxChars.bats)}ch`,
+    player: `${Math.max(7, maxChars.player)}ch`,
+    today: `${Math.max(3, maxChars.today)}ch`,
+    avg: `${Math.max(4, maxChars.avg)}ch`,
+  };
+}
+
+function applyLineupColumnSizing(table, sizing) {
+  table.style.setProperty("--lineup-col-spot", sizing.spot);
+  table.style.setProperty("--lineup-col-pos", sizing.pos);
+  table.style.setProperty("--lineup-col-bats", sizing.bats);
+  table.style.setProperty("--lineup-col-player", sizing.player);
+  table.style.setProperty("--lineup-col-today", sizing.today);
+  table.style.setProperty("--lineup-col-avg", sizing.avg);
 }
 
 function renderFieldAlignment(defenseTeam, pitcherProfile) {
