@@ -6,6 +6,10 @@ const state = {
   selectedGameId: null,
   refreshTimer: null,
   rosterCache: new Map(),
+  timelineHistory: {
+    gameId: null,
+    plays: [],
+  },
 };
 
 const elements = {
@@ -157,6 +161,7 @@ function renderDashboard(payload, context) {
   const selectedGame = payload?.selectedGame ?? null;
   const gameSections = Array.isArray(payload?.live?.gameSections) ? payload.live.gameSections : [];
   const plays = Array.isArray(payload?.live?.plays) ? payload.live.plays : [];
+  const timelinePlays = mergeTimelinePlays(payload, summary, selectedGame, plays);
 
   const lineupsSections = Array.isArray(payload?.live?.lineupsSections) ? payload.live.lineupsSections : [];
   const awayBoxSections = Array.isArray(payload?.live?.awayBoxSections) ? payload.live.awayBoxSections : [];
@@ -250,7 +255,7 @@ function renderDashboard(payload, context) {
   renderLineupTable(batterTeam.lineup, batterEntry, batterTeam.branding);
   renderFieldAlignment(pitcherTeam, pitcherProfile);
   renderLineScore(lineScore, selectedGame);
-  renderTimeline(plays, teamPack);
+  renderTimeline(timelinePlays, teamPack);
 }
 
 function applySideColumnSwap(battingSide) {
@@ -624,7 +629,7 @@ function renderTimeline(plays, teams) {
 
       const text = document.createElement("p");
       text.className = "timeline-text";
-      appendHighlightedPlayText(text, play.text || "", play.batter || null);
+      appendHighlightedPlayText(text, play, teams);
 
       item.append(badge, text);
       wrap.append(item);
@@ -1927,8 +1932,9 @@ function renderTeamLogo(node, teamName, branding) {
   node.alt = `${teamName} logo`;
 }
 
-function appendHighlightedPlayText(node, text, batterName) {
-  const clean = normalizePlayText(text);
+function appendHighlightedPlayText(node, play, teams) {
+  const clean = normalizePlayText(play?.text || "", play, teams);
+  const batterName = play?.batter || null;
   const highlightLastName = toLastName(batterName);
 
   if (!highlightLastName) {
@@ -1963,17 +1969,110 @@ function appendHighlightedPlayText(node, text, batterName) {
   }
 }
 
-function normalizePlayText(text) {
+function normalizePlayText(text, play, teams) {
   if (!text) {
     return "";
   }
 
-  return String(text)
+  const normalizedNames = normalizePlayNamesToLastNames(String(text), play, teams);
+  return normalizedNames
     .replace(/\((\d+\s*-\s*\d+)\s+([A-Za-z]+)\)/g, (_match, count, sequence) => {
       return `(${count} ${sequence.toUpperCase()})`;
     })
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function normalizePlayNamesToLastNames(text, play, teams) {
+  let output = String(text || "");
+  const namePairs = collectPlayNamePairs(play, teams);
+  if (namePairs.length === 0) {
+    return output;
+  }
+
+  namePairs
+    .slice()
+    .sort((left, right) => right.full.length - left.full.length)
+    .forEach((pair) => {
+      const first = escapeRegExp(pair.first);
+      const last = escapeRegExp(pair.last);
+      const initial = escapeRegExp(pair.first.charAt(0));
+      const replacement = pair.displayLast;
+
+      const fullPattern = new RegExp(`\\b${first}\\s+${last}\\b`, "gi");
+      output = output.replace(fullPattern, replacement);
+
+      const initialPattern = new RegExp(`\\b${initial}\\.?\\s+${last}\\b`, "gi");
+      output = output.replace(initialPattern, replacement);
+    });
+
+  return output;
+}
+
+function collectPlayNamePairs(play, teams) {
+  const pairs = new Map();
+
+  const addName = (rawName) => {
+    const normalized = normalizePersonName(rawName);
+    if (!normalized) {
+      return;
+    }
+
+    const parts = normalized.split(/\s+/).filter(Boolean);
+    if (parts.length < 2) {
+      return;
+    }
+
+    const first = toTitle(parts[0]);
+    const last = toTitle(parts[parts.length - 1]);
+    const key = `${first.toLowerCase()}|${last.toLowerCase()}`;
+    if (pairs.has(key)) {
+      return;
+    }
+
+    pairs.set(key, {
+      first,
+      last,
+      full: `${first} ${last}`,
+      displayLast: last,
+    });
+  };
+
+  const addTeamNames = (team) => {
+    const lineup = Array.isArray(team?.lineup) ? team.lineup : [];
+    lineup.forEach((entry) => {
+      addName(entry?.fullName || entry?.name);
+      addName(entry?.rosterPlayer?.name);
+    });
+
+    const rosterPlayers = Array.isArray(team?.roster?.players) ? team.roster.players : [];
+    rosterPlayers.forEach((player) => {
+      addName(player?.name);
+    });
+  };
+
+  addTeamNames(teams?.away);
+  addTeamNames(teams?.home);
+  addName(play?.batter);
+  addName(play?.pitcher);
+  addName(parseSubstitutionEnteringName(play?.text || ""));
+  addName(parseSubstitutionReplacedName(play?.text || ""));
+
+  return Array.from(pairs.values());
+}
+
+function parseSubstitutionReplacedName(text) {
+  const raw = String(text || "").trim();
+  if (!raw) {
+    return null;
+  }
+
+  const match = raw.match(/\bfor\s+(.+?)[.;]?$/i);
+  if (!match?.[1]) {
+    return null;
+  }
+
+  return normalizePersonName(match[1]);
 }
 
 function parseTodayLine(todayText) {
@@ -2469,6 +2568,66 @@ function abbreviateTeam(teamName) {
 
 function isSamePlayer(a, b) {
   return normalizePersonName(a) === normalizePersonName(b) || toLastName(a) === toLastName(b);
+}
+
+function mergeTimelinePlays(payload, summary, selectedGame, incomingPlays) {
+  const requestedGameId =
+    parseFiniteInt(payload?.selectedGameId) || parseFiniteInt(selectedGame?.gameId) || parseFiniteInt(summary?.id);
+  const gameId = requestedGameId ?? null;
+  const history = state.timelineHistory;
+
+  if (history.gameId !== gameId) {
+    history.gameId = gameId;
+    history.plays = [];
+  }
+
+  if (!Array.isArray(incomingPlays) || incomingPlays.length === 0) {
+    return history.plays.slice();
+  }
+
+  const merged = history.plays.map((play) => ({ ...play }));
+  const keyToIndex = new Map(
+    merged.map((play, index) => [buildTimelinePlayKey(play), index]).filter(([key]) => Boolean(key))
+  );
+
+  incomingPlays.forEach((play) => {
+    const key = buildTimelinePlayKey(play);
+    if (!key) {
+      return;
+    }
+
+    const existingIndex = keyToIndex.get(key);
+    if (existingIndex === undefined) {
+      keyToIndex.set(key, merged.length);
+      merged.push({ ...play });
+      return;
+    }
+
+    merged[existingIndex] = {
+      ...merged[existingIndex],
+      ...play,
+    };
+  });
+
+  history.plays = merged.slice(-240);
+  return history.plays.slice();
+}
+
+function buildTimelinePlayKey(play) {
+  const explicitKey = normalizeCell(play?.key);
+  if (explicitKey) {
+    return `k:${explicitKey}`;
+  }
+
+  const inning = Number.isFinite(play?.inning) ? play.inning : "x";
+  const half = normalizeCell(play?.half) || "x";
+  const order = Number.isFinite(play?.order) ? play.order : "x";
+  const text = normalizeCell(play?.text) || "x";
+  return `f:${inning}:${half}:${order}:${text}`;
+}
+
+function escapeRegExp(value) {
+  return String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function renderLoadFailure(message) {
