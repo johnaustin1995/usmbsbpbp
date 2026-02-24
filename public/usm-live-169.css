@@ -632,6 +632,8 @@ body {
   width: 100%;
   border-collapse: collapse;
   table-layout: auto;
+  --lineup-active-bg: #f0c425;
+  --lineup-active-fg: #111111;
 }
 
 .lineup-table th,
@@ -714,11 +716,21 @@ body {
 }
 
 .lineup-table tr.active {
-  background: #f0c425;
+  background: var(--lineup-active-bg);
 }
 
 .lineup-table tr.active td {
-  color: #111;
+  color: var(--lineup-active-fg);
+}
+
+.runners-title {
+  margin: 0 0 4px;
+  text-align: center;
+  font-size: clamp(18px, 1.05vw, 23px);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .placeholder {

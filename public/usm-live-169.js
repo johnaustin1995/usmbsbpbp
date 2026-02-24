@@ -247,7 +247,7 @@ function renderDashboard(payload, context) {
   renderBatterStats(batterProfile, batterTeam);
 
   renderRunnerNames(summary?.situation?.bases || null);
-  renderLineupTable(batterTeam.lineup, batterEntry);
+  renderLineupTable(batterTeam.lineup, batterEntry, batterTeam.branding);
   renderFieldAlignment(pitcherTeam, pitcherProfile);
   renderLineScore(lineScore, selectedGame);
   renderTimeline(plays, teamPack);
@@ -391,16 +391,16 @@ function renderBatterStats(profile, team) {
 }
 
 function renderRunnerNames(bases) {
-  const first = bases?.first ? toLastName(bases?.firstRunner) || "--" : "--";
-  const second = bases?.second ? toLastName(bases?.secondRunner) || "--" : "--";
-  const third = bases?.third ? toLastName(bases?.thirdRunner) || "--" : "--";
+  const first = bases?.first ? toLastName(bases?.firstRunner) || "EMPTY" : "EMPTY";
+  const second = bases?.second ? toLastName(bases?.secondRunner) || "EMPTY" : "EMPTY";
+  const third = bases?.third ? toLastName(bases?.thirdRunner) || "EMPTY" : "EMPTY";
 
   elements.runnerFirst.textContent = first.toUpperCase();
   elements.runnerSecond.textContent = second.toUpperCase();
   elements.runnerThird.textContent = third.toUpperCase();
 }
 
-function renderLineupTable(lineup, activeEntry) {
+function renderLineupTable(lineup, activeEntry, branding) {
   if (!Array.isArray(lineup) || lineup.length === 0) {
     elements.lineupTable.innerHTML = '<tbody><tr><td class="placeholder">Lineup unavailable.</td></tr></tbody>';
     return;
@@ -412,6 +412,7 @@ function renderLineupTable(lineup, activeEntry) {
 
   const columnSizing = computeLineupColumnSizing(sortedLineup);
   applyLineupColumnSizing(elements.lineupTable, columnSizing);
+  applyLineupHighlightStyling(elements.lineupTable, branding?.colors?.primary, "#f0c425");
 
   elements.lineupTable.innerHTML = "";
   const thead = document.createElement("thead");
@@ -451,6 +452,12 @@ function renderLineupTable(lineup, activeEntry) {
   });
 
   elements.lineupTable.append(thead, tbody);
+}
+
+function applyLineupHighlightStyling(table, preferredColor, fallbackColor) {
+  const color = safeHex(preferredColor) || fallbackColor;
+  table.style.setProperty("--lineup-active-bg", color);
+  table.style.setProperty("--lineup-active-fg", getReadableTextColor(color));
 }
 
 function computeLineupColumnSizing(lineup) {
