@@ -2004,7 +2004,34 @@ function normalizePlayNamesToLastNames(text, play, teams) {
 
       const initialPattern = new RegExp(`\\b${initial}\\.?\\s+${last}\\b`, "gi");
       output = output.replace(initialPattern, replacement);
+
+      const reversedFullPattern = new RegExp(`\\b${last}\\s*,\\s*${first}\\b`, "gi");
+      output = output.replace(reversedFullPattern, replacement);
+
+      const reversedInitialPattern = new RegExp(
+        `\\b${last}\\s*,\\s*${initial}\\.?(?=\\s|$|[.;:!?])`,
+        "gi"
+      );
+      output = output.replace(reversedInitialPattern, replacement);
+
+      const trailingInitialPattern = new RegExp(
+        `\\b${last}\\s+${initial}\\.?(?=\\s|$|[.;:!?])`,
+        "gi"
+      );
+      output = output.replace(trailingInitialPattern, replacement);
     });
+
+  const knownLastNames = Array.from(new Set(namePairs.map((pair) => pair.displayLast).filter(Boolean)))
+    .map((last) => escapeRegExp(last))
+    .sort((left, right) => right.length - left.length);
+
+  if (knownLastNames.length > 0) {
+    const trailingCommaPattern = new RegExp(
+      `\\b(${knownLastNames.join("|")})\\s*,(?=\\s|$|[.;:!?])`,
+      "gi"
+    );
+    output = output.replace(trailingCommaPattern, "$1");
+  }
 
   return output;
 }
