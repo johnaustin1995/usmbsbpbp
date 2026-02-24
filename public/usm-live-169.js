@@ -406,7 +406,13 @@ function renderLineupTable(lineup, activeEntry, branding) {
     return;
   }
 
-  const sortedLineup = lineup
+  const battingLineup = lineup.filter((entry) => parseFiniteInt(entry?.spot) !== 10);
+  if (battingLineup.length === 0) {
+    elements.lineupTable.innerHTML = '<tbody><tr><td class="placeholder">Lineup unavailable.</td></tr></tbody>';
+    return;
+  }
+
+  const sortedLineup = battingLineup
     .slice()
     .sort((a, b) => (a.spot ?? 99) - (b.spot ?? 99));
 
