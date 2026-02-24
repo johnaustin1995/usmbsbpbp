@@ -1160,10 +1160,156 @@ function buildMetaLine(player, options = {}) {
   const position = normalizePosition(player?.position || options.fallbackPosition || "-");
   const bats = normalizeCell(player?.bats || options.fallbackBats || "-");
   const throws = normalizeCell(player?.throws || options.fallbackThrows || player?.bats || "-");
-  const classYear = normalizeCell(player?.classYear || "-");
-  const hometown = normalizeCell(player?.hometown || player?.from || "-");
+  const classYear = normalizeClassYear(player?.classYear);
+  const hometown = normalizeHometownWithStateAbbreviation(player?.hometown || player?.from);
 
   return `${position} | ${bats}/${throws} | ${classYear} | ${hometown}`.toUpperCase();
+}
+
+const STATE_DEFINITIONS = [
+  { abbr: "AL", names: ["Alabama", "Ala"] },
+  { abbr: "AK", names: ["Alaska"] },
+  { abbr: "AZ", names: ["Arizona", "Ariz"] },
+  { abbr: "AR", names: ["Arkansas", "Ark"] },
+  { abbr: "CA", names: ["California", "Calif"] },
+  { abbr: "CO", names: ["Colorado", "Colo"] },
+  { abbr: "CT", names: ["Connecticut", "Conn"] },
+  { abbr: "DE", names: ["Delaware", "Del"] },
+  { abbr: "FL", names: ["Florida", "Fla"] },
+  { abbr: "GA", names: ["Georgia", "Ga"] },
+  { abbr: "HI", names: ["Hawaii", "Hawaii", "Hawai'i", "Hawaiʻi"] },
+  { abbr: "ID", names: ["Idaho"] },
+  { abbr: "IL", names: ["Illinois", "Ill"] },
+  { abbr: "IN", names: ["Indiana", "Ind"] },
+  { abbr: "IA", names: ["Iowa"] },
+  { abbr: "KS", names: ["Kansas", "Kan"] },
+  { abbr: "KY", names: ["Kentucky", "Ky"] },
+  { abbr: "LA", names: ["Louisiana", "La"] },
+  { abbr: "ME", names: ["Maine"] },
+  { abbr: "MD", names: ["Maryland", "Md"] },
+  { abbr: "MA", names: ["Massachusetts", "Mass"] },
+  { abbr: "MI", names: ["Michigan", "Mich"] },
+  { abbr: "MN", names: ["Minnesota", "Minn"] },
+  { abbr: "MS", names: ["Mississippi", "Miss"] },
+  { abbr: "MO", names: ["Missouri", "Mo"] },
+  { abbr: "MT", names: ["Montana", "Mont"] },
+  { abbr: "NE", names: ["Nebraska", "Neb"] },
+  { abbr: "NV", names: ["Nevada", "Nev"] },
+  { abbr: "NH", names: ["New Hampshire", "N.H"] },
+  { abbr: "NJ", names: ["New Jersey", "N.J"] },
+  { abbr: "NM", names: ["New Mexico", "N.M"] },
+  { abbr: "NY", names: ["New York", "N.Y"] },
+  { abbr: "NC", names: ["North Carolina", "N.C"] },
+  { abbr: "ND", names: ["North Dakota", "N.D"] },
+  { abbr: "OH", names: ["Ohio"] },
+  { abbr: "OK", names: ["Oklahoma", "Okla"] },
+  { abbr: "OR", names: ["Oregon", "Ore"] },
+  { abbr: "PA", names: ["Pennsylvania", "Pa"] },
+  { abbr: "RI", names: ["Rhode Island", "R.I"] },
+  { abbr: "SC", names: ["South Carolina", "S.C"] },
+  { abbr: "SD", names: ["South Dakota", "S.D"] },
+  { abbr: "TN", names: ["Tennessee", "Tenn"] },
+  { abbr: "TX", names: ["Texas", "Tex"] },
+  { abbr: "UT", names: ["Utah"] },
+  { abbr: "VT", names: ["Vermont", "Vt"] },
+  { abbr: "VA", names: ["Virginia", "Va"] },
+  { abbr: "WA", names: ["Washington", "Wash"] },
+  { abbr: "WV", names: ["West Virginia", "W.Va"] },
+  { abbr: "WI", names: ["Wisconsin", "Wis"] },
+  { abbr: "WY", names: ["Wyoming", "Wyo"] },
+  { abbr: "DC", names: ["District of Columbia", "D.C"] },
+  { abbr: "PR", names: ["Puerto Rico", "P.R"] },
+  { abbr: "VI", names: ["Virgin Islands", "U.S. Virgin Islands"] },
+];
+
+const STATE_ABBREVIATION_LOOKUP = buildStateAbbreviationLookup();
+
+function buildStateAbbreviationLookup() {
+  const map = new Map();
+  STATE_DEFINITIONS.forEach((entry) => {
+    map.set(normalizeStateLookupKey(entry.abbr), entry.abbr);
+    entry.names.forEach((name) => {
+      map.set(normalizeStateLookupKey(name), entry.abbr);
+    });
+  });
+  return map;
+}
+
+function normalizeClassYear(value) {
+  const raw = normalizeCell(value);
+  if (!raw) {
+    return "-";
+  }
+
+  const normalized = raw
+    .toLowerCase()
+    .replace(/\./g, "")
+    .replace(/-/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (/graduate|^gr$|^grad$/.test(normalized)) {
+    return "GR";
+  }
+
+  if (/freshman|^fr$/.test(normalized)) {
+    return "FR";
+  }
+
+  if (/sophomore|^so$/.test(normalized)) {
+    return "SO";
+  }
+
+  if (/junior|^jr$/.test(normalized)) {
+    return "JR";
+  }
+
+  if (/senior|^sr$/.test(normalized)) {
+    return "SR";
+  }
+
+  return raw.replace(/\./g, "").toUpperCase();
+}
+
+function normalizeHometownWithStateAbbreviation(value) {
+  const raw = normalizeCell(value);
+  if (!raw) {
+    return "-";
+  }
+
+  const parts = raw.split(",");
+  if (parts.length < 2) {
+    const lone = normalizeStateToken(raw);
+    return lone || raw;
+  }
+
+  const city = parts.slice(0, -1).join(",").trim();
+  const statePart = parts[parts.length - 1].trim();
+  const abbreviatedState = normalizeStateToken(statePart);
+  if (!abbreviatedState) {
+    return raw;
+  }
+
+  return `${city}, ${abbreviatedState}`;
+}
+
+function normalizeStateToken(value) {
+  const normalized = normalizeStateLookupKey(value);
+  if (!normalized) {
+    return null;
+  }
+
+  return STATE_ABBREVIATION_LOOKUP.get(normalized) || null;
+}
+
+function normalizeStateLookupKey(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[.'’]/g, "")
+    .replace(/[^a-z0-9]+/gi, " ")
+    .trim()
+    .toLowerCase();
 }
 
 function assignDefensivePositions(lineup, pitcherProfile) {
