@@ -16,6 +16,7 @@
     "x:daemon": "tsx src/tools/x-southern-miss-daemon.ts",
     "x:verify": "tsx src/tools/x-verify.ts",
     "schedule:usm": "tsx src/tools/build-southern-miss-schedule.ts",
+    "roster:scrape": "tsx src/tools/scrape-roster.ts",
     "import:branding": "node scripts/import-team-branding.mjs",
     "import:branding:meta": "node scripts/import-team-branding.mjs --skip-logos"
   },
