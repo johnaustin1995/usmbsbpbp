@@ -926,22 +926,25 @@ function parseLineScoreSection(section) {
 function parsePitchingSection(section) {
   const title = String(section?.title || "");
   const info = parsePitchingTitle(title);
-
-  const table = section?.tables?.[0];
-  const headers = Array.isArray(table?.headers) ? table.headers.map((value) => String(value || "").trim()) : [];
-  const row = Array.isArray(table?.rows) ? table.rows[0] : null;
-  const cells = Array.isArray(row?.cells) ? row.cells : [];
-
+  const tables = Array.isArray(section?.tables) ? section.tables : [];
   const statMap = {};
-  headers.forEach((header, index) => {
-    const key = header.toUpperCase();
-    if (!key) {
-      return;
-    }
-    statMap[key] = cells[index] ?? null;
+  const statPriority = {};
+
+  tables.forEach((table) => {
+    mergePitchingTableStatMap(statMap, statPriority, table);
   });
 
-  if (info.era !== null) {
+  const throwsFromStats = normalizeCell(statMap.THROWS);
+  if (!info.throws && throwsFromStats) {
+    info.throws = throwsFromStats.toUpperCase();
+  }
+
+  const eraFromStats = normalizeCell(statMap.ERA);
+  if (!info.era && eraFromStats) {
+    info.era = eraFromStats;
+  }
+
+  if (info.era !== null && statMap.ERA == null) {
     statMap.ERA = info.era;
   }
 
@@ -968,6 +971,74 @@ function parsePitchingTitle(title) {
     throws: throwsMatch ? throwsMatch[1].toUpperCase() : null,
     era: eraMatch ? eraMatch[1] : null,
   };
+}
+
+function mergePitchingTableStatMap(target, priorityMap, table) {
+  if (!table || !Array.isArray(table.headers) || !Array.isArray(table.rows)) {
+    return;
+  }
+
+  const headers = table.headers.map((header) => toPitchingStatKey(header));
+  const hasTodayHeader = headers.includes("TODAY");
+  const hasThrowsHeader = headers.includes("THROWS");
+  const hasSeasonHeader = headers.includes("SEASON");
+
+  const directPriority = hasTodayHeader ? 3 : hasThrowsHeader ? 2 : hasSeasonHeader ? 1 : 2;
+  const directRow = table.rows[0] ?? null;
+  if (directRow && headers.length > 0) {
+    const aligned = alignLineupRowCells(headers, Array.isArray(directRow.cells) ? directRow.cells : []);
+    headers.forEach((header, index) => {
+      setPitchingStat(target, priorityMap, header, aligned[index] ?? null, directPriority);
+    });
+  }
+
+  table.rows.forEach((row, index) => {
+    const headerCells = (Array.isArray(row?.cells) ? row.cells : []).map((cell) => toPitchingStatKey(cell));
+    if (headerCells.length === 0) {
+      return;
+    }
+
+    const rowType = headerCells[0];
+    if (rowType !== "TODAY" && rowType !== "THROWS" && rowType !== "SEASON") {
+      return;
+    }
+
+    const nextRow = table.rows[index + 1];
+    if (!nextRow || !Array.isArray(nextRow.cells) || nextRow.cells.length === 0) {
+      return;
+    }
+
+    const rowPriority = rowType === "TODAY" ? 3 : rowType === "THROWS" ? 2 : 1;
+    const alignedValues = alignLineupRowCells(headerCells, nextRow.cells);
+    headerCells.forEach((header, cellIndex) => {
+      setPitchingStat(target, priorityMap, header, alignedValues[cellIndex] ?? null, rowPriority);
+    });
+  });
+}
+
+function toPitchingStatKey(value) {
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .toUpperCase();
+}
+
+function setPitchingStat(target, priorityMap, key, value, priority) {
+  if (!key || key === "PLAYER" || key === "#" || key === "DEC") {
+    return;
+  }
+
+  if (value === null || value === undefined || value === "") {
+    return;
+  }
+
+  const currentPriority = priorityMap[key] ?? -1;
+  if (priority < currentPriority) {
+    return;
+  }
+
+  target[key] = value;
+  priorityMap[key] = priority;
 }
 
 function parseLineupSection(section) {
