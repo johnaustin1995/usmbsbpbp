@@ -11,6 +11,7 @@ const BASE_BROWSER_HEADERS = {
 };
 
 const PLAYER_PROFILE_PATH_RE = /\/sport[s]?\/[^/]+\/roster\/(?!coaches\/|staff\/)[^?#]+/i;
+const PLAYER_PROFILE_LEGACY_PATH_RE = /\/roster\.(?:aspx|php)$/i;
 const NON_PLAYER_ROLE_RE =
   /\b(coach|director|coordinator|operations|development|analytics|strength|conditioning|trainer|manager|staff|support|volunteer|graduate assistant|ga)\b/i;
 const PROFILE_CONTAINER_SELECTOR = [
@@ -95,6 +96,9 @@ export async function scrapeRosterPage(options: ScrapeRosterOptions): Promise<Sc
   let strategy: "profile-links" | "table-fallback" = "profile-links";
   let candidates = extractPlayersFromProfileLinks($, sourceUrl);
   if (candidates.length === 0) {
+    candidates = extractPlayersFromStructuredData($, sourceUrl);
+  }
+  if (candidates.length === 0) {
     strategy = "table-fallback";
     candidates = extractPlayersFromTables($, sourceUrl);
   }
@@ -149,6 +153,112 @@ function extractPlayersFromProfileLinks($: CheerioAPI, pageUrl: string): Candida
   }
 
   return records;
+}
+
+function extractPlayersFromStructuredData($: CheerioAPI, pageUrl: string): CandidatePlayerRecord[] {
+  const records: CandidatePlayerRecord[] = [];
+  const seen = new Set<string>();
+
+  $("script[type='application/ld+json']").each((_, node) => {
+    const raw = cleanText($(node).html() || "");
+    if (!raw) {
+      return;
+    }
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return;
+    }
+
+    const people = collectStructuredPeople(parsed);
+    for (const person of people) {
+      const profileUrl = toAbsoluteUrl(person.url, pageUrl);
+      if (!isPlayerProfileHref(profileUrl) || seen.has(profileUrl)) {
+        continue;
+      }
+      seen.add(profileUrl);
+      const structuredName = cleanPersonName(cleanText(person.name) || "");
+
+      records.push({
+        profileUrl,
+        name: structuredName || null,
+        number: null,
+        photoUrl: person.image ? toAbsoluteUrl(person.image, pageUrl) : null,
+        fields: new Map<string, string>(),
+      });
+    }
+  });
+
+  return records;
+}
+
+interface StructuredPerson {
+  name: string;
+  url: string;
+  image: string | null;
+}
+
+function collectStructuredPeople(value: unknown): StructuredPerson[] {
+  const people: StructuredPerson[] = [];
+  walkStructuredValue(value, people);
+  return people;
+}
+
+function walkStructuredValue(value: unknown, people: StructuredPerson[]): void {
+  if (!value) {
+    return;
+  }
+
+  if (Array.isArray(value)) {
+    for (const entry of value) {
+      walkStructuredValue(entry, people);
+    }
+    return;
+  }
+
+  if (typeof value !== "object") {
+    return;
+  }
+
+  const record = value as Record<string, unknown>;
+  const type = cleanText(String(record["@type"] ?? ""));
+  if (type && /person/i.test(type)) {
+    const name = cleanText(String(record.name ?? ""));
+    const url = cleanText(String(record.url ?? ""));
+    const image = extractStructuredImage(record.image);
+    if (name && url) {
+      people.push({ name, url, image });
+    }
+  }
+
+  for (const child of Object.values(record)) {
+    walkStructuredValue(child, people);
+  }
+}
+
+function extractStructuredImage(value: unknown): string | null {
+  if (!value) {
+    return null;
+  }
+  if (typeof value === "string") {
+    return cleanText(value) || null;
+  }
+  if (Array.isArray(value)) {
+    for (const entry of value) {
+      const image = extractStructuredImage(entry);
+      if (image) {
+        return image;
+      }
+    }
+    return null;
+  }
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    return cleanText(String(record.url ?? "")) || null;
+  }
+  return null;
 }
 
 function resolveClosestPlayerContainer($: CheerioAPI, anchor: AnyNode): AnyNode | null {
@@ -1199,17 +1309,27 @@ function isPlayerProfileHref(href: string | null | undefined): boolean {
   }
 
   let path = cleanHref;
+  let search = "";
   try {
-    path = new URL(cleanHref, "https://example.com").pathname;
+    const parsed = new URL(cleanHref, "https://example.com");
+    path = parsed.pathname;
+    search = parsed.search;
   } catch {
     path = cleanHref;
   }
 
-  if (!PLAYER_PROFILE_PATH_RE.test(path)) {
-    return false;
+  if (PLAYER_PROFILE_PATH_RE.test(path)) {
+    return !/\/roster\/(?:coaches|staff)\//i.test(path);
   }
 
-  return !/\/roster\/(?:coaches|staff)\//i.test(path);
+  if (PLAYER_PROFILE_LEGACY_PATH_RE.test(path)) {
+    const params = new URLSearchParams(search);
+    if (params.has("rp_id") || params.has("player_id")) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function escapeRegExp(value: string): string {

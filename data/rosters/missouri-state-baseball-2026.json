@@ -1,0 +1,973 @@
+{
+  "sourceUrl": "https://missouristatebears.com/sports/baseball/roster",
+  "fetchedAt": "2026-02-27T15:38:27.298Z",
+  "pageTitle": "2026 Baseball Roster - Missouri State",
+  "teamName": "Missouri State",
+  "sport": "Baseball",
+  "season": "2026",
+  "playerCount": 33,
+  "parser": {
+    "strategy": "profile-links",
+    "candidateRecords": 165,
+    "dedupedRecords": 33
+  },
+  "players": [
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/bowen-tabola/8913",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/bowen-tabola/8913",
+      "name": "Bowen Tabola",
+      "firstName": "Bowen",
+      "lastName": "Tabola",
+      "number": "1",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Bowen_Tabola_3463_AGibh.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Sophomore",
+      "height": "5-10",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Castle Rock, Colo.",
+      "from": "Castle Rock, Colo.",
+      "lastSchool": null,
+      "previousSchool": "Cherokee Trail HS/Western Carolina/Eastern Florida State",
+      "previousSchools": [
+        "Cherokee Trail HS/Western Carolina/Eastern Florida State"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Height": "5-10",
+        "Hometown": "Castle Rock, Colo.",
+        "Prev School": "Cherokee Trail HS/Western Carolina/Eastern Florida State",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/bryce-cermenelli/8914",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/bryce-cermenelli/8914",
+      "name": "Bryce Cermenelli",
+      "firstName": "Bryce",
+      "lastName": "Cermenelli",
+      "number": "3",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Bryce_Cermenelli_3881_WIet5.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-8",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Norco, Calif.",
+      "from": "Norco, Calif.",
+      "lastSchool": null,
+      "previousSchool": "Norco HS/Riverside CC/Central Arkansas",
+      "previousSchools": [
+        "Norco HS/Riverside CC/Central Arkansas"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-8",
+        "Hometown": "Norco, Calif.",
+        "Prev School": "Norco HS/Riverside CC/Central Arkansas",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/jax-ryan/8915",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/jax-ryan/8915",
+      "name": "Jax Ryan",
+      "firstName": "Jax",
+      "lastName": "Ryan",
+      "number": "4",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Jax_Ryan_3456_G5iLK.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Verdigris, Okla.",
+      "from": "Verdigris, Okla.",
+      "lastSchool": null,
+      "previousSchool": "Verdigris HS/Arizona State",
+      "previousSchools": [
+        "Verdigris HS/Arizona State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-1",
+        "Hometown": "Verdigris, Okla.",
+        "Prev School": "Verdigris HS/Arizona State",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/gabe-roessler/8916",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/gabe-roessler/8916",
+      "name": "Gabe Roessler",
+      "firstName": "Gabe",
+      "lastName": "Roessler",
+      "number": "5",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Gabe_Roessler_3415_XCOtk.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "6-1",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Rockton, Ill.",
+      "from": "Rockton, Ill.",
+      "lastSchool": null,
+      "previousSchool": "Hononegah Community HS/Madison College/Milwaukee",
+      "previousSchools": [
+        "Hononegah Community HS/Madison College/Milwaukee"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-1",
+        "Hometown": "Rockton, Ill.",
+        "Prev School": "Hononegah Community HS/Madison College/Milwaukee",
+        "Weight": "200"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/logan-fyffe/8900",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/logan-fyffe/8900",
+      "name": "Logan Fyffe",
+      "firstName": "Logan",
+      "lastName": "Fyffe",
+      "number": "9",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Logan_Fyffe_3477_8oOkf.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "6-0",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Springfield, Ohio",
+      "from": "Springfield, Ohio",
+      "lastSchool": null,
+      "previousSchool": "Kenton Ridge HS",
+      "previousSchools": [
+        "Kenton Ridge HS"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "6-0",
+        "Hometown": "Springfield, Ohio",
+        "Prev School": "Kenton Ridge HS",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/jason-schaaf/8906",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/jason-schaaf/8906",
+      "name": "Jason Schaaf",
+      "firstName": "Jason",
+      "lastName": "Schaaf",
+      "number": "10",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Jason_Schaaf_3436_ECEHO.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-11",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Las Vegas, Nev.",
+      "from": "Las Vegas, Nev.",
+      "lastSchool": null,
+      "previousSchool": "Palo Verde HS/Indian Hills CC",
+      "previousSchools": [
+        "Palo Verde HS/Indian Hills CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-11",
+        "Hometown": "Las Vegas, Nev.",
+        "Prev School": "Palo Verde HS/Indian Hills CC",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/logan-dunn/8899",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/logan-dunn/8899",
+      "name": "Logan Dunn",
+      "firstName": "Logan",
+      "lastName": "Dunn",
+      "number": "11",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Logan_Dunn_3852_znaZT.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "6-0",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Wautoma, Wis.",
+      "from": "Wautoma, Wis.",
+      "lastSchool": null,
+      "previousSchool": "Wautoma HS",
+      "previousSchools": [
+        "Wautoma HS"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "6-0",
+        "Hometown": "Wautoma, Wis.",
+        "Prev School": "Wautoma HS",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/michael-yusypchuk/8912",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/michael-yusypchuk/8912",
+      "name": "Michael Yusypchuk",
+      "firstName": "Michael",
+      "lastName": "Yusypchuk",
+      "number": "12",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Michael_Yusypchuk_3301_ulaKk.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "6-3",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Edmonton, Alberta",
+      "from": "Edmonton, Alberta",
+      "lastSchool": null,
+      "previousSchool": "Foothills Composite HS",
+      "previousSchools": [
+        "Foothills Composite HS"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "6-3",
+        "Hometown": "Edmonton, Alberta",
+        "Prev School": "Foothills Composite HS",
+        "Weight": "215"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/bobby-atkinson/8917",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/bobby-atkinson/8917",
+      "name": "Bobby Atkinson",
+      "firstName": "Bobby",
+      "lastName": "Atkinson",
+      "number": "13",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Bobby_Atkinson_3421_OuhSh.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "205",
+      "bats": null,
+      "throws": null,
+      "hometown": "Darien, Ill.",
+      "from": "Darien, Ill.",
+      "lastSchool": null,
+      "previousSchool": "St. Rita of Cascia HS/Heartland CC/Coastal Carolina/Bradley",
+      "previousSchools": [
+        "St. Rita of Cascia HS/Heartland CC/Coastal Carolina/Bradley"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-10",
+        "Hometown": "Darien, Ill.",
+        "Prev School": "St. Rita of Cascia HS/Heartland CC/Coastal Carolina/Bradley",
+        "Weight": "205"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/adyn-schell/8918",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/adyn-schell/8918",
+      "name": "Adyn Schell",
+      "firstName": "Adyn",
+      "lastName": "Schell",
+      "number": "14",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Adyn_Schell_4343_SgK7r.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Freshman",
+      "height": "6-1",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Toronto, Ontario",
+      "from": "Toronto, Ontario",
+      "lastSchool": null,
+      "previousSchool": "Martingrove Collegiate Institute",
+      "previousSchools": [
+        "Martingrove Collegiate Institute"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "6-1",
+        "Hometown": "Toronto, Ontario",
+        "Prev School": "Martingrove Collegiate Institute",
+        "Weight": "210"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/caden-bogenpohl/8897",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/caden-bogenpohl/8897",
+      "name": "Caden Bogenpohl",
+      "firstName": "Caden",
+      "lastName": "Bogenpohl",
+      "number": "16",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Caden_Bogenpohl_3844_gFJrg.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-6",
+      "weight": "245",
+      "bats": null,
+      "throws": null,
+      "hometown": "Jackson, Mo.",
+      "from": "Jackson, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Jackson HS",
+      "previousSchools": [
+        "Jackson HS"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-6",
+        "Hometown": "Jackson, Mo.",
+        "Prev School": "Jackson HS",
+        "Weight": "245"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/sam-maclaughlin/8904",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/sam-maclaughlin/8904",
+      "name": "Sam Maclaughlin",
+      "firstName": "Sam",
+      "lastName": "Maclaughlin",
+      "number": "17",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Sam_Maclaughlin_3988_63hXv.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "6-1",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Toronto, Ontario",
+      "from": "Toronto, Ontario",
+      "lastSchool": null,
+      "previousSchool": "Humberside Collegiate Institute",
+      "previousSchools": [
+        "Humberside Collegiate Institute"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "6-1",
+        "Hometown": "Toronto, Ontario",
+        "Prev School": "Humberside Collegiate Institute",
+        "Weight": "190"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/charlie-carter/8919",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/charlie-carter/8919",
+      "name": "Charlie Carter",
+      "firstName": "Charlie",
+      "lastName": "Carter",
+      "number": "19",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Charlie_Carter_3869_NHwzU.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Little Rock, Ark.",
+      "from": "Little Rock, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Little Rock Christian Academy/Oklahoma State",
+      "previousSchools": [
+        "Little Rock Christian Academy/Oklahoma State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-3",
+        "Hometown": "Little Rock, Ark.",
+        "Prev School": "Little Rock Christian Academy/Oklahoma State",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/trent-ash/8920",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/trent-ash/8920",
+      "name": "Trent Ash",
+      "firstName": "Trent",
+      "lastName": "Ash",
+      "number": "21",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Trent_Ash_3896_qiaHL.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "5-10",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Springville, Utah",
+      "from": "Springville, Utah",
+      "lastSchool": null,
+      "previousSchool": "Springville HS/Bethany Lutheran College",
+      "previousSchools": [
+        "Springville HS/Bethany Lutheran College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "5-10",
+        "Hometown": "Springville, Utah",
+        "Prev School": "Springville HS/Bethany Lutheran College",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/taeg-gollert/8901",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/taeg-gollert/8901",
+      "name": "Taeg Gollert",
+      "firstName": "Taeg",
+      "lastName": "Gollert",
+      "number": "23",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Taeg_Gollert_3888_rA2ET.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "6-1",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Toronto, Ontario",
+      "from": "Toronto, Ontario",
+      "lastSchool": null,
+      "previousSchool": "Humberside Collegiate Institute",
+      "previousSchools": [
+        "Humberside Collegiate Institute"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-1",
+        "Hometown": "Toronto, Ontario",
+        "Prev School": "Humberside Collegiate Institute",
+        "Weight": "215"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/max-knight/8902",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/max-knight/8902",
+      "name": "Max Knight",
+      "firstName": "Max",
+      "lastName": "Knight",
+      "number": "24",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Max_Knight_3867_wbW79.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Bixby, Okla.",
+      "from": "Bixby, Okla.",
+      "lastSchool": null,
+      "previousSchool": "Bixby HS/Oklahoma State",
+      "previousSchools": [
+        "Bixby HS/Oklahoma State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-3",
+        "Hometown": "Bixby, Okla.",
+        "Prev School": "Bixby HS/Oklahoma State",
+        "Weight": "210"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/brock-lucas/8921",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/brock-lucas/8921",
+      "name": "Brock Lucas",
+      "firstName": "Brock",
+      "lastName": "Lucas",
+      "number": "25",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Brock_Lucas_3429_ErVWX.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "6-4",
+      "weight": "225",
+      "bats": null,
+      "throws": null,
+      "hometown": "St. Elizabeth, Mo.",
+      "from": "St. Elizabeth, Mo.",
+      "lastSchool": null,
+      "previousSchool": "St. Elizabeth HS/Missouri",
+      "previousSchools": [
+        "St. Elizabeth HS/Missouri"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-4",
+        "Hometown": "St. Elizabeth, Mo.",
+        "Prev School": "St. Elizabeth HS/Missouri",
+        "Weight": "225"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/carter-bergman/8896",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/carter-bergman/8896",
+      "name": "Carter Bergman",
+      "firstName": "Carter",
+      "lastName": "Bergman",
+      "number": "26",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Carter_Bergman_3401_D4Ypv.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "6-2",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Kansas City, Kan.",
+      "from": "Kansas City, Kan.",
+      "lastSchool": null,
+      "previousSchool": "Basehor-Linwood HS",
+      "previousSchools": [
+        "Basehor-Linwood HS"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-2",
+        "Hometown": "Kansas City, Kan.",
+        "Prev School": "Basehor-Linwood HS",
+        "Weight": "215"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/brody-mcniel/8905",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/brody-mcniel/8905",
+      "name": "Brody Mcniel",
+      "firstName": "Brody",
+      "lastName": "Mcniel",
+      "number": "27",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Brody_McNiel_3409_OJoAP.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Sophomore",
+      "height": "6-4",
+      "weight": "205",
+      "bats": null,
+      "throws": null,
+      "hometown": "Rogersville, Mo.",
+      "from": "Rogersville, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Logan-Rogersville HS",
+      "previousSchools": [
+        "Logan-Rogersville HS"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Height": "6-4",
+        "Hometown": "Rogersville, Mo.",
+        "Prev School": "Logan-Rogersville HS",
+        "Weight": "205"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/lance-wade/8922",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/lance-wade/8922",
+      "name": "Lance Wade",
+      "firstName": "Lance",
+      "lastName": "Wade",
+      "number": "29",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Lance_Wade_3448_iJnX5.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Baton Rouge, La.",
+      "from": "Baton Rouge, La.",
+      "lastSchool": null,
+      "previousSchool": "University Lab School/Mississippi College/Winthrop",
+      "previousSchools": [
+        "University Lab School/Mississippi College/Winthrop"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-10",
+        "Hometown": "Baton Rouge, La.",
+        "Prev School": "University Lab School/Mississippi College/Winthrop",
+        "Weight": "190"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/jackson-beaman/8924",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/jackson-beaman/8924",
+      "name": "Jackson Beaman",
+      "firstName": "Jackson",
+      "lastName": "Beaman",
+      "number": "31",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Jackson_Beaman_3859_62G1a.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "6-2",
+      "weight": "230",
+      "bats": null,
+      "throws": null,
+      "hometown": "Lincoln, Mo.",
+      "from": "Lincoln, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Lincoln HS/Missouri/Iowa",
+      "previousSchools": [
+        "Lincoln HS/Missouri/Iowa"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-2",
+        "Hometown": "Lincoln, Mo.",
+        "Prev School": "Lincoln HS/Missouri/Iowa",
+        "Weight": "230"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/michael-callahan/8925",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/michael-callahan/8925",
+      "name": "Michael Callahan",
+      "firstName": "Michael",
+      "lastName": "Callahan",
+      "number": "32",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Michael_Callahan_4338_x70iS.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Freshman",
+      "height": "5-10",
+      "weight": "170",
+      "bats": null,
+      "throws": null,
+      "hometown": "Wildwood, Mo.",
+      "from": "Wildwood, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Lafayette HS",
+      "previousSchools": [
+        "Lafayette HS"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "5-10",
+        "Hometown": "Wildwood, Mo.",
+        "Prev School": "Lafayette HS",
+        "Weight": "170"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/jake-collier/8926",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/jake-collier/8926",
+      "name": "Jake Collier",
+      "firstName": "Jake",
+      "lastName": "Collier",
+      "number": "33",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/jake_collier_4112_wm4dS.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Freshman",
+      "height": "5-11",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Pacific, Mo.",
+      "from": "Pacific, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Pacific HS",
+      "previousSchools": [
+        "Pacific HS"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "5-11",
+        "Hometown": "Pacific, Mo.",
+        "Prev School": "Pacific HS",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/ross-felder/8927",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/ross-felder/8927",
+      "name": "Ross Felder",
+      "firstName": "Ross",
+      "lastName": "Felder",
+      "number": "34",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Ross_felder_4113_pUmhI.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Freshman",
+      "height": "6-2",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Springdale, Ark.",
+      "from": "Springdale, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Har-Ber HS/Arkansas",
+      "previousSchools": [
+        "Har-Ber HS/Arkansas"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Freshman",
+        "Height": "6-2",
+        "Hometown": "Springdale, Ark.",
+        "Prev School": "Har-Ber HS/Arkansas",
+        "Weight": "190"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/brant-kragel/8903",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/brant-kragel/8903",
+      "name": "Brant Kragel",
+      "firstName": "Brant",
+      "lastName": "Kragel",
+      "number": "35",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Brant_Kragel_3899_oqkyu.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "6-5",
+      "weight": "235",
+      "bats": null,
+      "throws": null,
+      "hometown": "Castle Rock, Colo.",
+      "from": "Castle Rock, Colo.",
+      "lastSchool": null,
+      "previousSchool": "Valor Christian HS/Pima CC",
+      "previousSchools": [
+        "Valor Christian HS/Pima CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-5",
+        "Hometown": "Castle Rock, Colo.",
+        "Prev School": "Valor Christian HS/Pima CC",
+        "Weight": "235"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/tyler-charlton/8898",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/tyler-charlton/8898",
+      "name": "Tyler Charlton",
+      "firstName": "Tyler",
+      "lastName": "Charlton",
+      "number": "36",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Tyler_Charlton_3390_dUpNy.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Junior",
+      "height": "6-2",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Foristell, Mo.",
+      "from": "Foristell, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Christian Brothers HS",
+      "previousSchools": [
+        "Christian Brothers HS"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-2",
+        "Hometown": "Foristell, Mo.",
+        "Prev School": "Christian Brothers HS",
+        "Weight": "220"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/daniel-wissler/8923",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/daniel-wissler/8923",
+      "name": "Daniel Wissler",
+      "firstName": "Daniel",
+      "lastName": "Wissler",
+      "number": "40",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Daniel_Wissler_3889_bjZ0t.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Junior",
+      "height": "6-2",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "O'Fallon, Mo.",
+      "from": "O'Fallon, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Fort Zumwalt West HS/Missouri",
+      "previousSchools": [
+        "Fort Zumwalt West HS/Missouri"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-2",
+        "Hometown": "O'Fallon, Mo.",
+        "Prev School": "Fort Zumwalt West HS/Missouri",
+        "Weight": "190"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/drew-wedgeworth/8911",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/drew-wedgeworth/8911",
+      "name": "Drew Wedgeworth",
+      "firstName": "Drew",
+      "lastName": "Wedgeworth",
+      "number": "41",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Drew_Wedgeworth_3875_bH3e4.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Freshman",
+      "height": "6-2",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Springfield, Mo.",
+      "from": "Springfield, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Glendale HS",
+      "previousSchools": [
+        "Glendale HS"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Freshman",
+        "Height": "6-2",
+        "Hometown": "Springfield, Mo.",
+        "Prev School": "Glendale HS",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/charlie-spoonhour/8908",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/charlie-spoonhour/8908",
+      "name": "Charlie Spoonhour",
+      "firstName": "Charlie",
+      "lastName": "Spoonhour",
+      "number": "43",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Charlie_Spoonhour_3486_U7Lmh.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "5-11",
+      "weight": "165",
+      "bats": null,
+      "throws": null,
+      "hometown": "St. Louis, Mo.",
+      "from": "St. Louis, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Vianney HS",
+      "previousSchools": [
+        "Vianney HS"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "5-11",
+        "Hometown": "St. Louis, Mo.",
+        "Prev School": "Vianney HS",
+        "Weight": "165"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/curry-sutherland/8909",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/curry-sutherland/8909",
+      "name": "Curry Sutherland",
+      "firstName": "Curry",
+      "lastName": "Sutherland",
+      "number": "44",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Curry_Sutherland_3396_HS9kC.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-5",
+      "weight": "225",
+      "bats": null,
+      "throws": null,
+      "hometown": "Rogersville, Mo.",
+      "from": "Rogersville, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Logan-Rogersville HS",
+      "previousSchools": [
+        "Logan-Rogersville HS"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-5",
+        "Hometown": "Rogersville, Mo.",
+        "Prev School": "Logan-Rogersville HS",
+        "Weight": "225"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/harrison-bouthillette/8928",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/harrison-bouthillette/8928",
+      "name": "Harrison Bouthillette",
+      "firstName": "Harrison",
+      "lastName": "Bouthillette",
+      "number": "45",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Harrison_Bouthillette_3470_TMiOL.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-2",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Indian Land, S.C.",
+      "from": "Indian Land, S.C.",
+      "lastSchool": null,
+      "previousSchool": "Metrolina Christian Academy/San Jacinto College/USC Lancaster",
+      "previousSchools": [
+        "Metrolina Christian Academy/San Jacinto College/USC Lancaster"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-2",
+        "Hometown": "Indian Land, S.C.",
+        "Prev School": "Metrolina Christian Academy/San Jacinto College/USC Lancaster",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/tommy-kramkowski/8930",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/tommy-kramkowski/8930",
+      "name": "Tommy Kramkowski",
+      "firstName": "Tommy",
+      "lastName": "Kramkowski",
+      "number": "50",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/Tommy_Kramkowski_3991_feybG.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Freshman",
+      "height": "6-3",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Swansea, Ill.",
+      "from": "Swansea, Ill.",
+      "lastSchool": null,
+      "previousSchool": "Belleville East HS",
+      "previousSchools": [
+        "Belleville East HS"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "6-3",
+        "Hometown": "Swansea, Ill.",
+        "Prev School": "Belleville East HS",
+        "Weight": "200"
+      }
+    },
+    {
+      "key": "https://missouristatebears.com/sports/baseball/roster/owen-slater/8907",
+      "profileUrl": "https://missouristatebears.com/sports/baseball/roster/owen-slater/8907",
+      "name": "Owen Slater",
+      "firstName": "Owen",
+      "lastName": "Slater",
+      "number": "88",
+      "photoUrl": "https://missouristatebears.com/images/2025/12/4/owen_slater_4118_NjBib.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "6-4",
+      "weight": "205",
+      "bats": null,
+      "throws": null,
+      "hometown": "Brooklin, Ontario",
+      "from": "Brooklin, Ontario",
+      "lastSchool": null,
+      "previousSchool": "Brooklin HS",
+      "previousSchools": [
+        "Brooklin HS"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "6-4",
+        "Hometown": "Brooklin, Ontario",
+        "Prev School": "Brooklin HS",
+        "Weight": "205"
+      }
+    }
+  ]
+}

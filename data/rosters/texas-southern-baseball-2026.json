@@ -1,0 +1,1031 @@
+{
+  "sourceUrl": "https://admin.tsusports.com/sports/baseball/roster",
+  "fetchedAt": "2026-02-27T15:45:06.113Z",
+  "pageTitle": "2026 Baseball Roster - Texas Southern University Athletics",
+  "teamName": "Texas Southern",
+  "sport": "Baseball",
+  "season": "2026",
+  "playerCount": 35,
+  "parser": {
+    "strategy": "profile-links",
+    "candidateRecords": 175,
+    "dedupedRecords": 35
+  },
+  "players": [
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/tj-bradford/7418",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/tj-bradford/7418",
+      "name": "Tj Bradford",
+      "firstName": "Tj",
+      "lastName": "Bradford",
+      "number": "0",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/0-Terrance_Bradford.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Freshman",
+      "height": "5-8",
+      "weight": "165",
+      "bats": null,
+      "throws": null,
+      "hometown": "Hewlett, NY",
+      "from": "Hewlett, NY",
+      "lastSchool": null,
+      "previousSchool": "Chaminade",
+      "previousSchools": [
+        "Chaminade"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "5-8",
+        "Hometown": "Hewlett, NY",
+        "Prev School": "Chaminade",
+        "Weight": "165"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/daylon-carleton/7403",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/daylon-carleton/7403",
+      "name": "Daylon Carleton",
+      "firstName": "Daylon",
+      "lastName": "Carleton",
+      "number": "2",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/2-Daylon_Carleton.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Junior",
+      "height": "6-0",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Stone Mountain, GA",
+      "from": "Stone Mountain, GA",
+      "lastSchool": null,
+      "previousSchool": "Alvin CC",
+      "previousSchools": [
+        "Alvin CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-0",
+        "Hometown": "Stone Mountain, GA",
+        "Prev School": "Alvin CC",
+        "Weight": "210"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/justin-mayes/7408",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/justin-mayes/7408",
+      "name": "Justin Mayes",
+      "firstName": "Justin",
+      "lastName": "Mayes",
+      "number": "3",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_3-Justin_Mays.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "6-1",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Sugar Land, Texas",
+      "from": "Sugar Land, Texas",
+      "lastSchool": null,
+      "previousSchool": "Odessa CC",
+      "previousSchools": [
+        "Odessa CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-1",
+        "Hometown": "Sugar Land, Texas",
+        "Prev School": "Odessa CC",
+        "Weight": "190"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/kewan-braziel/7416",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/kewan-braziel/7416",
+      "name": "Kewan Braziel",
+      "firstName": "Kewan",
+      "lastName": "Braziel",
+      "number": "4",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/4-Kewan_Braziel.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Charlotte, N.C.",
+      "from": "Charlotte, N.C.",
+      "lastSchool": null,
+      "previousSchool": "Alcorn State",
+      "previousSchools": [
+        "Alcorn State"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-10",
+        "Hometown": "Charlotte, N.C.",
+        "Prev School": "Alcorn State",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/jonathan-trejo/7415",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/jonathan-trejo/7415",
+      "name": "Jonathan Trejo",
+      "firstName": "Jonathan",
+      "lastName": "Trejo",
+      "number": "5",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/5-Jonathan_Trejo.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Cypress, Texas",
+      "from": "Cypress, Texas",
+      "lastSchool": null,
+      "previousSchool": "Langham Creek",
+      "previousSchools": [
+        "Langham Creek"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-0",
+        "Hometown": "Cypress, Texas",
+        "Prev School": "Langham Creek",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/jose-luccioni/7407",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/jose-luccioni/7407",
+      "name": "Jose Luccioni",
+      "firstName": "Jose",
+      "lastName": "Luccioni",
+      "number": "6",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/6-Jose_Luccioni.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "5-11",
+      "weight": "150",
+      "bats": null,
+      "throws": null,
+      "hometown": "Clear Lake, Texas",
+      "from": "Clear Lake, Texas",
+      "lastSchool": null,
+      "previousSchool": "Clear Brook",
+      "previousSchools": [
+        "Clear Brook"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "5-11",
+        "Hometown": "Clear Lake, Texas",
+        "Prev School": "Clear Brook",
+        "Weight": "150"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/tanner-marek/7417",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/tanner-marek/7417",
+      "name": "Tanner Marek",
+      "firstName": "Tanner",
+      "lastName": "Marek",
+      "number": "7",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_7-Tanner_Marek.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Sophomore",
+      "height": "6-0",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Alvin, Texas",
+      "from": "Alvin, Texas",
+      "lastSchool": null,
+      "previousSchool": "Alvin CC",
+      "previousSchools": [
+        "Alvin CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Height": "6-0",
+        "Hometown": "Alvin, Texas",
+        "Prev School": "Alvin CC",
+        "Weight": "190"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/landyn-grant/7419",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/landyn-grant/7419",
+      "name": "Landyn Grant",
+      "firstName": "Landyn",
+      "lastName": "Grant",
+      "number": "8",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_8-Landyn_Grant.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Sophomore",
+      "height": "6-3",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Longview, Texas",
+      "from": "Longview, Texas",
+      "lastSchool": null,
+      "previousSchool": "Prairie View A&M",
+      "previousSchools": [
+        "Prairie View A&M"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Height": "6-3",
+        "Hometown": "Longview, Texas",
+        "Prev School": "Prairie View A&M",
+        "Weight": "200"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/evan-joubert/7405",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/evan-joubert/7405",
+      "name": "Evan Joubert",
+      "firstName": "Evan",
+      "lastName": "Joubert",
+      "number": "9",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_9-Evan_Joubert.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Lake Charles, La.",
+      "from": "Lake Charles, La.",
+      "lastSchool": null,
+      "previousSchool": "LSU-Eunice",
+      "previousSchools": [
+        "LSU-Eunice"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-10",
+        "Hometown": "Lake Charles, La.",
+        "Prev School": "LSU-Eunice",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/derek-gipson/7426",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/derek-gipson/7426",
+      "name": "Derek Gipson",
+      "firstName": "Derek",
+      "lastName": "Gipson",
+      "number": "10",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/10-Dereck_Gippson.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Gurabo, P.R.",
+      "from": "Gurabo, P.R.",
+      "lastSchool": null,
+      "previousSchool": "San Jacinto College",
+      "previousSchools": [
+        "San Jacinto College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-0",
+        "Hometown": "Gurabo, P.R.",
+        "Prev School": "San Jacinto College",
+        "Weight": "180"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/collin-reed/7420",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/collin-reed/7420",
+      "name": "Collin Reed",
+      "firstName": "Collin",
+      "lastName": "Reed",
+      "number": "11",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_11-Colin_Reed.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Junior",
+      "height": "6-0",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Abilene, Texas",
+      "from": "Abilene, Texas",
+      "lastSchool": null,
+      "previousSchool": "South Arkansas College",
+      "previousSchools": [
+        "South Arkansas College"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-0",
+        "Hometown": "Abilene, Texas",
+        "Prev School": "South Arkansas College",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/collin-dennis/7404",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/collin-dennis/7404",
+      "name": "Collin Dennis",
+      "firstName": "Collin",
+      "lastName": "Dennis",
+      "number": "13",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/13-Collin_Dennis.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "5-10",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Humble, Texas",
+      "from": "Humble, Texas",
+      "lastSchool": null,
+      "previousSchool": "Atascocita",
+      "previousSchools": [
+        "Atascocita"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "5-10",
+        "Hometown": "Humble, Texas",
+        "Prev School": "Atascocita",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/demarques-thompson/7421",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/demarques-thompson/7421",
+      "name": "Demarques Thompson",
+      "firstName": "Demarques",
+      "lastName": "Thompson",
+      "number": "14",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/14-DeMarques_Thompson.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Katy, Texas",
+      "from": "Katy, Texas",
+      "lastSchool": null,
+      "previousSchool": "Prairie View A&M",
+      "previousSchools": [
+        "Prairie View A&M"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-1",
+        "Hometown": "Katy, Texas",
+        "Prev School": "Prairie View A&M",
+        "Weight": "190"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/christopher-chavez/7422",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/christopher-chavez/7422",
+      "name": "Christopher Chavez",
+      "firstName": "Christopher",
+      "lastName": "Chavez",
+      "number": "15",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/15-Christopher_Chavez.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "5-10",
+      "weight": "175",
+      "bats": null,
+      "throws": null,
+      "hometown": "Corpus Christi, Texas",
+      "from": "Corpus Christi, Texas",
+      "lastSchool": null,
+      "previousSchool": "Alvin CC",
+      "previousSchools": [
+        "Alvin CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "5-10",
+        "Hometown": "Corpus Christi, Texas",
+        "Prev School": "Alvin CC",
+        "Weight": "175"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/elijah-rodriguez/7412",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/elijah-rodriguez/7412",
+      "name": "Elijah Rodriguez",
+      "firstName": "Elijah",
+      "lastName": "Rodriguez",
+      "number": "16",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/16-Elijah_A_Rodriguez.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-8",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Baytown, Texas",
+      "from": "Baytown, Texas",
+      "lastSchool": null,
+      "previousSchool": "Mary Hardin-Baylor",
+      "previousSchools": [
+        "Mary Hardin-Baylor"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-8",
+        "Hometown": "Baytown, Texas",
+        "Prev School": "Mary Hardin-Baylor",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/joshua-prieto/7411",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/joshua-prieto/7411",
+      "name": "Joshua Prieto",
+      "firstName": "Joshua",
+      "lastName": "Prieto",
+      "number": "17",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/17-Joshua_Prieto.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-11",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Katy, Texas",
+      "from": "Katy, Texas",
+      "lastSchool": null,
+      "previousSchool": "Hill College",
+      "previousSchools": [
+        "Hill College"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-11",
+        "Hometown": "Katy, Texas",
+        "Prev School": "Hill College",
+        "Weight": "215"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/dalton-alford/7402",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/dalton-alford/7402",
+      "name": "Dalton Alford",
+      "firstName": "Dalton",
+      "lastName": "Alford",
+      "number": "18",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/18-Dalton_Alford.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Graduate Student",
+      "height": "5-11",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Port O'Connor, Texas",
+      "from": "Port O'Connor, Texas",
+      "lastSchool": null,
+      "previousSchool": "South Surburban JC",
+      "previousSchools": [
+        "South Surburban JC"
+      ],
+      "sourceFields": {
+        "Class": "Graduate Student",
+        "Height": "5-11",
+        "Hometown": "Port O'Connor, Texas",
+        "Prev School": "South Surburban JC",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/jace-maynard/7409",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/jace-maynard/7409",
+      "name": "Jace Maynard",
+      "firstName": "Jace",
+      "lastName": "Maynard",
+      "number": "19",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_19-Jace_Maynard.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "6-1",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Dickinson, Texas",
+      "from": "Dickinson, Texas",
+      "lastSchool": null,
+      "previousSchool": "Mountain View CC",
+      "previousSchools": [
+        "Mountain View CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-1",
+        "Hometown": "Dickinson, Texas",
+        "Prev School": "Mountain View CC",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/zachari-pace/7423",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/zachari-pace/7423",
+      "name": "Zachari Pace",
+      "firstName": "Zachari",
+      "lastName": "Pace",
+      "number": "20",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/20-Zachari_Pace.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-4",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Colorado Springs, Texas",
+      "from": "Colorado Springs, Texas",
+      "lastSchool": null,
+      "previousSchool": "Indian Hills CC",
+      "previousSchools": [
+        "Indian Hills CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-4",
+        "Hometown": "Colorado Springs, Texas",
+        "Prev School": "Indian Hills CC",
+        "Weight": "220"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/kevin-parker/7424",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/kevin-parker/7424",
+      "name": "Kevin Parker",
+      "firstName": "Kevin",
+      "lastName": "Parker",
+      "number": "21",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/21-Kevin_Parker.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-11",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Brentwood, Calif.",
+      "from": "Brentwood, Calif.",
+      "lastSchool": null,
+      "previousSchool": "Utah Valley",
+      "previousSchools": [
+        "Utah Valley"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-11",
+        "Hometown": "Brentwood, Calif.",
+        "Prev School": "Utah Valley",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/anthony-ruiz/7425",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/anthony-ruiz/7425",
+      "name": "Anthony Ruiz",
+      "firstName": "Anthony",
+      "lastName": "Ruiz",
+      "number": "22",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_22-Anthony_Ruiz.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Junior",
+      "height": "6-2",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Miami, Fla.",
+      "from": "Miami, Fla.",
+      "lastSchool": null,
+      "previousSchool": "New Orleans",
+      "previousSchools": [
+        "New Orleans"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-2",
+        "Hometown": "Miami, Fla.",
+        "Prev School": "New Orleans",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/joshua-pena/7427",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/joshua-pena/7427",
+      "name": "Joshua Pena",
+      "firstName": "Joshua",
+      "lastName": "Pena",
+      "number": "23",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_23-Joshua_Pena.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-4",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Houston, Texas",
+      "from": "Houston, Texas",
+      "lastSchool": null,
+      "previousSchool": "Alvin CC",
+      "previousSchools": [
+        "Alvin CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-4",
+        "Hometown": "Houston, Texas",
+        "Prev School": "Alvin CC",
+        "Weight": "210"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/nate-lopez/7406",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/nate-lopez/7406",
+      "name": "Nate Lopez",
+      "firstName": "Nate",
+      "lastName": "Lopez",
+      "number": "24",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_24-Nate_Lopez.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-8",
+      "weight": "165",
+      "bats": null,
+      "throws": null,
+      "hometown": "Katy, Texas",
+      "from": "Katy, Texas",
+      "lastSchool": null,
+      "previousSchool": "Western Texas College",
+      "previousSchools": [
+        "Western Texas College"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-8",
+        "Hometown": "Katy, Texas",
+        "Prev School": "Western Texas College",
+        "Weight": "165"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/mikelle-mason/7428",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/mikelle-mason/7428",
+      "name": "Mikelle Mason",
+      "firstName": "Mikelle",
+      "lastName": "Mason",
+      "number": "25",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/25-Mikelle_Mason.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Graduate Student",
+      "height": "6-2",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Harker Heights, Texas",
+      "from": "Harker Heights, Texas",
+      "lastSchool": null,
+      "previousSchool": "Tuskegee",
+      "previousSchools": [
+        "Tuskegee"
+      ],
+      "sourceFields": {
+        "Class": "Graduate Student",
+        "Height": "6-2",
+        "Hometown": "Harker Heights, Texas",
+        "Prev School": "Tuskegee",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/zac-laviage/7429",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/zac-laviage/7429",
+      "name": "Zac Laviage",
+      "firstName": "Zac",
+      "lastName": "Laviage",
+      "number": "26",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_26-Zac_Laviage.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "5-10",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Houston, Texas",
+      "from": "Houston, Texas",
+      "lastSchool": null,
+      "previousSchool": "Chapman University",
+      "previousSchools": [
+        "Chapman University"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "5-10",
+        "Hometown": "Houston, Texas",
+        "Prev School": "Chapman University",
+        "Weight": "180"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/miguel-morales/7410",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/miguel-morales/7410",
+      "name": "Miguel Morales",
+      "firstName": "Miguel",
+      "lastName": "Morales",
+      "number": "29",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/29-Miguel_Morules.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Arroyo, Puerto Rico",
+      "from": "Arroyo, Puerto Rico",
+      "lastSchool": null,
+      "previousSchool": "San Jacinto College",
+      "previousSchools": [
+        "San Jacinto College"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-10",
+        "Hometown": "Arroyo, Puerto Rico",
+        "Prev School": "San Jacinto College",
+        "Weight": "185"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/marco-mueses/7431",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/marco-mueses/7431",
+      "name": "Marco Mueses",
+      "firstName": "Marco",
+      "lastName": "Mueses",
+      "number": "33",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/33-Marco_Muejes.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Santo Domingo, D.R.",
+      "from": "Santo Domingo, D.R.",
+      "lastSchool": null,
+      "previousSchool": "New Orleans",
+      "previousSchools": [
+        "New Orleans"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-0",
+        "Hometown": "Santo Domingo, D.R.",
+        "Prev School": "New Orleans",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/shaun-williams/7432",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/shaun-williams/7432",
+      "name": "Shaun Williams",
+      "firstName": "Shaun",
+      "lastName": "Williams",
+      "number": "34",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/34-Shaun_Williams.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Saginaw, Texas",
+      "from": "Saginaw, Texas",
+      "lastSchool": null,
+      "previousSchool": "North Lake College",
+      "previousSchools": [
+        "North Lake College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-1",
+        "Hometown": "Saginaw, Texas",
+        "Prev School": "North Lake College",
+        "Weight": "210"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/byron-robinson/7433",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/byron-robinson/7433",
+      "name": "Byron Robinson",
+      "firstName": "Byron",
+      "lastName": "Robinson",
+      "number": "35",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/35-Byron_Robinson.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": "230",
+      "bats": null,
+      "throws": null,
+      "hometown": "Daytona Beach, Fla.",
+      "from": "Daytona Beach, Fla.",
+      "lastSchool": null,
+      "previousSchool": "San Jacinto College",
+      "previousSchools": [
+        "San Jacinto College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-3",
+        "Hometown": "Daytona Beach, Fla.",
+        "Prev School": "San Jacinto College",
+        "Weight": "230"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/jj-olivarez/7434",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/jj-olivarez/7434",
+      "name": "Jj Olivarez",
+      "firstName": "Jj",
+      "lastName": "Olivarez",
+      "number": "36",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/36-Juan_Olivarez.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Senior",
+      "height": "6-5",
+      "weight": "260",
+      "bats": null,
+      "throws": null,
+      "hometown": "Channelview, Texas",
+      "from": "Channelview, Texas",
+      "lastSchool": null,
+      "previousSchool": "Alvin CC",
+      "previousSchools": [
+        "Alvin CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-5",
+        "Hometown": "Channelview, Texas",
+        "Prev School": "Alvin CC",
+        "Weight": "260"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/erwin-cabassa/7435",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/erwin-cabassa/7435",
+      "name": "Erwin Cabassa",
+      "firstName": "Erwin",
+      "lastName": "Cabassa",
+      "number": "38",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/38-Erwin_Cabassa.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Junior",
+      "height": "6-2",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Deltona, Fla.",
+      "from": "Deltona, Fla.",
+      "lastSchool": null,
+      "previousSchool": "Seminole State (FL)",
+      "previousSchools": [
+        "Seminole State (FL)"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-2",
+        "Hometown": "Deltona, Fla.",
+        "Prev School": "Seminole State (FL)",
+        "Weight": "220"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/matthew-salazar/7413",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/matthew-salazar/7413",
+      "name": "Matthew Salazar",
+      "firstName": "Matthew",
+      "lastName": "Salazar",
+      "number": "39",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/39-Matthew_Salazar.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "5-10",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Elsa, Texas",
+      "from": "Elsa, Texas",
+      "lastSchool": null,
+      "previousSchool": "Edcouch-Elsa",
+      "previousSchools": [
+        "Edcouch-Elsa"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "5-10",
+        "Hometown": "Elsa, Texas",
+        "Prev School": "Edcouch-Elsa",
+        "Weight": "190"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/john-smith/7414",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/john-smith/7414",
+      "name": "John Smith",
+      "firstName": "John",
+      "lastName": "Smith",
+      "number": "40",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/Players_photos_2026_40-John_Smith.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Sophomore",
+      "height": "6-4",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Houston, Texas",
+      "from": "Houston, Texas",
+      "lastSchool": null,
+      "previousSchool": "North Shore",
+      "previousSchools": [
+        "North Shore"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "6-4",
+        "Hometown": "Houston, Texas",
+        "Prev School": "North Shore",
+        "Weight": "195"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/seve-medrano/7430",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/seve-medrano/7430",
+      "name": "Seve Medrano",
+      "firstName": "Seve",
+      "lastName": "Medrano",
+      "number": "44",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/28-_Seve_Medrano.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Graduate Student",
+      "height": "6-0",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Corpus Christi, Texas",
+      "from": "Corpus Christi, Texas",
+      "lastSchool": null,
+      "previousSchool": "Prairie View A&M",
+      "previousSchools": [
+        "Prairie View A&M"
+      ],
+      "sourceFields": {
+        "Class": "Graduate Student",
+        "Height": "6-0",
+        "Hometown": "Corpus Christi, Texas",
+        "Prev School": "Prairie View A&M",
+        "Weight": "200"
+      }
+    },
+    {
+      "key": "https://admin.tsusports.com/sports/baseball/roster/quinton-jefferson/7436",
+      "profileUrl": "https://admin.tsusports.com/sports/baseball/roster/quinton-jefferson/7436",
+      "name": "Quinton Jefferson",
+      "firstName": "Quinton",
+      "lastName": "Jefferson",
+      "number": "55",
+      "photoUrl": "https://datg7il085uh2.cloudfront.net/images/2026/2/5/55-Quinton_Jefferson.JPG?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Freshman",
+      "height": "5-10",
+      "weight": "170",
+      "bats": null,
+      "throws": null,
+      "hometown": "Spring, Texas",
+      "from": "Spring, Texas",
+      "lastSchool": null,
+      "previousSchool": "Garden City CC",
+      "previousSchools": [
+        "Garden City CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Freshman",
+        "Height": "5-10",
+        "Hometown": "Spring, Texas",
+        "Prev School": "Garden City CC",
+        "Weight": "170"
+      }
+    }
+  ]
+}

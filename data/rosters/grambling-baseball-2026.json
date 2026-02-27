@@ -1,0 +1,1071 @@
+{
+  "sourceUrl": "https://gsutigers.com/sports/baseball/roster",
+  "fetchedAt": "2026-02-27T15:44:54.288Z",
+  "pageTitle": "2026 Baseball Roster - Grambling State University Athletics",
+  "teamName": "Grambling",
+  "sport": "Baseball",
+  "season": "2026",
+  "playerCount": 35,
+  "parser": {
+    "strategy": "profile-links",
+    "candidateRecords": 175,
+    "dedupedRecords": 35
+  },
+  "players": [
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/charles-ashe-iii/7583",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/charles-ashe-iii/7583",
+      "name": "Charles Ashe Iii",
+      "firstName": "Charles Ashe",
+      "lastName": "Iii",
+      "number": "0",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Charles_Ashe_Of9xx.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Freshman",
+      "height": "5-10",
+      "weight": "205",
+      "bats": null,
+      "throws": null,
+      "hometown": "Brookhaven, Ga.",
+      "from": "Brookhaven, Ga.",
+      "lastSchool": null,
+      "previousSchool": "St. Puis Catholic",
+      "previousSchools": [
+        "St. Puis Catholic"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "5-10",
+        "Hometown:": "Brookhaven, Ga.",
+        "Position:": "Infield",
+        "Prev School:": "St. Puis Catholic",
+        "Weight:": "205"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/martavius-thomas/7566",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/martavius-thomas/7566",
+      "name": "Martavius Thomas",
+      "firstName": "Martavius",
+      "lastName": "Thomas",
+      "number": "1",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Martavius_Thomas_KdkMK.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Junior",
+      "height": "5-9",
+      "weight": "170",
+      "bats": null,
+      "throws": null,
+      "hometown": "Camden, Ark.",
+      "from": "Camden, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Camden Fairview HS",
+      "previousSchools": [
+        "Camden Fairview HS"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "5-9",
+        "Highschool:": "Camden Fairview HS",
+        "Hometown:": "Camden, Ark.",
+        "Position:": "Outfield",
+        "Prev School:": "Camden Fairview HS",
+        "Weight:": "170"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/hasani-johnson/7628",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/hasani-johnson/7628",
+      "name": "Hasani Johnson",
+      "firstName": "Hasani",
+      "lastName": "Johnson",
+      "number": "2",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Hasani_Johnson_yI5UF.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Redshirt Senior",
+      "height": "5-10",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Elk Grove, Calif.",
+      "from": "Elk Grove, Calif.",
+      "lastSchool": null,
+      "previousSchool": "Louisiana-Monroe",
+      "previousSchools": [
+        "Louisiana-Monroe"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Senior",
+        "Height:": "5-10",
+        "Hometown:": "Elk Grove, Calif.",
+        "Position:": "Infield",
+        "Prev School:": "Louisiana-Monroe",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/ethan-delgado/7590",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/ethan-delgado/7590",
+      "name": "Ethan Delgado",
+      "firstName": "Ethan",
+      "lastName": "Delgado",
+      "number": "3",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Ethan_Delgado_j9z6S.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Sophomore",
+      "height": "5-10",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Celina, Texas",
+      "from": "Celina, Texas",
+      "lastSchool": null,
+      "previousSchool": "Ecclesia College",
+      "previousSchools": [
+        "Ecclesia College"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "5-10",
+        "Hometown:": "Celina, Texas",
+        "Position:": "Infield",
+        "Prev School:": "Ecclesia College",
+        "Weight:": "185"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/dillon-braxton/7584",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/dillon-braxton/7584",
+      "name": "Dillon Braxton",
+      "firstName": "Dillon",
+      "lastName": "Braxton",
+      "number": "4",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Dillion_Braxton__Oo4d8.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Freshman",
+      "height": "5-10",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Natchitoches, La.",
+      "from": "Natchitoches, La.",
+      "lastSchool": null,
+      "previousSchool": "Natchitoches Central HS",
+      "previousSchools": [
+        "Natchitoches Central HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "5-10",
+        "Hometown:": "Natchitoches, La.",
+        "Position:": "Outfield",
+        "Prev School:": "Natchitoches Central HS",
+        "Weight:": "180"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/xorian-robinson/7622",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/xorian-robinson/7622",
+      "name": "Xorian Robinson",
+      "firstName": "Xorian",
+      "lastName": "Robinson",
+      "number": "5",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Zorian_RObinson_7qliD.jpg?width=80&quality=90",
+      "position": "Utility",
+      "classYear": "Freshman",
+      "height": "5-10",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Oakland, La.",
+      "from": "Oakland, La.",
+      "lastSchool": null,
+      "previousSchool": "El Dorado HS",
+      "previousSchools": [
+        "El Dorado HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "5-10",
+        "Hometown:": "Oakland, La.",
+        "Position:": "Utility",
+        "Prev School:": "El Dorado HS",
+        "Weight:": "180"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/ryan-davis/7588",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/ryan-davis/7588",
+      "name": "Ryan Davis",
+      "firstName": "Ryan",
+      "lastName": "Davis",
+      "number": "6",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Ryan_xepR0.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Graduate Student",
+      "height": "6-1",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Bryans Road, Md.",
+      "from": "Bryans Road, Md.",
+      "lastSchool": null,
+      "previousSchool": "Maryland-Eastern Shore",
+      "previousSchools": [
+        "Maryland-Eastern Shore"
+      ],
+      "sourceFields": {
+        "Class:": "Graduate Student",
+        "Height:": "6-1",
+        "Hometown:": "Bryans Road, Md.",
+        "Position:": "Infield",
+        "Prev School:": "Maryland-Eastern Shore",
+        "Weight:": "195"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/shannon-martin/7561",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/shannon-martin/7561",
+      "name": "Shannon Martin",
+      "firstName": "Shannon",
+      "lastName": "Martin",
+      "number": "7",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Shannon_Martin_R12cp.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "New Orleans, La.",
+      "from": "New Orleans, La.",
+      "lastSchool": null,
+      "previousSchool": "Texas Southern",
+      "previousSchools": [
+        "Texas Southern"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "5-10",
+        "Hometown:": "New Orleans, La.",
+        "Position:": "Infield",
+        "Prev School:": "Texas Southern",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/cameron-hill/7558",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/cameron-hill/7558",
+      "name": "Cameron Hill",
+      "firstName": "Cameron",
+      "lastName": "Hill",
+      "number": "8",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Cameron_Hill_WbTEQ.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Senior",
+      "height": "6-0",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Jackson, Miss.",
+      "from": "Jackson, Miss.",
+      "lastSchool": null,
+      "previousSchool": "Hinds CC",
+      "previousSchools": [
+        "Hinds CC"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-0",
+        "Hometown:": "Jackson, Miss.",
+        "Position:": "Outfield",
+        "Prev School:": "Hinds CC",
+        "Weight:": "195"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/daniel-soukup-ii/7623",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/daniel-soukup-ii/7623",
+      "name": "Daniel Soukup Ii",
+      "firstName": "Daniel Soukup",
+      "lastName": "Ii",
+      "number": "9",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Daniel_Sukop_II_5NfDV.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Freshman",
+      "height": "6-0",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "San Antonio, Texas",
+      "from": "San Antonio, Texas",
+      "lastSchool": null,
+      "previousSchool": "Davenport HS",
+      "previousSchools": [
+        "Davenport HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "6-0",
+        "Hometown:": "San Antonio, Texas",
+        "Position:": "Outfield",
+        "Prev School:": "Davenport HS",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/julian-carter/7587",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/julian-carter/7587",
+      "name": "Julian Carter",
+      "firstName": "Julian",
+      "lastName": "Carter",
+      "number": "11",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Julian_Carter_OSfAt.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Freshman",
+      "height": "6-0",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Fairburn, Ga.",
+      "from": "Fairburn, Ga.",
+      "lastSchool": null,
+      "previousSchool": "North Atlanta, Ga.",
+      "previousSchools": [
+        "North Atlanta, Ga."
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "6-0",
+        "Hometown:": "Fairburn, Ga.",
+        "Position:": "Infield",
+        "Prev School:": "North Atlanta, Ga.",
+        "Weight:": "185"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/hampton-phillips/7562",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/hampton-phillips/7562",
+      "name": "Hampton Phillips",
+      "firstName": "Hampton",
+      "lastName": "Phillips",
+      "number": "12",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Hampton_Phillips_eQqpc.jpg?width=80&quality=90",
+      "position": "Utility",
+      "classYear": "Sophomore",
+      "height": "5-9",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Sugar Land, Texas",
+      "from": "Sugar Land, Texas",
+      "lastSchool": null,
+      "previousSchool": "Fort Bend Austin HS",
+      "previousSchools": [
+        "Fort Bend Austin HS"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "5-9",
+        "Hometown:": "Sugar Land, Texas",
+        "Position:": "Utility",
+        "Prev School:": "Fort Bend Austin HS",
+        "Weight:": "185"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/shelton-harville/7595",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/shelton-harville/7595",
+      "name": "Shelton Harville",
+      "firstName": "Shelton",
+      "lastName": "Harville",
+      "number": "13",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Shelton_Harville_Jr_scolg.jpg?width=80&quality=90",
+      "position": "Right-Handed Pitcher",
+      "classYear": "Freshman",
+      "height": "5-10",
+      "weight": "170",
+      "bats": null,
+      "throws": null,
+      "hometown": "Shreveport, La.",
+      "from": "Shreveport, La.",
+      "lastSchool": null,
+      "previousSchool": "Captain Shreve HS",
+      "previousSchools": [
+        "Captain Shreve HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "5-10",
+        "Hometown:": "Shreveport, La.",
+        "Position:": "Right-Handed Pitcher",
+        "Prev School:": "Captain Shreve HS",
+        "Weight:": "170"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/shaun-mante/7624",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/shaun-mante/7624",
+      "name": "Shaun Mante",
+      "firstName": "Shaun",
+      "lastName": "Mante",
+      "number": "14",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Shauan_TSI7O.jpg?width=80&quality=90",
+      "position": "Left-Handed Pitcher",
+      "classYear": "Junior",
+      "height": "5-10",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Oakland, Calif.",
+      "from": "Oakland, Calif.",
+      "lastSchool": null,
+      "previousSchool": "Los Mendanos College",
+      "previousSchools": [
+        "Los Mendanos College"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "5-10",
+        "Hometown:": "Oakland, Calif.",
+        "Position:": "Left-Handed Pitcher",
+        "Prev School:": "Los Mendanos College",
+        "Weight:": "180"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/kejuan-burnett/7585",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/kejuan-burnett/7585",
+      "name": "Kejuan Burnett",
+      "firstName": "Kejuan",
+      "lastName": "Burnett",
+      "number": "16",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/KeJuan_Burnett_l9Wsg.jpg?width=80&quality=90",
+      "position": "Right-Handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-2",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Desoto, Texas",
+      "from": "Desoto, Texas",
+      "lastSchool": null,
+      "previousSchool": "Dillard University",
+      "previousSchools": [
+        "Dillard University"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-2",
+        "Hometown:": "Desoto, Texas",
+        "Position:": "Right-Handed Pitcher",
+        "Prev School:": "Dillard University",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/jacobie-smith/7625",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/jacobie-smith/7625",
+      "name": "Jacobie Smith",
+      "firstName": "Jacobie",
+      "lastName": "Smith",
+      "number": "17",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Jakobi_hXxLc.jpg?width=80&quality=90",
+      "position": "Right-Handed Pitcher",
+      "classYear": "Junior",
+      "height": "5-11",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Tupelo, Miss.",
+      "from": "Tupelo, Miss.",
+      "lastSchool": null,
+      "previousSchool": "Northeast Mississippi CC",
+      "previousSchools": [
+        "Northeast Mississippi CC"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "5-11",
+        "Hometown:": "Tupelo, Miss.",
+        "Position:": "Right-Handed Pitcher",
+        "Prev School:": "Northeast Mississippi CC",
+        "Weight:": "200"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/aidan-lopez/7629",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/aidan-lopez/7629",
+      "name": "Aidan Lopez",
+      "firstName": "Aidan",
+      "lastName": "Lopez",
+      "number": "18",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Aiden_JqH4N.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Junior",
+      "height": "5-10",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Eagle Pass, Texas",
+      "from": "Eagle Pass, Texas",
+      "lastSchool": null,
+      "previousSchool": "Wharton College",
+      "previousSchools": [
+        "Wharton College"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "5-10",
+        "Hometown:": "Eagle Pass, Texas",
+        "Position:": "Infield",
+        "Prev School:": "Wharton College",
+        "Weight:": "185"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/keyon-guillory/7593",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/keyon-guillory/7593",
+      "name": "Keyon Guillory",
+      "firstName": "Keyon",
+      "lastName": "Guillory",
+      "number": "19",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Keyon_Guillory_RJvii.jpg?width=80&quality=90",
+      "position": "Right-Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-2",
+      "weight": "250",
+      "bats": null,
+      "throws": null,
+      "hometown": "Lake Charles, La.",
+      "from": "Lake Charles, La.",
+      "lastSchool": null,
+      "previousSchool": "Wiley",
+      "previousSchools": [
+        "Wiley"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-2",
+        "Hometown:": "Lake Charles, La.",
+        "Position:": "Right-Handed Pitcher",
+        "Prev School:": "Wiley",
+        "Weight:": "250"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/mohamed-horati/7594",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/mohamed-horati/7594",
+      "name": "Mohamed Horati",
+      "firstName": "Mohamed",
+      "lastName": "Horati",
+      "number": "20",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Mohammed_Harati_4nH6i.jpg?width=80&quality=90",
+      "position": "Right-Handed Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-0",
+      "weight": "205",
+      "bats": null,
+      "throws": null,
+      "hometown": "Houston, Texas",
+      "from": "Houston, Texas",
+      "lastSchool": null,
+      "previousSchool": "Wharton College",
+      "previousSchools": [
+        "Wharton College"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Junior",
+        "Height:": "6-0",
+        "Hometown:": "Houston, Texas",
+        "Position:": "Right-Handed Pitcher",
+        "Prev School:": "Wharton College",
+        "Weight:": "205"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/nick-robinson/7563",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/nick-robinson/7563",
+      "name": "Nick Robinson",
+      "firstName": "Nick",
+      "lastName": "Robinson",
+      "number": "22",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Nick_Robinson__CWI8F.jpg?width=80&quality=90",
+      "position": "Left-Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "175",
+      "bats": null,
+      "throws": null,
+      "hometown": "Ruston, La.",
+      "from": "Ruston, La.",
+      "lastSchool": null,
+      "previousSchool": "Ruston HS",
+      "previousSchools": [
+        "Ruston HS"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-1",
+        "Highschool:": "Ruston HS",
+        "Hometown:": "Ruston, La.",
+        "Position:": "Left-Handed Pitcher",
+        "Prev School:": "Ruston HS",
+        "Weight:": "175"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/payton-allen/7553",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/payton-allen/7553",
+      "name": "Payton Allen",
+      "firstName": "Payton",
+      "lastName": "Allen",
+      "number": "23",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Payton_BPGrA.jpg?width=80&quality=90",
+      "position": "Right-Handed Pitcher",
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Bentonville, Ark.",
+      "from": "Bentonville, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Tyler CC",
+      "previousSchools": [
+        "Tyler CC"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "5-10",
+        "Hometown:": "Bentonville, Ark.",
+        "Position:": "Right-Handed Pitcher",
+        "Prev School:": "Tyler CC",
+        "Weight:": "180"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/titus-williams/7626",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/titus-williams/7626",
+      "name": "Titus Williams",
+      "firstName": "Titus",
+      "lastName": "Williams",
+      "number": "24",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Titus_Williams_WVnkF.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Freshman",
+      "height": "6-3",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Natchitoches, La.",
+      "from": "Natchitoches, La.",
+      "lastSchool": null,
+      "previousSchool": "Natchitoches Central HS",
+      "previousSchools": [
+        "Natchitoches Central HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "6-3",
+        "Hometown:": "Natchitoches, La.",
+        "Position:": "Outfield",
+        "Prev School:": "Natchitoches Central HS",
+        "Weight:": "200"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/james-woody/7567",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/james-woody/7567",
+      "name": "James Woody",
+      "firstName": "James",
+      "lastName": "Woody",
+      "number": "25",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/James_1VdNg.jpg?width=80&quality=90",
+      "position": "Utility",
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "205",
+      "bats": null,
+      "throws": null,
+      "hometown": "Ridgeland, Miss.",
+      "from": "Ridgeland, Miss.",
+      "lastSchool": null,
+      "previousSchool": "Ridgeland HS",
+      "previousSchools": [
+        "Ridgeland HS"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-1",
+        "Highschool:": "Ridgeland HS",
+        "Hometown:": "Ridgeland, Miss.",
+        "Position:": "Utility",
+        "Prev School:": "Ridgeland HS",
+        "Weight:": "205"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/rafael-capistran/7586",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/rafael-capistran/7586",
+      "name": "Rafael Capistran",
+      "firstName": "Rafael",
+      "lastName": "Capistran",
+      "number": "26",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Raphael_Capistran_TyFAC.jpg?width=80&quality=90",
+      "position": "Right-Handed Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "5-11",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Brownsville, Texas",
+      "from": "Brownsville, Texas",
+      "lastSchool": null,
+      "previousSchool": "Wharton CC",
+      "previousSchools": [
+        "Wharton CC"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Junior",
+        "Height:": "5-11",
+        "Hometown:": "Brownsville, Texas",
+        "Position:": "Right-Handed Pitcher",
+        "Prev School:": "Wharton CC",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/chris-marcellus/7560",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/chris-marcellus/7560",
+      "name": "Chris Marcellus",
+      "firstName": "Chris",
+      "lastName": "Marcellus",
+      "number": "28",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Chris_Marcellius_QgT03.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Rowlett, Texas",
+      "from": "Rowlett, Texas",
+      "lastSchool": null,
+      "previousSchool": "Sachse HS",
+      "previousSchools": [
+        "Sachse HS"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "5-10",
+        "Highschool:": "Sachse HS",
+        "Hometown:": "Rowlett, Texas",
+        "Position:": "Catcher",
+        "Prev School:": "Sachse HS",
+        "Weight:": "185"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/trevor-esparza/7591",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/trevor-esparza/7591",
+      "name": "Trevor Esparza",
+      "firstName": "Trevor",
+      "lastName": "Esparza",
+      "number": "29",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Trevor_Esperaza_JLzmB.jpg?width=80&quality=90",
+      "position": "Right-Handed Pitcher",
+      "classYear": "Junior",
+      "height": "5-11",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Katy, Texas",
+      "from": "Katy, Texas",
+      "lastSchool": null,
+      "previousSchool": "Incarnate Word",
+      "previousSchools": [
+        "Incarnate Word"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "5-11",
+        "Hometown:": "Katy, Texas",
+        "Position:": "Right-Handed Pitcher",
+        "Prev School:": "Incarnate Word",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/keevyn-goss/7592",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/keevyn-goss/7592",
+      "name": "Keevyn Goss",
+      "firstName": "Keevyn",
+      "lastName": "Goss",
+      "number": "33",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Keevyn_UPIQ6.jpg?width=80&quality=90",
+      "position": "Left-Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Fate, Texas",
+      "from": "Fate, Texas",
+      "lastSchool": null,
+      "previousSchool": "Wharton College",
+      "previousSchools": [
+        "Wharton College"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-0",
+        "Hometown:": "Fate, Texas",
+        "Position:": "Left-Handed Pitcher",
+        "Prev School:": "Wharton College",
+        "Weight:": "220"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/julio-vasquez/7627",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/julio-vasquez/7627",
+      "name": "Julio Vasquez",
+      "firstName": "Julio",
+      "lastName": "Vasquez",
+      "number": "35",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Julio_Vargas_fvU85.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Graduate Student",
+      "height": "6-2",
+      "weight": "205",
+      "bats": null,
+      "throws": null,
+      "hometown": "Ontario, Canada",
+      "from": "Ontario, Canada",
+      "lastSchool": null,
+      "previousSchool": "Henderson State",
+      "previousSchools": [
+        "Henderson State"
+      ],
+      "sourceFields": {
+        "Class:": "Graduate Student",
+        "Height:": "6-2",
+        "Hometown:": "Ontario, Canada",
+        "Position:": "Catcher",
+        "Prev School:": "Henderson State",
+        "Weight:": "205"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/taylor-dooley/7556",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/taylor-dooley/7556",
+      "name": "Taylor Dooley",
+      "firstName": "Taylor",
+      "lastName": "Dooley",
+      "number": "36",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Taylor_Dooley_KnxnW.jpg?width=80&quality=90",
+      "position": "Right-Handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-2",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Aurora, Colo.",
+      "from": "Aurora, Colo.",
+      "lastSchool": null,
+      "previousSchool": "Garden City CC",
+      "previousSchools": [
+        "Garden City CC"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-2",
+        "Hometown:": "Aurora, Colo.",
+        "Position:": "Right-Handed Pitcher",
+        "Prev School:": "Garden City CC",
+        "Weight:": "180"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/john-delgadillo/7589",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/john-delgadillo/7589",
+      "name": "John Delgadillo",
+      "firstName": "John",
+      "lastName": "Delgadillo",
+      "number": "38",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/John_Delgadio_4iArn.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Freshman",
+      "height": "6-4",
+      "weight": "230",
+      "bats": null,
+      "throws": null,
+      "hometown": "Bronx, N.Y.",
+      "from": "Bronx, N.Y.",
+      "lastSchool": null,
+      "previousSchool": "P27 Academy",
+      "previousSchools": [
+        "P27 Academy"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "6-4",
+        "Hometown:": "Bronx, N.Y.",
+        "Position:": "Catcher",
+        "Prev School:": "P27 Academy",
+        "Weight:": "230"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/trey-bridges/7555",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/trey-bridges/7555",
+      "name": "Trey Bridges",
+      "firstName": "Trey",
+      "lastName": "Bridges",
+      "number": "42",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Trey_Bridges_lFUrW.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Senior",
+      "height": "6-1",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Jackson, Miss.",
+      "from": "Jackson, Miss.",
+      "lastSchool": null,
+      "previousSchool": "East Central CC",
+      "previousSchools": [
+        "East Central CC"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-1",
+        "Hometown:": "Jackson, Miss.",
+        "Position:": "Outfield",
+        "Prev School:": "East Central CC",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/shamarian-brantley/7554",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/shamarian-brantley/7554",
+      "name": "Shamarian Brantley",
+      "firstName": "Shamarian",
+      "lastName": "Brantley",
+      "number": "43",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Shamarian_Brantley_s0sT3.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Junior",
+      "height": "5-10",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Ruston, La.",
+      "from": "Ruston, La.",
+      "lastSchool": null,
+      "previousSchool": "Simsboro HS",
+      "previousSchools": [
+        "Simsboro HS"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "5-10",
+        "Highschool:": "Simsboro HS",
+        "Hometown:": "Ruston, La.",
+        "Position:": "Outfield",
+        "Prev School:": "Simsboro HS",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/trenton-shaw/7565",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/trenton-shaw/7565",
+      "name": "Trenton Shaw",
+      "firstName": "Trenton",
+      "lastName": "Shaw",
+      "number": "44",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Trenton_Shaw_Kedv2.jpg?width=80&quality=90",
+      "position": "Left-Handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-4",
+      "weight": "240",
+      "bats": null,
+      "throws": null,
+      "hometown": "Desoto, Texas",
+      "from": "Desoto, Texas",
+      "lastSchool": null,
+      "previousSchool": "Grayson CC",
+      "previousSchools": [
+        "Grayson CC"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-4",
+        "Hometown:": "Desoto, Texas",
+        "Position:": "Left-Handed Pitcher",
+        "Prev School:": "Grayson CC",
+        "Weight:": "240"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/spencer-sensley/7564",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/spencer-sensley/7564",
+      "name": "Spencer Sensley",
+      "firstName": "Spencer",
+      "lastName": "Sensley",
+      "number": "45",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Spenser_Sensely_UFJBX.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Redshirt Senior",
+      "height": "5-11",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Farmerville, La.",
+      "from": "Farmerville, La.",
+      "lastSchool": null,
+      "previousSchool": "National Park College",
+      "previousSchools": [
+        "National Park College"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Senior",
+        "Height:": "5-11",
+        "Hometown:": "Farmerville, La.",
+        "Position:": "Infield",
+        "Prev School:": "National Park College",
+        "Weight:": "200"
+      }
+    },
+    {
+      "key": "https://gsutigers.com/sports/baseball/roster/nicholas-jackson-jr-/7559",
+      "profileUrl": "https://gsutigers.com/sports/baseball/roster/nicholas-jackson-jr-/7559",
+      "name": "Nicholas Jackson Jr",
+      "firstName": "Nicholas Jackson",
+      "lastName": "Jr",
+      "number": "55",
+      "photoUrl": "https://gsutigers.com/images/2026/1/15/Nick_Jackson_usV9Z.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Sophomore",
+      "height": "5-10",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Atlanta, Ga.",
+      "from": "Atlanta, Ga.",
+      "lastSchool": null,
+      "previousSchool": "Grayson HS",
+      "previousSchools": [
+        "Grayson HS"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "5-10",
+        "Hometown:": "Atlanta, Ga.",
+        "Position:": "Catcher",
+        "Prev School:": "Grayson HS",
+        "Weight:": "190"
+      }
+    }
+  ]
+}

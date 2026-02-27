@@ -1,0 +1,1180 @@
+{
+  "sourceUrl": "https://gobluehose.com/sports/baseball/roster",
+  "fetchedAt": "2026-02-27T15:49:19.734Z",
+  "pageTitle": "2026 Baseball Roster - Presbyterian College",
+  "teamName": "Presbyterian",
+  "sport": "Baseball",
+  "season": "2026",
+  "playerCount": 39,
+  "parser": {
+    "strategy": "profile-links",
+    "candidateRecords": 195,
+    "dedupedRecords": 39
+  },
+  "players": [
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/james-green/7999",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/james-green/7999",
+      "name": "James Green",
+      "firstName": "James",
+      "lastName": "Green",
+      "number": "1",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_1_James_Green_Head_Shot.jpg?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Junior",
+      "height": "5-10",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Huntersville, NC",
+      "from": "Huntersville, NC",
+      "lastSchool": null,
+      "previousSchool": "Louisburg CC",
+      "previousSchools": [
+        "Louisburg CC"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "5-10",
+        "Hometown:": "Huntersville, NC",
+        "Position:": "Outfielder",
+        "Previous School:": "Louisburg CC",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/layton-hyneman/7979",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/layton-hyneman/7979",
+      "name": "Layton Hyneman",
+      "firstName": "Layton",
+      "lastName": "Hyneman",
+      "number": "2",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_2_Layton_Hyneman_Head_Shot.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Redshirt Freshman",
+      "height": "5-10",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Villa Rica, GA",
+      "from": "Villa Rica, GA",
+      "lastSchool": null,
+      "previousSchool": "Villa Rica HS",
+      "previousSchools": [
+        "Villa Rica HS"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Freshman",
+        "Height:": "5-10",
+        "Hometown:": "Villa Rica, GA",
+        "Position:": "Catcher",
+        "Previous School:": "Villa Rica HS",
+        "Weight:": "180"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/sammy-vander-hill/8000",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/sammy-vander-hill/8000",
+      "name": "Sammy Vander Hill",
+      "firstName": "Sammy Vander",
+      "lastName": "Hill",
+      "number": "4",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_4_Sammy_Vander_Hill_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Athens, AL",
+      "from": "Athens, AL",
+      "lastSchool": null,
+      "previousSchool": "Motlow State CC",
+      "previousSchools": [
+        "Motlow State CC"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-1",
+        "Hometown:": "Athens, AL",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Motlow State CC",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/andrew-albertus/7968",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/andrew-albertus/7968",
+      "name": "Andrew Albertus",
+      "firstName": "Andrew",
+      "lastName": "Albertus",
+      "number": "5",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_5_Andrew_Albertus_Head_Shot_s7WWN.jpg?width=80&quality=90",
+      "position": "Utility",
+      "classYear": "Sophomore",
+      "height": "5-10",
+      "weight": "175",
+      "bats": null,
+      "throws": null,
+      "hometown": "Carrollton, GA",
+      "from": "Carrollton, GA",
+      "lastSchool": null,
+      "previousSchool": "Carrollton HS",
+      "previousSchools": [
+        "Carrollton HS"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "5-10",
+        "Hometown:": "Carrollton, GA",
+        "Position:": "Utility",
+        "Previous School:": "Carrollton HS",
+        "Weight:": "175"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/cam-mallo/7981",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/cam-mallo/7981",
+      "name": "Cam Mallo",
+      "firstName": "Cam",
+      "lastName": "Mallo",
+      "number": "6",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_6_Cam_Mallo_Head_Shot.jpg?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Sophomore",
+      "height": "5-10",
+      "weight": "170",
+      "bats": null,
+      "throws": null,
+      "hometown": "Tampa, FL",
+      "from": "Tampa, FL",
+      "lastSchool": null,
+      "previousSchool": "Jefferson HS",
+      "previousSchools": [
+        "Jefferson HS"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "5-10",
+        "Hometown:": "Tampa, FL",
+        "Position:": "Infielder",
+        "Previous School:": "Jefferson HS",
+        "Weight:": "170"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/tristan-mcgregor/7984",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/tristan-mcgregor/7984",
+      "name": "Tristan Mcgregor",
+      "firstName": "Tristan",
+      "lastName": "Mcgregor",
+      "number": "8",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_8_Tristan_McGregor_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Sarasota, FL",
+      "from": "Sarasota, FL",
+      "lastSchool": null,
+      "previousSchool": "Inspiration Academy",
+      "previousSchools": [
+        "Inspiration Academy"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-3",
+        "Hometown:": "Sarasota, FL",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Inspiration Academy",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/domaine-vann/7990",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/domaine-vann/7990",
+      "name": "Domaine Vann",
+      "firstName": "Domaine",
+      "lastName": "Vann",
+      "number": "9",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_9_Domaine_Vann_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Freshman",
+      "height": "6-2",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Greensboro, N.C",
+      "from": "Greensboro, N.C",
+      "lastSchool": null,
+      "previousSchool": "Wesleyan Christian Academy",
+      "previousSchools": [
+        "Wesleyan Christian Academy"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "6-2",
+        "Hometown:": "Greensboro, N.C",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Wesleyan Christian Academy",
+        "Weight:": "195"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/caden-mason/8001",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/caden-mason/8001",
+      "name": "Caden Mason",
+      "firstName": "Caden",
+      "lastName": "Mason",
+      "number": "10",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_10_Caden_Mason_Head_Shot.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Hayden, AL",
+      "from": "Hayden, AL",
+      "lastSchool": null,
+      "previousSchool": "Coastal Alabama CC South",
+      "previousSchools": [
+        "Coastal Alabama CC South"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-0",
+        "Hometown:": "Hayden, AL",
+        "Position:": "Catcher",
+        "Previous School:": "Coastal Alabama CC South",
+        "Weight:": "200"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/robbie-boykin/7971",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/robbie-boykin/7971",
+      "name": "Robbie Boykin",
+      "firstName": "Robbie",
+      "lastName": "Boykin",
+      "number": "11",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_11_Robbie_Boykin_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-3",
+      "weight": "230",
+      "bats": null,
+      "throws": null,
+      "hometown": "Richmond, VA",
+      "from": "Richmond, VA",
+      "lastSchool": null,
+      "previousSchool": "South Carolina",
+      "previousSchools": [
+        "South Carolina"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-3",
+        "Hometown:": "Richmond, VA",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "South Carolina",
+        "Weight:": "230"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/mikah-conner/7975",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/mikah-conner/7975",
+      "name": "Mikah Conner",
+      "firstName": "Mikah",
+      "lastName": "Conner",
+      "number": "12",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_12_Mikah_Conner_Head_Shot.jpg?width=80&quality=90",
+      "position": "Infielder/Pitcher",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "165",
+      "bats": null,
+      "throws": null,
+      "hometown": "Columbia, SC",
+      "from": "Columbia, SC",
+      "lastSchool": null,
+      "previousSchool": "Ben Lippen HS",
+      "previousSchools": [
+        "Ben Lippen HS"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-0",
+        "Hometown:": "Columbia, SC",
+        "Position:": "Infielder/Pitcher",
+        "Previous School:": "Ben Lippen HS",
+        "Weight:": "165"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/christian-charalambous/7974",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/christian-charalambous/7974",
+      "name": "Christian Charalambous",
+      "firstName": "Christian",
+      "lastName": "Charalambous",
+      "number": "13",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_13_Christian_Charalambous_Head_Shot.jpg?width=80&quality=90",
+      "position": "Left Handed Pitcher",
+      "classYear": "Redshirt Sophomore",
+      "height": "5-11",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Bergenfield, NJ",
+      "from": "Bergenfield, NJ",
+      "lastSchool": null,
+      "previousSchool": "Bergen Catholic HS",
+      "previousSchools": [
+        "Bergen Catholic HS"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Sophomore",
+        "Height:": "5-11",
+        "Hometown:": "Bergenfield, NJ",
+        "Position:": "Left Handed Pitcher",
+        "Previous School:": "Bergen Catholic HS",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/matthew-rollison/7987",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/matthew-rollison/7987",
+      "name": "Matthew Rollison",
+      "firstName": "Matthew",
+      "lastName": "Rollison",
+      "number": "15",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_15_Matthew_Rollison_Head_SHot.jpg?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Sophomore",
+      "height": "5-11",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Irmo, SC",
+      "from": "Irmo, SC",
+      "lastSchool": null,
+      "previousSchool": "Dutch Fork HS",
+      "previousSchools": [
+        "Dutch Fork HS"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "5-11",
+        "Hometown:": "Irmo, SC",
+        "Position:": "Infielder",
+        "Previous School:": "Dutch Fork HS",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/brooks-chamberlin/7973",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/brooks-chamberlin/7973",
+      "name": "Brooks Chamberlin",
+      "firstName": "Brooks",
+      "lastName": "Chamberlin",
+      "number": "16",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_16_Brooks_Chamberlin_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-4",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Tampa, FL",
+      "from": "Tampa, FL",
+      "lastSchool": null,
+      "previousSchool": "Tampa Jesuit HS",
+      "previousSchools": [
+        "Tampa Jesuit HS"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-4",
+        "Hometown:": "Tampa, FL",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Tampa Jesuit HS",
+        "Weight:": "190"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/bauer-burkart/8002",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/bauer-burkart/8002",
+      "name": "Bauer Burkart",
+      "firstName": "Bauer",
+      "lastName": "Burkart",
+      "number": "17",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_17_Bauer_Burkart_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Leesburg, VA",
+      "from": "Leesburg, VA",
+      "lastSchool": null,
+      "previousSchool": "Marshall",
+      "previousSchools": [
+        "Marshall"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-0",
+        "Hometown:": "Leesburg, VA",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Marshall",
+        "Weight:": "185"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/bo-moody/7991",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/bo-moody/7991",
+      "name": "Bo Moody",
+      "firstName": "Bo",
+      "lastName": "Moody",
+      "number": "18",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_18_Bo_Moody_Head_Shot.jpg?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Freshman",
+      "height": "5-11",
+      "weight": "175",
+      "bats": null,
+      "throws": null,
+      "hometown": "Georgetown, SC",
+      "from": "Georgetown, SC",
+      "lastSchool": null,
+      "previousSchool": "Georgetown HS",
+      "previousSchools": [
+        "Georgetown HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "5-11",
+        "Hometown:": "Georgetown, SC",
+        "Position:": "Infielder",
+        "Previous School:": "Georgetown HS",
+        "Weight:": "175"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/tyrell-williams/7989",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/tyrell-williams/7989",
+      "name": "Tyrell Williams",
+      "firstName": "Tyrell",
+      "lastName": "Williams",
+      "number": "19",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_19_Tyrell_Williams_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Orlando, FL",
+      "from": "Orlando, FL",
+      "lastSchool": null,
+      "previousSchool": "Ocoee HS",
+      "previousSchools": [
+        "Ocoee HS"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-3",
+        "Hometown:": "Orlando, FL",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Ocoee HS",
+        "Weight:": "180"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/tucker-meredith/7992",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/tucker-meredith/7992",
+      "name": "Tucker Meredith",
+      "firstName": "Tucker",
+      "lastName": "Meredith",
+      "number": "20",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_20_Tucker_Meredith_Head_Shot.jpg?width=80&quality=90",
+      "position": "Left Handed Pitcher",
+      "classYear": "Freshman",
+      "height": "6-0",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Greenwood, SC",
+      "from": "Greenwood, SC",
+      "lastSchool": null,
+      "previousSchool": "Emerald HS",
+      "previousSchools": [
+        "Emerald HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "6-0",
+        "Hometown:": "Greenwood, SC",
+        "Position:": "Left Handed Pitcher",
+        "Previous School:": "Emerald HS",
+        "Weight:": "200"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/brody-linker/7980",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/brody-linker/7980",
+      "name": "Brody Linker",
+      "firstName": "Brody",
+      "lastName": "Linker",
+      "number": "21",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_21_Brody_Linker_Head_Shot.jpg?width=80&quality=90",
+      "position": "Infielder/Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-3",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Anderson, SC",
+      "from": "Anderson, SC",
+      "lastSchool": null,
+      "previousSchool": "Crescent HS",
+      "previousSchools": [
+        "Crescent HS"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "6-3",
+        "Hometown:": "Anderson, SC",
+        "Position:": "Infielder/Pitcher",
+        "Previous School:": "Crescent HS",
+        "Weight:": "195"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/carter-payne/7986",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/carter-payne/7986",
+      "name": "Carter Payne",
+      "firstName": "Carter",
+      "lastName": "Payne",
+      "number": "22",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_22_Carter_Payne_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Redshirt Sophomore",
+      "height": "6-0",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Riverview, FL",
+      "from": "Riverview, FL",
+      "lastSchool": null,
+      "previousSchool": "Lennard HS",
+      "previousSchools": [
+        "Lennard HS"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Sophomore",
+        "Height:": "6-0",
+        "Hometown:": "Riverview, FL",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Lennard HS",
+        "Weight:": "215"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/nick-smith/7988",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/nick-smith/7988",
+      "name": "Nick Smith",
+      "firstName": "Nick",
+      "lastName": "Smith",
+      "number": "23",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_23_Nick_Smith_Head_Shot.jpg?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Senior",
+      "height": "6-1",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Charlotte, NC",
+      "from": "Charlotte, NC",
+      "lastSchool": null,
+      "previousSchool": null,
+      "previousSchools": [],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-1",
+        "Hometown:": "Charlotte, NC",
+        "Position:": "Infielder",
+        "Weight:": "220"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/jonathan-williams/7998",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/jonathan-williams/7998",
+      "name": "Jonathan Williams",
+      "firstName": "Jonathan",
+      "lastName": "Williams",
+      "number": "24",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_24_Jonathan_Williams_Head_Shot.jpg?width=80&quality=90",
+      "position": "Infielder/Pitcher",
+      "classYear": "Freshman",
+      "height": "6-1",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Tampa, FL",
+      "from": "Tampa, FL",
+      "lastSchool": null,
+      "previousSchool": "Homeschooled",
+      "previousSchools": [
+        "Homeschooled"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "6-1",
+        "Hometown:": "Tampa, FL",
+        "Position:": "Infielder/Pitcher",
+        "Previous School:": "Homeschooled",
+        "Weight:": "195"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/michael-marroquin-jr-/7982",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/michael-marroquin-jr-/7982",
+      "name": "Michael Marroquin Jr",
+      "firstName": "Michael Marroquin",
+      "lastName": "Jr",
+      "number": "25",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_25_Mikey_Marroquin_Jr._Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-0",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Tampa, FL",
+      "from": "Tampa, FL",
+      "lastSchool": null,
+      "previousSchool": "Jefferson HS",
+      "previousSchools": [
+        "Jefferson HS"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "6-0",
+        "Hometown:": "Tampa, FL",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Jefferson HS",
+        "Weight:": "200"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/cole-morgan/7993",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/cole-morgan/7993",
+      "name": "Cole Morgan",
+      "firstName": "Cole",
+      "lastName": "Morgan",
+      "number": "26",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_26_Cole_Morgan_Head_Shot.jpg?width=80&quality=90",
+      "position": "Catcher/Right Handed Pitcher",
+      "classYear": "Freshman",
+      "height": "5-9",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Vero Beach, FL",
+      "from": "Vero Beach, FL",
+      "lastSchool": null,
+      "previousSchool": "Vero Beach HS",
+      "previousSchools": [
+        "Vero Beach HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "5-9",
+        "Hometown:": "Vero Beach, FL",
+        "Position:": "Catcher/Right Handed Pitcher",
+        "Previous School:": "Vero Beach HS",
+        "Weight:": "195"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/emory-guilford/8003",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/emory-guilford/8003",
+      "name": "Emory Guilford",
+      "firstName": "Emory",
+      "lastName": "Guilford",
+      "number": "27",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_27_Emory_Guilford_Head_Shot.jpg?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Redshirt Sophomore",
+      "height": "6-2",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Tucker, GA",
+      "from": "Tucker, GA",
+      "lastSchool": null,
+      "previousSchool": "Voorhees University",
+      "previousSchools": [
+        "Voorhees University"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Sophomore",
+        "Height:": "6-2",
+        "Hometown:": "Tucker, GA",
+        "Position:": "Outfielder",
+        "Previous School:": "Voorhees University",
+        "Weight:": "200"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/kyle-mueller/7985",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/kyle-mueller/7985",
+      "name": "Kyle Mueller",
+      "firstName": "Kyle",
+      "lastName": "Mueller",
+      "number": "28",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_28_Kyle_Mueller_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-4",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Winter Haven, FL",
+      "from": "Winter Haven, FL",
+      "lastSchool": null,
+      "previousSchool": "Lakeland Christian School",
+      "previousSchools": [
+        "Lakeland Christian School"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-4",
+        "Hometown:": "Winter Haven, FL",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Lakeland Christian School",
+        "Weight:": "215"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/ian-lindsay/8004",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/ian-lindsay/8004",
+      "name": "Ian Lindsay",
+      "firstName": "Ian",
+      "lastName": "Lindsay",
+      "number": "30",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_30_Ian_Lindsay_Head_Shot.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Chattanooga, TN",
+      "from": "Chattanooga, TN",
+      "lastSchool": null,
+      "previousSchool": "Chattanooga State CC",
+      "previousSchools": [
+        "Chattanooga State CC"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-1",
+        "Hometown:": "Chattanooga, TN",
+        "Position:": "Catcher",
+        "Previous School:": "Chattanooga State CC",
+        "Weight:": "220"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/landon-nichols/7994",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/landon-nichols/7994",
+      "name": "Landon Nichols",
+      "firstName": "Landon",
+      "lastName": "Nichols",
+      "number": "31",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_31_Landon_Nichols_Head_Shot.jpg?width=80&quality=90",
+      "position": "Infielder/Pitcher",
+      "classYear": "Freshman",
+      "height": "6-2",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Indian Trail, NC",
+      "from": "Indian Trail, NC",
+      "lastSchool": null,
+      "previousSchool": "Metrolina Christian Academy",
+      "previousSchools": [
+        "Metrolina Christian Academy"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "6-2",
+        "Hometown:": "Indian Trail, NC",
+        "Position:": "Infielder/Pitcher",
+        "Previous School:": "Metrolina Christian Academy",
+        "Weight:": "210"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/nathan-sofield/7995",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/nathan-sofield/7995",
+      "name": "Nathan Sofield",
+      "firstName": "Nathan",
+      "lastName": "Sofield",
+      "number": "32",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_32_Natha_Sofield_Head_Shot.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Freshman",
+      "height": "5-7",
+      "weight": "175",
+      "bats": null,
+      "throws": null,
+      "hometown": "Tuckerton, NJ",
+      "from": "Tuckerton, NJ",
+      "lastSchool": null,
+      "previousSchool": "Pinelands Regional HS",
+      "previousSchools": [
+        "Pinelands Regional HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "5-7",
+        "Hometown:": "Tuckerton, NJ",
+        "Position:": "Catcher",
+        "Previous School:": "Pinelands Regional HS",
+        "Weight:": "175"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/jj-harrell/7978",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/jj-harrell/7978",
+      "name": "Jj Harrell",
+      "firstName": "Jj",
+      "lastName": "Harrell",
+      "number": "33",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_33_JJ_Harrell_Head_Shot.jpg?width=80&quality=90",
+      "position": "Left Handed Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-0",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Concord, NC",
+      "from": "Concord, NC",
+      "lastSchool": null,
+      "previousSchool": "Homeschooled",
+      "previousSchools": [
+        "Homeschooled"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "6-0",
+        "Hometown:": "Concord, NC",
+        "Position:": "Left Handed Pitcher",
+        "Previous School:": "Homeschooled",
+        "Weight:": "195"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/braiden-eagen/8005",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/braiden-eagen/8005",
+      "name": "Braiden Eagen",
+      "firstName": "Braiden",
+      "lastName": "Eagen",
+      "number": "34",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_34_Braiden_Eagen_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-1",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Summerville, SC",
+      "from": "Summerville, SC",
+      "lastSchool": null,
+      "previousSchool": "Newberry College",
+      "previousSchools": [
+        "Newberry College"
+      ],
+      "sourceFields": {
+        "Class:": "Sophomore",
+        "Height:": "6-1",
+        "Hometown:": "Summerville, SC",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Newberry College",
+        "Weight:": "215"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/amman-dewberry/7976",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/amman-dewberry/7976",
+      "name": "Amman Dewberry",
+      "firstName": "Amman",
+      "lastName": "Dewberry",
+      "number": "35",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_35_Amman_Dewberry_Head_Shot.jpg?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Redshirt Junior",
+      "height": "6-3",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Conyers, GA",
+      "from": "Conyers, GA",
+      "lastSchool": null,
+      "previousSchool": "Peachtree Academy",
+      "previousSchools": [
+        "Peachtree Academy"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Junior",
+        "Height:": "6-3",
+        "Hometown:": "Conyers, GA",
+        "Position:": "Outfielder",
+        "Previous School:": "Peachtree Academy",
+        "Weight:": "200"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/jayden-adams/7996",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/jayden-adams/7996",
+      "name": "Jayden Adams",
+      "firstName": "Jayden",
+      "lastName": "Adams",
+      "number": "36",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_36_Jayden_Adams_Head_Shot.jpg?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Freshman",
+      "height": "5-9",
+      "weight": "170",
+      "bats": null,
+      "throws": null,
+      "hometown": "Greenwood, SC",
+      "from": "Greenwood, SC",
+      "lastSchool": null,
+      "previousSchool": "Greenwood HS",
+      "previousSchools": [
+        "Greenwood HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "5-9",
+        "Hometown:": "Greenwood, SC",
+        "Position:": "Outfielder",
+        "Previous School:": "Greenwood HS",
+        "Weight:": "170"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/matthew-cannon/8006",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/matthew-cannon/8006",
+      "name": "Matthew Cannon",
+      "firstName": "Matthew",
+      "lastName": "Cannon",
+      "number": "37",
+      "photoUrl": "https://gobluehose.com/images/2026/2/11/_37_Matthew_Cannon_Head_Shot.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Junior",
+      "height": "5-10",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Alpharetta, GA",
+      "from": "Alpharetta, GA",
+      "lastSchool": null,
+      "previousSchool": "Spartanburg Methodist",
+      "previousSchools": [
+        "Spartanburg Methodist"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "5-10",
+        "Hometown:": "Alpharetta, GA",
+        "Position:": "Catcher",
+        "Previous School:": "Spartanburg Methodist",
+        "Weight:": "215"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/aidan-taylor/7997",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/aidan-taylor/7997",
+      "name": "Aidan Taylor",
+      "firstName": "Aidan",
+      "lastName": "Taylor",
+      "number": "38",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_38_Aidan_Taylor_Head_Shot.jpg?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Freshman",
+      "height": "5-11",
+      "weight": "165",
+      "bats": null,
+      "throws": null,
+      "hometown": "Belmont, NC",
+      "from": "Belmont, NC",
+      "lastSchool": null,
+      "previousSchool": "South Point HS",
+      "previousSchools": [
+        "South Point HS"
+      ],
+      "sourceFields": {
+        "Class:": "Freshman",
+        "Height:": "5-11",
+        "Hometown:": "Belmont, NC",
+        "Position:": "Infielder",
+        "Previous School:": "South Point HS",
+        "Weight:": "165"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/mason-mcdaniel/7983",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/mason-mcdaniel/7983",
+      "name": "Mason Mcdaniel",
+      "firstName": "Mason",
+      "lastName": "Mcdaniel",
+      "number": "40",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_40_Mason_McDaniel_Head_Shot.jpg?width=80&quality=90",
+      "position": "Left Handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-4",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Sanford, FL",
+      "from": "Sanford, FL",
+      "lastSchool": null,
+      "previousSchool": "Seminole HS",
+      "previousSchools": [
+        "Seminole HS"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-4",
+        "Hometown:": "Sanford, FL",
+        "Position:": "Left Handed Pitcher",
+        "Previous School:": "Seminole HS",
+        "Weight:": "180"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/eli-bowery/7970",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/eli-bowery/7970",
+      "name": "Eli Bowery",
+      "firstName": "Eli",
+      "lastName": "Bowery",
+      "number": "41",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_41_Eli_Bowery_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-3",
+      "weight": "225",
+      "bats": null,
+      "throws": null,
+      "hometown": "Salem, VA",
+      "from": "Salem, VA",
+      "lastSchool": null,
+      "previousSchool": "Salem HS",
+      "previousSchools": [
+        "Salem HS"
+      ],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "6-3",
+        "Hometown:": "Salem, VA",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Salem HS",
+        "Weight:": "225"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/holden-baker/7969",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/holden-baker/7969",
+      "name": "Holden Baker",
+      "firstName": "Holden",
+      "lastName": "Baker",
+      "number": "43",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_43_Holden_Baker_Head_Shot.jpg?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": "225",
+      "bats": null,
+      "throws": null,
+      "hometown": "Brookhaven, GA",
+      "from": "Brookhaven, GA",
+      "lastSchool": null,
+      "previousSchool": "The Mount Vernon School",
+      "previousSchools": [
+        "The Mount Vernon School"
+      ],
+      "sourceFields": {
+        "Class:": "Junior",
+        "Height:": "6-3",
+        "Hometown:": "Brookhaven, GA",
+        "Position:": "Infielder",
+        "Previous School:": "The Mount Vernon School",
+        "Weight:": "225"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/connor-bradley/7972",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/connor-bradley/7972",
+      "name": "Connor Bradley",
+      "firstName": "Connor",
+      "lastName": "Bradley",
+      "number": "44",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_44_Connor_Bradley_Head_Shot.jpg?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "205",
+      "bats": null,
+      "throws": null,
+      "hometown": "Hayesville, NC",
+      "from": "Hayesville, NC",
+      "lastSchool": null,
+      "previousSchool": null,
+      "previousSchools": [],
+      "sourceFields": {
+        "Class:": "Senior",
+        "Height:": "5-10",
+        "Hometown:": "Hayesville, NC",
+        "Position:": "Outfielder",
+        "Weight:": "205"
+      }
+    },
+    {
+      "key": "https://gobluehose.com/sports/baseball/roster/jeremiah-hampton/7977",
+      "profileUrl": "https://gobluehose.com/sports/baseball/roster/jeremiah-hampton/7977",
+      "name": "Jeremiah Hampton",
+      "firstName": "Jeremiah",
+      "lastName": "Hampton",
+      "number": "45",
+      "photoUrl": "https://gobluehose.com/images/2026/1/29/_45_Jeremiah_Hampton_Head_Shot.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-1",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Belton, SC",
+      "from": "Belton, SC",
+      "lastSchool": null,
+      "previousSchool": "Belton Honea-Path HS",
+      "previousSchools": [
+        "Belton Honea-Path HS"
+      ],
+      "sourceFields": {
+        "Class:": "Redshirt Junior",
+        "Height:": "6-1",
+        "Hometown:": "Belton, SC",
+        "Position:": "Right Handed Pitcher",
+        "Previous School:": "Belton Honea-Path HS",
+        "Weight:": "180"
+      }
+    }
+  ]
+}
