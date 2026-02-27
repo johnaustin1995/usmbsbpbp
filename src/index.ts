@@ -279,19 +279,22 @@ app.get("/api/usm/site", async (req, res, next) => {
     const requestedId = parsePositiveInteger(cleanQueryString(req.query.id));
     const nowEpoch = Math.floor(Date.now() / 1000);
 
-    const [scheduleLoaded, teamsLoaded, rosterCandidates] = await Promise.all([
+    const [scheduleLoaded, rosterCandidates] = await Promise.all([
       loadUsmSchedulePayload(),
-      loadTeamsPayload({ season: seasonQuery, file: null }),
       loadRosterCandidates(),
     ]);
 
-    const usmTeam = findSouthernMissTeam(teamsLoaded.payload.teams);
-    if (!usmTeam) {
-      res.status(404).json({
-        error: "Southern Miss team data was not found in teams payload.",
-        file: teamsLoaded.filename,
-      });
-      return;
+    let teamsLoaded: LoadedTeamsPayload | null = null;
+    let teamsLoadError: string | null = null;
+    let usmTeam: D1TeamSeasonData | null = null;
+    try {
+      teamsLoaded = await loadTeamsPayload({ season: seasonQuery, file: null });
+      usmTeam = findSouthernMissTeam(teamsLoaded.payload.teams);
+      if (!usmTeam) {
+        teamsLoadError = `Southern Miss team data was not found in teams payload (${teamsLoaded.filename}).`;
+      }
+    } catch (error) {
+      teamsLoadError = error instanceof Error ? error.message : String(error);
     }
 
     const normalizedUsmSchedule = normalizeUsmScheduleGames(scheduleLoaded.payload.games);
@@ -300,7 +303,9 @@ app.get("/api/usm/site", async (req, res, next) => {
       ? normalizedUsmSchedule.find((game) => game.gameId === selectedGameId) ?? null
       : null;
 
-    const d1ScheduleRows = buildUsmSiteScheduleRows(usmTeam.schedule, normalizedUsmSchedule);
+    const d1ScheduleRows = usmTeam
+      ? buildUsmSiteScheduleRows(usmTeam.schedule, normalizedUsmSchedule, seasonQuery ?? usmTeam.season ?? null)
+      : buildUsmSiteScheduleRowsFromUsmSchedule(normalizedUsmSchedule);
     const seasonSummary = buildUsmSeasonSummary(d1ScheduleRows);
 
     let liveSummary = null as Awaited<ReturnType<typeof getLiveSummary>> | null;
@@ -316,30 +321,36 @@ app.get("/api/usm/site", async (req, res, next) => {
     const rosterMatch = findBestRosterMatch(rosterCandidates, {
       team: "Southern Miss",
       sport: "baseball",
-      season: seasonQuery ?? usmTeam.season ?? null,
+      season: seasonQuery ?? usmTeam?.season ?? null,
     });
 
     res.json({
       generatedAt: new Date().toISOString(),
       nowEpoch,
-      season: seasonQuery ?? usmTeam.season ?? teamsLoaded.payload.season ?? null,
+      season: seasonQuery ?? usmTeam?.season ?? teamsLoaded?.payload.season ?? null,
       team: {
-        id: usmTeam.id,
-        name: usmTeam.name,
-        slug: usmTeam.slug,
-        logoUrl: usmTeam.logoUrl,
-        conference: usmTeam.conference,
-        teamUrl: usmTeam.teamUrl,
-        scheduleUrl: usmTeam.scheduleUrl,
-        statsUrl: usmTeam.statsUrl,
+        id: usmTeam?.id ?? null,
+        name: usmTeam?.name ?? "Southern Miss",
+        slug: usmTeam?.slug ?? "smiss",
+        logoUrl: usmTeam?.logoUrl ?? null,
+        conference: usmTeam?.conference ?? null,
+        teamUrl: usmTeam?.teamUrl ?? null,
+        scheduleUrl: usmTeam?.scheduleUrl ?? null,
+        statsUrl: usmTeam?.statsUrl ?? null,
       },
       summary: seasonSummary,
       schedule: {
         sourceFile: path.basename(scheduleLoaded.path),
         sourceLoadedAt: scheduleLoaded.loadedAt,
         sourceGeneratedAt: scheduleLoaded.payload.generatedAt ?? null,
+        sourceKind: usmTeam ? "d1-team-schedule" : "usm-schedule-file",
         total: d1ScheduleRows.length,
         games: d1ScheduleRows,
+      },
+      sources: {
+        teamsFile: teamsLoaded?.filename ?? null,
+        teamsLoadedAt: teamsLoaded?.loadedAt ?? null,
+        teamsError: teamsLoadError,
       },
       live: {
         selectedGameId,
@@ -354,7 +365,7 @@ app.get("/api/usm/site", async (req, res, next) => {
             file: path.basename(rosterMatch.path),
             loadedAt: rosterMatch.loadedAt,
             score: rosterMatch.score,
-            teamName: rosterMatch.payload.teamName ?? usmTeam.name,
+            teamName: rosterMatch.payload.teamName ?? usmTeam?.name ?? "Southern Miss",
             season: rosterMatch.payload.season ?? null,
             playerCount: Array.isArray(rosterMatch.payload.players)
               ? rosterMatch.payload.players.length
@@ -1285,6 +1296,49 @@ function buildUsmSiteScheduleRows(
   });
 }
 
+function buildUsmSiteScheduleRowsFromUsmSchedule(
+  games: UsmScheduleGameNormalized[]
+): UsmSiteScheduleRow[] {
+  const nowEpoch = Math.floor(Date.now() / 1000);
+  return games.map((game, index) => {
+    const locationType = inferUsmLocationType(game);
+    const opponentName = resolveUsmOpponentName(game);
+    const outcome = parseOutcomeFromStatusText(game.statusText);
+    const { runsFor, runsAgainst } = parseRunsFromResultText(game.statusText, outcome);
+    const isCompleted = outcome === "win" || outcome === "loss";
+    const isUpcoming = !isCompleted && (game.startEpochResolved === null || game.startEpochResolved >= nowEpoch - 36 * 60 * 60);
+
+    return {
+      index,
+      dateLabel: game.date,
+      dateIso: game.date,
+      locationType,
+      opponentName,
+      opponentSlug: toSlug(opponentName),
+      resultText: game.statusText ?? null,
+      outcome,
+      runsFor,
+      runsAgainst,
+      resultUrl: null,
+      statbroadcastId: game.gameId,
+      isCompleted,
+      isUpcoming,
+    };
+  });
+}
+
+function inferUsmLocationType(game: UsmScheduleGameNormalized): string | null {
+  const home = normalizeLookupName(game.homeTeam);
+  const away = normalizeLookupName(game.awayTeam);
+  if (home.includes("southern miss")) {
+    return null;
+  }
+  if (away.includes("southern miss")) {
+    return "@";
+  }
+  return null;
+}
+
 function parseDateIsoFromD1Schedule(game: D1TeamScheduleGame, seasonHint: string | null): string | null {
   const dateUrl = cleanQueryString(game.dateUrl);
   if (dateUrl) {
@@ -1329,6 +1383,20 @@ function parseDateIsoFromD1Schedule(game: D1TeamScheduleGame, seasonHint: string
   }
 
   return `${String(fallbackYear).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
+
+function parseOutcomeFromStatusText(statusText: string | null): "win" | "loss" | "unknown" {
+  const normalized = cleanQueryString(statusText)?.toUpperCase() ?? "";
+  if (!normalized) {
+    return "unknown";
+  }
+  if (/^W\b/u.test(normalized)) {
+    return "win";
+  }
+  if (/^L\b/u.test(normalized)) {
+    return "loss";
+  }
+  return "unknown";
 }
 
 function parseRunsFromResultText(
