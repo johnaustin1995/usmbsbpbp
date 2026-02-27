@@ -60,18 +60,23 @@ app.get("/api/usm/schedule", async (req, res, next) => {
     const normalizedGames = normalizeUsmScheduleGames(schedule.payload.games);
     let textScheduleError: string | null = null;
     let textScheduleFetchedAt: string | null = null;
-    let games = normalizedGames;
+    let textScheduleRows: SouthernMissScheduleTextGame[] = [];
+    let gamesWithResults = normalizedGames;
 
     try {
       const textSchedule = await getSouthernMissScheduleText();
       textScheduleFetchedAt = textSchedule.fetchedAt;
-      games = mergeUsmScheduleResults(games, textSchedule.games);
+      textScheduleRows = textSchedule.games;
+      gamesWithResults = mergeUsmScheduleResults(gamesWithResults, textScheduleRows);
     } catch (error) {
       textScheduleError = error instanceof Error ? error.message : String(error);
     }
 
-    const selectedGameId = pickUsmGameId(games, requestedId, nowEpoch);
-    const selectedGame = selectedGameId ? games.find((game) => game.gameId === selectedGameId) ?? null : null;
+    const selectedGameId = pickUsmGameId(gamesWithResults, requestedId, nowEpoch);
+    const selectedGame = selectedGameId
+      ? gamesWithResults.find((game) => game.gameId === selectedGameId) ?? null
+      : null;
+    const games = buildUsmScheduleApiGames(gamesWithResults, textScheduleRows);
 
     res.json({
       file: path.basename(schedule.path),
@@ -84,6 +89,7 @@ app.get("/api/usm/schedule", async (req, res, next) => {
       textSchedule: {
         fetchedAt: textScheduleFetchedAt,
         error: textScheduleError,
+        totalGames: textScheduleRows.length,
       },
       games,
     });
@@ -1004,6 +1010,20 @@ interface UsmScheduleGameNormalized {
   startEpochResolved: number | null;
 }
 
+interface UsmScheduleApiGame {
+  date: string | null;
+  gameId: number | null;
+  awayTeam: string;
+  homeTeam: string;
+  statusText: string | null;
+  resultText: string | null;
+  startTimeEpochEt: number | null;
+  startTimeIsoEt: string | null;
+  startTimeEpoch: number | null;
+  startTimeIso: string | null;
+  startEpochResolved: number | null;
+}
+
 interface LoadedUsmSchedulePayload {
   path: string;
   loadedAt: string;
@@ -1577,7 +1597,7 @@ function mergeUsmScheduleResults(
       return { ...game, resultText: mergedResult };
     }
 
-    const normalizedOpponent = normalizeLookupName(resolveUsmOpponentName(game));
+    const normalizedOpponent = normalizeUsmOpponentMatchName(resolveUsmOpponentName(game));
     const preferredIndex = findBestScheduleTextMatchIndex(candidates, normalizedOpponent, true);
     const fallbackIndex = preferredIndex >= 0 ? preferredIndex : findBestScheduleTextMatchIndex(candidates, normalizedOpponent, false);
     const matchIndex = fallbackIndex;
@@ -1595,6 +1615,153 @@ function mergeUsmScheduleResults(
   });
 }
 
+function buildUsmScheduleApiGames(
+  gamesWithResults: UsmScheduleGameNormalized[],
+  scheduleTextRows: SouthernMissScheduleTextGame[]
+): UsmScheduleApiGame[] {
+  const combined: UsmScheduleApiGame[] = gamesWithResults.map((game) => ({
+    date: game.date,
+    gameId: game.gameId,
+    awayTeam: game.awayTeam,
+    homeTeam: game.homeTeam,
+    statusText: game.statusText,
+    resultText: game.resultText,
+    startTimeEpochEt: game.startTimeEpochEt,
+    startTimeIsoEt: game.startTimeIsoEt,
+    startTimeEpoch: game.startTimeEpoch,
+    startTimeIso: game.startTimeIso,
+    startEpochResolved: game.startEpochResolved,
+  }));
+
+  for (const row of scheduleTextRows) {
+    if (hasScheduleTextMatch(gamesWithResults, row)) {
+      continue;
+    }
+
+    const opponentName = cleanQueryString(row.opponentName);
+    if (!opponentName) {
+      continue;
+    }
+
+    const teams = buildUsmTeamsFromScheduleTextRow(row, opponentName);
+    const resultText = normalizeResultStatusText(row.resultText);
+    const statusText = resultText ? "Final" : cleanQueryString(row.timeLabel) ?? null;
+
+    combined.push({
+      date: cleanQueryString(row.dateIso),
+      gameId: null,
+      awayTeam: teams.awayTeam,
+      homeTeam: teams.homeTeam,
+      statusText,
+      resultText,
+      startTimeEpochEt: null,
+      startTimeIsoEt: null,
+      startTimeEpoch: null,
+      startTimeIso: null,
+      startEpochResolved: null,
+    });
+  }
+
+  return combined.sort((a, b) => {
+    const aEpoch = a.startEpochResolved;
+    const bEpoch = b.startEpochResolved;
+    if (aEpoch !== null && bEpoch !== null && aEpoch !== bEpoch) {
+      return aEpoch - bEpoch;
+    }
+
+    if (aEpoch !== null && bEpoch === null) {
+      return -1;
+    }
+    if (aEpoch === null && bEpoch !== null) {
+      return 1;
+    }
+
+    if (a.date && b.date && a.date !== b.date) {
+      return a.date.localeCompare(b.date);
+    }
+
+    const aGameId = a.gameId ?? Number.MAX_SAFE_INTEGER;
+    const bGameId = b.gameId ?? Number.MAX_SAFE_INTEGER;
+    if (aGameId !== bGameId) {
+      return aGameId - bGameId;
+    }
+
+    return resolveUsmOpponentNameFromTeams(a.awayTeam, a.homeTeam).localeCompare(
+      resolveUsmOpponentNameFromTeams(b.awayTeam, b.homeTeam)
+    );
+  });
+}
+
+function hasScheduleTextMatch(
+  gamesWithResults: UsmScheduleGameNormalized[],
+  row: SouthernMissScheduleTextGame
+): boolean {
+  const dateIso = cleanQueryString(row.dateIso);
+  if (!dateIso) {
+    return false;
+  }
+
+  const sameDateGames = gamesWithResults.filter((game) => game.date === dateIso);
+  if (sameDateGames.length === 0) {
+    return false;
+  }
+
+  const normalizedRowOpponent = normalizeUsmOpponentMatchName(row.opponentName ?? "");
+  if (!normalizedRowOpponent) {
+    return true;
+  }
+
+  return sameDateGames.some((game) => {
+    const normalizedOpponent = normalizeUsmOpponentMatchName(resolveUsmOpponentName(game));
+    if (!normalizedOpponent) {
+      return false;
+    }
+
+    return (
+      normalizedOpponent === normalizedRowOpponent ||
+      normalizedOpponent.includes(normalizedRowOpponent) ||
+      normalizedRowOpponent.includes(normalizedOpponent)
+    );
+  });
+}
+
+function buildUsmTeamsFromScheduleTextRow(
+  row: SouthernMissScheduleTextGame,
+  opponentName: string
+): { awayTeam: string; homeTeam: string } {
+  const site = normalizeLookupName(row.siteLabel ?? "");
+  if (site.includes("home")) {
+    return {
+      awayTeam: opponentName,
+      homeTeam: "Southern Miss",
+    };
+  }
+
+  if (site.includes("away")) {
+    return {
+      awayTeam: "Southern Miss",
+      homeTeam: opponentName,
+    };
+  }
+
+  return {
+    awayTeam: "Southern Miss",
+    homeTeam: opponentName,
+  };
+}
+
+function resolveUsmOpponentNameFromTeams(awayTeam: string, homeTeam: string): string {
+  const home = normalizeLookupName(homeTeam);
+  const away = normalizeLookupName(awayTeam);
+  if (home.includes("southern miss")) {
+    return awayTeam;
+  }
+  if (away.includes("southern miss")) {
+    return homeTeam;
+  }
+  return awayTeam || homeTeam;
+}
+
 function findBestScheduleTextMatchIndex(
   candidates: Array<{ row: SouthernMissScheduleTextGame; used: boolean }>,
   normalizedOpponent: string,
@@ -1609,7 +1776,7 @@ function findBestScheduleTextMatchIndex(
       continue;
     }
 
-    const opponent = normalizeLookupName(candidate.row.opponentName ?? "");
+    const opponent = normalizeUsmOpponentMatchName(candidate.row.opponentName ?? "");
     if (!opponent || !normalizedOpponent) {
       continue;
     }
@@ -1650,6 +1817,26 @@ function normalizeResultStatusText(value: string | null): string | null {
   }
 
   return text;
+}
+
+function normalizeUsmOpponentMatchName(value: string): string {
+  let normalized = normalizeLookupName(value);
+  if (!normalized) {
+    return normalized;
+  }
+
+  const aliasMap: Array<[RegExp, string]> = [
+    [/\bapp state\b/g, "appalachian state"],
+    [/\bulm\b/g, "ul monroe"],
+    [/\bla tech\b/g, "louisiana tech"],
+    [/\bolde? dom\b/g, "old dominion"],
+  ];
+
+  for (const [pattern, replacement] of aliasMap) {
+    normalized = normalized.replace(pattern, replacement);
+  }
+
+  return normalized.replace(/\s+/g, " ").trim();
 }
 
 function buildUsmSeasonSummary(scheduleRows: UsmSiteScheduleRow[]): UsmSeasonSummary {

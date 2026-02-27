@@ -564,7 +564,27 @@ function pickUpcomingGames(games, limit) {
       if (Number.isFinite(aEpoch) && Number.isFinite(bEpoch) && aEpoch !== bEpoch) {
         return aEpoch - bEpoch;
       }
-      return toPositiveInt(a?.gameId) - toPositiveInt(b?.gameId);
+
+      if (Number.isFinite(aEpoch) && !Number.isFinite(bEpoch)) {
+        return -1;
+      }
+      if (!Number.isFinite(aEpoch) && Number.isFinite(bEpoch)) {
+        return 1;
+      }
+
+      const aDate = cleanText(a?.date);
+      const bDate = cleanText(b?.date);
+      if (aDate && bDate && aDate !== bDate) {
+        return aDate.localeCompare(bDate);
+      }
+
+      const aGameId = toPositiveInt(a?.gameId);
+      const bGameId = toPositiveInt(b?.gameId);
+      if (Number.isFinite(aGameId) && Number.isFinite(bGameId) && aGameId !== bGameId) {
+        return aGameId - bGameId;
+      }
+
+      return cleanTeamName(a?.awayTeam).localeCompare(cleanTeamName(b?.awayTeam));
     });
 
   return upcoming.slice(0, Math.max(1, limit));
