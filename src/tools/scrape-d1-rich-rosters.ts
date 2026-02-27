@@ -38,6 +38,85 @@ const TEAM_DOMAIN_OVERRIDES: Record<string, string[]> = {
   "central connecticut": ["ccsubluedevils.com"],
 };
 
+const TEAM_ROSTER_URL_OVERRIDES_RAW: Record<string, string[]> = {
+  "Abilene Christian": ["https://acusports.com/sports/baseball/roster"],
+  Akron: ["https://gozips.com/sports/baseball/roster"],
+  "Appalachian State": ["https://appstatesports.com/sports/baseball/roster"],
+  Belmont: ["https://belmontbruins.com/sports/baseball/roster"],
+  "Cal State Northridge": ["https://gomatadors.com/sports/baseball/roster"],
+  "California Baptist": ["https://cbulancers.com/sports/baseball/roster"],
+  "CSU Bakersfield": ["https://gorunners.com/sports/baseball/roster"],
+  "Delaware State": ["https://dsuhornets.com/sports/baseball/roster"],
+  "East Tennessee State": ["https://etsubucs.com/sports/baseball/roster"],
+  "Fairleigh Dickinson": ["https://fduknights.com/sports/baseball/roster"],
+  "Florida Gulf Coast": ["https://fgcuathletics.com/sports/baseball/roster"],
+  Hawaii: ["https://hawaiiathletics.com/sports/baseball/roster"],
+  "High Point": ["https://highpointpanthers.com/sports/baseball/roster"],
+  "Holy Cross": ["https://goholycross.com/sports/baseball/roster"],
+  "Illinois-Chicago": ["https://uicflames.com/sports/baseball/roster"],
+  "Incarnate Word": ["https://uiwcardinals.com/sports/baseball/roster"],
+  Iona: ["https://ionagaels.com/sports/baseball/roster"],
+  Lamar: ["https://lamarcardinals.com/sports/baseball/roster"],
+  "Le Moyne": ["https://lemoynedolphins.com/sports/baseball/roster"],
+  "Little Rock": ["https://lrtrojans.com/sports/baseball/roster"],
+  Maine: ["https://goblackbears.com/sports/baseball/roster"],
+  "Miami (OH)": ["https://miamiredhawks.com/sports/baseball/roster"],
+  Navy: ["https://navysports.com/sports/baseball/roster"],
+  "New Haven": ["https://newhavenchargers.com/sports/baseball/roster"],
+  "New Mexico": ["https://golobos.com/sports/baseball/roster"],
+  Nicholls: ["https://geauxcolonels.com/sports/baseball/roster"],
+  "Norfolk State": ["https://nsuspartans.com/sports/baseball/roster"],
+  "North Dakota State": ["https://gobison.com/sports/baseball/roster"],
+  "Northern Colorado": ["https://uncbears.com/sports/baseball/roster"],
+  "Northern Illinois": ["https://niuhuskies.com/sports/baseball/roster"],
+  Oakland: ["https://goldengrizzlies.com/sports/baseball/roster"],
+  Omaha: ["https://omavs.com/sports/baseball/roster"],
+  Pacific: ["https://pacifictigers.com/sports/baseball/roster"],
+  Pennsylvania: ["https://pennathletics.com/sports/baseball/roster"],
+  Rider: ["https://gobroncs.com/sports/baseball/roster"],
+  "Sacramento State": ["https://hornetsports.com/sports/baseball/roster"],
+  "Sacred Heart": ["https://sacredheartpioneers.com/sports/baseball/roster"],
+  "Saint Joseph’s": ["https://sjuhawks.com/sports/baseball/roster"],
+  "Saint Mary’s": ["https://smcgaels.com/sports/baseball/roster"],
+  "Saint Peter’s": ["https://saintpeterspeacocks.com/sports/baseball/roster"],
+  Samford: ["https://samfordsports.com/sports/baseball/roster"],
+  "San Francisco": ["https://usfdons.com/sports/baseball/roster"],
+  "San Jose State": ["https://sjsuspartans.com/sports/baseball/roster"],
+  "Santa Clara": ["https://santaclarabroncos.com/sports/baseball/roster"],
+  Seattle: ["https://goseattleu.com/sports/baseball/roster/season/2025"],
+  "SIU Edwardsville": ["https://siuecougars.com/sports/baseball/roster"],
+  "Southeastern Louisiana": ["https://lionsports.net/sports/baseball/roster"],
+  "Southern Indiana": ["https://gousieagles.com/sports/baseball/roster"],
+  "St. Bonaventure": ["https://gobonnies.com/sports/baseball/roster"],
+  "St. Thomas": ["https://tommiesports.com/sports/baseball/roster"],
+  Tarleton: ["https://tarletonsports.com/sports/baseball/roster"],
+  "Tennessee Tech": ["https://tennesseetech.prestosports.com/sports/bsb/2025-26/roster"],
+  "Texas A&M-Corpus Christi": ["https://goislanders.com/sports/baseball/roster"],
+  Toledo: ["https://utrockets.com/sports/baseball/roster"],
+  Towson: ["https://towsontigers.com/sports/baseball/roster"],
+  "UL Monroe": ["https://ulmwarhawks.com/sports/baseball/roster"],
+  UMES: ["https://umeshawksports.com/sports/baseball/roster"],
+  "UNC Asheville": ["https://uncabulldogs.com/sports/baseball/roster"],
+  "UNC Greensboro": ["https://uncgspartans.com/sports/baseball/roster"],
+  "Southern California": ["https://usctrojans.com/sports/baseball/roster"],
+  "UT Arlington": ["https://utamavs.com/sports/baseball/roster"],
+  "Tennessee-Martin": ["https://utmsports.com/sports/baseball/roster"],
+  "Utah Tech": ["https://utahtechtrailblazers.com/sports/baseball/roster"],
+  "UT Rio Grande Valley": ["https://goutrgv.com/sports/baseball/roster"],
+  Valparaiso: ["https://valpoathletics.com/sports/baseball/roster"],
+  VCU: ["https://vcuathletics.com/sports/baseball/roster"],
+  VMI: ["https://vmikeydets.com/sports/baseball/roster"],
+  "West Georgia": ["https://uwgathletics.com/sports/baseball/roster"],
+  "Western Carolina": ["https://catamountsports.com/sports/baseball/roster"],
+  "Western Illinois": ["https://goleathernecks.com/sports/baseball/roster"],
+  "William & Mary": ["https://tribeathletics.com/sports/baseball/roster"],
+  Wofford: ["https://woffordterriers.com/sports/baseball/roster"],
+};
+
+const TEAM_ROSTER_URL_OVERRIDES = new Map<string, string[]>(
+  Object.entries(TEAM_ROSTER_URL_OVERRIDES_RAW).map(([teamName, urls]) => [normalizeName(teamName), urls])
+);
+
 interface CliOptions {
   teamsFile: string | null;
   season: string | null;
@@ -183,6 +262,15 @@ async function processTeam(
 
   const domainsTried: string[] = [];
   const rosterUrlsTried: string[] = [];
+
+  const manualUrls = TEAM_ROSTER_URL_OVERRIDES.get(normalizeName(team.name)) ?? [];
+  for (const manualUrl of manualUrls) {
+    const manualAttempt = await tryManualRosterUrl(team, manualUrl, options, context, outPath, domainsTried, rosterUrlsTried);
+    if (manualAttempt) {
+      return manualAttempt;
+    }
+  }
+
   const scheduleDomains = deriveDomainCandidates(team, options.maxDomains);
   const scheduleAttempt = await tryDomainCandidates(team, scheduleDomains, options, context, outPath, domainsTried, rosterUrlsTried);
   if (scheduleAttempt) {
@@ -301,6 +389,67 @@ async function tryDomainCandidates(
   }
 
   return null;
+}
+
+async function tryManualRosterUrl(
+  team: D1TeamSeasonData,
+  rosterUrl: string,
+  options: CliOptions,
+  context: ScrapeAttemptContext,
+  outPath: string,
+  domainsTried: string[],
+  rosterUrlsTried: string[]
+): Promise<TeamResult | null> {
+  const host = parseHost(rosterUrl);
+  if (host && !domainsTried.includes(host)) {
+    domainsTried.push(host);
+  }
+
+  if (context.rosterCache.has(rosterUrl)) {
+    return null;
+  }
+  if (rosterUrlsTried.length >= options.maxRosterUrlsPerTeam) {
+    return null;
+  }
+
+  context.rosterCache.add(rosterUrl);
+  rosterUrlsTried.push(rosterUrl);
+
+  const probe = await quickProbeRosterUrl(rosterUrl, Math.min(options.timeoutMs, 6_000), context.probeCache);
+  if (!probe.ok || !isLikelyRosterProbe(probe)) {
+    return null;
+  }
+
+  const scraped = await tryScrapeRoster(probe.finalUrl, options.timeoutMs);
+  if (!scraped.ok) {
+    return null;
+  }
+  if (scraped.payload.playerCount < options.minPlayers) {
+    return null;
+  }
+
+  if (!options.dryRun) {
+    const payload = applyTeamOverrides(scraped.payload, team, options.season ?? team.season ?? null);
+    await fs.mkdir(path.dirname(outPath), { recursive: true });
+    await fs.writeFile(outPath, JSON.stringify(payload, null, 2), "utf8");
+  }
+
+  return {
+    teamId: team.id,
+    teamName: team.name,
+    slug: team.slug,
+    conference: team.conference?.name ?? null,
+    season: options.season ?? team.season ?? null,
+    status: "success",
+    message: options.dryRun
+      ? `Matched manual roster URL (dry-run): ${probe.finalUrl}`
+      : `Scraped ${scraped.payload.playerCount} players from manual roster URL.`,
+    sourceUrl: probe.finalUrl,
+    outputPath: outPath,
+    players: scraped.payload.playerCount,
+    domainsTried,
+    rosterUrlsTried,
+  };
 }
 
 function deriveDomainCandidates(team: D1TeamSeasonData, maxDomains: number): DomainCandidate[] {

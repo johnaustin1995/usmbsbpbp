@@ -1,0 +1,1199 @@
+{
+  "sourceUrl": "https://lrtrojans.com/sports/baseball/roster",
+  "fetchedAt": "2026-02-27T16:23:41.101Z",
+  "pageTitle": "2026 Baseball Roster - Little Rock Athletics",
+  "teamName": "Little Rock",
+  "sport": "Baseball",
+  "season": "2026",
+  "playerCount": 39,
+  "parser": {
+    "strategy": "profile-links",
+    "candidateRecords": 195,
+    "dedupedRecords": 39
+  },
+  "players": [
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/jerdy-lopez/9480",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/jerdy-lopez/9480",
+      "name": "Jerdy Lopez",
+      "firstName": "Jerdy",
+      "lastName": "Lopez",
+      "number": "1",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/JERDY_LOPEZ.jpg?width=80&quality=90",
+      "position": "Shortstop",
+      "classYear": "Junior",
+      "height": "5-8",
+      "weight": "173",
+      "bats": null,
+      "throws": null,
+      "hometown": "Santo Domingo, Dominican Republic",
+      "from": "Santo Domingo, Dominican Republic",
+      "lastSchool": null,
+      "previousSchool": "Western Oklahoma CC",
+      "previousSchools": [
+        "Western Oklahoma CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Santo Domingo, Dominican Republic",
+        "Ht./Wt.": "5-8 / 173",
+        "Letters": "0",
+        "Position": "Shortstop",
+        "Prev School": "Western Oklahoma CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/michael-o-brien/9481",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/michael-o-brien/9481",
+      "name": "Michael O Brien",
+      "firstName": "Michael O",
+      "lastName": "Brien",
+      "number": "2",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/MICHAEL_O_BRIEN.jpg?width=80&quality=90",
+      "position": "Center Field",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "River Ridge, La.",
+      "from": "River Ridge, La.",
+      "lastSchool": null,
+      "previousSchool": "Mississippi State",
+      "previousSchools": [
+        "Mississippi State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "River Ridge, La.",
+        "Ht./Wt.": "6-0 / 180",
+        "Letters": "0",
+        "Position": "Center Field",
+        "Prev School": "Mississippi State"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/easton-roe/9482",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/easton-roe/9482",
+      "name": "Easton Roe",
+      "firstName": "Easton",
+      "lastName": "Roe",
+      "number": "4",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/EASTON_ROE.jpg?width=80&quality=90",
+      "position": "First Base",
+      "classYear": "Junior",
+      "height": "5-11",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Pleasant Hill, Mo.",
+      "from": "Pleasant Hill, Mo.",
+      "lastSchool": null,
+      "previousSchool": "Johnson County CC",
+      "previousSchools": [
+        "Johnson County CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Pleasant Hill, Mo.",
+        "Ht./Wt.": "5-11 / 210",
+        "Letters": "0",
+        "Position": "First Base",
+        "Prev School": "Johnson County CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/blake-simpson/9483",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/blake-simpson/9483",
+      "name": "Blake Simpson",
+      "firstName": "Blake",
+      "lastName": "Simpson",
+      "number": "5",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/BLAKE_SIMPSON.jpg?width=80&quality=90",
+      "position": "Infield",
+      "classYear": "Redshirt Junior",
+      "height": "6-2",
+      "weight": "188",
+      "bats": null,
+      "throws": null,
+      "hometown": "Toronto, Ontario",
+      "from": "Toronto, Ontario",
+      "lastSchool": null,
+      "previousSchool": "Missouri",
+      "previousSchools": [
+        "Missouri"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Hometown": "Toronto, Ontario",
+        "Ht./Wt.": "6-2 / 188",
+        "Letters": "0",
+        "Position": "Infield",
+        "Prev School": "Missouri"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/brody-bunting/9369",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/brody-bunting/9369",
+      "name": "Brody Bunting",
+      "firstName": "Brody",
+      "lastName": "Bunting",
+      "number": "6",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/BRODY_BUNTING.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-1",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Sherwood, Ark.",
+      "from": "Sherwood, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Johnson County CC",
+      "previousSchools": [
+        "Johnson County CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Sherwood, Ark.",
+        "Ht./Wt.": "6-1 / 200",
+        "Letters": "2",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Johnson County CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/trent-jordan/9378",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/trent-jordan/9378",
+      "name": "Trent Jordan",
+      "firstName": "Trent",
+      "lastName": "Jordan",
+      "number": "7",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/TRENT_JORDAN.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-1",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Mountain Home, Ark.",
+      "from": "Mountain Home, Ark.",
+      "lastSchool": "Mountain Home HS",
+      "previousSchool": "Hendrix College",
+      "previousSchools": [
+        "Hendrix College"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "High School": "Mountain Home HS",
+        "Hometown": "Mountain Home, Ark.",
+        "Ht./Wt.": "6-1 / 220",
+        "Letters": "2",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Hendrix College"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/cooper-chaplain/9372",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/cooper-chaplain/9372",
+      "name": "Cooper Chaplain",
+      "firstName": "Cooper",
+      "lastName": "Chaplain",
+      "number": "8",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/COOPER_CHAPLAIN.jpg?width=80&quality=90",
+      "position": "Second Base",
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": "185",
+      "bats": null,
+      "throws": null,
+      "hometown": "Jackson, Miss.",
+      "from": "Jackson, Miss.",
+      "lastSchool": null,
+      "previousSchool": "Meridian CC",
+      "previousSchools": [
+        "Meridian CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Jackson, Miss.",
+        "Ht./Wt.": "5-10 / 185",
+        "Letters": "2",
+        "Position": "Second Base",
+        "Prev School": "Meridian CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/trey-hill/9377",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/trey-hill/9377",
+      "name": "Trey Hill",
+      "firstName": "Trey",
+      "lastName": "Hill",
+      "number": "9",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/TREY_HILL.jpg?width=80&quality=90",
+      "position": "Center Field",
+      "classYear": "Senior",
+      "height": "6-0",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Fayetteville, Ark.",
+      "from": "Fayetteville, Ark.",
+      "lastSchool": "Farmington HS",
+      "previousSchool": "Farmington HS",
+      "previousSchools": [
+        "Farmington HS"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "High School": "Farmington HS",
+        "Hometown": "Fayetteville, Ark.",
+        "Ht./Wt.": "6-0 / 210",
+        "Letters": "4",
+        "Position": "Center Field",
+        "Prev School": "Farmington HS"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/jake-mcclure/9484",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/jake-mcclure/9484",
+      "name": "Jake Mcclure",
+      "firstName": "Jake",
+      "lastName": "Mcclure",
+      "number": "10",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/JAKE_MCCLURE.jpg?width=80&quality=90",
+      "position": "Utility",
+      "classYear": "Redshirt Junior",
+      "height": "5-9",
+      "weight": "186",
+      "bats": null,
+      "throws": null,
+      "hometown": "Gardner, Kans.",
+      "from": "Gardner, Kans.",
+      "lastSchool": null,
+      "previousSchool": "Johnson County CC",
+      "previousSchools": [
+        "Johnson County CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Hometown": "Gardner, Kans.",
+        "Ht./Wt.": "5-9 / 186",
+        "Letters": "0",
+        "Position": "Utility",
+        "Prev School": "Johnson County CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/nolan-freund/9485",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/nolan-freund/9485",
+      "name": "Nolan Freund",
+      "firstName": "Nolan",
+      "lastName": "Freund",
+      "number": "12",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/NOLAN_FREUND.jpg?width=80&quality=90",
+      "position": "Third Base",
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Kingman, Kans.",
+      "from": "Kingman, Kans.",
+      "lastSchool": null,
+      "previousSchool": "Cloud County CC",
+      "previousSchools": [
+        "Cloud County CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Kingman, Kans.",
+        "Ht./Wt.": "6-1 / 215",
+        "Letters": "0",
+        "Position": "Third Base",
+        "Prev School": "Cloud County CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/tag-andrews/9486",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/tag-andrews/9486",
+      "name": "Tag Andrews",
+      "firstName": "Tag",
+      "lastName": "Andrews",
+      "number": "13",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/TAG_ANDREWS.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Redshirt Freshman",
+      "height": "6-0",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Maumelle, Ark.",
+      "from": "Maumelle, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Arkansas",
+      "previousSchools": [
+        "Arkansas"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Freshman",
+        "Hometown": "Maumelle, Ark.",
+        "Ht./Wt.": "6-0 / 180",
+        "Letters": "0",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Arkansas"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/josh-beezley/9367",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/josh-beezley/9367",
+      "name": "Josh Beezley",
+      "firstName": "Josh",
+      "lastName": "Beezley",
+      "number": "14",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/JOSH_BEEZLEY.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "5-11",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Wheeler Heights, New South Wales, Australia",
+      "from": "Wheeler Heights, New South Wales, Australia",
+      "lastSchool": null,
+      "previousSchool": "National Park College",
+      "previousSchools": [
+        "National Park College"
+      ],
+      "sourceFields": {
+        "Class": "Graduate Student",
+        "Hometown": "Wheeler Heights, New South Wales, Australia",
+        "Ht./Wt.": "5-11 / 200",
+        "Letters": "5",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "National Park College"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/kade-smith/9487",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/kade-smith/9487",
+      "name": "Kade Smith",
+      "firstName": "Kade",
+      "lastName": "Smith",
+      "number": "16",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/KADE_SMITH.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Redshirt Sophomore",
+      "height": "5-11",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Searcy, Ark.",
+      "from": "Searcy, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Harding",
+      "previousSchools": [
+        "Harding"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Hometown": "Searcy, Ark.",
+        "Ht./Wt.": "5-11 / 210",
+        "Letters": "0",
+        "Position": "Outfield",
+        "Prev School": "Harding"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/nico-baumbach/9488",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/nico-baumbach/9488",
+      "name": "Nico Baumbach",
+      "firstName": "Nico",
+      "lastName": "Baumbach",
+      "number": "17",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/NICO_BAUMBACH.jpg?width=80&quality=90",
+      "position": "Third Base",
+      "classYear": "Graduate Student",
+      "height": "5-11",
+      "weight": "205",
+      "bats": null,
+      "throws": null,
+      "hometown": "Euless, Tex.",
+      "from": "Euless, Tex.",
+      "lastSchool": "Trinity High School",
+      "previousSchool": "Northeast Texas CC",
+      "previousSchools": [
+        "Northeast Texas CC"
+      ],
+      "sourceFields": {
+        "Class": "Graduate Student",
+        "High School": "Trinity High School",
+        "Hometown": "Euless, Tex.",
+        "Ht./Wt.": "5-11 / 205",
+        "Letters": "5",
+        "Position": "Third Base",
+        "Prev School": "Northeast Texas CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/preston-davis/9374",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/preston-davis/9374",
+      "name": "Preston Davis",
+      "firstName": "Preston",
+      "lastName": "Davis",
+      "number": "18",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/PRESTON_DAVIS.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Redshirt Senior",
+      "height": "6-3",
+      "weight": "235",
+      "bats": null,
+      "throws": null,
+      "hometown": "Texarkana, Texas",
+      "from": "Texarkana, Texas",
+      "lastSchool": "Redwater HS",
+      "previousSchool": "Redwater HS",
+      "previousSchools": [
+        "Redwater HS"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Senior",
+        "High School": "Redwater HS",
+        "Hometown": "Texarkana, Texas",
+        "Ht./Wt.": "6-3 / 235",
+        "Letters": "5",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Redwater HS"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/brigden-parker/9489",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/brigden-parker/9489",
+      "name": "Brigden Parker",
+      "firstName": "Brigden",
+      "lastName": "Parker",
+      "number": "19",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/BRIGDEN_PARKER.jpg?width=80&quality=90",
+      "position": "Left Hand Pitcher",
+      "classYear": "Redshirt Senior",
+      "height": "6-2",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Holly, Colo.",
+      "from": "Holly, Colo.",
+      "lastSchool": null,
+      "previousSchool": "Kansas",
+      "previousSchools": [
+        "Kansas"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Senior",
+        "Hometown": "Holly, Colo.",
+        "Ht./Wt.": "6-2 / 200",
+        "Letters": "0",
+        "Position": "Left Hand Pitcher",
+        "Prev School": "Kansas"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/zach-busick/9370",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/zach-busick/9370",
+      "name": "Zach Busick",
+      "firstName": "Zach",
+      "lastName": "Busick",
+      "number": "20",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/ZACH_BUSICK.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "England, Ark.",
+      "from": "England, Ark.",
+      "lastSchool": "Carlisle HS",
+      "previousSchool": "Carlisle HS",
+      "previousSchools": [
+        "Carlisle HS"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "High School": "Carlisle HS",
+        "Hometown": "England, Ark.",
+        "Ht./Wt.": "6-1 / 200",
+        "Letters": "3",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Carlisle HS"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/waylon-sebren/9383",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/waylon-sebren/9383",
+      "name": "Waylon Sebren",
+      "firstName": "Waylon",
+      "lastName": "Sebren",
+      "number": "21",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/WAYLON_SEBREN.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Redshirt Senior",
+      "height": "5-9",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Puckett, Miss.",
+      "from": "Puckett, Miss.",
+      "lastSchool": "Puckett HS",
+      "previousSchool": "Memphis",
+      "previousSchools": [
+        "Memphis"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Senior",
+        "High School": "Puckett HS",
+        "Hometown": "Puckett, Miss.",
+        "Ht./Wt.": "5-9 / 180",
+        "Letters": "2",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Memphis"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/jack-cline/9373",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/jack-cline/9373",
+      "name": "Jack Cline",
+      "firstName": "Jack",
+      "lastName": "Cline",
+      "number": "23",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/JACK_CLINE.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "6-3",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Little Rock, Ark.",
+      "from": "Little Rock, Ark.",
+      "lastSchool": null,
+      "previousSchool": "North Oklahoma College-Enid",
+      "previousSchools": [
+        "North Oklahoma College-Enid"
+      ],
+      "sourceFields": {
+        "Class": "Graduate Student",
+        "Hometown": "Little Rock, Ark.",
+        "Ht./Wt.": "6-3 / 220",
+        "Letters": "5",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "North Oklahoma College-Enid"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/cade-martin/9380",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/cade-martin/9380",
+      "name": "Cade Martin",
+      "firstName": "Cade",
+      "lastName": "Martin",
+      "number": "24",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/CADE_MARTIN.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Sophomore",
+      "height": "6-0",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Texarkana, Texas",
+      "from": "Texarkana, Texas",
+      "lastSchool": "Pleasant Grove HS",
+      "previousSchool": "Pleasant Grove HS",
+      "previousSchools": [
+        "Pleasant Grove HS"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "High School": "Pleasant Grove HS",
+        "Hometown": "Texarkana, Texas",
+        "Ht./Wt.": "6-0 / 220",
+        "Letters": "2",
+        "Position": "Catcher",
+        "Prev School": "Pleasant Grove HS"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/ty-rhoades/9381",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/ty-rhoades/9381",
+      "name": "Ty Rhoades",
+      "firstName": "Ty",
+      "lastName": "Rhoades",
+      "number": "25",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/TY_RHOADES.jpg?width=80&quality=90",
+      "position": "Utility",
+      "classYear": "Senior",
+      "height": "6-0",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Jonesboro, Ark.",
+      "from": "Jonesboro, Ark.",
+      "lastSchool": "Jonesboro HS",
+      "previousSchool": "Jonesboro HS",
+      "previousSchools": [
+        "Jonesboro HS"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "High School": "Jonesboro HS",
+        "Hometown": "Jonesboro, Ark.",
+        "Ht./Wt.": "6-0 / 210",
+        "Letters": "4",
+        "Position": "Utility",
+        "Prev School": "Jonesboro HS"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/angel-cano/9371",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/angel-cano/9371",
+      "name": "Angel Cano",
+      "firstName": "Angel",
+      "lastName": "Cano",
+      "number": "26",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/ANGEL_CANO.jpg?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Senior",
+      "height": "6-2",
+      "weight": "225",
+      "bats": null,
+      "throws": null,
+      "hometown": "Cartagena, Colombia",
+      "from": "Cartagena, Colombia",
+      "lastSchool": null,
+      "previousSchool": "Western Oklahoma State College",
+      "previousSchools": [
+        "Western Oklahoma State College"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Cartagena, Colombia",
+        "Ht./Wt.": "6-2 / 225",
+        "Letters": "2",
+        "Position": "Infielder",
+        "Prev School": "Western Oklahoma State College"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/ryan-geck/9375",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/ryan-geck/9375",
+      "name": "Ryan Geck",
+      "firstName": "Ryan",
+      "lastName": "Geck",
+      "number": "27",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/RYAN_GECK.jpg?width=80&quality=90",
+      "position": "Utility",
+      "classYear": "Senior",
+      "height": "6-5",
+      "weight": "230",
+      "bats": null,
+      "throws": null,
+      "hometown": "Long Beach, Calif.",
+      "from": "Long Beach, Calif.",
+      "lastSchool": null,
+      "previousSchool": "Long Beach City College",
+      "previousSchools": [
+        "Long Beach City College"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Long Beach, Calif.",
+        "Ht./Wt.": "6-5 / 230",
+        "Letters": "2",
+        "Position": "Utility",
+        "Prev School": "Long Beach City College"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/austin-coyle/9490",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/austin-coyle/9490",
+      "name": "Austin Coyle",
+      "firstName": "Austin",
+      "lastName": "Coyle",
+      "number": "28",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/AUSTIN_COYLE.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Redshirt Junior",
+      "height": "6-1",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Kamloops, British Columbia",
+      "from": "Kamloops, British Columbia",
+      "lastSchool": null,
+      "previousSchool": "Cloud County CC",
+      "previousSchools": [
+        "Cloud County CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Hometown": "Kamloops, British Columbia",
+        "Ht./Wt.": "6-1 / 190",
+        "Letters": "0",
+        "Position": "Outfield",
+        "Prev School": "Cloud County CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/david-stanley/9491",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/david-stanley/9491",
+      "name": "David Stanley",
+      "firstName": "David",
+      "lastName": "Stanley",
+      "number": "29",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/DAVID_STANLEY.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "Toronto, Ontario",
+      "from": "Toronto, Ontario",
+      "lastSchool": null,
+      "previousSchool": "Conners State",
+      "previousSchools": [
+        "Conners State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Toronto, Ontario",
+        "Ht./Wt.": "6-0 / 200",
+        "Letters": "0",
+        "Position": "Outfield",
+        "Prev School": "Conners State"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/brannon-westmoreland/9492",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/brannon-westmoreland/9492",
+      "name": "Brannon Westmoreland",
+      "firstName": "Brannon",
+      "lastName": "Westmoreland",
+      "number": "30",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/BRANNON_WESTMORELAND.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-6",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Haskell, Okla.",
+      "from": "Haskell, Okla.",
+      "lastSchool": null,
+      "previousSchool": "Conners State",
+      "previousSchools": [
+        "Conners State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Haskell, Okla.",
+        "Ht./Wt.": "6-6 / 215",
+        "Letters": "0",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Conners State"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/hunter-royal/9382",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/hunter-royal/9382",
+      "name": "Hunter Royal",
+      "firstName": "Hunter",
+      "lastName": "Royal",
+      "number": "31",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/HUNTER_ROYAL.jpg?width=80&quality=90",
+      "position": "Left Handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "5-9",
+      "weight": "195",
+      "bats": null,
+      "throws": null,
+      "hometown": "Rogers, Ark.",
+      "from": "Rogers, Ark.",
+      "lastSchool": "Rogers Heritage",
+      "previousSchool": "South Arkansas College",
+      "previousSchools": [
+        "South Arkansas College"
+      ],
+      "sourceFields": {
+        "Class": "Graduate Student",
+        "High School": "Rogers Heritage",
+        "Hometown": "Rogers, Ark.",
+        "Ht./Wt.": "5-9 / 195",
+        "Letters": "5",
+        "Position": "Left Handed Pitcher",
+        "Prev School": "South Arkansas College"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/malcolm-brown/9368",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/malcolm-brown/9368",
+      "name": "Malcolm Brown",
+      "firstName": "Malcolm",
+      "lastName": "Brown",
+      "number": "32",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/MALCOLM_BROWN.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Senior",
+      "height": "6-1",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Texarkana, Texas",
+      "from": "Texarkana, Texas",
+      "lastSchool": "Redwater HS",
+      "previousSchool": "Redwater HS",
+      "previousSchools": [
+        "Redwater HS"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "High School": "Redwater HS",
+        "Hometown": "Texarkana, Texas",
+        "Ht./Wt.": "6-1 / 190",
+        "Letters": "4",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Redwater HS"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/luke-schimmels/9493",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/luke-schimmels/9493",
+      "name": "Luke Schimmels",
+      "firstName": "Luke",
+      "lastName": "Schimmels",
+      "number": "33",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/LUKE_SCHIMMELS.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Redshirt Sophomore",
+      "height": "6-2",
+      "weight": "215",
+      "bats": null,
+      "throws": null,
+      "hometown": "Edmond, Okla.",
+      "from": "Edmond, Okla.",
+      "lastSchool": null,
+      "previousSchool": "Cowley County CC",
+      "previousSchools": [
+        "Cowley County CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Hometown": "Edmond, Okla.",
+        "Ht./Wt.": "6-2 / 215",
+        "Letters": "0",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Cowley County CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/blake-van-cleve/9385",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/blake-van-cleve/9385",
+      "name": "Blake Van Cleve",
+      "firstName": "Blake Van",
+      "lastName": "Cleve",
+      "number": "34",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/BLAKE_VAN_CLEVE.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Graduate Student",
+      "height": "6-4",
+      "weight": "190",
+      "bats": null,
+      "throws": null,
+      "hometown": "Plano, TX",
+      "from": "Plano, TX",
+      "lastSchool": "Plano Senior High School",
+      "previousSchool": "Northeast Texas Community College",
+      "previousSchools": [
+        "Northeast Texas Community College"
+      ],
+      "sourceFields": {
+        "Class": "Graduate Student",
+        "High School": "Plano Senior High School",
+        "Hometown": "Plano, TX",
+        "Ht./Wt.": "6-4 / 190",
+        "Letters": "5",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Northeast Texas Community College"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/brett-gastman/9494",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/brett-gastman/9494",
+      "name": "Brett Gastman",
+      "firstName": "Brett",
+      "lastName": "Gastman",
+      "number": "35",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/BRETT_GASTMAN.jpg?width=80&quality=90",
+      "position": "Left Handed Pitcher",
+      "classYear": "Redshirt Senior",
+      "height": "6-2",
+      "weight": "210",
+      "bats": null,
+      "throws": null,
+      "hometown": "Little Rock, Ark.",
+      "from": "Little Rock, Ark.",
+      "lastSchool": null,
+      "previousSchool": "Charleston Southern",
+      "previousSchools": [
+        "Charleston Southern"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Senior",
+        "Hometown": "Little Rock, Ark.",
+        "Ht./Wt.": "6-2 / 210",
+        "Letters": "0",
+        "Position": "Left Handed Pitcher",
+        "Prev School": "Charleston Southern"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/lance-anderson/9495",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/lance-anderson/9495",
+      "name": "Lance Anderson",
+      "firstName": "Lance",
+      "lastName": "Anderson",
+      "number": "36",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/LANCE_ANDERSON.jpg?width=80&quality=90",
+      "position": "Shortstop",
+      "classYear": "Junior",
+      "height": "5-9",
+      "weight": "170",
+      "bats": null,
+      "throws": null,
+      "hometown": "Boise, Idaho",
+      "from": "Boise, Idaho",
+      "lastSchool": null,
+      "previousSchool": "Columbia Basin CC",
+      "previousSchools": [
+        "Columbia Basin CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Boise, Idaho",
+        "Ht./Wt.": "5-9 / 170",
+        "Letters": "0",
+        "Position": "Shortstop",
+        "Prev School": "Columbia Basin CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/gage-haley/9376",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/gage-haley/9376",
+      "name": "Gage Haley",
+      "firstName": "Gage",
+      "lastName": "Haley",
+      "number": "38",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/GAGE_HALEY.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Junior",
+      "height": "6-6",
+      "weight": "260",
+      "bats": null,
+      "throws": null,
+      "hometown": "Southaven, Miss.",
+      "from": "Southaven, Miss.",
+      "lastSchool": "Lewisburg HS",
+      "previousSchool": "Mississippi State",
+      "previousSchools": [
+        "Mississippi State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "High School": "Lewisburg HS",
+        "Hometown": "Southaven, Miss.",
+        "Ht./Wt.": "6-6 / 260",
+        "Letters": "2",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Mississippi State"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/jack-bilski/9496",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/jack-bilski/9496",
+      "name": "Jack Bilski",
+      "firstName": "Jack",
+      "lastName": "Bilski",
+      "number": "39",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/JACK_BILSKI.jpg?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": "200",
+      "bats": null,
+      "throws": null,
+      "hometown": "La Porte, Texas",
+      "from": "La Porte, Texas",
+      "lastSchool": null,
+      "previousSchool": "UA Rich Mountain",
+      "previousSchools": [
+        "UA Rich Mountain"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "La Porte, Texas",
+        "Ht./Wt.": "6-3 / 200",
+        "Letters": "0",
+        "Position": "Catcher",
+        "Prev School": "UA Rich Mountain"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/russ-martin/9498",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/russ-martin/9498",
+      "name": "Russ Martin",
+      "firstName": "Russ",
+      "lastName": "Martin",
+      "number": "42",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/RUSS_MARTIN.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Freshman",
+      "height": "6-0",
+      "weight": "220",
+      "bats": null,
+      "throws": null,
+      "hometown": "Russellville, Ark.",
+      "from": "Russellville, Ark.",
+      "lastSchool": "Russellville HS",
+      "previousSchool": "Russellville HS",
+      "previousSchools": [
+        "Russellville HS"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "High School": "Russellville HS",
+        "Hometown": "Russellville, Ark.",
+        "Ht./Wt.": "6-0 / 220",
+        "Letters": "0",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Russellville HS"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/brayden-walls/9502",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/brayden-walls/9502",
+      "name": "Brayden Walls",
+      "firstName": "Brayden",
+      "lastName": "Walls",
+      "number": "43",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/BRAYDEN_WALLS.jpg?width=80&quality=90",
+      "position": "Left Handed Pitcher",
+      "classYear": "Junior",
+      "height": "5-10",
+      "weight": "180",
+      "bats": null,
+      "throws": null,
+      "hometown": "Boise, Idaho",
+      "from": "Boise, Idaho",
+      "lastSchool": null,
+      "previousSchool": "Columbia Basin CC",
+      "previousSchools": [
+        "Columbia Basin CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Boise, Idaho",
+        "Ht./Wt.": "5-10 / 180",
+        "Letters": "0",
+        "Position": "Left Handed Pitcher",
+        "Prev School": "Columbia Basin CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/luis-castillo/9499",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/luis-castillo/9499",
+      "name": "Luis Castillo",
+      "firstName": "Luis",
+      "lastName": "Castillo",
+      "number": "44",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/LUIS_CASTILLO.jpg?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Redshirt Sophomore",
+      "height": "6-4",
+      "weight": "270",
+      "bats": null,
+      "throws": null,
+      "hometown": "Santo Domingo, Dominican Republic",
+      "from": "Santo Domingo, Dominican Republic",
+      "lastSchool": null,
+      "previousSchool": "Western Oklahoma CC",
+      "previousSchools": [
+        "Western Oklahoma CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Hometown": "Santo Domingo, Dominican Republic",
+        "Ht./Wt.": "6-4 / 270",
+        "Letters": "0",
+        "Position": "Outfield",
+        "Prev School": "Western Oklahoma CC"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/nic-bronzini/9500",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/nic-bronzini/9500",
+      "name": "Nic Bronzini",
+      "firstName": "Nic",
+      "lastName": "Bronzini",
+      "number": "45",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/NIC_BRONZINI.jpg?width=80&quality=90",
+      "position": "Left Handed Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-4",
+      "weight": "250",
+      "bats": null,
+      "throws": null,
+      "hometown": "San Ramon, Calif.",
+      "from": "San Ramon, Calif.",
+      "lastSchool": null,
+      "previousSchool": "Washington",
+      "previousSchools": [
+        "Washington"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Hometown": "San Ramon, Calif.",
+        "Ht./Wt.": "6-4 / 250",
+        "Letters": "0",
+        "Position": "Left Handed Pitcher",
+        "Prev School": "Washington"
+      }
+    },
+    {
+      "key": "https://lrtrojans.com/sports/baseball/roster/isaac-evaniew/9501",
+      "profileUrl": "https://lrtrojans.com/sports/baseball/roster/isaac-evaniew/9501",
+      "name": "Isaac Evaniew",
+      "firstName": "Isaac",
+      "lastName": "Evaniew",
+      "number": "46",
+      "photoUrl": "https://lrtrojans.com/images/2025/10/8/ISAAC_EVANIEW.jpg?width=80&quality=90",
+      "position": "Right Handed Pitcher",
+      "classYear": "Redshirt Senior",
+      "height": "6-2",
+      "weight": "250",
+      "bats": null,
+      "throws": null,
+      "hometown": "Eugene, Ore.",
+      "from": "Eugene, Ore.",
+      "lastSchool": null,
+      "previousSchool": "Oregon",
+      "previousSchools": [
+        "Oregon"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Senior",
+        "Hometown": "Eugene, Ore.",
+        "Ht./Wt.": "6-2 / 250",
+        "Letters": "0",
+        "Position": "Right Handed Pitcher",
+        "Prev School": "Oregon"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1242 @@
+{
+  "sourceUrl": "https://uwgathletics.com/sports/baseball/roster",
+  "fetchedAt": "2026-02-27T16:22:49.594Z",
+  "pageTitle": "2026 Baseball Roster - UWG Wolves | Athletic Programs | Official Athletics Site",
+  "teamName": "West Georgia",
+  "sport": "Baseball",
+  "season": "2026",
+  "playerCount": 42,
+  "parser": {
+    "strategy": "profile-links",
+    "candidateRecords": 210,
+    "dedupedRecords": 42
+  },
+  "players": [
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/davis-williams/10985",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/davis-williams/10985",
+      "name": "Davis Williams",
+      "firstName": "Davis",
+      "lastName": "Williams",
+      "number": "1",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/davis_Williams.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Cartersville, GA",
+      "from": "Cartersville, GA",
+      "lastSchool": "Cartersville",
+      "previousSchool": "Jacksonville State",
+      "previousSchools": [
+        "Jacksonville State"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-0",
+        "High School": "Cartersville",
+        "Hometown": "Cartersville, GA",
+        "Position": "Pitcher",
+        "Prev School": "Jacksonville State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/maverick-torres/10983",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/maverick-torres/10983",
+      "name": "Maverick Torres",
+      "firstName": "Maverick",
+      "lastName": "Torres",
+      "number": "2",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Maverick_Torres.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-2",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Long Beach, CA",
+      "from": "Long Beach, CA",
+      "lastSchool": null,
+      "previousSchool": "Seckinger",
+      "previousSchools": [
+        "Seckinger"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "6-2",
+        "Hometown": "Long Beach, CA",
+        "Position": "Pitcher",
+        "Prev School": "Seckinger"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/brady-mcdevitt/10973",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/brady-mcdevitt/10973",
+      "name": "Brady Mcdevitt",
+      "firstName": "Brady",
+      "lastName": "Mcdevitt",
+      "number": "3",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Brady_McDevitt.png?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Senior",
+      "height": "5-11",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Marietta, GA",
+      "from": "Marietta, GA",
+      "lastSchool": "Kell",
+      "previousSchool": "Chipola CC",
+      "previousSchools": [
+        "Chipola CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-11",
+        "High School": "Kell",
+        "Hometown": "Marietta, GA",
+        "Position": "Outfielder",
+        "Prev School": "Chipola CC"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/hank-smith/10981",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/hank-smith/10981",
+      "name": "Hank Smith",
+      "firstName": "Hank",
+      "lastName": "Smith",
+      "number": "4",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Hank_Smith.png?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Redshirt Junior",
+      "height": "5-10",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Cartersville, GA",
+      "from": "Cartersville, GA",
+      "lastSchool": "Cartersville",
+      "previousSchool": "Jacksonville State",
+      "previousSchools": [
+        "Jacksonville State"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "5-10",
+        "High School": "Cartersville",
+        "Hometown": "Cartersville, GA",
+        "Position": "Catcher",
+        "Prev School": "Jacksonville State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/gabe-wuerth/10987",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/gabe-wuerth/10987",
+      "name": "Gabe Wuerth",
+      "firstName": "Gabe",
+      "lastName": "Wuerth",
+      "number": "5",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Gabe_Wuerth.png?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Senior",
+      "height": "5-9",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Woodstock, GA",
+      "from": "Woodstock, GA",
+      "lastSchool": null,
+      "previousSchool": "Georgia College & State",
+      "previousSchools": [
+        "Georgia College & State"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-9",
+        "Hometown": "Woodstock, GA",
+        "Position": "Infielder",
+        "Prev School": "Georgia College & State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/blane-schmitt/10988",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/blane-schmitt/10988",
+      "name": "Blane Schmitt",
+      "firstName": "Blane",
+      "lastName": "Schmitt",
+      "number": "6",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Blaine_Schmitt.png?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Cincinnati, OH",
+      "from": "Cincinnati, OH",
+      "lastSchool": null,
+      "previousSchool": "St. Johns River College",
+      "previousSchools": [
+        "St. Johns River College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-0",
+        "Hometown": "Cincinnati, OH",
+        "Position": "Infielder",
+        "Prev School": "St. Johns River College"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/carson-mynatt/10976",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/carson-mynatt/10976",
+      "name": "Carson Mynatt",
+      "firstName": "Carson",
+      "lastName": "Mynatt",
+      "number": "7",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Carson_Mynatt.png?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Senior",
+      "height": "6-3",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Canton, GA",
+      "from": "Canton, GA",
+      "lastSchool": null,
+      "previousSchool": "Georgia Southern",
+      "previousSchools": [
+        "Georgia Southern"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-3",
+        "Hometown": "Canton, GA",
+        "Position": "Outfielder",
+        "Prev School": "Georgia Southern"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/jordan-marlo/10990",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/jordan-marlo/10990",
+      "name": "Jordan Marlo",
+      "firstName": "Jordan",
+      "lastName": "Marlo",
+      "number": "8",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Jordan_Marlo_.png?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Freshman",
+      "height": "5-10",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Cross City, FL",
+      "from": "Cross City, FL",
+      "lastSchool": null,
+      "previousSchool": "Trenton High School",
+      "previousSchools": [
+        "Trenton High School"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "5-10",
+        "Hometown": "Cross City, FL",
+        "Position": "Infielder",
+        "Prev School": "Trenton High School"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/jacob-bowman/10960",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/jacob-bowman/10960",
+      "name": "Jacob Bowman",
+      "firstName": "Jacob",
+      "lastName": "Bowman",
+      "number": "9",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Jacob_Bowman.png?width=80&quality=90",
+      "position": null,
+      "classYear": "Redshirt Junior",
+      "height": "6-1",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Charlotte, NC",
+      "from": "Charlotte, NC",
+      "lastSchool": "Sun Valley",
+      "previousSchool": "Hillsbrough CC",
+      "previousSchools": [
+        "Hillsbrough CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-1",
+        "High School": "Sun Valley",
+        "Hometown": "Charlotte, NC",
+        "Prev School": "Hillsbrough CC"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/tyler-presnell/10978",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/tyler-presnell/10978",
+      "name": "Tyler Presnell",
+      "firstName": "Tyler",
+      "lastName": "Presnell",
+      "number": "10",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Tyler_Presnall.png?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Senior",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Canton, GA",
+      "from": "Canton, GA",
+      "lastSchool": null,
+      "previousSchool": "Cherokee",
+      "previousSchools": [
+        "Cherokee"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-0",
+        "Hometown": "Canton, GA",
+        "Position": "Infielder",
+        "Prev School": "Cherokee"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/andon-lewis/10991",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/andon-lewis/10991",
+      "name": "Andon Lewis",
+      "firstName": "Andon",
+      "lastName": "Lewis",
+      "number": "11",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Andon_Lewis.png?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Senior",
+      "height": "6-2",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Calhoun, GA",
+      "from": "Calhoun, GA",
+      "lastSchool": null,
+      "previousSchool": "Georgia State University",
+      "previousSchools": [
+        "Georgia State University"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-2",
+        "Hometown": "Calhoun, GA",
+        "Position": "Infielder",
+        "Prev School": "Georgia State University"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/conner-hilton/10992",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/conner-hilton/10992",
+      "name": "Conner Hilton",
+      "firstName": "Conner",
+      "lastName": "Hilton",
+      "number": "12",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Connor_Hilton.png?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Hoschton, GA",
+      "from": "Hoschton, GA",
+      "lastSchool": null,
+      "previousSchool": "Gordon State College",
+      "previousSchools": [
+        "Gordon State College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-0",
+        "Hometown": "Hoschton, GA",
+        "Position": "Outfielder",
+        "Prev School": "Gordon State College"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/patrick-mccullough/11011",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/patrick-mccullough/11011",
+      "name": "Patrick Mccullough",
+      "firstName": "Patrick",
+      "lastName": "Mccullough",
+      "number": "13",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Patrick_McCullough.png?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Senior",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Grapevine, TX",
+      "from": "Grapevine, TX",
+      "lastSchool": null,
+      "previousSchool": "Murray State College",
+      "previousSchools": [
+        "Murray State College"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-0",
+        "Hometown": "Grapevine, TX",
+        "Position": "Infielder",
+        "Prev School": "Murray State College"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/blake-bradford/10961",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/blake-bradford/10961",
+      "name": "Blake Bradford",
+      "firstName": "Blake",
+      "lastName": "Bradford",
+      "number": "14",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Blake_Bradford.png?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Senior",
+      "height": "6-3",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Sylvania, OH",
+      "from": "Sylvania, OH",
+      "lastSchool": "Sylvania Northview",
+      "previousSchool": "Hutchinson CC",
+      "previousSchools": [
+        "Hutchinson CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-3",
+        "High School": "Sylvania Northview",
+        "Hometown": "Sylvania, OH",
+        "Position": "Infielder",
+        "Prev School": "Hutchinson CC"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/ashton-yelder/10997",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/ashton-yelder/10997",
+      "name": "Ashton Yelder",
+      "firstName": "Ashton",
+      "lastName": "Yelder",
+      "number": "15",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Ashton_Yelder.png?width=80&quality=90",
+      "position": "Outfield/Infielder",
+      "classYear": "Freshman",
+      "height": "6-3",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Montgomery, AL",
+      "from": "Montgomery, AL",
+      "lastSchool": null,
+      "previousSchool": "Lowndes Academy",
+      "previousSchools": [
+        "Lowndes Academy"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "6-3",
+        "Hometown": "Montgomery, AL",
+        "Position": "Outfield/Infielder",
+        "Prev School": "Lowndes Academy"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/fano-cruz/10994",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/fano-cruz/10994",
+      "name": "Fano Cruz",
+      "firstName": "Fano",
+      "lastName": "Cruz",
+      "number": "16",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Fano_Cruz.png?width=80&quality=90",
+      "position": "First Base / Outfielder",
+      "classYear": "Junior",
+      "height": "6-2",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Viera, FL",
+      "from": "Viera, FL",
+      "lastSchool": null,
+      "previousSchool": "Pasco-Hernando State",
+      "previousSchools": [
+        "Pasco-Hernando State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-2",
+        "Hometown": "Viera, FL",
+        "Position": "First Base / Outfielder",
+        "Prev School": "Pasco-Hernando State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/gavin-mask/10972",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/gavin-mask/10972",
+      "name": "Gavin Mask",
+      "firstName": "Gavin",
+      "lastName": "Mask",
+      "number": "17",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Gavin_Mask.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Senior",
+      "height": "6-2",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Covington, GA",
+      "from": "Covington, GA",
+      "lastSchool": "Piedmont Academy",
+      "previousSchool": "South Georgia State",
+      "previousSchools": [
+        "South Georgia State"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-2",
+        "High School": "Piedmont Academy",
+        "Hometown": "Covington, GA",
+        "Position": "Pitcher",
+        "Prev School": "South Georgia State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/luke-ridley/11003",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/luke-ridley/11003",
+      "name": "Luke Ridley",
+      "firstName": "Luke",
+      "lastName": "Ridley",
+      "number": "18",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/22/Luke_Ridley.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Redshirt Senior",
+      "height": "6-1",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Gainesville, FL",
+      "from": "Gainesville, FL",
+      "lastSchool": null,
+      "previousSchool": "Old Dominion University",
+      "previousSchools": [
+        "Old Dominion University"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Senior",
+        "Height": "6-1",
+        "Hometown": "Gainesville, FL",
+        "Position": "Pitcher",
+        "Prev School": "Old Dominion University"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/mason-cooper/11010",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/mason-cooper/11010",
+      "name": "Mason Cooper",
+      "firstName": "Mason",
+      "lastName": "Cooper",
+      "number": "19",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Mason_Cooper.png?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Senior",
+      "height": "5-10",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Jefferson, GA",
+      "from": "Jefferson, GA",
+      "lastSchool": null,
+      "previousSchool": "Snead State",
+      "previousSchools": [
+        "Snead State"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "5-10",
+        "Hometown": "Jefferson, GA",
+        "Position": "Catcher",
+        "Prev School": "Snead State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/wilson-donnelly/10967",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/wilson-donnelly/10967",
+      "name": "Wilson Donnelly",
+      "firstName": "Wilson",
+      "lastName": "Donnelly",
+      "number": "20",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Kevin_Hilton.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Sophomore",
+      "height": "6-2",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Augusta, GA",
+      "from": "Augusta, GA",
+      "lastSchool": null,
+      "previousSchool": "Augusta Christian",
+      "previousSchools": [
+        "Augusta Christian"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Height": "6-2",
+        "Hometown": "Augusta, GA",
+        "Position": "Pitcher",
+        "Prev School": "Augusta Christian"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/braxton-brooks/10995",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/braxton-brooks/10995",
+      "name": "Braxton Brooks",
+      "firstName": "Braxton",
+      "lastName": "Brooks",
+      "number": "21",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Braxton_Brooks__DOUBLE_CHECK_.png?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Junior",
+      "height": "6-1",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Monroe, GA",
+      "from": "Monroe, GA",
+      "lastSchool": null,
+      "previousSchool": "University of Alabama Birmingham",
+      "previousSchools": [
+        "University of Alabama Birmingham"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-1",
+        "Hometown": "Monroe, GA",
+        "Position": "Outfielder",
+        "Prev School": "University of Alabama Birmingham"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/macklin-miller/10996",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/macklin-miller/10996",
+      "name": "Macklin Miller",
+      "firstName": "Macklin",
+      "lastName": "Miller",
+      "number": "22",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Macklin_Miller.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-3",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Tampa, FL",
+      "from": "Tampa, FL",
+      "lastSchool": null,
+      "previousSchool": "Santa Fe College",
+      "previousSchools": [
+        "Santa Fe College"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-3",
+        "Hometown": "Tampa, FL",
+        "Position": "Pitcher",
+        "Prev School": "Santa Fe College"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/josh-lanum/10998",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/josh-lanum/10998",
+      "name": "Josh Lanum",
+      "firstName": "Josh",
+      "lastName": "Lanum",
+      "number": "24",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Josh_Lanum.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Redshirt Sophomore",
+      "height": "6-2",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Stone Mountain, GA",
+      "from": "Stone Mountain, GA",
+      "lastSchool": null,
+      "previousSchool": "Eastern FL. State",
+      "previousSchools": [
+        "Eastern FL. State"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Height": "6-2",
+        "Hometown": "Stone Mountain, GA",
+        "Position": "Pitcher",
+        "Prev School": "Eastern FL. State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/anthony-cole/11013",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/anthony-cole/11013",
+      "name": "Anthony Cole",
+      "firstName": "Anthony",
+      "lastName": "Cole",
+      "number": "25",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Anthony_Cole.png?width=80&quality=90",
+      "position": "Outfield",
+      "classYear": "Junior",
+      "height": "6-5",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Orlando, FL",
+      "from": "Orlando, FL",
+      "lastSchool": null,
+      "previousSchool": "Pasco-Hernando State",
+      "previousSchools": [
+        "Pasco-Hernando State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-5",
+        "Hometown": "Orlando, FL",
+        "Position": "Outfield",
+        "Prev School": "Pasco-Hernando State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/gabe-young/10986",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/gabe-young/10986",
+      "name": "Gabe Young",
+      "firstName": "Gabe",
+      "lastName": "Young",
+      "number": "26",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Gabe_Young.png?width=80&quality=90",
+      "position": "Outfielder",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Mountain Brook, AL",
+      "from": "Mountain Brook, AL",
+      "lastSchool": null,
+      "previousSchool": "Jacksonville State",
+      "previousSchools": [
+        "Jacksonville State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-0",
+        "Hometown": "Mountain Brook, AL",
+        "Position": "Outfielder",
+        "Prev School": "Jacksonville State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/rowan-park/10999",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/rowan-park/10999",
+      "name": "Rowan Park",
+      "firstName": "Rowan",
+      "lastName": "Park",
+      "number": "27",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Rowan_Park.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Redshirt Junior",
+      "height": "6-1",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Marietta, GA",
+      "from": "Marietta, GA",
+      "lastSchool": null,
+      "previousSchool": "Walters State CC",
+      "previousSchools": [
+        "Walters State CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Height": "6-1",
+        "Hometown": "Marietta, GA",
+        "Position": "Pitcher",
+        "Prev School": "Walters State CC"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/lex-kenny/11000",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/lex-kenny/11000",
+      "name": "Lex Kenny",
+      "firstName": "Lex",
+      "lastName": "Kenny",
+      "number": "28",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Lex_Kenny.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Senior",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Canton, GA",
+      "from": "Canton, GA",
+      "lastSchool": null,
+      "previousSchool": "Georgia College & State",
+      "previousSchools": [
+        "Georgia College & State"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-0",
+        "Hometown": "Canton, GA",
+        "Position": "Pitcher",
+        "Prev School": "Georgia College & State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/david-bell/11008",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/david-bell/11008",
+      "name": "David Bell",
+      "firstName": "David",
+      "lastName": "Bell",
+      "number": "29",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/David_Bell.png?width=80&quality=90",
+      "position": "Catcher",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Evans, GA",
+      "from": "Evans, GA",
+      "lastSchool": null,
+      "previousSchool": "Wharton CC",
+      "previousSchools": [
+        "Wharton CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-0",
+        "Hometown": "Evans, GA",
+        "Position": "Catcher",
+        "Prev School": "Wharton CC"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/zane-wright/11002",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/zane-wright/11002",
+      "name": "Zane Wright",
+      "firstName": "Zane",
+      "lastName": "Wright",
+      "number": "30",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Zane_Wright.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Junior",
+      "height": "6-5",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Plant City, FL",
+      "from": "Plant City, FL",
+      "lastSchool": null,
+      "previousSchool": "Polk State College",
+      "previousSchools": [
+        "Polk State College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-5",
+        "Hometown": "Plant City, FL",
+        "Position": "Pitcher",
+        "Prev School": "Polk State College"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/evimael-quiles/10979",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/evimael-quiles/10979",
+      "name": "Evimael Quiles",
+      "firstName": "Evimael",
+      "lastName": "Quiles",
+      "number": "31",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Evi.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Senior",
+      "height": "6-4",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Camuy, PR",
+      "from": "Camuy, PR",
+      "lastSchool": "Carols Beltran Baseball Acad.",
+      "previousSchool": "Eastern Florida",
+      "previousSchools": [
+        "Eastern Florida"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-4",
+        "High School": "Carols Beltran Baseball Acad.",
+        "Hometown": "Camuy, PR",
+        "Position": "Pitcher",
+        "Prev School": "Eastern Florida"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/eric-de-costa/11001",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/eric-de-costa/11001",
+      "name": "Eric De Costa",
+      "firstName": "Eric De",
+      "lastName": "Costa",
+      "number": "32",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Eric_De_Costa.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Redshirt Freshman",
+      "height": "6-5",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "North Aurora, IL",
+      "from": "North Aurora, IL",
+      "lastSchool": null,
+      "previousSchool": "University of Cincinnati",
+      "previousSchools": [
+        "University of Cincinnati"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Freshman",
+        "Height": "6-5",
+        "Hometown": "North Aurora, IL",
+        "Position": "Pitcher",
+        "Prev School": "University of Cincinnati"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/landon-weidner/10984",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/landon-weidner/10984",
+      "name": "Landon Weidner",
+      "firstName": "Landon",
+      "lastName": "Weidner",
+      "number": "34",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Landon_Weidner.png?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Senior",
+      "height": "6-4",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Flower Mound, TX",
+      "from": "Flower Mound, TX",
+      "lastSchool": "Flower Mound",
+      "previousSchool": "Howard",
+      "previousSchools": [
+        "Howard"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-4",
+        "High School": "Flower Mound",
+        "Hometown": "Flower Mound, TX",
+        "Position": "Infielder",
+        "Prev School": "Howard"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/bryan-gomez/10968",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/bryan-gomez/10968",
+      "name": "Bryan Gomez",
+      "firstName": "Bryan",
+      "lastName": "Gomez",
+      "number": "35",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Byran_Gomez.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Senior",
+      "height": "6-3",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Brooklyn, NY",
+      "from": "Brooklyn, NY",
+      "lastSchool": "Inwood Academy",
+      "previousSchool": "State College of Florida",
+      "previousSchools": [
+        "State College of Florida"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Height": "6-3",
+        "High School": "Inwood Academy",
+        "Hometown": "Brooklyn, NY",
+        "Position": "Pitcher",
+        "Prev School": "State College of Florida"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/gunnar-plante/11004",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/gunnar-plante/11004",
+      "name": "Gunnar Plante",
+      "firstName": "Gunnar",
+      "lastName": "Plante",
+      "number": "36",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Gunnar_Plante.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Redshirt Sophomore",
+      "height": "6-8",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Woodstock, GA",
+      "from": "Woodstock, GA",
+      "lastSchool": null,
+      "previousSchool": "Wagner College",
+      "previousSchools": [
+        "Wagner College"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Height": "6-8",
+        "Hometown": "Woodstock, GA",
+        "Position": "Pitcher",
+        "Prev School": "Wagner College"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/drew-richardson/11005",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/drew-richardson/11005",
+      "name": "Drew Richardson",
+      "firstName": "Drew",
+      "lastName": "Richardson",
+      "number": "37",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Drew_Richardson.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Redshirt Freshman",
+      "height": "6-3",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Peachtree City, GA",
+      "from": "Peachtree City, GA",
+      "lastSchool": null,
+      "previousSchool": "Middle Tennessee State",
+      "previousSchools": [
+        "Middle Tennessee State"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Freshman",
+        "Height": "6-3",
+        "Hometown": "Peachtree City, GA",
+        "Position": "Pitcher",
+        "Prev School": "Middle Tennessee State"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/liam-bestermann/10959",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/liam-bestermann/10959",
+      "name": "Liam Bestermann",
+      "firstName": "Liam",
+      "lastName": "Bestermann",
+      "number": "38",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Wilson_Donnelly.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Redshirt Freshman",
+      "height": "6-1",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Braselton, GA",
+      "from": "Braselton, GA",
+      "lastSchool": null,
+      "previousSchool": "Peachtree Ridge HS",
+      "previousSchools": [
+        "Peachtree Ridge HS"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Freshman",
+        "Height": "6-1",
+        "Hometown": "Braselton, GA",
+        "Position": "Pitcher",
+        "Prev School": "Peachtree Ridge HS"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/grant-edwards/11006",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/grant-edwards/11006",
+      "name": "Grant Edwards",
+      "firstName": "Grant",
+      "lastName": "Edwards",
+      "number": "39",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Grant_Edwards.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Junior",
+      "height": "6-3",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Macon, GA",
+      "from": "Macon, GA",
+      "lastSchool": null,
+      "previousSchool": "Gordon State College",
+      "previousSchools": [
+        "Gordon State College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-3",
+        "Hometown": "Macon, GA",
+        "Position": "Pitcher",
+        "Prev School": "Gordon State College"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/grayson-stroumpis/11012",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/grayson-stroumpis/11012",
+      "name": "Grayson Stroumpis",
+      "firstName": "Grayson",
+      "lastName": "Stroumpis",
+      "number": "40",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Grayson_Stroumpis.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Freshman",
+      "height": "6-5",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Alpharetta, GA",
+      "from": "Alpharetta, GA",
+      "lastSchool": null,
+      "previousSchool": "Centennial High School",
+      "previousSchools": [
+        "Centennial High School"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "6-5",
+        "Hometown": "Alpharetta, GA",
+        "Position": "Pitcher",
+        "Prev School": "Centennial High School"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/kevin-hilton/10989",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/kevin-hilton/10989",
+      "name": "Kevin Hilton",
+      "firstName": "Kevin",
+      "lastName": "Hilton",
+      "number": "41",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Liam_Besterman.png?width=80&quality=90",
+      "position": "Infielder",
+      "classYear": "Redshirt Sophomore",
+      "height": "5-10",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Cincinnati, OH",
+      "from": "Cincinnati, OH",
+      "lastSchool": null,
+      "previousSchool": "Lincoln Trail College",
+      "previousSchools": [
+        "Lincoln Trail College"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Height": "5-10",
+        "Hometown": "Cincinnati, OH",
+        "Position": "Infielder",
+        "Prev School": "Lincoln Trail College"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/aiden-alvarez/10993",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/aiden-alvarez/10993",
+      "name": "Aiden Alvarez",
+      "firstName": "Aiden",
+      "lastName": "Alvarez",
+      "number": "42",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Aiden_Alvarez.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Junior",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Largo, FL",
+      "from": "Largo, FL",
+      "lastSchool": null,
+      "previousSchool": "Polk State College",
+      "previousSchools": [
+        "Polk State College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Height": "6-0",
+        "Hometown": "Largo, FL",
+        "Position": "Pitcher",
+        "Prev School": "Polk State College"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/tyler-fallmann/11007",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/tyler-fallmann/11007",
+      "name": "Tyler Fallmann",
+      "firstName": "Tyler",
+      "lastName": "Fallmann",
+      "number": "43",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/Tyler_Fallmann.png?width=80&quality=90",
+      "position": "Pitcher",
+      "classYear": "Freshman",
+      "height": "6-0",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Marietta, GA",
+      "from": "Marietta, GA",
+      "lastSchool": null,
+      "previousSchool": "The Walker School",
+      "previousSchools": [
+        "The Walker School"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "6-0",
+        "Hometown": "Marietta, GA",
+        "Position": "Pitcher",
+        "Prev School": "The Walker School"
+      }
+    },
+    {
+      "key": "https://uwgathletics.com/sports/baseball/roster/cole-gilmore/11009",
+      "profileUrl": "https://uwgathletics.com/sports/baseball/roster/cole-gilmore/11009",
+      "name": "Cole Gilmore",
+      "firstName": "Cole",
+      "lastName": "Gilmore",
+      "number": "45",
+      "photoUrl": "https://uwgathletics.com/images/2026/1/21/33.png?width=80&quality=90",
+      "position": "Catcher / Infield",
+      "classYear": "Freshman",
+      "height": "5-10",
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Newnan, GA",
+      "from": "Newnan, GA",
+      "lastSchool": null,
+      "previousSchool": "Newnan High School",
+      "previousSchools": [
+        "Newnan High School"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Height": "5-10",
+        "Hometown": "Newnan, GA",
+        "Position": "Catcher / Infield",
+        "Prev School": "Newnan High School"
+      }
+    }
+  ]
+}
