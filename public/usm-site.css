@@ -262,6 +262,13 @@ h1 {
   gap: 0.72rem;
 }
 
+.official-grid {
+  margin-top: 0.72rem;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.72rem;
+}
+
 .split-card {
   border-radius: 10px;
   border: 1px solid #24364e;
@@ -281,6 +288,11 @@ h1 {
   margin: 0.35rem 0 0;
   font-size: 1.12rem;
   font-weight: 500;
+}
+
+.split-small {
+  font-size: 0.96rem;
+  line-height: 1.3;
 }
 
 .roster-controls {
@@ -364,6 +376,10 @@ h1 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .official-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .roster-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -387,6 +403,10 @@ h1 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .official-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .roster-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -404,6 +424,7 @@ h1 {
 @media (max-width: 560px) {
   .summary-grid,
   .split-grid,
+  .official-grid,
   .roster-grid {
     grid-template-columns: 1fr;
   }

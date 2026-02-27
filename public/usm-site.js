@@ -30,6 +30,12 @@ const elements = {
   splitNeutral: document.getElementById("split-neutral"),
   splitRf: document.getElementById("split-rf"),
   splitRa: document.getElementById("split-ra"),
+  officialAvg: document.getElementById("official-avg"),
+  officialOps: document.getElementById("official-ops"),
+  officialEra: document.getElementById("official-era"),
+  officialWhip: document.getElementById("official-whip"),
+  officialTopHitter: document.getElementById("official-top-hitter"),
+  officialTopPitcher: document.getElementById("official-top-pitcher"),
   rosterSearch: document.getElementById("roster-search"),
   rosterMeta: document.getElementById("roster-meta"),
   rosterGrid: document.getElementById("roster-grid"),
@@ -107,7 +113,7 @@ function setLoadingState() {
   elements.scheduleMeta.textContent = "Loading games...";
   elements.liveMeta.textContent = "Waiting for game context...";
   elements.rosterMeta.textContent = "Loading players...";
-  elements.statsMeta.textContent = "Season-level record splits and scoring averages.";
+  elements.statsMeta.textContent = "Season-level record splits and official Southern Miss cumulative stats.";
 }
 
 function renderFailure(message) {
@@ -129,7 +135,7 @@ function renderPage() {
   renderSummary(payload.summary);
   renderLive(payload.live);
   renderSchedule(payload.schedule?.games || []);
-  renderStats(payload.summary);
+  renderStats(payload.summary, payload.stats || null);
   renderRoster();
 }
 
@@ -252,12 +258,52 @@ function renderSchedule(games) {
   elements.scheduleBody.appendChild(fragment);
 }
 
-function renderStats(summary) {
+function renderStats(summary, statsPayload) {
   elements.splitHome.textContent = formatRecord(summary?.home);
   elements.splitAway.textContent = formatRecord(summary?.away);
   elements.splitNeutral.textContent = formatRecord(summary?.neutral);
   elements.splitRf.textContent = summary?.averageRunsFor ?? "--";
   elements.splitRa.textContent = summary?.averageRunsAgainst ?? "--";
+
+  const official = statsPayload?.payload || null;
+  const teamStats = official?.teamStats || null;
+  const hitters = Array.isArray(official?.individual?.hitting) ? official.individual.hitting : [];
+  const pitchers = Array.isArray(official?.individual?.pitching) ? official.individual.pitching : [];
+
+  if (!teamStats) {
+    elements.officialAvg.textContent = "--";
+    elements.officialOps.textContent = "--";
+    elements.officialEra.textContent = "--";
+    elements.officialWhip.textContent = "--";
+    elements.officialTopHitter.textContent = "--";
+    elements.officialTopPitcher.textContent = "--";
+    if (statsPayload?.error) {
+      elements.statsMeta.textContent = `Official stats unavailable: ${statsPayload.error}`;
+    }
+    return;
+  }
+
+  const avg = cleanStatCell(teamStats.ourBattingAverage);
+  const ops = cleanStatCell(teamStats.ourOps);
+  const whip = cleanStatCell(teamStats.ourWhip);
+  const innings = cleanStatCell(teamStats.ourInningsPitched);
+  const earnedRuns = cleanStatCell(teamStats.ourEarnedRunsAllowed);
+  const era = computeEra(innings, earnedRuns);
+
+  elements.officialAvg.textContent = avg || "--";
+  elements.officialOps.textContent = ops || "--";
+  elements.officialWhip.textContent = whip || "--";
+  elements.officialEra.textContent = era || "--";
+
+  const topHitter = pickTopHitter(hitters);
+  const topPitcher = pickTopPitcher(pitchers);
+  elements.officialTopHitter.textContent = topHitter || "--";
+  elements.officialTopPitcher.textContent = topPitcher || "--";
+
+  const seasonText = official?.season ? `Season ${official.season}` : "Official cumulative stats";
+  const recordText = official?.record ? `Record ${official.record}` : "";
+  const refreshedText = official?.fetchedAt ? `Updated ${new Date(official.fetchedAt).toLocaleString()}` : "";
+  elements.statsMeta.textContent = [seasonText, recordText, refreshedText].filter(Boolean).join(" | ");
 }
 
 function applyRosterFilter() {
@@ -452,6 +498,120 @@ function formatRunDiff(value) {
 function parseFiniteInt(value) {
   const parsed = Number.parseInt(String(value || ""), 10);
   return Number.isFinite(parsed) ? parsed : null;
+}
+
+function cleanStatCell(value) {
+  if (value === null || value === undefined) {
+    return "";
+  }
+  if (typeof value === "number") {
+    if (!Number.isFinite(value)) {
+      return "";
+    }
+    return String(value);
+  }
+  return String(value).trim();
+}
+
+function parseNumber(value) {
+  const text = cleanStatCell(value).replace(/,/g, "");
+  if (!text) {
+    return null;
+  }
+  const parsed = Number.parseFloat(text);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function inningsToOuts(value) {
+  const text = cleanStatCell(value);
+  if (!text) {
+    return null;
+  }
+  if (/^\d+$/.test(text)) {
+    return Number.parseInt(text, 10) * 3;
+  }
+  const match = text.match(/^(\d+)\.(\d)$/);
+  if (!match) {
+    return null;
+  }
+  const whole = Number.parseInt(match[1], 10);
+  const frac = Number.parseInt(match[2], 10);
+  if (!Number.isFinite(whole) || !Number.isFinite(frac) || frac < 0 || frac > 2) {
+    return null;
+  }
+  return whole * 3 + frac;
+}
+
+function computeEra(inningsPitched, earnedRunsAllowed) {
+  const outs = inningsToOuts(inningsPitched);
+  const er = parseNumber(earnedRunsAllowed);
+  if (!Number.isFinite(outs) || outs <= 0 || !Number.isFinite(er)) {
+    return "";
+  }
+  const era = (er * 27) / outs;
+  return era.toFixed(2);
+}
+
+function pickTopHitter(rows) {
+  const candidates = rows
+    .map((row) => {
+      const values = row?.values || {};
+      return {
+        name: cleanTeamName(row?.playerName || ""),
+        average: parseNumber(values.battingAverage),
+        atBats: parseNumber(values.atBats),
+      };
+    })
+    .filter((row) => row.name && Number.isFinite(row.average) && Number.isFinite(row.atBats) && row.atBats >= 10)
+    .sort((a, b) => {
+      if (b.average !== a.average) {
+        return b.average - a.average;
+      }
+      return b.atBats - a.atBats;
+    });
+
+  const top = candidates[0];
+  if (!top) {
+    return "";
+  }
+  return `${formatLastName(top.name)} ${top.average.toFixed(3).replace(/^0(?=\.)/u, "")}`;
+}
+
+function pickTopPitcher(rows) {
+  const candidates = rows
+    .map((row) => {
+      const values = row?.values || {};
+      return {
+        name: cleanTeamName(row?.playerName || ""),
+        era: parseNumber(values.earnedRunAverage),
+        innings: parseNumber(values.inningsPitched),
+      };
+    })
+    .filter((row) => row.name && Number.isFinite(row.era) && Number.isFinite(row.innings) && row.innings >= 5)
+    .sort((a, b) => {
+      if (a.era !== b.era) {
+        return a.era - b.era;
+      }
+      return b.innings - a.innings;
+    });
+
+  const top = candidates[0];
+  if (!top) {
+    return "";
+  }
+  return `${formatLastName(top.name)} ${top.era.toFixed(2)} ERA`;
+}
+
+function formatLastName(name) {
+  const text = String(name || "").trim();
+  if (!text) {
+    return "";
+  }
+  if (text.includes(",")) {
+    return text.split(",")[0].trim();
+  }
+  const parts = text.split(/\s+/);
+  return parts[parts.length - 1];
 }
 
 function cleanTeamName(value) {

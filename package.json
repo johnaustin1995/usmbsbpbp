@@ -16,6 +16,7 @@
     "x:daemon": "tsx src/tools/x-southern-miss-daemon.ts",
     "x:verify": "tsx src/tools/x-verify.ts",
     "schedule:usm": "tsx src/tools/build-southern-miss-schedule.ts",
+    "stats:usm": "tsx src/tools/build-southern-miss-stats.ts",
     "roster:scrape": "tsx src/tools/scrape-roster.ts",
     "roster:d1-rich": "tsx src/tools/scrape-d1-rich-rosters.ts",
     "import:branding": "node scripts/import-team-branding.mjs",
@@ -33,6 +34,7 @@
   "dependencies": {
     "axios": "^1.13.5",
     "cheerio": "^1.0.0-rc.12",
+    "devalue": "^5.6.3",
     "express": "^5.2.1",
     "he": "^1.2.0",
     "pdfjs-dist": "^3.11.174"

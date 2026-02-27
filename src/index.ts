@@ -13,6 +13,7 @@ import {
   DEFAULT_BASEBALL_PRINT_XSL,
   getStatBroadcastPdfJson,
 } from "./scrapers/statbroadcast-pdf";
+import { getSouthernMissStats, type SouthernMissStatsPayload } from "./scrapers/southern-miss-stats";
 import { normalizeScoreDate } from "./utils/date";
 import { runWithConcurrency } from "./utils/async";
 import { buildFrontendScoresFeed, normalizeLiveSummary } from "./normalize";
@@ -273,6 +274,21 @@ app.get("/api/usm/live", async (req, res, next) => {
   }
 });
 
+app.get("/api/usm/stats", async (req, res, next) => {
+  try {
+    const seasonQuery = normalizeSeason(req.query.season) ?? "2026";
+    const refresh = toBoolean(req.query.refresh);
+    const payload = await getSouthernMissStats({
+      season: seasonQuery,
+      bypassCache: refresh,
+    });
+
+    res.json(payload);
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get("/api/usm/site", async (req, res, next) => {
   try {
     const seasonQuery = normalizeSeason(req.query.season);
@@ -307,6 +323,15 @@ app.get("/api/usm/site", async (req, res, next) => {
       ? buildUsmSiteScheduleRows(usmTeam.schedule, normalizedUsmSchedule, seasonQuery ?? usmTeam.season ?? null)
       : buildUsmSiteScheduleRowsFromUsmSchedule(normalizedUsmSchedule);
     const seasonSummary = buildUsmSeasonSummary(d1ScheduleRows);
+    const statsSeason = seasonQuery ?? usmTeam?.season ?? null;
+
+    let officialStats: SouthernMissStatsPayload | null = null;
+    let officialStatsError: string | null = null;
+    try {
+      officialStats = await getSouthernMissStats({ season: statsSeason ?? "2026" });
+    } catch (error) {
+      officialStatsError = error instanceof Error ? error.message : String(error);
+    }
 
     let liveSummary = null as Awaited<ReturnType<typeof getLiveSummary>> | null;
     let liveSummaryError: string | null = null;
@@ -351,6 +376,11 @@ app.get("/api/usm/site", async (req, res, next) => {
         teamsFile: teamsLoaded?.filename ?? null,
         teamsLoadedAt: teamsLoaded?.loadedAt ?? null,
         teamsError: teamsLoadError,
+      },
+      stats: {
+        season: statsSeason,
+        payload: officialStats,
+        error: officialStatsError,
       },
       live: {
         selectedGameId,
