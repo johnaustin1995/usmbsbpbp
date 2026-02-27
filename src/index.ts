@@ -16,7 +16,7 @@ import {
 import { normalizeScoreDate } from "./utils/date";
 import { runWithConcurrency } from "./utils/async";
 import { buildFrontendScoresFeed, normalizeLiveSummary } from "./normalize";
-import type { D1GameWithLive, D1TeamSeasonData, D1TeamsDatabasePayload } from "./types";
+import type { D1GameWithLive, D1TeamScheduleGame, D1TeamSeasonData, D1TeamsDatabasePayload } from "./types";
 
 const app = express();
 const port = Number.parseInt(process.env.PORT ?? "8787", 10);
@@ -267,6 +267,101 @@ app.get("/api/usm/live", async (req, res, next) => {
         homeSeasonSections,
         homeSeasonError,
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/usm/site", async (req, res, next) => {
+  try {
+    const seasonQuery = normalizeSeason(req.query.season);
+    const requestedId = parsePositiveInteger(cleanQueryString(req.query.id));
+    const nowEpoch = Math.floor(Date.now() / 1000);
+
+    const [scheduleLoaded, teamsLoaded, rosterCandidates] = await Promise.all([
+      loadUsmSchedulePayload(),
+      loadTeamsPayload({ season: seasonQuery, file: null }),
+      loadRosterCandidates(),
+    ]);
+
+    const usmTeam = findSouthernMissTeam(teamsLoaded.payload.teams);
+    if (!usmTeam) {
+      res.status(404).json({
+        error: "Southern Miss team data was not found in teams payload.",
+        file: teamsLoaded.filename,
+      });
+      return;
+    }
+
+    const normalizedUsmSchedule = normalizeUsmScheduleGames(scheduleLoaded.payload.games);
+    const selectedGameId = pickUsmGameId(normalizedUsmSchedule, requestedId, nowEpoch, true);
+    const selectedGame = selectedGameId
+      ? normalizedUsmSchedule.find((game) => game.gameId === selectedGameId) ?? null
+      : null;
+
+    const d1ScheduleRows = buildUsmSiteScheduleRows(usmTeam.schedule, normalizedUsmSchedule);
+    const seasonSummary = buildUsmSeasonSummary(d1ScheduleRows);
+
+    let liveSummary = null as Awaited<ReturnType<typeof getLiveSummary>> | null;
+    let liveSummaryError: string | null = null;
+    if (selectedGameId) {
+      try {
+        liveSummary = await getLiveSummary(selectedGameId);
+      } catch (error) {
+        liveSummaryError = error instanceof Error ? error.message : String(error);
+      }
+    }
+
+    const rosterMatch = findBestRosterMatch(rosterCandidates, {
+      team: "Southern Miss",
+      sport: "baseball",
+      season: seasonQuery ?? usmTeam.season ?? null,
+    });
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      nowEpoch,
+      season: seasonQuery ?? usmTeam.season ?? teamsLoaded.payload.season ?? null,
+      team: {
+        id: usmTeam.id,
+        name: usmTeam.name,
+        slug: usmTeam.slug,
+        logoUrl: usmTeam.logoUrl,
+        conference: usmTeam.conference,
+        teamUrl: usmTeam.teamUrl,
+        scheduleUrl: usmTeam.scheduleUrl,
+        statsUrl: usmTeam.statsUrl,
+      },
+      summary: seasonSummary,
+      schedule: {
+        sourceFile: path.basename(scheduleLoaded.path),
+        sourceLoadedAt: scheduleLoaded.loadedAt,
+        sourceGeneratedAt: scheduleLoaded.payload.generatedAt ?? null,
+        total: d1ScheduleRows.length,
+        games: d1ScheduleRows,
+      },
+      live: {
+        selectedGameId,
+        selectedGame,
+        summary: liveSummary,
+        summaryFrontend: liveSummary ? normalizeLiveSummary(liveSummary) : null,
+        summaryError: liveSummaryError,
+        viewerUrl: selectedGameId ? `/usm-live-169.html?id=${selectedGameId}` : "/usm-live-169.html",
+      },
+      roster: rosterMatch
+        ? {
+            file: path.basename(rosterMatch.path),
+            loadedAt: rosterMatch.loadedAt,
+            score: rosterMatch.score,
+            teamName: rosterMatch.payload.teamName ?? usmTeam.name,
+            season: rosterMatch.payload.season ?? null,
+            playerCount: Array.isArray(rosterMatch.payload.players)
+              ? rosterMatch.payload.players.length
+              : 0,
+            players: Array.isArray(rosterMatch.payload.players) ? rosterMatch.payload.players : [],
+          }
+        : null,
     });
   } catch (error) {
     next(error);
@@ -867,6 +962,45 @@ interface RankedRosterMatch extends LoadedRosterPayload {
   score: number;
 }
 
+interface UsmSiteScheduleRow {
+  index: number;
+  dateLabel: string | null;
+  dateIso: string | null;
+  locationType: string | null;
+  opponentName: string | null;
+  opponentSlug: string | null;
+  resultText: string | null;
+  outcome: "win" | "loss" | "unknown";
+  runsFor: number | null;
+  runsAgainst: number | null;
+  resultUrl: string | null;
+  statbroadcastId: number | null;
+  isCompleted: boolean;
+  isUpcoming: boolean;
+}
+
+interface UsmRecordSplit {
+  wins: number;
+  losses: number;
+}
+
+interface UsmSeasonSummary {
+  gamesPlayed: number;
+  wins: number;
+  losses: number;
+  winPct: string;
+  runDifferential: number;
+  runsFor: number;
+  runsAgainst: number;
+  averageRunsFor: string;
+  averageRunsAgainst: string;
+  home: UsmRecordSplit;
+  away: UsmRecordSplit;
+  neutral: UsmRecordSplit;
+  streak: string;
+  last10: string;
+}
+
 async function loadUsmSchedulePayload(): Promise<LoadedUsmSchedulePayload> {
   const stats = await fs.stat(usmSchedulePath);
   const cached = usmScheduleCache.get(usmSchedulePath);
@@ -1101,6 +1235,245 @@ function pickUsmGameId(
   }
 
   return games[0]?.gameId ?? null;
+}
+
+function findSouthernMissTeam(teams: D1TeamSeasonData[]): D1TeamSeasonData | null {
+  const bySlug = teams.find((team) => String(team.slug ?? "").toLowerCase() === "smiss");
+  if (bySlug) {
+    return bySlug;
+  }
+
+  const byName = teams.find((team) => normalizeLookupName(team.name) === normalizeLookupName("Southern Miss"));
+  if (byName) {
+    return byName;
+  }
+
+  return teams.find((team) => normalizeLookupName(team.name).includes("southern miss")) ?? null;
+}
+
+function buildUsmSiteScheduleRows(
+  d1Schedule: D1TeamScheduleGame[],
+  normalizedUsmSchedule: UsmScheduleGameNormalized[],
+  seasonHint: string | null = null
+): UsmSiteScheduleRow[] {
+  const nowEpoch = Math.floor(Date.now() / 1000);
+
+  return d1Schedule.map((game, index) => {
+    const dateIso = parseDateIsoFromD1Schedule(game, seasonHint);
+    const { runsFor, runsAgainst } = parseRunsFromResultText(game.resultText, game.outcome);
+    const statbroadcastId = matchUsmStatbroadcastId(normalizedUsmSchedule, dateIso, game.opponentName);
+    const dateEpoch = dateIso ? Math.floor(Date.parse(`${dateIso}T00:00:00Z`) / 1000) : null;
+    const isCompleted = game.outcome === "win" || game.outcome === "loss";
+    const isUpcoming = !isCompleted && (dateEpoch === null || dateEpoch >= nowEpoch - 36 * 60 * 60);
+
+    return {
+      index,
+      dateLabel: game.dateLabel ?? null,
+      dateIso,
+      locationType: game.locationType ?? null,
+      opponentName: game.opponentName ?? null,
+      opponentSlug: game.opponentSlug ?? null,
+      resultText: game.resultText ?? null,
+      outcome: game.outcome,
+      runsFor,
+      runsAgainst,
+      resultUrl: game.resultUrl ?? null,
+      statbroadcastId,
+      isCompleted,
+      isUpcoming,
+    };
+  });
+}
+
+function parseDateIsoFromD1Schedule(game: D1TeamScheduleGame, seasonHint: string | null): string | null {
+  const dateUrl = cleanQueryString(game.dateUrl);
+  if (dateUrl) {
+    const compact = dateUrl.match(/date=(\d{8})/i)?.[1] ?? null;
+    if (compact) {
+      return `${compact.slice(0, 4)}-${compact.slice(4, 6)}-${compact.slice(6, 8)}`;
+    }
+  }
+
+  const label = cleanQueryString(game.dateLabel);
+  if (!label) {
+    return null;
+  }
+
+  const seasonYear = Number.parseInt(seasonHint ?? "", 10);
+  const fallbackYear = Number.isFinite(seasonYear) ? seasonYear : new Date().getUTCFullYear();
+  const monthMatch = label.match(/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/i);
+  const dayMatch = label.match(/\b(\d{1,2})\b(?!.*\b\d{1,2}\b)/);
+  if (!monthMatch || !dayMatch) {
+    return null;
+  }
+
+  const monthToken = monthMatch[1].slice(0, 3).toLowerCase();
+  const monthMap: Record<string, number> = {
+    jan: 1,
+    feb: 2,
+    mar: 3,
+    apr: 4,
+    may: 5,
+    jun: 6,
+    jul: 7,
+    aug: 8,
+    sep: 9,
+    oct: 10,
+    nov: 11,
+    dec: 12,
+  };
+  const month = monthMap[monthToken];
+  const day = Number.parseInt(dayMatch[1], 10);
+  if (!month || !Number.isFinite(day)) {
+    return null;
+  }
+
+  return `${String(fallbackYear).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
+
+function parseRunsFromResultText(
+  resultText: string | null,
+  outcome: "win" | "loss" | "unknown"
+): { runsFor: number | null; runsAgainst: number | null } {
+  const text = cleanQueryString(resultText);
+  if (!text) {
+    return { runsFor: null, runsAgainst: null };
+  }
+
+  const scoreMatch = text.match(/(\d+)\s*-\s*(\d+)/);
+  if (!scoreMatch) {
+    return { runsFor: null, runsAgainst: null };
+  }
+
+  const first = Number.parseInt(scoreMatch[1], 10);
+  const second = Number.parseInt(scoreMatch[2], 10);
+  if (!Number.isFinite(first) || !Number.isFinite(second)) {
+    return { runsFor: null, runsAgainst: null };
+  }
+
+  if (outcome === "win") {
+    return { runsFor: first, runsAgainst: second };
+  }
+
+  if (outcome === "loss") {
+    return { runsFor: second, runsAgainst: first };
+  }
+
+  return { runsFor: first, runsAgainst: second };
+}
+
+function matchUsmStatbroadcastId(
+  normalizedUsmSchedule: UsmScheduleGameNormalized[],
+  dateIso: string | null,
+  d1OpponentName: string | null
+): number | null {
+  if (!dateIso) {
+    return null;
+  }
+
+  const sameDateGames = normalizedUsmSchedule.filter((game) => game.date === dateIso);
+  if (sameDateGames.length === 0) {
+    return null;
+  }
+
+  if (sameDateGames.length === 1) {
+    return sameDateGames[0].gameId;
+  }
+
+  const normalizedOpponent = normalizeLookupName(d1OpponentName ?? "");
+  if (!normalizedOpponent) {
+    return sameDateGames[0].gameId;
+  }
+
+  const matched = sameDateGames.find((game) => {
+    const scheduleOpponent = normalizeLookupName(resolveUsmOpponentName(game));
+    return (
+      scheduleOpponent === normalizedOpponent ||
+      scheduleOpponent.includes(normalizedOpponent) ||
+      normalizedOpponent.includes(scheduleOpponent)
+    );
+  });
+
+  return matched?.gameId ?? sameDateGames[0].gameId;
+}
+
+function resolveUsmOpponentName(game: UsmScheduleGameNormalized): string {
+  const home = normalizeLookupName(game.homeTeam);
+  const away = normalizeLookupName(game.awayTeam);
+  if (home.includes("southern miss")) {
+    return game.awayTeam;
+  }
+  if (away.includes("southern miss")) {
+    return game.homeTeam;
+  }
+  return game.awayTeam || game.homeTeam;
+}
+
+function buildUsmSeasonSummary(scheduleRows: UsmSiteScheduleRow[]): UsmSeasonSummary {
+  const completed = scheduleRows.filter((game) => game.isCompleted);
+  const wins = completed.filter((game) => game.outcome === "win").length;
+  const losses = completed.filter((game) => game.outcome === "loss").length;
+  const gamesPlayed = wins + losses;
+
+  const home: UsmRecordSplit = { wins: 0, losses: 0 };
+  const away: UsmRecordSplit = { wins: 0, losses: 0 };
+  const neutral: UsmRecordSplit = { wins: 0, losses: 0 };
+
+  let runsFor = 0;
+  let runsAgainst = 0;
+  for (const game of completed) {
+    if (game.runsFor !== null) {
+      runsFor += game.runsFor;
+    }
+    if (game.runsAgainst !== null) {
+      runsAgainst += game.runsAgainst;
+    }
+
+    const bucket = game.locationType === "@" ? away : game.locationType === "vs" ? neutral : home;
+    if (game.outcome === "win") {
+      bucket.wins += 1;
+    } else if (game.outcome === "loss") {
+      bucket.losses += 1;
+    }
+  }
+
+  const recent = completed.slice(-10);
+  const recentWins = recent.filter((game) => game.outcome === "win").length;
+  const recentLosses = recent.filter((game) => game.outcome === "loss").length;
+
+  let streak = "-";
+  const latestCompleted = completed[completed.length - 1];
+  if (latestCompleted) {
+    let streakCount = 1;
+    for (let i = completed.length - 2; i >= 0; i -= 1) {
+      if (completed[i].outcome !== latestCompleted.outcome) {
+        break;
+      }
+      streakCount += 1;
+    }
+    streak = `${latestCompleted.outcome === "win" ? "W" : "L"}${streakCount}`;
+  }
+
+  const winPctRaw = gamesPlayed > 0 ? wins / gamesPlayed : 0;
+  const averageRunsFor = gamesPlayed > 0 ? runsFor / gamesPlayed : 0;
+  const averageRunsAgainst = gamesPlayed > 0 ? runsAgainst / gamesPlayed : 0;
+
+  return {
+    gamesPlayed,
+    wins,
+    losses,
+    winPct: winPctRaw.toFixed(3).replace(/^0(?=\.)/u, ""),
+    runDifferential: runsFor - runsAgainst,
+    runsFor,
+    runsAgainst,
+    averageRunsFor: averageRunsFor.toFixed(2),
+    averageRunsAgainst: averageRunsAgainst.toFixed(2),
+    home,
+    away,
+    neutral,
+    streak,
+    last10: `${recentWins}-${recentLosses}`,
+  };
 }
 
 function parseNullableInteger(value: unknown): number | null {

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Southern Miss Baseball</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/usm-site.css?v=20260227a" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-brand">
+          <img id="hero-logo" alt="Southern Miss logo" />
+          <div>
+            <p class="eyebrow">NCAA Division I Baseball</p>
+            <h1>Southern Miss Baseball</h1>
+            <p id="hero-meta" class="hero-meta">Loading season profile...</p>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <a id="open-live-link" class="btn btn-primary" href="/usm-live-169.html" target="_blank" rel="noopener noreferrer">
+            Open 16x9 Viewer
+          </a>
+          <button id="refresh-site" class="btn btn-ghost" type="button">Refresh Data</button>
+        </div>
+      </header>
+
+      <section class="summary-grid">
+        <article class="summary-card">
+          <p class="summary-label">Record</p>
+          <p id="summary-record" class="summary-value">--</p>
+        </article>
+        <article class="summary-card">
+          <p class="summary-label">Win %</p>
+          <p id="summary-win-pct" class="summary-value">--</p>
+        </article>
+        <article class="summary-card">
+          <p class="summary-label">Runs</p>
+          <p id="summary-runs" class="summary-value">--</p>
+        </article>
+        <article class="summary-card">
+          <p class="summary-label">Run Diff</p>
+          <p id="summary-run-diff" class="summary-value">--</p>
+        </article>
+        <article class="summary-card">
+          <p class="summary-label">Streak</p>
+          <p id="summary-streak" class="summary-value">--</p>
+        </article>
+        <article class="summary-card">
+          <p class="summary-label">Last 10</p>
+          <p id="summary-last-10" class="summary-value">--</p>
+        </article>
+      </section>
+
+      <nav class="section-nav" aria-label="Section navigation">
+        <a href="#live">Live Viewer</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#stats">Stats</a>
+        <a href="#roster">Roster</a>
+      </nav>
+
+      <main class="content">
+        <section id="live" class="panel">
+          <div class="panel-head">
+            <h2>Live Game Viewer (16x9)</h2>
+            <p id="live-meta">Waiting for game context...</p>
+          </div>
+          <div class="viewer-wrap">
+            <iframe
+              id="live-frame"
+              title="Southern Miss live viewer"
+              src="/usm-live-169.html"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </section>
+
+        <section id="schedule" class="panel">
+          <div class="panel-head">
+            <h2>Season Schedule</h2>
+            <p id="schedule-meta">Loading games...</p>
+          </div>
+          <div class="table-wrap">
+            <table class="schedule-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Opponent</th>
+                  <th>Site</th>
+                  <th>Result</th>
+                  <th>Game ID</th>
+                </tr>
+              </thead>
+              <tbody id="schedule-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="stats" class="panel">
+          <div class="panel-head">
+            <h2>Team Splits</h2>
+            <p id="stats-meta">Season-level record splits and scoring averages.</p>
+          </div>
+          <div class="split-grid">
+            <article class="split-card">
+              <p class="split-label">Home</p>
+              <p id="split-home" class="split-value">--</p>
+            </article>
+            <article class="split-card">
+              <p class="split-label">Away</p>
+              <p id="split-away" class="split-value">--</p>
+            </article>
+            <article class="split-card">
+              <p class="split-label">Neutral</p>
+              <p id="split-neutral" class="split-value">--</p>
+            </article>
+            <article class="split-card">
+              <p class="split-label">Avg Runs Scored</p>
+              <p id="split-rf" class="split-value">--</p>
+            </article>
+            <article class="split-card">
+              <p class="split-label">Avg Runs Allowed</p>
+              <p id="split-ra" class="split-value">--</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="roster" class="panel">
+          <div class="panel-head">
+            <h2>Roster</h2>
+            <div class="roster-controls">
+              <input id="roster-search" type="search" placeholder="Search player, position, hometown..." />
+              <p id="roster-meta">Loading players...</p>
+            </div>
+          </div>
+          <div id="roster-grid" class="roster-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/branding.js?v=20260223a" defer></script>
+    <script src="/usm-site.js?v=20260227a" defer></script>
+  </body>
+</html>
