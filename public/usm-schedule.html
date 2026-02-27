@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Southern Miss Baseball | Home</title>
+    <title>Southern Miss Baseball | Schedule</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,7 +12,7 @@
     />
     <link rel="stylesheet" href="/usm-site.css?v=20260227c" />
   </head>
-  <body data-page="home">
+  <body data-page="schedule">
     <div class="site-shell">
       <header class="site-header">
         <a class="site-brand" href="/usm-site.html">
@@ -33,18 +33,22 @@
       <main class="page-main">
         <section class="panel">
           <div class="panel-head">
-            <h2>Upcoming Games</h2>
-            <p id="upcoming-meta">Loading upcoming games...</p>
+            <h2>Season Schedule</h2>
+            <p id="schedule-meta">Loading games...</p>
           </div>
-          <div id="upcoming-list" class="upcoming-list"></div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head">
-            <h2>Latest News</h2>
-            <p id="news-meta">Loading baseball news...</p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Matchup</th>
+                  <th>Status</th>
+                  <th>Game ID</th>
+                </tr>
+              </thead>
+              <tbody id="schedule-body"></tbody>
+            </table>
           </div>
-          <div id="news-grid" class="news-grid"></div>
         </section>
       </main>
     </div>

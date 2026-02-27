@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Southern Miss Baseball | Stats</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/usm-site.css?v=20260227c" />
+  </head>
+  <body data-page="stats">
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="site-brand" href="/usm-site.html">
+          <img id="site-logo" alt="Southern Miss logo" />
+          <div>
+            <p class="site-kicker">Southern Miss Baseball</p>
+            <h1>Golden Eagles Hub</h1>
+          </div>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a data-nav="home" href="/usm-site.html">Home</a>
+          <a data-nav="schedule" href="/usm-schedule.html">Schedule</a>
+          <a data-nav="roster" href="/usm-roster.html">Roster</a>
+          <a data-nav="stats" href="/usm-stats.html">Stats</a>
+        </nav>
+      </header>
+
+      <main class="page-main">
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Team Stats</h2>
+            <p id="stats-meta">Loading official stats...</p>
+          </div>
+          <div class="stat-grid">
+            <article class="stat-card">
+              <p class="stat-label">Record</p>
+              <p id="team-record" class="stat-value">--</p>
+            </article>
+            <article class="stat-card">
+              <p class="stat-label">Batting AVG</p>
+              <p id="team-avg" class="stat-value">--</p>
+            </article>
+            <article class="stat-card">
+              <p class="stat-label">OPS</p>
+              <p id="team-ops" class="stat-value">--</p>
+            </article>
+            <article class="stat-card">
+              <p class="stat-label">ERA</p>
+              <p id="team-era" class="stat-value">--</p>
+            </article>
+            <article class="stat-card">
+              <p class="stat-label">WHIP</p>
+              <p id="team-whip" class="stat-value">--</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Top Hitters</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table compact">
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>AVG</th>
+                  <th>HR</th>
+                  <th>RBI</th>
+                </tr>
+              </thead>
+              <tbody id="stats-hitting-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Top Pitchers</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table compact">
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>ERA</th>
+                  <th>IP</th>
+                  <th>K</th>
+                </tr>
+              </thead>
+              <tbody id="stats-pitching-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/branding.js?v=20260223a" defer></script>
+    <script src="/usm-site.js?v=20260227c" defer></script>
+  </body>
+</html>

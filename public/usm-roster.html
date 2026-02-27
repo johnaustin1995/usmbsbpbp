@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Southern Miss Baseball | Home</title>
+    <title>Southern Miss Baseball | Roster</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,7 +12,7 @@
     />
     <link rel="stylesheet" href="/usm-site.css?v=20260227c" />
   </head>
-  <body data-page="home">
+  <body data-page="roster">
     <div class="site-shell">
       <header class="site-header">
         <a class="site-brand" href="/usm-site.html">
@@ -33,18 +33,13 @@
       <main class="page-main">
         <section class="panel">
           <div class="panel-head">
-            <h2>Upcoming Games</h2>
-            <p id="upcoming-meta">Loading upcoming games...</p>
+            <h2>Roster</h2>
+            <div class="inline-controls">
+              <input id="roster-search" type="search" placeholder="Search players, positions, hometown..." />
+              <p id="roster-meta">Loading players...</p>
+            </div>
           </div>
-          <div id="upcoming-list" class="upcoming-list"></div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head">
-            <h2>Latest News</h2>
-            <p id="news-meta">Loading baseball news...</p>
-          </div>
-          <div id="news-grid" class="news-grid"></div>
+          <div id="roster-grid" class="roster-grid"></div>
         </section>
       </main>
     </div>

@@ -13,6 +13,7 @@ import {
   DEFAULT_BASEBALL_PRINT_XSL,
   getStatBroadcastPdfJson,
 } from "./scrapers/statbroadcast-pdf";
+import { getSouthernMissNews } from "./scrapers/southern-miss-news";
 import { getSouthernMissStats, type SouthernMissStatsPayload } from "./scrapers/southern-miss-stats";
 import { normalizeScoreDate } from "./utils/date";
 import { runWithConcurrency } from "./utils/async";
@@ -280,6 +281,21 @@ app.get("/api/usm/stats", async (req, res, next) => {
     const refresh = toBoolean(req.query.refresh);
     const payload = await getSouthernMissStats({
       season: seasonQuery,
+      bypassCache: refresh,
+    });
+
+    res.json(payload);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/usm/news", async (req, res, next) => {
+  try {
+    const limitRaw = parsePositiveInteger(cleanQueryString(req.query.limit));
+    const refresh = toBoolean(req.query.refresh);
+    const payload = await getSouthernMissNews({
+      limit: limitRaw ? Math.min(limitRaw, 20) : 10,
       bypassCache: refresh,
     });
 
