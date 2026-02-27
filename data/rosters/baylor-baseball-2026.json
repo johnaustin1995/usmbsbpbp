@@ -1,11 +1,11 @@
 {
   "sourceUrl": "https://baylorbears.com/sports/baseball/roster",
-  "fetchedAt": "2026-02-24T16:00:05.257Z",
+  "fetchedAt": "2026-02-27T14:29:07.176Z",
   "pageTitle": "Baseball Roster - Baylor",
   "teamName": "Baylor",
   "sport": "Baseball",
   "season": "2026",
-  "playerCount": 38,
+  "playerCount": 37,
   "parser": {
     "strategy": "profile-links",
     "candidateRecords": 149,
@@ -1169,27 +1169,6 @@
         "Position": "LHP",
         "Weight": "205 lbs"
       }
-    },
-    {
-      "key": "https://baylorbears.com/sports/baseball/roster/2026",
-      "profileUrl": "https://baylorbears.com/sports/baseball/roster/2026",
-      "name": "Roster",
-      "firstName": "Roster",
-      "lastName": null,
-      "number": null,
-      "photoUrl": null,
-      "position": null,
-      "classYear": null,
-      "height": null,
-      "weight": null,
-      "bats": null,
-      "throws": null,
-      "hometown": null,
-      "from": null,
-      "lastSchool": null,
-      "previousSchool": null,
-      "previousSchools": [],
-      "sourceFields": {}
     }
   ]
 }

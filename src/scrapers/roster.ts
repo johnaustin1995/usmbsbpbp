@@ -728,7 +728,7 @@ function toScrapedPlayer(record: CandidatePlayerRecord): ScrapedRosterPlayer | n
 
   const number = record.number ?? parseJerseyNumber(getFieldValue(record.fields, isNumberLabel));
   const position = cleanNullable(getFieldValue(record.fields, isPositionLabel));
-  if (isLikelyNonPlayerRecord(name, position, record.fields, number)) {
+  if (isLikelyNonPlayerRecord(name, position, record.fields, number, record.profileUrl)) {
     return null;
   }
 
@@ -771,7 +771,8 @@ function isLikelyNonPlayerRecord(
   name: string,
   position: string | null,
   fields: Map<string, string>,
-  number: string | null
+  number: string | null,
+  profileUrl: string | null
 ): boolean {
   const normalizedName = cleanText(name);
   const normalizedPosition = cleanText(position || "");
@@ -785,6 +786,10 @@ function isLikelyNonPlayerRecord(
   }
 
   if (isLikelyPlayerPosition(normalizedPosition)) {
+    return false;
+  }
+
+  if (profileUrl && isPlayerProfileHref(profileUrl)) {
     return false;
   }
 

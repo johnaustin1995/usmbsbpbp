@@ -1,0 +1,1101 @@
+{
+  "sourceUrl": "https://dbupatriots.com/sports/baseball/roster",
+  "fetchedAt": "2026-02-27T14:41:12.129Z",
+  "pageTitle": "2026 Baseball Roster - Dallas Baptist University Athletics",
+  "teamName": "Dallas Baptist",
+  "sport": "Baseball",
+  "season": "2026",
+  "playerCount": 39,
+  "parser": {
+    "strategy": "profile-links",
+    "candidateRecords": 191,
+    "dedupedRecords": 39
+  },
+  "players": [
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/keaton-grady/7743",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/keaton-grady/7743",
+      "name": "Keaton Grady",
+      "firstName": "Keaton",
+      "lastName": "Grady",
+      "number": "1",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-45.jpg?width=80&quality=90",
+      "position": "INF",
+      "classYear": "Redshirt Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Elgin, TX",
+      "from": "Elgin, TX",
+      "lastSchool": null,
+      "previousSchool": "Incarnate Word",
+      "previousSchools": [
+        "Incarnate Word"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Senior",
+        "Hometown": "Elgin, TX",
+        "Position": "INF",
+        "Prev School": "Incarnate Word"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/2026",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/2026",
+      "name": "Roster",
+      "firstName": "Roster",
+      "lastName": null,
+      "number": "1",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-45.jpg?width=80&quality=90",
+      "position": null,
+      "classYear": null,
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": null,
+      "from": null,
+      "lastSchool": null,
+      "previousSchool": null,
+      "previousSchools": [],
+      "sourceFields": {}
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/dylan-schlaegel/7751",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/dylan-schlaegel/7751",
+      "name": "Dylan Schlaegel",
+      "firstName": "Dylan",
+      "lastName": "Schlaegel",
+      "number": "2",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-53.jpg?width=80&quality=90",
+      "position": "OF",
+      "classYear": "Redshirt Sophomore",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Mansfield, TX",
+      "from": "Mansfield, TX",
+      "lastSchool": null,
+      "previousSchool": "Mansfield Legacy HS",
+      "previousSchools": [
+        "Mansfield Legacy HS"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Hometown": "Mansfield, TX",
+        "Position": "OF",
+        "Prev School": "Mansfield Legacy HS"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/dylan-cupp/7756",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/dylan-cupp/7756",
+      "name": "Dylan Cupp",
+      "firstName": "Dylan",
+      "lastName": "Cupp",
+      "number": "3",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-46.jpg?width=80&quality=90",
+      "position": "INF",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Cedartown, GA",
+      "from": "Cedartown, GA",
+      "lastSchool": null,
+      "previousSchool": "Mississippi State",
+      "previousSchools": [
+        "Mississippi State"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Cedartown, GA",
+        "Position": "INF",
+        "Prev School": "Mississippi State"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/jayden-blalack/7758",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/jayden-blalack/7758",
+      "name": "Jayden Blalack",
+      "firstName": "Jayden",
+      "lastName": "Blalack",
+      "number": "5",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-49.jpg?width=80&quality=90",
+      "position": "INF",
+      "classYear": "Freshman",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Richmond, TX",
+      "from": "Richmond, TX",
+      "lastSchool": null,
+      "previousSchool": "Travis HS",
+      "previousSchools": [
+        "Travis HS"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Hometown": "Richmond, TX",
+        "Position": "INF",
+        "Prev School": "Travis HS"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/brooks-sartain/7750",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/brooks-sartain/7750",
+      "name": "Brooks Sartain",
+      "firstName": "Brooks",
+      "lastName": "Sartain",
+      "number": "6",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-50.jpg?width=80&quality=90",
+      "position": "OF",
+      "classYear": "Redshirt Freshman",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Fort Worth, TX",
+      "from": "Fort Worth, TX",
+      "lastSchool": null,
+      "previousSchool": "Trinity Valley School",
+      "previousSchools": [
+        "Trinity Valley School"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Freshman",
+        "Hometown": "Fort Worth, TX",
+        "Position": "OF",
+        "Prev School": "Trinity Valley School"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/cooper-neville/7759",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/cooper-neville/7759",
+      "name": "Cooper Neville",
+      "firstName": "Cooper",
+      "lastName": "Neville",
+      "number": "7",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-48.jpg?width=80&quality=90",
+      "position": "INF",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Glendale, AZ",
+      "from": "Glendale, AZ",
+      "lastSchool": null,
+      "previousSchool": "Iowa Western CC",
+      "previousSchools": [
+        "Iowa Western CC"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Glendale, AZ",
+        "Position": "INF",
+        "Prev School": "Iowa Western CC"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/ryan-martin/7760",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/ryan-martin/7760",
+      "name": "Ryan Martin",
+      "firstName": "Ryan",
+      "lastName": "Martin",
+      "number": "8",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-44.jpg?width=80&quality=90",
+      "position": "OF",
+      "classYear": "Redshirt Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Marietta, GA",
+      "from": "Marietta, GA",
+      "lastSchool": null,
+      "previousSchool": "Georgia Highlands College",
+      "previousSchools": [
+        "Georgia Highlands College"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Junior",
+        "Hometown": "Marietta, GA",
+        "Position": "OF",
+        "Prev School": "Georgia Highlands College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/adam-berghult/7739",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/adam-berghult/7739",
+      "name": "Adam Berghult",
+      "firstName": "Adam",
+      "lastName": "Berghult",
+      "number": "9",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-52.jpg?width=80&quality=90",
+      "position": "C",
+      "classYear": "Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Edina, MN",
+      "from": "Edina, MN",
+      "lastSchool": null,
+      "previousSchool": "North Iowa Area CC",
+      "previousSchools": [
+        "North Iowa Area CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Edina, MN",
+        "Position": "C",
+        "Prev School": "North Iowa Area CC"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/mac-rose/7761",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/mac-rose/7761",
+      "name": "Mac Rose",
+      "firstName": "Mac",
+      "lastName": "Rose",
+      "number": "11",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-47.jpg?width=80&quality=90",
+      "position": "C",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Rockwall, TX",
+      "from": "Rockwall, TX",
+      "lastSchool": null,
+      "previousSchool": "Vanderbilt",
+      "previousSchools": [
+        "Vanderbilt"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Rockwall, TX",
+        "Position": "C",
+        "Prev School": "Vanderbilt"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/landon-underhill/7753",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/landon-underhill/7753",
+      "name": "Landon Underhill",
+      "firstName": "Landon",
+      "lastName": "Underhill",
+      "number": "13",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-43.jpg?width=80&quality=90",
+      "position": "OF",
+      "classYear": "Redshirt Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Hurst, TX",
+      "from": "Hurst, TX",
+      "lastSchool": null,
+      "previousSchool": "McClennan CC",
+      "previousSchools": [
+        "McClennan CC"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Senior",
+        "Hometown": "Hurst, TX",
+        "Position": "OF",
+        "Prev School": "McClennan CC"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/hogan-nelson/7762",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/hogan-nelson/7762",
+      "name": "Hogan Nelson",
+      "firstName": "Hogan",
+      "lastName": "Nelson",
+      "number": "14",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-42.jpg?width=80&quality=90",
+      "position": "INF",
+      "classYear": "Freshman",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Fort Worth, TX",
+      "from": "Fort Worth, TX",
+      "lastSchool": null,
+      "previousSchool": "Liberty Christian School",
+      "previousSchools": [
+        "Liberty Christian School"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Hometown": "Fort Worth, TX",
+        "Position": "INF",
+        "Prev School": "Liberty Christian School"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/jude-hall/7763",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/jude-hall/7763",
+      "name": "Jude Hall",
+      "firstName": "Jude",
+      "lastName": "Hall",
+      "number": "15",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-34.jpg?width=80&quality=90",
+      "position": "OF",
+      "classYear": "Fifth Year",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Chilliwack, British Columbia, Canada",
+      "from": "Chilliwack, British Columbia, Canada",
+      "lastSchool": null,
+      "previousSchool": "Southeastern Louisiana",
+      "previousSchools": [
+        "Southeastern Louisiana"
+      ],
+      "sourceFields": {
+        "Class": "Fifth Year",
+        "Hometown": "Chilliwack, British Columbia, Canada",
+        "Position": "OF",
+        "Prev School": "Southeastern Louisiana"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/liam-watt/7754",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/liam-watt/7754",
+      "name": "Liam Watt",
+      "firstName": "Liam",
+      "lastName": "Watt",
+      "number": "16",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-37.jpg?width=80&quality=90",
+      "position": "LHP",
+      "classYear": "Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Burlington, Ontario, Canada",
+      "from": "Burlington, Ontario, Canada",
+      "lastSchool": null,
+      "previousSchool": "LSU Eunice",
+      "previousSchools": [
+        "LSU Eunice"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Burlington, Ontario, Canada",
+        "Position": "LHP",
+        "Prev School": "LSU Eunice"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/dillon-haines/7744",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/dillon-haines/7744",
+      "name": "Dillon Haines",
+      "firstName": "Dillon",
+      "lastName": "Haines",
+      "number": "17",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-15.jpg?width=80&quality=90",
+      "position": "LHP",
+      "classYear": "Graduate Student",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "St. Augustine, FL",
+      "from": "St. Augustine, FL",
+      "lastSchool": null,
+      "previousSchool": "Chipola College",
+      "previousSchools": [
+        "Chipola College"
+      ],
+      "sourceFields": {
+        "Class": "Graduate Student",
+        "Hometown": "St. Augustine, FL",
+        "Position": "LHP",
+        "Prev School": "Chipola College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/jake-bennett/7738",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/jake-bennett/7738",
+      "name": "Jake Bennett",
+      "firstName": "Jake",
+      "lastName": "Bennett",
+      "number": "18",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-36.jpg?width=80&quality=90",
+      "position": "C/OF",
+      "classYear": "Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Louisville, KY",
+      "from": "Louisville, KY",
+      "lastSchool": null,
+      "previousSchool": "San Jacinto College",
+      "previousSchools": [
+        "San Jacinto College"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Louisville, KY",
+        "Position": "C/OF",
+        "Prev School": "San Jacinto College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/chayton-krauss/7747",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/chayton-krauss/7747",
+      "name": "Chayton Krauss",
+      "firstName": "Chayton",
+      "lastName": "Krauss",
+      "number": "19",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-35.jpg?width=80&quality=90",
+      "position": "INF",
+      "classYear": "Fifth Year",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Coppell, TX",
+      "from": "Coppell, TX",
+      "lastSchool": null,
+      "previousSchool": "Grayson College",
+      "previousSchools": [
+        "Grayson College"
+      ],
+      "sourceFields": {
+        "Class": "Fifth Year",
+        "Hometown": "Coppell, TX",
+        "Position": "INF",
+        "Prev School": "Grayson College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/david-heefner/7745",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/david-heefner/7745",
+      "name": "David Heefner",
+      "firstName": "David",
+      "lastName": "Heefner",
+      "number": "20",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-19.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Redshirt Sophomore",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Cedar Hill, TX",
+      "from": "Cedar Hill, TX",
+      "lastSchool": null,
+      "previousSchool": "Homeschool",
+      "previousSchools": [
+        "Homeschool"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Hometown": "Cedar Hill, TX",
+        "Position": "RHP",
+        "Prev School": "Homeschool"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/urim-ibrahimi/7764",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/urim-ibrahimi/7764",
+      "name": "Urim Ibrahimi",
+      "firstName": "Urim",
+      "lastName": "Ibrahimi",
+      "number": "24",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-23.jpg?width=80&quality=90",
+      "position": "INF",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Arlington, TX",
+      "from": "Arlington, TX",
+      "lastSchool": null,
+      "previousSchool": "Midland College",
+      "previousSchools": [
+        "Midland College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Arlington, TX",
+        "Position": "INF",
+        "Prev School": "Midland College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/jared-schaeffer/7765",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/jared-schaeffer/7765",
+      "name": "Jared Schaeffer",
+      "firstName": "Jared",
+      "lastName": "Schaeffer",
+      "number": "25",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-39.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Katy, TX",
+      "from": "Katy, TX",
+      "lastSchool": null,
+      "previousSchool": "Univ. of Akron",
+      "previousSchools": [
+        "Univ. of Akron"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Katy, TX",
+        "Position": "RHP",
+        "Prev School": "Univ. of Akron"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/michael-benzor/7766",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/michael-benzor/7766",
+      "name": "Michael Benzor",
+      "firstName": "Michael",
+      "lastName": "Benzor",
+      "number": "26",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-22.jpg?width=80&quality=90",
+      "position": "LHP",
+      "classYear": "Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Houston, TX",
+      "from": "Houston, TX",
+      "lastSchool": null,
+      "previousSchool": "Univ. of Houston",
+      "previousSchools": [
+        "Univ. of Houston"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Houston, TX",
+        "Position": "LHP",
+        "Prev School": "Univ. of Houston"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/russ-smith/7767",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/russ-smith/7767",
+      "name": "Russ Smith",
+      "firstName": "Russ",
+      "lastName": "Smith",
+      "number": "27",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-32.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Sophomore",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Burden, KS",
+      "from": "Burden, KS",
+      "lastSchool": null,
+      "previousSchool": "Cowley College",
+      "previousSchools": [
+        "Cowley College"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Hometown": "Burden, KS",
+        "Position": "RHP",
+        "Prev School": "Cowley College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/ben-tryon/7752",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/ben-tryon/7752",
+      "name": "Ben Tryon",
+      "firstName": "Ben",
+      "lastName": "Tryon",
+      "number": "29",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-26.jpg?width=80&quality=90",
+      "position": "UTL",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Southlake, TX",
+      "from": "Southlake, TX",
+      "lastSchool": null,
+      "previousSchool": "Carroll HS",
+      "previousSchools": [
+        "Carroll HS"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Southlake, TX",
+        "Position": "UTL",
+        "Prev School": "Carroll HS"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/ashton-branson/7741",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/ashton-branson/7741",
+      "name": "Ashton Branson",
+      "firstName": "Ashton",
+      "lastName": "Branson",
+      "number": "30",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-29.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Little Rock, AR",
+      "from": "Little Rock, AR",
+      "lastSchool": null,
+      "previousSchool": "Crowder College",
+      "previousSchools": [
+        "Crowder College"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Little Rock, AR",
+        "Position": "RHP",
+        "Prev School": "Crowder College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/luke-pettitte/7749",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/luke-pettitte/7749",
+      "name": "Luke Pettitte",
+      "firstName": "Luke",
+      "lastName": "Pettitte",
+      "number": "32",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-30.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Houston, TX",
+      "from": "Houston, TX",
+      "lastSchool": null,
+      "previousSchool": "Second Baptist School",
+      "previousSchools": [
+        "Second Baptist School"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Houston, TX",
+        "Position": "RHP",
+        "Prev School": "Second Baptist School"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/reagan-mccluskey/7768",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/reagan-mccluskey/7768",
+      "name": "Reagan Mccluskey",
+      "firstName": "Reagan",
+      "lastName": "Mccluskey",
+      "number": "33",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-25.jpg?width=80&quality=90",
+      "position": "C",
+      "classYear": "Freshman",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Brentwood, TN",
+      "from": "Brentwood, TN",
+      "lastSchool": null,
+      "previousSchool": "Christ Presbyterian Academy",
+      "previousSchools": [
+        "Christ Presbyterian Academy"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Hometown": "Brentwood, TN",
+        "Position": "C",
+        "Prev School": "Christ Presbyterian Academy"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/max-luzarraga/7769",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/max-luzarraga/7769",
+      "name": "Max Luzarraga",
+      "firstName": "Max",
+      "lastName": "Luzarraga",
+      "number": "34",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-24.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Freshman",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Matthews, NC",
+      "from": "Matthews, NC",
+      "lastSchool": null,
+      "previousSchool": "Weddington HS",
+      "previousSchools": [
+        "Weddington HS"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Hometown": "Matthews, NC",
+        "Position": "RHP",
+        "Prev School": "Weddington HS"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/tate-hess/7770",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/tate-hess/7770",
+      "name": "Tate Hess",
+      "firstName": "Tate",
+      "lastName": "Hess",
+      "number": "35",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-31.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Singer, LA",
+      "from": "Singer, LA",
+      "lastSchool": null,
+      "previousSchool": "Univ. of Louisiana",
+      "previousSchools": [
+        "Univ. of Louisiana"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Singer, LA",
+        "Position": "RHP",
+        "Prev School": "Univ. of Louisiana"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/will-girardi/7771",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/will-girardi/7771",
+      "name": "Will Girardi",
+      "firstName": "Will",
+      "lastName": "Girardi",
+      "number": "36",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-28.jpg?width=80&quality=90",
+      "position": "LHP",
+      "classYear": "Fifth Year",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Danvers, IL",
+      "from": "Danvers, IL",
+      "lastSchool": null,
+      "previousSchool": "Lenoir-Rhyne Univ.",
+      "previousSchools": [
+        "Lenoir-Rhyne Univ."
+      ],
+      "sourceFields": {
+        "Class": "Fifth Year",
+        "Hometown": "Danvers, IL",
+        "Position": "LHP",
+        "Prev School": "Lenoir-Rhyne Univ."
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/tallen-bagwell/7772",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/tallen-bagwell/7772",
+      "name": "Tallen Bagwell",
+      "firstName": "Tallen",
+      "lastName": "Bagwell",
+      "number": "38",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-17.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Roff, OK",
+      "from": "Roff, OK",
+      "lastSchool": null,
+      "previousSchool": "Cowley College",
+      "previousSchools": [
+        "Cowley College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Roff, OK",
+        "Position": "RHP",
+        "Prev School": "Cowley College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/armani-knipper/7773",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/armani-knipper/7773",
+      "name": "Armani Knipper",
+      "firstName": "Armani",
+      "lastName": "Knipper",
+      "number": "39",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-55.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Southlake, TX",
+      "from": "Southlake, TX",
+      "lastSchool": null,
+      "previousSchool": "Navarro College",
+      "previousSchools": [
+        "Navarro College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Southlake, TX",
+        "Position": "RHP",
+        "Prev School": "Navarro College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/ryan-borberg/7740",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/ryan-borberg/7740",
+      "name": "Ryan Borberg",
+      "firstName": "Ryan",
+      "lastName": "Borberg",
+      "number": "40",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-14.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Lake Quivira, KS",
+      "from": "Lake Quivira, KS",
+      "lastSchool": null,
+      "previousSchool": "Johnson County CC",
+      "previousSchools": [
+        "Johnson County CC"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Lake Quivira, KS",
+        "Position": "RHP",
+        "Prev School": "Johnson County CC"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/hayden-willey/7774",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/hayden-willey/7774",
+      "name": "Hayden Willey",
+      "firstName": "Hayden",
+      "lastName": "Willey",
+      "number": "42",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-54.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Freshman",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Missouri City, TX",
+      "from": "Missouri City, TX",
+      "lastSchool": null,
+      "previousSchool": "Ridge Point HS",
+      "previousSchools": [
+        "Ridge Point HS"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Hometown": "Missouri City, TX",
+        "Position": "RHP",
+        "Prev School": "Ridge Point HS"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/miles-williams/7775",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/miles-williams/7775",
+      "name": "Miles Williams",
+      "firstName": "Miles",
+      "lastName": "Williams",
+      "number": "43",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-13.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Freshman",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Magnolia, TX",
+      "from": "Magnolia, TX",
+      "lastSchool": null,
+      "previousSchool": "Second Baptist School",
+      "previousSchools": [
+        "Second Baptist School"
+      ],
+      "sourceFields": {
+        "Class": "Freshman",
+        "Hometown": "Magnolia, TX",
+        "Position": "RHP",
+        "Prev School": "Second Baptist School"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/jt-long/7776",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/jt-long/7776",
+      "name": "Jt Long",
+      "firstName": "Jt",
+      "lastName": "Long",
+      "number": "44",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-12.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Junior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Madeira Beach, FL",
+      "from": "Madeira Beach, FL",
+      "lastSchool": null,
+      "previousSchool": "Polk State College",
+      "previousSchools": [
+        "Polk State College"
+      ],
+      "sourceFields": {
+        "Class": "Junior",
+        "Hometown": "Madeira Beach, FL",
+        "Position": "RHP",
+        "Prev School": "Polk State College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/athan-kroll/7748",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/athan-kroll/7748",
+      "name": "Athan Kroll",
+      "firstName": "Athan",
+      "lastName": "Kroll",
+      "number": "47",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-18.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Sophomore",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Brighton, CO",
+      "from": "Brighton, CO",
+      "lastSchool": null,
+      "previousSchool": "Valor Christian HS",
+      "previousSchools": [
+        "Valor Christian HS"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Hometown": "Brighton, CO",
+        "Position": "RHP",
+        "Prev School": "Valor Christian HS"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/avery-duncan/7742",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/avery-duncan/7742",
+      "name": "Avery Duncan",
+      "firstName": "Avery",
+      "lastName": "Duncan",
+      "number": "48",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-57.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Sophomore",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Green Bay, WI",
+      "from": "Green Bay, WI",
+      "lastSchool": null,
+      "previousSchool": "Notre Dame Academy",
+      "previousSchools": [
+        "Notre Dame Academy"
+      ],
+      "sourceFields": {
+        "Class": "Sophomore",
+        "Hometown": "Green Bay, WI",
+        "Position": "RHP",
+        "Prev School": "Notre Dame Academy"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/aiden-vandehatert/7777",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/aiden-vandehatert/7777",
+      "name": "Aiden Vandehatert",
+      "firstName": "Aiden",
+      "lastName": "Vandehatert",
+      "number": "49",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-16.jpg?width=80&quality=90",
+      "position": "LHP",
+      "classYear": "Redshirt Sophomore",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Fairfield, OH",
+      "from": "Fairfield, OH",
+      "lastSchool": null,
+      "previousSchool": "Lincoln Trail College",
+      "previousSchools": [
+        "Lincoln Trail College"
+      ],
+      "sourceFields": {
+        "Class": "Redshirt Sophomore",
+        "Hometown": "Fairfield, OH",
+        "Position": "LHP",
+        "Prev School": "Lincoln Trail College"
+      }
+    },
+    {
+      "key": "https://dbupatriots.com/sports/baseball/roster/jerrod-jenkins/7746",
+      "profileUrl": "https://dbupatriots.com/sports/baseball/roster/jerrod-jenkins/7746",
+      "name": "Jerrod Jenkins",
+      "firstName": "Jerrod",
+      "lastName": "Jenkins",
+      "number": "50",
+      "photoUrl": "https://dbupatriots.com/images/2025/11/25/bsbl_headshots-56.jpg?width=80&quality=90",
+      "position": "RHP",
+      "classYear": "Senior",
+      "height": null,
+      "weight": null,
+      "bats": null,
+      "throws": null,
+      "hometown": "Winchester, VA",
+      "from": "Winchester, VA",
+      "lastSchool": null,
+      "previousSchool": "Millbrook HS",
+      "previousSchools": [
+        "Millbrook HS"
+      ],
+      "sourceFields": {
+        "Class": "Senior",
+        "Hometown": "Winchester, VA",
+        "Position": "RHP",
+        "Prev School": "Millbrook HS"
+      }
+    }
+  ]
+}
