@@ -224,7 +224,7 @@ async function loadSchedulePage() {
     elements.scheduleBody.innerHTML = "";
     if (games.length === 0) {
       elements.scheduleMeta.textContent = "No games available.";
-      elements.scheduleBody.innerHTML = `<tr><td colspan="4">No schedule entries found.</td></tr>`;
+      elements.scheduleBody.innerHTML = `<tr><td colspan="5">No schedule entries found.</td></tr>`;
       return;
     }
 
@@ -245,6 +245,10 @@ async function loadSchedulePage() {
       const statusCell = document.createElement("td");
       statusCell.textContent = cleanText(game.statusText) || "Scheduled";
       tr.appendChild(statusCell);
+
+      const resultCell = document.createElement("td");
+      resultCell.textContent = cleanText(game.resultText) || "--";
+      tr.appendChild(resultCell);
 
       const gameIdCell = document.createElement("td");
       if (toPositiveInt(game.gameId)) {
@@ -267,7 +271,7 @@ async function loadSchedulePage() {
   } catch (error) {
     const message = getErrorMessage(error);
     elements.scheduleMeta.textContent = `Failed to load games: ${message}`;
-    elements.scheduleBody.innerHTML = `<tr><td colspan="4">${escapeHtml(message)}</td></tr>`;
+    elements.scheduleBody.innerHTML = `<tr><td colspan="5">${escapeHtml(message)}</td></tr>`;
   }
 }
 
@@ -542,7 +546,7 @@ function pickUpcomingGames(games, limit) {
 
   const upcoming = rows
     .filter((game) => {
-      const status = cleanText(game?.statusText) || "";
+      const status = cleanText(game?.resultText || game?.statusText) || "";
       if (isFinalStatus(status)) {
         return false;
       }

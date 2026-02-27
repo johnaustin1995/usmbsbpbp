@@ -13,6 +13,7 @@ import {
   DEFAULT_BASEBALL_PRINT_XSL,
   getStatBroadcastPdfJson,
 } from "./scrapers/statbroadcast-pdf";
+import { getSouthernMissScheduleText, type SouthernMissScheduleTextGame } from "./scrapers/southern-miss-schedule-text";
 import { getSouthernMissNews } from "./scrapers/southern-miss-news";
 import { getSouthernMissStats, type SouthernMissStatsPayload } from "./scrapers/southern-miss-stats";
 import { normalizeScoreDate } from "./utils/date";
@@ -56,7 +57,18 @@ app.get("/api/usm/schedule", async (req, res, next) => {
     const requestedId = parsePositiveInteger(cleanQueryString(req.query.id));
     const schedule = await loadUsmSchedulePayload();
     const nowEpoch = Math.floor(Date.now() / 1000);
-    const games = normalizeUsmScheduleGames(schedule.payload.games);
+    const normalizedGames = normalizeUsmScheduleGames(schedule.payload.games);
+    let textScheduleError: string | null = null;
+    let textScheduleFetchedAt: string | null = null;
+    let games = normalizedGames;
+
+    try {
+      const textSchedule = await getSouthernMissScheduleText();
+      textScheduleFetchedAt = textSchedule.fetchedAt;
+      games = mergeUsmScheduleResults(games, textSchedule.games);
+    } catch (error) {
+      textScheduleError = error instanceof Error ? error.message : String(error);
+    }
 
     const selectedGameId = pickUsmGameId(games, requestedId, nowEpoch);
     const selectedGame = selectedGameId ? games.find((game) => game.gameId === selectedGameId) ?? null : null;
@@ -69,6 +81,10 @@ app.get("/api/usm/schedule", async (req, res, next) => {
       selectedGameId,
       selectedGame,
       nowEpoch,
+      textSchedule: {
+        fetchedAt: textScheduleFetchedAt,
+        error: textScheduleError,
+      },
       games,
     });
   } catch (error) {
@@ -228,6 +244,7 @@ app.get("/api/usm/live", async (req, res, next) => {
             awayTeam: summary?.visitorTeam ?? "Away",
             homeTeam: summary?.homeTeam ?? "Home",
             statusText: summary?.statusText ?? "External game",
+            resultText: normalizeResultStatusText(summary?.statusText ?? null),
             startTimeEpochEt: null,
             startTimeIsoEt: null,
             startTimeEpoch: null,
@@ -965,6 +982,7 @@ interface UsmScheduleGameRaw {
   startTimeIsoEt?: string | null;
   startTimeEpoch?: number | null;
   startTimeIso?: string | null;
+  resultText?: string | null;
 }
 
 interface UsmSchedulePayload {
@@ -978,6 +996,7 @@ interface UsmScheduleGameNormalized {
   awayTeam: string;
   homeTeam: string;
   statusText: string | null;
+  resultText: string | null;
   startTimeEpochEt: number | null;
   startTimeIsoEt: string | null;
   startTimeEpoch: number | null;
@@ -1215,12 +1234,15 @@ function normalizeUsmScheduleGames(games: UsmScheduleGameRaw[]): UsmScheduleGame
     const startEpochResolved = startTimeEpochEt ?? startTimeEpoch;
 
     if (!deduped.has(gameId)) {
+      const statusText = typeof game.statusText === "string" ? game.statusText : null;
+      const explicitResultText = typeof game.resultText === "string" ? game.resultText : null;
       deduped.set(gameId, {
         date: typeof game.date === "string" ? game.date : null,
         gameId,
         awayTeam: typeof game.awayTeam === "string" ? game.awayTeam : "Away",
         homeTeam: typeof game.homeTeam === "string" ? game.homeTeam : "Home",
-        statusText: typeof game.statusText === "string" ? game.statusText : null,
+        statusText,
+        resultText: normalizeResultStatusText(explicitResultText) ?? normalizeResultStatusText(statusText),
         startTimeEpochEt,
         startTimeIsoEt: typeof game.startTimeIsoEt === "string" ? game.startTimeIsoEt : null,
         startTimeEpoch,
@@ -1349,8 +1371,9 @@ function buildUsmSiteScheduleRowsFromUsmSchedule(
   return games.map((game, index) => {
     const locationType = inferUsmLocationType(game);
     const opponentName = resolveUsmOpponentName(game);
-    const outcome = parseOutcomeFromStatusText(game.statusText);
-    const { runsFor, runsAgainst } = parseRunsFromResultText(game.statusText, outcome);
+    const resultText = game.resultText ?? game.statusText;
+    const outcome = parseOutcomeFromStatusText(resultText);
+    const { runsFor, runsAgainst } = parseRunsFromResultText(resultText, outcome);
     const isCompleted = outcome === "win" || outcome === "loss";
     const isUpcoming = !isCompleted && (game.startEpochResolved === null || game.startEpochResolved >= nowEpoch - 36 * 60 * 60);
 
@@ -1361,7 +1384,7 @@ function buildUsmSiteScheduleRowsFromUsmSchedule(
       locationType,
       opponentName,
       opponentSlug: toSlug(opponentName),
-      resultText: game.statusText ?? null,
+      resultText: resultText ?? null,
       outcome,
       runsFor,
       runsAgainst,
@@ -1521,6 +1544,112 @@ function resolveUsmOpponentName(game: UsmScheduleGameNormalized): string {
     return game.homeTeam;
   }
   return game.awayTeam || game.homeTeam;
+}
+
+function mergeUsmScheduleResults(
+  games: UsmScheduleGameNormalized[],
+  scheduleTextRows: SouthernMissScheduleTextGame[]
+): UsmScheduleGameNormalized[] {
+  if (!Array.isArray(scheduleTextRows) || scheduleTextRows.length === 0) {
+    return games;
+  }
+
+  const rowsByDate = new Map<string, Array<{ row: SouthernMissScheduleTextGame; used: boolean }>>();
+  for (const row of scheduleTextRows) {
+    const dateIso = cleanQueryString(row.dateIso);
+    if (!dateIso) {
+      continue;
+    }
+    const bucket = rowsByDate.get(dateIso) ?? [];
+    bucket.push({ row, used: false });
+    rowsByDate.set(dateIso, bucket);
+  }
+
+  return games.map((game) => {
+    let mergedResult = normalizeResultStatusText(game.resultText) ?? normalizeResultStatusText(game.statusText);
+    const dateIso = cleanQueryString(game.date);
+    if (!dateIso) {
+      return { ...game, resultText: mergedResult };
+    }
+
+    const candidates = rowsByDate.get(dateIso);
+    if (!candidates || candidates.length === 0) {
+      return { ...game, resultText: mergedResult };
+    }
+
+    const normalizedOpponent = normalizeLookupName(resolveUsmOpponentName(game));
+    const preferredIndex = findBestScheduleTextMatchIndex(candidates, normalizedOpponent, true);
+    const fallbackIndex = preferredIndex >= 0 ? preferredIndex : findBestScheduleTextMatchIndex(candidates, normalizedOpponent, false);
+    const matchIndex = fallbackIndex;
+    if (matchIndex < 0) {
+      return { ...game, resultText: mergedResult };
+    }
+
+    candidates[matchIndex].used = true;
+    const rowResult = normalizeResultStatusText(candidates[matchIndex].row.resultText);
+    if (rowResult) {
+      mergedResult = rowResult;
+    }
+
+    return { ...game, resultText: mergedResult };
+  });
+}
+
+function findBestScheduleTextMatchIndex(
+  candidates: Array<{ row: SouthernMissScheduleTextGame; used: boolean }>,
+  normalizedOpponent: string,
+  unusedOnly: boolean
+): number {
+  let bestIndex = -1;
+  let bestScore = -1;
+
+  for (let index = 0; index < candidates.length; index += 1) {
+    const candidate = candidates[index];
+    if (unusedOnly && candidate.used) {
+      continue;
+    }
+
+    const opponent = normalizeLookupName(candidate.row.opponentName ?? "");
+    if (!opponent || !normalizedOpponent) {
+      continue;
+    }
+
+    let score = 0;
+    if (opponent === normalizedOpponent) {
+      score = 40;
+    } else if (opponent.includes(normalizedOpponent) || normalizedOpponent.includes(opponent)) {
+      score = 25;
+    } else {
+      const opponentTokens = opponent.split(" ").filter((token) => token.length > 2);
+      const targetTokens = new Set(normalizedOpponent.split(" ").filter((token) => token.length > 2));
+      const overlap = opponentTokens.filter((token) => targetTokens.has(token)).length;
+      if (overlap > 0) {
+        score = overlap;
+      }
+    }
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestIndex = index;
+    }
+  }
+
+  return bestIndex;
+}
+
+function normalizeResultStatusText(value: string | null): string | null {
+  const text = cleanQueryString(value);
+  if (!text || text === "-" || text === "--") {
+    return null;
+  }
+
+  const outcome = parseOutcomeFromStatusText(text);
+  const runs = parseRunsFromResultText(text, outcome);
+  if (outcome === "unknown" || runs.runsFor === null || runs.runsAgainst === null) {
+    return null;
+  }
+
+  return text;
 }
 
 function buildUsmSeasonSummary(scheduleRows: UsmSiteScheduleRow[]): UsmSeasonSummary {
