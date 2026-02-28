@@ -335,8 +335,52 @@ describe("live play feed pipeline", () => {
       maxLength: 280,
     });
 
-    expect(singleTweet).toContain("Ethan Richmond singled through the right side (1-1 KB).");
-    expect(substitutionTweet).toContain("Isaiah Warrick pinch ran for Will Helms.");
+    expect(singleTweet).toContain("Richmond singled through the right side (1-1 KB).");
+    expect(substitutionTweet).toContain("Warrick pinch ran for Helms.");
+  });
+
+  it("matches 16x9 viewer wording for dropped third strike plays", () => {
+    const summary = buildSummary({
+      visitorTeam: "#12 Southern Miss",
+      homeTeam: "Louisiana Tech",
+      visitorScore: 0,
+      homeScore: 0,
+      pitchCount: 12,
+    });
+
+    const payload = buildLiveStatsPayload([
+      buildSection("1st Inning Play-by-play", [
+        buildTable(
+          ["", "Play", "Scoring Dec.", "Batter", "Pitcher", "Outs"],
+          [
+            ["Top of the 1st", null, null, null, null, null],
+            [
+              null,
+              "HIGDON, BEN struck out swinging on dropped third strike, out at first c to 1b (2-2 BKKBS).",
+              null,
+              "HIGDON, BEN",
+              "Miller",
+              1,
+            ],
+          ]
+        ),
+      ]),
+    ]);
+
+    const plays = extractLivePlayEvents(payload);
+    const states = deriveLivePlayStates(plays, summary);
+
+    const tweet = buildPlayTweetText({
+      play: plays[0],
+      summary,
+      stateAfterPlay: states.get(plays[0].key) ?? null,
+      participantNames: ["Ben Higdon"],
+      maxLength: 280,
+    });
+
+    expect(tweet).toContain("Higdon struck out swinging on dropped third strike, out at first c to 1b (2-2 BKKBS).");
+    expect(tweet).not.toContain("Ben Ben Higdon");
+    expect(tweet).not.toContain("Out Strike");
   });
 });
 

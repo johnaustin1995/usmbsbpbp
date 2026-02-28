@@ -208,7 +208,7 @@ export function buildPlayTweetText(input: BuildPlayTweetTextInput): string {
     normalizePlayTextForFeed(cleanText(input.play.text), {
       explicitNames: [input.play.batter, input.play.pitcher],
       participantNames: input.participantNames ?? [],
-      nameStyle: "full",
+      nameStyle: "last",
     })
   );
 
@@ -363,18 +363,16 @@ function normalizePlayNames(
         text = text.replace(trailingInitialPattern, replacement);
       });
 
-    if (nameStyle === "full") {
-      const uniqueLastNamePairs = buildUniqueLastNamePairs(namePairs);
-      uniqueLastNamePairs.forEach((pair) => {
-        const last = escapeRegExp(pair.last);
-        const replacement = pair.display;
-        const bareLastPattern = new RegExp(
-          `\\b${last}\\b(?=\\s+(?:struck|grounded|flied|lined|popped|fouled|walked|singled|doubled|tripled|homered|reached|advanced|stole|scored|pinch|sacrificed|hit|out|to|on|from|at|replaces?|replaced|entered|flies|grounds|lines|walks|strikes)\\b)`,
-          "gi"
-        );
-        text = text.replace(bareLastPattern, replacement);
-      });
-    }
+    const lastNamePairs = nameStyle === "full" ? buildUniqueLastNamePairs(namePairs) : namePairs;
+    lastNamePairs.forEach((pair) => {
+      const last = escapeRegExp(pair.last);
+      const replacement = nameStyle === "last" ? pair.last : pair.display;
+      const bareLastPattern = new RegExp(
+        `\\b${last}\\b(?=\\s+(?:struck|grounded|flied|lined|popped|fouled|walked|singled|doubled|tripled|homered|reached|advanced|stole|scored|pinch|sacrificed|hit|out|to|on|from|at|replaces?|replaced|entered|flies|grounds|lines|walks|strikes)\\b)`,
+        "gi"
+      );
+      text = text.replace(bareLastPattern, replacement);
+    });
 
     const knownDisplays = Array.from(new Set(namePairs.map((pair) => pair.display).filter(Boolean)))
       .map((display) => escapeRegExp(display))
@@ -389,7 +387,7 @@ function normalizePlayNames(
     }
   }
 
-  return normalizeNamesInText(text, options.explicitNames ?? []);
+  return text;
 }
 
 function collectPlayNamePairs(
