@@ -4,6 +4,7 @@ import {
   buildPlayTweetText,
   deriveLivePlayStates,
   extractLivePlayEvents,
+  extractParticipantNamesFromLineupStats,
   isFinalStatus,
 } from "../src/pipelines/live-play-feed";
 import type { StatBroadcastLiveStats, StatBroadcastLiveSummary, StatsSection, StatsTable } from "../src/types";
@@ -276,6 +277,66 @@ describe("live play feed pipeline", () => {
     expect(substitutionTweet).toContain("#1 LSU - 10");
     expect(substitutionTweet).toContain("Marsh to p for Buczkowski.");
     expect(substitutionTweet).not.toContain("Mid 9th");
+  });
+
+  it("extracts lineup participant names and applies 16x9-style normalization to tweet text", () => {
+    const summary = buildSummary({
+      visitorTeam: "Purdue",
+      homeTeam: "#20 Southern Miss",
+      visitorScore: 1,
+      homeScore: 4,
+      pitchCount: 32,
+    });
+
+    const lineupStats = buildLiveStatsPayload([
+      buildSection("Purdue Batting Order", [
+        buildTable(
+          ["Spot", "Player", "Pos", "Bats", "Today", "Avg"],
+          [
+            [1, "#12 Ethan Richmond", "CF", "R", "1-2", ".300"],
+            [2, "#4 Isaiah Warrick", "PR", "R", "0-0", ".250"],
+            [3, "#9 Will Helms", "1B", "L", "1-3", ".286"],
+          ]
+        ),
+      ]),
+    ]);
+
+    const participantNames = extractParticipantNamesFromLineupStats(lineupStats);
+    expect(participantNames).toEqual(["Ethan Richmond", "Isaiah Warrick", "Will Helms"]);
+
+    const playsPayload = buildLiveStatsPayload([
+      buildSection("6th Inning Play-by-play", [
+        buildTable(
+          ["", "Play", "Scoring Dec.", "Batter", "Pitcher", "Outs"],
+          [
+            ["Top of the 6th", null, null, null, null, null],
+            [null, "RICHMOND singled through the right side (1-1 kb).", "1B", "RICHMOND", "Sivley", 0],
+            [null, "I. Warrick pinch ran for W. Helms.", null, null, null, 0],
+          ]
+        ),
+      ]),
+    ]);
+
+    const plays = extractLivePlayEvents(playsPayload);
+    const states = deriveLivePlayStates(plays, summary);
+
+    const singleTweet = buildPlayTweetText({
+      play: plays[0],
+      summary,
+      stateAfterPlay: states.get(plays[0].key) ?? null,
+      participantNames,
+      maxLength: 280,
+    });
+    const substitutionTweet = buildPlayTweetText({
+      play: plays[1],
+      summary,
+      stateAfterPlay: states.get(plays[1].key) ?? null,
+      participantNames,
+      maxLength: 280,
+    });
+
+    expect(singleTweet).toContain("Ethan Richmond singled through the right side (1-1 KB).");
+    expect(substitutionTweet).toContain("Isaiah Warrick pinch ran for Will Helms.");
   });
 });
 

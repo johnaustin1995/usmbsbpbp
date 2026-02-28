@@ -25,6 +25,7 @@ export interface BuildPlayTweetTextInput {
   play: LivePlayEvent;
   summary: StatBroadcastLiveSummary;
   stateAfterPlay?: DerivedPlayState | null;
+  participantNames?: string[];
   maxLength?: number;
   appendTag?: string | null;
 }
@@ -44,6 +45,13 @@ export interface DerivedPlayState {
   awayScore: number | null;
   homeScore: number | null;
   outsAfterPlay: number | null;
+}
+
+interface NamePair {
+  first: string;
+  last: string;
+  full: string;
+  display: string;
 }
 
 export function extractLivePlayEvents(liveStats: StatBroadcastLiveStats): LivePlayEvent[] {
@@ -196,7 +204,13 @@ export function buildPlayTweetText(input: BuildPlayTweetTextInput): string {
   blocks.push(
     `${cleanText(input.summary.visitorTeam)} - ${formatScore(awayScore)}\n${cleanText(input.summary.homeTeam)} - ${formatScore(homeScore)}`
   );
-  blocks.push(normalizeNamesInText(cleanText(input.play.text), [input.play.batter, input.play.pitcher]));
+  blocks.push(
+    normalizePlayTextForFeed(cleanText(input.play.text), {
+      explicitNames: [input.play.batter, input.play.pitcher],
+      participantNames: input.participantNames ?? [],
+      nameStyle: "full",
+    })
+  );
 
   if (pitcherName && pitchCount !== null) {
     blocks.push(`Pitching | ${pitcherName} - P ${pitchCount}`);
@@ -243,9 +257,298 @@ export function buildFinalTweetText(input: BuildFinalTweetTextInput): string {
   return trimToTweetLength(lines.join("\n"), maxLength);
 }
 
+export function extractParticipantNamesFromLineupStats(liveStats: StatBroadcastLiveStats): string[] {
+  const names = new Set<string>();
+  for (const section of liveStats.sections) {
+    if (!/batting order|line\s*up/i.test(section.title)) {
+      continue;
+    }
+
+    const table = section.tables[0];
+    if (!table || !Array.isArray(table.rows)) {
+      continue;
+    }
+
+    for (const row of table.rows) {
+      const parsedPlayer = parseLineupPlayerCell(
+        readLineupCellByHeader(table, row, /^#?\s*player$/i) ??
+          readLineupCellByHeader(table, row, /^player$/i) ??
+          row?.values?.player ??
+          row?.cells?.[1] ??
+          null
+      );
+
+      const normalized = cleanText(parsedPlayer.fullName ?? parsedPlayer.name ?? "");
+      if (normalized) {
+        names.add(normalized);
+      }
+    }
+  }
+
+  return Array.from(names);
+}
+
 function toOptionalFinalPitcherName(value: string | null | undefined): string | null {
   const normalized = normalizeDisplayName(cleanText(value ?? ""));
   return normalized.length > 0 ? normalized : null;
+}
+
+function normalizePlayTextForFeed(
+  value: string,
+  options: {
+    explicitNames?: Array<string | null | undefined>;
+    participantNames?: string[];
+    nameStyle?: "full" | "last";
+  } = {}
+): string {
+  if (!value) {
+    return "";
+  }
+
+  const normalizedNames = normalizePlayNames(value, options);
+  return normalizedNames
+    .replace(/\((\d+\s*-\s*\d+)\s+([A-Za-z]+)\)/g, (_match, count: string, sequence: string) => {
+      return `(${count} ${sequence.toUpperCase()})`;
+    })
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizePlayNames(
+  value: string,
+  options: {
+    explicitNames?: Array<string | null | undefined>;
+    participantNames?: string[];
+    nameStyle?: "full" | "last";
+  }
+): string {
+  let text = String(value || "");
+  const nameStyle = options.nameStyle === "last" ? "last" : "full";
+  const namePairs = collectPlayNamePairs(
+    options.participantNames ?? [],
+    options.explicitNames ?? [],
+    text,
+    nameStyle
+  );
+
+  if (namePairs.length > 0) {
+    namePairs
+      .slice()
+      .sort((left, right) => right.full.length - left.full.length)
+      .forEach((pair) => {
+        const first = escapeRegExp(pair.first);
+        const last = escapeRegExp(pair.last);
+        const initial = escapeRegExp(pair.first.charAt(0));
+        const replacement = pair.display;
+
+        const fullPattern = new RegExp(`\\b${first}\\s+${last}\\b`, "gi");
+        text = text.replace(fullPattern, replacement);
+
+        const initialPattern = new RegExp(`\\b${initial}\\.?\\s+${last}\\b`, "gi");
+        text = text.replace(initialPattern, replacement);
+
+        const reversedFullPattern = new RegExp(`\\b${last}\\s*,\\s*${first}\\b`, "gi");
+        text = text.replace(reversedFullPattern, replacement);
+
+        const reversedInitialPattern = new RegExp(
+          `\\b${last}\\s*,\\s*${initial}\\.?(?=\\s|$|[.;:!?])`,
+          "gi"
+        );
+        text = text.replace(reversedInitialPattern, replacement);
+
+        const trailingInitialPattern = new RegExp(
+          `\\b${last}\\s+${initial}\\.?(?=\\s|$|[.;:!?])`,
+          "gi"
+        );
+        text = text.replace(trailingInitialPattern, replacement);
+      });
+
+    if (nameStyle === "full") {
+      const uniqueLastNamePairs = buildUniqueLastNamePairs(namePairs);
+      uniqueLastNamePairs.forEach((pair) => {
+        const last = escapeRegExp(pair.last);
+        const replacement = pair.display;
+        const bareLastPattern = new RegExp(
+          `\\b${last}\\b(?=\\s+(?:struck|grounded|flied|lined|popped|fouled|walked|singled|doubled|tripled|homered|reached|advanced|stole|scored|pinch|sacrificed|hit|out|to|on|from|at|replaces?|replaced|entered|flies|grounds|lines|walks|strikes)\\b)`,
+          "gi"
+        );
+        text = text.replace(bareLastPattern, replacement);
+      });
+    }
+
+    const knownDisplays = Array.from(new Set(namePairs.map((pair) => pair.display).filter(Boolean)))
+      .map((display) => escapeRegExp(display))
+      .sort((left, right) => right.length - left.length);
+
+    if (knownDisplays.length > 0) {
+      const trailingCommaPattern = new RegExp(
+        `\\b(${knownDisplays.join("|")})\\s*,(?=\\s|$|[.;:!?])`,
+        "gi"
+      );
+      text = text.replace(trailingCommaPattern, "$1");
+    }
+  }
+
+  return normalizeNamesInText(text, options.explicitNames ?? []);
+}
+
+function collectPlayNamePairs(
+  participantNames: string[],
+  explicitNames: Array<string | null | undefined>,
+  playText: string,
+  nameStyle: "full" | "last"
+): NamePair[] {
+  const pairs = new Map<string, NamePair>();
+
+  const addName = (rawName: string | null | undefined): void => {
+    const normalized = normalizeDisplayName(cleanText(rawName ?? ""));
+    if (!normalized) {
+      return;
+    }
+
+    const parts = normalized.split(/\s+/).filter(Boolean);
+    if (parts.length < 2) {
+      return;
+    }
+
+    const first = toTitleCasePersonName(parts[0]);
+    const last = toTitleCasePersonName(parts[parts.length - 1]);
+    const full = `${first} ${last}`.trim();
+    const key = `${first.toLowerCase()}|${last.toLowerCase()}`;
+    if (pairs.has(key)) {
+      return;
+    }
+
+    pairs.set(key, {
+      first,
+      last,
+      full,
+      display: nameStyle === "last" ? last : full,
+    });
+  };
+
+  participantNames.forEach((name) => {
+    addName(name);
+  });
+  explicitNames.forEach((name) => {
+    addName(name);
+  });
+  addName(parseSubstitutionEnteringName(playText));
+  addName(parseSubstitutionReplacedName(playText));
+
+  return Array.from(pairs.values());
+}
+
+function buildUniqueLastNamePairs(namePairs: NamePair[]): NamePair[] {
+  const counts = new Map<string, number>();
+  for (const pair of namePairs) {
+    counts.set(pair.last.toLowerCase(), (counts.get(pair.last.toLowerCase()) ?? 0) + 1);
+  }
+
+  return namePairs.filter((pair) => (counts.get(pair.last.toLowerCase()) ?? 0) === 1);
+}
+
+function parseSubstitutionEnteringName(text: string): string | null {
+  const raw = String(text || "").trim();
+  if (!raw) {
+    return null;
+  }
+
+  const patterns = [
+    /^(.+?)\s+to\s+[a-z0-9]+(?:\s+for\s+.+)?[.;]?$/i,
+    /^(.+?)\s+pinch\s+(?:hit|ran)\s+for\s+.+[.;]?$/i,
+    /^(.+?)\s+entered\s+the\s+game/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = raw.match(pattern);
+    if (match?.[1]) {
+      const parsed = normalizeDisplayName(match[1]);
+      if (parsed) {
+        return parsed;
+      }
+    }
+  }
+
+  return null;
+}
+
+function parseSubstitutionReplacedName(text: string): string | null {
+  const raw = String(text || "").trim();
+  if (!raw) {
+    return null;
+  }
+
+  const match = raw.match(/\bfor\s+(.+?)[.;]?$/i);
+  if (!match?.[1]) {
+    return null;
+  }
+
+  return normalizeDisplayName(match[1]);
+}
+
+function parseLineupPlayerCell(rawValue: string | number | null): {
+  number: string | null;
+  name: string | null;
+  fullName: string | null;
+} {
+  const value = toOptionalString(rawValue) ?? "";
+  if (!value) {
+    return { number: null, name: null, fullName: null };
+  }
+
+  let number: string | null = null;
+  let namePart = value;
+
+  const numberMatch = value.match(/^#(\d+)\s*(.+)$/i);
+  if (numberMatch) {
+    number = numberMatch[1];
+    namePart = numberMatch[2];
+  }
+
+  const normalizedFull = normalizeDisplayName(namePart);
+  const parts = normalizedFull.split(/\s+/).filter(Boolean);
+  const lastName = parts.length > 0 ? parts[parts.length - 1] : null;
+
+  return {
+    number,
+    name: lastName,
+    fullName: normalizedFull || null,
+  };
+}
+
+function readLineupCellByHeader(table: StatsTable, row: StatsTableRow, headerPattern: RegExp): string | number | null {
+  if (!table || !row || !Array.isArray(table.headers) || !Array.isArray(row.cells)) {
+    return null;
+  }
+
+  const index = table.headers.findIndex((header) => headerPattern.test(String(header || "").trim()));
+  if (index === -1) {
+    return null;
+  }
+
+  const aligned = alignLineupRowCells(table.headers, row.cells);
+  return aligned[index] ?? null;
+}
+
+function alignLineupRowCells(headers: string[], cells: Array<string | number | null>): Array<string | number | null> {
+  if (headers.length === cells.length) {
+    return cells;
+  }
+
+  if (headers.length === cells.length + 1 && String(headers[0] || "").trim() === "") {
+    return [null, ...cells];
+  }
+
+  if (headers.length > cells.length) {
+    const padded = [...cells];
+    while (padded.length < headers.length) {
+      padded.push(null);
+    }
+    return padded;
+  }
+
+  return cells.slice(0, headers.length);
 }
 
 export function isFinalStatus(summary: StatBroadcastLiveSummary): boolean {

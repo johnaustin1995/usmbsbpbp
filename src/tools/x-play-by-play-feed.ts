@@ -6,6 +6,7 @@ import {
   buildPlayTweetText,
   deriveLivePlayStates,
   extractLivePlayEvents,
+  extractParticipantNamesFromLineupStats,
   isFinalStatus,
 } from "../pipelines/live-play-feed";
 import { getFinalGame, getLiveStats, getLiveSummary } from "../scrapers/statbroadcast";
@@ -40,6 +41,7 @@ interface FeedState {
 }
 
 const MAX_STORED_KEYS = 20_000;
+let lineupWarningLogged = false;
 
 async function main(): Promise<void> {
   loadDotEnv();
@@ -69,7 +71,10 @@ async function runCycle(options: CliOptions, state: FeedState, xClient: XClient 
     );
   }
 
-  const liveStats = await getLiveStats(options.gameId, "plays");
+  const [liveStats, participantNames] = await Promise.all([
+    getLiveStats(options.gameId, "plays"),
+    loadParticipantNames(options.gameId),
+  ]);
   const plays = extractLivePlayEvents(liveStats);
   const playStates = deriveLivePlayStates(plays, summary);
 
@@ -100,6 +105,7 @@ async function runCycle(options: CliOptions, state: FeedState, xClient: XClient 
       play,
       summary,
       stateAfterPlay: playStates.get(play.key) ?? null,
+      participantNames,
       appendTag: options.appendTag,
     });
 
@@ -184,6 +190,21 @@ async function runCycle(options: CliOptions, state: FeedState, xClient: XClient 
   state.updatedAt = new Date().toISOString();
   const shouldExitForFinal = isOfficialFinal || (isLikelyFinalFromPlays && graceSatisfied);
   return shouldExitForFinal && (!options.postFinal || state.finalPosted) && !pendingPlays;
+}
+
+async function loadParticipantNames(gameId: number): Promise<string[]> {
+  try {
+    const lineupStats = await getLiveStats(gameId, "lineups");
+    return extractParticipantNamesFromLineupStats(lineupStats);
+  } catch (error) {
+    if (!lineupWarningLogged) {
+      const message = error instanceof Error ? error.message : String(error);
+      // eslint-disable-next-line no-console
+      console.warn(`[lineups] Failed to load lineup names for game ${gameId}; continuing without them (${message})`);
+      lineupWarningLogged = true;
+    }
+    return [];
+  }
 }
 
 async function sendTweet(
