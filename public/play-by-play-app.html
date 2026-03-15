@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Play-by-Play App • NCAA Baseball</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/play-by-play-app.css?v=20260224a" />
+  </head>
+  <body data-timeline-limit="60">
+    <div class="pbp-app-backdrop" aria-hidden="true"></div>
+
+    <main class="pbp-app-shell">
+      <header class="pbp-app-header">
+        <a id="pbp-back-link" class="pbp-app-link" href="/">&larr; Scoreboard</a>
+
+        <div class="pbp-header-copy">
+          <p class="pbp-eyebrow">Live Play-by-Play App</p>
+          <h1 id="page-title">Loading Live Game...</h1>
+          <p id="page-meta" class="pbp-meta">Using the same live feed as the 16x9 viewer.</p>
+        </div>
+
+        <div class="pbp-header-actions">
+          <a id="pbp-desktop-link" class="pbp-app-link ghost" href="/usm-live-169.html">16x9 View</a>
+          <button id="pbp-refresh-btn" class="pbp-app-button" type="button">Refresh</button>
+        </div>
+      </header>
+
+      <section class="pbp-scoreboard">
+        <div class="score-main-row">
+          <div class="team-side away">
+            <img id="away-logo" class="team-logo" alt="Away team logo" hidden />
+            <div class="team-side-copy">
+              <p id="away-name" class="team-name">Away</p>
+              <p id="away-score" class="team-score">0</p>
+            </div>
+          </div>
+
+          <div class="center-game-state">
+            <div class="inning-display" aria-label="Inning">
+              <span id="inning-arrow" class="inning-arrow">▼</span>
+              <span id="inning-value" class="inning-value">1</span>
+            </div>
+
+            <div class="bases-diamond" aria-label="Base state">
+              <span id="base-second" class="base-cell base-second"></span>
+              <span id="base-third" class="base-cell base-third"></span>
+              <span id="base-first" class="base-cell base-first"></span>
+            </div>
+
+            <div class="count-outs" aria-label="Count and outs">
+              <p id="count-status" class="count-status">0-0</p>
+              <div id="outs-status" class="outs-status"></div>
+            </div>
+          </div>
+
+          <div class="team-side home">
+            <div class="team-side-copy team-side-copy-home">
+              <p id="home-name" class="team-name">Home</p>
+              <p id="home-score" class="team-score">0</p>
+            </div>
+            <img id="home-logo" class="team-logo" alt="Home team logo" hidden />
+          </div>
+        </div>
+
+        <div class="strip-row">
+          <p id="away-strip" class="team-strip away-strip">PITCHER ---   P --</p>
+          <p id="home-strip" class="team-strip home-strip">BATTER --- (.000)</p>
+        </div>
+      </section>
+
+      <section class="pbp-panel pbp-latest-panel">
+        <div class="pbp-panel-head">
+          <p class="pbp-panel-title">Latest Play</p>
+          <p id="latest-play-context" class="pbp-panel-meta">Live feed idle</p>
+        </div>
+        <p id="latest-play" class="pbp-latest-play">Waiting for live play-by-play.</p>
+      </section>
+
+      <section class="pbp-panel pbp-feed-panel">
+        <div class="pbp-panel-head">
+          <p class="pbp-panel-title">Feed</p>
+          <p class="pbp-panel-meta">Recent plays grouped by inning</p>
+        </div>
+        <div id="timeline" class="timeline"></div>
+      </section>
+
+      <section class="pbp-card-grid">
+        <article class="pbp-panel">
+          <div class="pbp-panel-head">
+            <p class="pbp-panel-title">Pitching</p>
+            <p class="pbp-panel-meta">Current defensive matchup</p>
+          </div>
+
+          <section class="hero-card">
+            <div class="hero-photo-wrap">
+              <img id="pitcher-photo" class="hero-photo" alt="Pitcher photo" />
+              <span id="pitcher-number" class="hero-number">--</span>
+            </div>
+            <div class="hero-content">
+              <p id="pitcher-name" class="hero-name">-</p>
+              <p id="pitcher-meta" class="hero-meta">-</p>
+            </div>
+          </section>
+
+          <section class="stats-card">
+            <p class="stats-title">This Game</p>
+            <table id="pitcher-stats" class="stat-table"></table>
+          </section>
+        </article>
+
+        <article class="pbp-panel">
+          <div class="pbp-panel-head">
+            <p class="pbp-panel-title">Hitting</p>
+            <p class="pbp-panel-meta">Current batter profile</p>
+          </div>
+
+          <section class="hero-card">
+            <div class="hero-photo-wrap">
+              <img id="batter-photo" class="hero-photo" alt="Batter photo" />
+              <span id="batter-number" class="hero-number">--</span>
+            </div>
+            <div class="hero-content">
+              <p id="batter-name" class="hero-name">-</p>
+              <p id="batter-meta" class="hero-meta">-</p>
+            </div>
+          </section>
+
+          <section class="stats-card">
+            <p class="stats-title">Season</p>
+            <table id="batter-stats" class="stat-table"></table>
+          </section>
+        </article>
+      </section>
+
+      <section class="pbp-card-grid pbp-card-grid-utility">
+        <article class="pbp-panel runners-card">
+          <div class="pbp-panel-head">
+            <p class="pbp-panel-title">Baserunners</p>
+            <p class="pbp-panel-meta">Live base occupancy</p>
+          </div>
+
+          <div class="runner-heads">
+            <span>1B</span>
+            <span>2B</span>
+            <span>3B</span>
+          </div>
+          <div class="runner-values">
+            <span id="runner-first">EMPTY</span>
+            <span id="runner-second">EMPTY</span>
+            <span id="runner-third">EMPTY</span>
+          </div>
+        </article>
+
+        <article class="pbp-panel">
+          <div class="pbp-panel-head">
+            <p class="pbp-panel-title">Line Score</p>
+            <p class="pbp-panel-meta">Inning-by-inning</p>
+          </div>
+          <div class="table-scroll">
+            <div id="linescore-wrap" class="linescore-wrap"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="pbp-panel">
+        <div class="pbp-panel-head">
+          <p class="pbp-panel-title">Lineup</p>
+          <p class="pbp-panel-meta">Active batter highlighted</p>
+        </div>
+        <div class="table-scroll">
+          <table id="lineup-table" class="lineup-table"></table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/branding.js?v=20260223a" defer></script>
+    <script src="/usm-live-169.js?v=20260224app1" defer></script>
+    <script src="/play-by-play-app.js?v=20260224a" defer></script>
+  </body>
+</html>

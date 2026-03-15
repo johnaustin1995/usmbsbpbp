@@ -44,7 +44,7 @@ function init() {
     if (date) {
       params.set("date", normalizeDateInput(date) || date);
     }
-    playViewerLink.href = `/play-by-play.html?${params.toString()}`;
+    playViewerLink.href = `/play-by-play-app.html?${params.toString()}`;
   }
 
   preloadBranding();

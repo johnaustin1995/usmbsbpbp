@@ -194,7 +194,7 @@ function renderCard(card, feedDate) {
     liveLink.textContent = "Game Dashboard";
     liveLink.removeAttribute("target");
     liveLink.removeAttribute("rel");
-    playViewerHref = `/play-by-play.html?${params.toString()}`;
+    playViewerHref = `/play-by-play-app.html?${params.toString()}`;
   } else if (card.liveStatsUrl) {
     liveLink.href = card.liveStatsUrl;
     liveLink.textContent = "External Live Stats";
@@ -206,7 +206,7 @@ function renderCard(card, feedDate) {
     const viewerLink = document.createElement("a");
     viewerLink.className = "live-link";
     viewerLink.href = playViewerHref;
-    viewerLink.textContent = "Play Viewer";
+    viewerLink.textContent = "Play-by-Play App";
     cardFoot.appendChild(viewerLink);
   }
 

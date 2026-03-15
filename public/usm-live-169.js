@@ -13,6 +13,12 @@ const state = {
 };
 
 const elements = {
+  pageTitle: document.getElementById("page-title"),
+  pageMeta: document.getElementById("page-meta"),
+  latestPlay: document.getElementById("latest-play"),
+  latestPlayContext: document.getElementById("latest-play-context"),
+  awayName: document.getElementById("away-name"),
+  homeName: document.getElementById("home-name"),
   bodyGrid: document.querySelector(".body-grid"),
   awayLogo: document.getElementById("away-logo"),
   homeLogo: document.getElementById("home-logo"),
@@ -232,6 +238,8 @@ function renderDashboard(payload, context) {
   const pitcherProfile = resolvePitcherProfile(pitcherTeam, activePitcherName, summary);
   const batterProfile = resolveBatterProfile(batterTeam, batterEntry, activeBatterName);
 
+  renderPageHeader(summary, selectedGame, context);
+  renderLatestPlay(recentPlay, teamPack);
   applySideColumnSwap(battingSide);
 
   renderTopScoreboard({
@@ -253,9 +261,65 @@ function renderDashboard(payload, context) {
 
   renderRunnerNames(summary?.situation?.bases || null);
   renderLineupTable(batterTeam.lineup, batterEntry, batterTeam.branding);
-  renderFieldAlignment(pitcherTeam, pitcherProfile);
+  if (elements.fieldLabels) {
+    renderFieldAlignment(pitcherTeam, pitcherProfile);
+  }
   renderLineScore(lineScore, selectedGame);
   renderTimeline(timelinePlays, teamPack);
+}
+
+function renderPageHeader(summary, selectedGame, context) {
+  if (!elements.pageTitle && !elements.pageMeta) {
+    return;
+  }
+
+  const title = `${context.awayTeam} at ${context.homeTeam}`;
+  const status =
+    normalizeCell(summary?.statusText) ||
+    normalizeCell(selectedGame?.statusText) ||
+    normalizeCell(selectedGame?.resultText) ||
+    "Awaiting live updates";
+  const updatedAt = new Date().toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  if (elements.pageTitle) {
+    elements.pageTitle.textContent = title;
+  }
+
+  if (elements.pageMeta) {
+    elements.pageMeta.textContent = `${status} • Updated ${updatedAt}`;
+  }
+}
+
+function renderLatestPlay(play, teams) {
+  if (!elements.latestPlay) {
+    return;
+  }
+
+  if (!play) {
+    elements.latestPlay.textContent = "Waiting for the first play.";
+    if (elements.latestPlayContext) {
+      elements.latestPlayContext.textContent = "Live feed idle";
+    }
+    return;
+  }
+
+  elements.latestPlay.innerHTML = "";
+  appendHighlightedPlayText(elements.latestPlay, play, teams);
+
+  if (elements.latestPlayContext) {
+    const parts = [
+      formatHalfLabel(play.half, play.inning),
+      Number.isFinite(play.outsAfterPlay) ? `${play.outsAfterPlay} out${play.outsAfterPlay === 1 ? "" : "s"}` : null,
+      Number.isFinite(play.awayScore) && Number.isFinite(play.homeScore)
+        ? `${play.awayScore}-${play.homeScore}`
+        : null,
+    ].filter(Boolean);
+
+    elements.latestPlayContext.textContent = parts.join(" • ");
+  }
 }
 
 function applySideColumnSwap(battingSide) {
@@ -272,6 +336,13 @@ function renderTopScoreboard(input) {
 
   elements.awayScore.textContent = formatScore(away.score);
   elements.homeScore.textContent = formatScore(home.score);
+
+  if (elements.awayName) {
+    elements.awayName.textContent = cleanTeamName(away.teamName) || "Away";
+  }
+  if (elements.homeName) {
+    elements.homeName.textContent = cleanTeamName(home.teamName) || "Home";
+  }
 
   renderTeamLogo(elements.awayLogo, away.teamName, away.branding);
   renderTeamLogo(elements.homeLogo, home.teamName, home.branding);
@@ -510,6 +581,10 @@ function applyLineupColumnSizing(table, sizing) {
 }
 
 function renderFieldAlignment(defenseTeam, pitcherProfile) {
+  if (!elements.fieldLabels) {
+    return;
+  }
+
   const labels = {
     p: toLastName(pitcherProfile.fullName || pitcherProfile.displayName) || "P",
     c: "C",
@@ -585,7 +660,9 @@ function renderTimeline(plays, teams) {
     return;
   }
 
-  const recent = plays.slice(-18).reverse();
+  const configuredLimit = Number.parseInt(String(document.body?.dataset?.timelineLimit || ""), 10);
+  const limit = Number.isFinite(configuredLimit) && configuredLimit > 0 ? configuredLimit : 18;
+  const recent = plays.slice(-limit).reverse();
   const groups = [];
 
   recent.forEach((play) => {
@@ -2658,6 +2735,12 @@ function escapeRegExp(value) {
 }
 
 function renderLoadFailure(message) {
+  if (elements.pageTitle) {
+    elements.pageTitle.textContent = "Play-by-Play Unavailable";
+  }
+  if (elements.pageMeta) {
+    elements.pageMeta.textContent = message;
+  }
   elements.inningArrow.textContent = "!";
   elements.inningValue.textContent = "ERR";
   elements.countStatus.textContent = "--";
