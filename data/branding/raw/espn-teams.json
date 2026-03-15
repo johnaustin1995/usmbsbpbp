@@ -3087,7 +3087,7 @@
                 "id": "825",
                 "uid": "s:1~l:14~t:825",
                 "slug": "barry-buccaneers",
-                "abbreviation": "BAR",
+                "abbreviation": "BARR",
                 "displayName": "Barry Buccaneers",
                 "shortDisplayName": "BARRY",
                 "name": "Buccaneers",
@@ -3263,7 +3263,7 @@
                 "id": "833",
                 "uid": "s:1~l:14~t:833",
                 "slug": "bears",
-                "abbreviation": "LEN",
+                "abbreviation": "LENR",
                 "displayName": "Bears",
                 "shortDisplayName": "LENRHYNE",
                 "name": "Bears",
@@ -3617,7 +3617,7 @@
                 "id": "826",
                 "uid": "s:1~l:14~t:826",
                 "slug": "bethany-ks-bethany-ks",
-                "abbreviation": "BET",
+                "abbreviation": "BETH",
                 "displayName": "Bethany (KS) BETHANY (KS)",
                 "shortDisplayName": "BETHANYKS",
                 "name": "BETHANY (KS)",
@@ -3991,7 +3991,7 @@
                 "id": "322",
                 "uid": "s:1~l:14~t:322",
                 "slug": "boise-state-broncos",
-                "abbreviation": "BOIS",
+                "abbreviation": "BSU",
                 "displayName": "Boise State Broncos",
                 "shortDisplayName": "Boise St",
                 "name": "Broncos",
@@ -4704,7 +4704,7 @@
                 "id": "827",
                 "uid": "s:1~l:14~t:827",
                 "slug": "broncos",
-                "abbreviation": "CPP",
+                "abbreviation": "CPPM",
                 "displayName": "Broncos",
                 "shortDisplayName": "CALPOLYPOM",
                 "name": "Broncos",
@@ -5196,7 +5196,7 @@
                 "id": "325",
                 "uid": "s:1~l:14~t:325",
                 "slug": "buffalo-bulls",
-                "abbreviation": "BUF",
+                "abbreviation": "BUFF",
                 "displayName": "Buffalo Bulls",
                 "shortDisplayName": "Buffalo",
                 "name": "Bulls",
@@ -5222,6 +5222,26 @@
                     "rel": [
                       "full",
                       "dark"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/91e483ab-3e70-3070-b358-fca2e4057083/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/91e483ab-3e70-3070-b358-fca2e4057083/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -5262,6 +5282,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/91e483ab-3e70-3070-b358-fca2e4057083/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/91e483ab-3e70-3070-b358-fca2e4057083/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/91e483ab-3e70-3070-b358-fca2e4057083/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/91e483ab-3e70-3070-b358-fca2e4057083/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -6172,6 +6232,26 @@
                     "height": 500
                   },
                   {
+                    "href": "https://a.espncdn.com/guid/30a40633-3f3e-38e5-b6bf-d12ec5a5b103/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/30a40633-3f3e-38e5-b6bf-d12ec5a5b103/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
                     "href": "https://a.espncdn.com/guid/30a40633-3f3e-38e5-b6bf-d12ec5a5b103/logos/primary_logo_on_primary_color.png",
                     "alt": "",
                     "rel": [
@@ -6207,6 +6287,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/30a40633-3f3e-38e5-b6bf-d12ec5a5b103/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/30a40633-3f3e-38e5-b6bf-d12ec5a5b103/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/30a40633-3f3e-38e5-b6bf-d12ec5a5b103/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/30a40633-3f3e-38e5-b6bf-d12ec5a5b103/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -7352,7 +7472,7 @@
                 "id": "829",
                 "uid": "s:1~l:14~t:829",
                 "slug": "central-missouri-state-mules",
-                "abbreviation": "CAO",
+                "abbreviation": "CMST",
                 "displayName": "Central Missouri State Mules",
                 "shortDisplayName": "CENTMISSOU",
                 "name": "Mules",
@@ -7390,7 +7510,7 @@
                 "id": "836",
                 "uid": "s:1~l:14~t:836",
                 "slug": "chaparrals",
-                "abbreviation": "LUC",
+                "abbreviation": "LUBC",
                 "displayName": "Chaparrals",
                 "shortDisplayName": "LUBBCHRIST",
                 "name": "Chaparrals",
@@ -7406,7 +7526,7 @@
                 "id": "118",
                 "uid": "s:1~l:14~t:118",
                 "slug": "charleston-cougars",
-                "abbreviation": "COFC",
+                "abbreviation": "CofC",
                 "displayName": "Charleston Cougars",
                 "shortDisplayName": "Charleston",
                 "name": "Cougars",
@@ -7822,7 +7942,7 @@
                 "id": "331",
                 "uid": "s:1~l:14~t:331",
                 "slug": "chicago-st-cougars",
-                "abbreviation": "CHST",
+                "abbreviation": "CHIC",
                 "displayName": "Chicago St Cougars",
                 "shortDisplayName": "Chicago St",
                 "name": "Cougars",
@@ -7853,6 +7973,46 @@
                     "height": 500
                   },
                   {
+                    "href": "https://a.espncdn.com/guid/446ba983-233d-357d-8c9c-e8a2a7eb497e/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/446ba983-233d-357d-8c9c-e8a2a7eb497e/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/446ba983-233d-357d-8c9c-e8a2a7eb497e/logos/primary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/446ba983-233d-357d-8c9c-e8a2a7eb497e/logos/primary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_secondary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
                     "href": "https://a.espncdn.com/guid/446ba983-233d-357d-8c9c-e8a2a7eb497e/logos/primary_logo_black.png",
                     "alt": "",
                     "rel": [
@@ -7868,6 +8028,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/446ba983-233d-357d-8c9c-e8a2a7eb497e/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/446ba983-233d-357d-8c9c-e8a2a7eb497e/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/446ba983-233d-357d-8c9c-e8a2a7eb497e/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/446ba983-233d-357d-8c9c-e8a2a7eb497e/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -8219,7 +8419,7 @@
                 "id": "332",
                 "uid": "s:1~l:14~t:332",
                 "slug": "cleveland-state-vikings",
-                "abbreviation": "CLE",
+                "abbreviation": "CLEV",
                 "displayName": "Cleveland State Vikings",
                 "shortDisplayName": "Cleveland St",
                 "name": "Vikings",
@@ -8572,7 +8772,7 @@
                 "id": "284",
                 "uid": "s:1~l:14~t:284",
                 "slug": "columbia-lions",
-                "abbreviation": "COLU",
+                "abbreviation": "CLMB",
                 "displayName": "Columbia Lions",
                 "shortDisplayName": "Columbia",
                 "name": "Lions",
@@ -10177,7 +10377,7 @@
                 "id": "343",
                 "uid": "s:1~l:14~t:343",
                 "slug": "detroit-mercy-titans",
-                "abbreviation": "DETM",
+                "abbreviation": "DET",
                 "displayName": "Detroit Mercy Titans",
                 "shortDisplayName": "Detroit Mercy",
                 "name": "Titans",
@@ -11485,7 +11685,7 @@
                 "id": "830",
                 "uid": "s:1~l:14~t:830",
                 "slug": "emporia-st-hornets",
-                "abbreviation": "EMP",
+                "abbreviation": "EMPO",
                 "displayName": "Emporia St Hornets",
                 "shortDisplayName": "EMPORIAST",
                 "name": "Hornets",
@@ -11699,7 +11899,7 @@
                 "id": "831",
                 "uid": "s:1~l:14~t:831",
                 "slug": "florence-patriots",
-                "abbreviation": "FRN",
+                "abbreviation": "FRMN",
                 "displayName": "FLORENCE Patriots",
                 "shortDisplayName": "FRANCISMAR",
                 "name": "Patriots",
@@ -13371,6 +13571,46 @@
                     "height": 500
                   },
                   {
+                    "href": "https://a.espncdn.com/guid/a67a4570-7992-388f-abaf-960baeec635a/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/a67a4570-7992-388f-abaf-960baeec635a/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/a67a4570-7992-388f-abaf-960baeec635a/logos/primary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/a67a4570-7992-388f-abaf-960baeec635a/logos/primary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_secondary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
                     "href": "https://a.espncdn.com/guid/a67a4570-7992-388f-abaf-960baeec635a/logos/primary_logo_black.png",
                     "alt": "",
                     "rel": [
@@ -13386,6 +13626,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/a67a4570-7992-388f-abaf-960baeec635a/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/a67a4570-7992-388f-abaf-960baeec635a/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/a67a4570-7992-388f-abaf-960baeec635a/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/a67a4570-7992-388f-abaf-960baeec635a/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -15167,7 +15447,7 @@
                 "id": "1190",
                 "uid": "s:1~l:14~t:1190",
                 "slug": "grand-view-vikings",
-                "abbreviation": "GRA",
+                "abbreviation": "GV",
                 "displayName": "Grand View Vikings",
                 "shortDisplayName": "Grand View",
                 "name": "Vikings",
@@ -15498,7 +15778,7 @@
                 "id": "832",
                 "uid": "s:1~l:14~t:832",
                 "slug": "hawaii-pacific-sea-warriors",
-                "abbreviation": "HPU",
+                "abbreviation": "HPAC",
                 "displayName": "Hawai'i Pacific Sea Warriors",
                 "shortDisplayName": "HAWAIIPAC",
                 "name": "Sea Warriors",
@@ -15674,7 +15954,7 @@
                 "id": "364",
                 "uid": "s:1~l:14~t:364",
                 "slug": "high-point-panthers",
-                "abbreviation": "HPU",
+                "abbreviation": "HP",
                 "displayName": "High Point Panthers",
                 "shortDisplayName": "High Point",
                 "name": "Panthers",
@@ -16151,7 +16431,7 @@
                 "id": "367",
                 "uid": "s:1~l:14~t:367",
                 "slug": "houston-christian-huskies",
-                "abbreviation": "HCU",
+                "abbreviation": "HBU",
                 "displayName": "Houston Christian Huskies",
                 "shortDisplayName": "Hou Christian",
                 "name": "Huskies",
@@ -16508,7 +16788,7 @@
                 "id": "375",
                 "uid": "s:1~l:14~t:375",
                 "slug": "iu-indianapolis-jaguars",
-                "abbreviation": "IUIN",
+                "abbreviation": "IUPU",
                 "displayName": "IU Indianapolis Jaguars",
                 "shortDisplayName": "IU Indy",
                 "name": "Jaguars",
@@ -16943,7 +17223,7 @@
                 "id": "371",
                 "uid": "s:1~l:14~t:371",
                 "slug": "incarnate-word-cardinals",
-                "abbreviation": "UIW",
+                "abbreviation": "IW",
                 "displayName": "Incarnate Word Cardinals",
                 "shortDisplayName": "Incarnate Word",
                 "name": "Cardinals",
@@ -17261,7 +17541,7 @@
                 "id": "308",
                 "uid": "s:1~l:14~t:308",
                 "slug": "indiana-state-sycamores",
-                "abbreviation": "INST",
+                "abbreviation": "ISA",
                 "displayName": "Indiana State Sycamores",
                 "shortDisplayName": "Indiana St",
                 "name": "Sycamores",
@@ -17793,7 +18073,7 @@
                 "id": "285",
                 "uid": "s:1~l:14~t:285",
                 "slug": "jackson-state-tigers",
-                "abbreviation": "JKST",
+                "abbreviation": "JACS",
                 "displayName": "Jackson State Tigers",
                 "shortDisplayName": "Jackson St",
                 "name": "Tigers",
@@ -18786,7 +19066,7 @@
                 "id": "307",
                 "uid": "s:1~l:14~t:307",
                 "slug": "kennesaw-state-owls",
-                "abbreviation": "KENN",
+                "abbreviation": "KSU",
                 "displayName": "Kennesaw State Owls",
                 "shortDisplayName": "Kennesaw St",
                 "name": "Owls",
@@ -19452,6 +19732,46 @@
                     "height": 500
                   },
                   {
+                    "href": "https://a.espncdn.com/guid/c1091b5a-279a-3e1b-8fd2-f57be9fe92a0/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/c1091b5a-279a-3e1b-8fd2-f57be9fe92a0/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/c1091b5a-279a-3e1b-8fd2-f57be9fe92a0/logos/primary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/c1091b5a-279a-3e1b-8fd2-f57be9fe92a0/logos/primary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_secondary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
                     "href": "https://a.espncdn.com/guid/c1091b5a-279a-3e1b-8fd2-f57be9fe92a0/logos/primary_logo_black.png",
                     "alt": "",
                     "rel": [
@@ -19467,6 +19787,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/c1091b5a-279a-3e1b-8fd2-f57be9fe92a0/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/c1091b5a-279a-3e1b-8fd2-f57be9fe92a0/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/c1091b5a-279a-3e1b-8fd2-f57be9fe92a0/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/c1091b5a-279a-3e1b-8fd2-f57be9fe92a0/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -20294,7 +20654,7 @@
                 "id": "834",
                 "uid": "s:1~l:14~t:834",
                 "slug": "lincoln-lions",
-                "abbreviation": "LNC",
+                "abbreviation": "LINC",
                 "displayName": "Lincoln Lions",
                 "shortDisplayName": "LINCOLN",
                 "name": "Lions",
@@ -20666,7 +21026,7 @@
                 "id": "261",
                 "uid": "s:1~l:14~t:261",
                 "slug": "little-rock-trojans",
-                "abbreviation": "LR",
+                "abbreviation": "UALR",
                 "displayName": "Little Rock Trojans",
                 "shortDisplayName": "Little Rock",
                 "name": "Trojans",
@@ -21302,7 +21662,6 @@
                 "id": "1189",
                 "uid": "s:1~l:14~t:1189",
                 "slug": "loras-college-duhawks",
-                "abbreviation": "LOR",
                 "displayName": "Loras College Duhawks",
                 "shortDisplayName": "Loras College",
                 "name": "Duhawks",
@@ -22109,7 +22468,7 @@
                 "id": "823",
                 "uid": "s:1~l:14~t:823",
                 "slug": "muskogee-bacone",
-                "abbreviation": "BAC",
+                "abbreviation": "BACN",
                 "displayName": "MUSKOGEE Bacone",
                 "shortDisplayName": "BACONECG",
                 "name": "Bacone",
@@ -23150,6 +23509,26 @@
                     "height": 500
                   },
                   {
+                    "href": "https://a.espncdn.com/guid/f63881ac-5725-3202-96d1-e51409541350/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f63881ac-5725-3202-96d1-e51409541350/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
                     "href": "https://a.espncdn.com/guid/f63881ac-5725-3202-96d1-e51409541350/logos/primary_logo_on_primary_color.png",
                     "alt": "",
                     "rel": [
@@ -23185,6 +23564,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f63881ac-5725-3202-96d1-e51409541350/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f63881ac-5725-3202-96d1-e51409541350/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f63881ac-5725-3202-96d1-e51409541350/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f63881ac-5725-3202-96d1-e51409541350/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -23536,7 +23955,7 @@
                 "id": "295",
                 "uid": "s:1~l:14~t:295",
                 "slug": "mercer-bears",
-                "abbreviation": "MER",
+                "abbreviation": "MERC",
                 "displayName": "Mercer Bears",
                 "shortDisplayName": "Mercer",
                 "name": "Bears",
@@ -24647,7 +25066,7 @@
                 "id": "837",
                 "uid": "s:1~l:14~t:837",
                 "slug": "mid-america-christian-evangels",
-                "abbreviation": "MCA",
+                "abbreviation": "MACU",
                 "displayName": "Mid-America Christian Evangels",
                 "shortDisplayName": "MCA",
                 "name": "Evangels",
@@ -24854,6 +25273,26 @@
                     "height": 500
                   },
                   {
+                    "href": "https://a.espncdn.com/guid/abef2c2f-d97d-3a5a-b7d3-515f6c8c12c4/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/abef2c2f-d97d-3a5a-b7d3-515f6c8c12c4/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
                     "href": "https://a.espncdn.com/guid/abef2c2f-d97d-3a5a-b7d3-515f6c8c12c4/logos/primary_logo_on_primary_color.png",
                     "alt": "",
                     "rel": [
@@ -24889,6 +25328,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/abef2c2f-d97d-3a5a-b7d3-515f6c8c12c4/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/abef2c2f-d97d-3a5a-b7d3-515f6c8c12c4/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/abef2c2f-d97d-3a5a-b7d3-515f6c8c12c4/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/abef2c2f-d97d-3a5a-b7d3-515f6c8c12c4/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -25558,7 +26037,7 @@
                 "id": "91",
                 "uid": "s:1~l:14~t:91",
                 "slug": "missouri-tigers",
-                "abbreviation": "MIZ",
+                "abbreviation": "MIZZ",
                 "displayName": "Missouri Tigers",
                 "shortDisplayName": "Missouri",
                 "name": "Tigers",
@@ -26470,7 +26949,7 @@
                 "id": "95",
                 "uid": "s:1~l:14~t:95",
                 "slug": "nc-state-wolfpack",
-                "abbreviation": "NCSU",
+                "abbreviation": "NCST",
                 "displayName": "NC State Wolfpack",
                 "shortDisplayName": "NC State",
                 "name": "Wolfpack",
@@ -27140,7 +27619,7 @@
                 "id": "849",
                 "uid": "s:1~l:14~t:849",
                 "slug": "nebraska-kearney-lopers",
-                "abbreviation": "NK",
+                "abbreviation": "NBKE",
                 "displayName": "Nebraska-Kearney Lopers",
                 "shortDisplayName": "Neb Kearney",
                 "name": "Lopers",
@@ -27853,7 +28332,7 @@
                 "id": "398",
                 "uid": "s:1~l:14~t:398",
                 "slug": "niagara-purple-eagles",
-                "abbreviation": "NIA",
+                "abbreviation": "NIAG",
                 "displayName": "Niagara Purple Eagles",
                 "shortDisplayName": "Niagara",
                 "name": "Purple Eagles",
@@ -28679,6 +29158,46 @@
                     "height": 500
                   },
                   {
+                    "href": "https://a.espncdn.com/guid/5575db27-feca-3506-971a-b60ea5d95b98/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/5575db27-feca-3506-971a-b60ea5d95b98/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/5575db27-feca-3506-971a-b60ea5d95b98/logos/primary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/5575db27-feca-3506-971a-b60ea5d95b98/logos/primary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_secondary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
                     "href": "https://a.espncdn.com/guid/5575db27-feca-3506-971a-b60ea5d95b98/logos/primary_logo_black.png",
                     "alt": "",
                     "rel": [
@@ -28694,6 +29213,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/5575db27-feca-3506-971a-b60ea5d95b98/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/5575db27-feca-3506-971a-b60ea5d95b98/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/5575db27-feca-3506-971a-b60ea5d95b98/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/5575db27-feca-3506-971a-b60ea5d95b98/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -28917,6 +29476,46 @@
                     "height": 500
                   },
                   {
+                    "href": "https://a.espncdn.com/guid/f4a561c1-16f4-31ae-8ebd-f9ec29d7a1d9/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f4a561c1-16f4-31ae-8ebd-f9ec29d7a1d9/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f4a561c1-16f4-31ae-8ebd-f9ec29d7a1d9/logos/primary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f4a561c1-16f4-31ae-8ebd-f9ec29d7a1d9/logos/primary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_secondary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
                     "href": "https://a.espncdn.com/guid/f4a561c1-16f4-31ae-8ebd-f9ec29d7a1d9/logos/primary_logo_black.png",
                     "alt": "",
                     "rel": [
@@ -28932,6 +29531,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f4a561c1-16f4-31ae-8ebd-f9ec29d7a1d9/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f4a561c1-16f4-31ae-8ebd-f9ec29d7a1d9/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f4a561c1-16f4-31ae-8ebd-f9ec29d7a1d9/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/f4a561c1-16f4-31ae-8ebd-f9ec29d7a1d9/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -28965,7 +29604,7 @@
                 "id": "310",
                 "uid": "s:1~l:14~t:310",
                 "slug": "north-dakota-state-bison",
-                "abbreviation": "NDSU",
+                "abbreviation": "NDST",
                 "displayName": "North Dakota State Bison",
                 "shortDisplayName": "N Dakota St",
                 "name": "Bison",
@@ -29123,7 +29762,7 @@
                 "id": "296",
                 "uid": "s:1~l:14~t:296",
                 "slug": "north-florida-ospreys",
-                "abbreviation": "UNF",
+                "abbreviation": "NFLA",
                 "displayName": "North Florida Ospreys",
                 "shortDisplayName": "North Florida",
                 "name": "Ospreys",
@@ -29282,7 +29921,7 @@
                 "id": "839",
                 "uid": "s:1~l:14~t:839",
                 "slug": "north-georgia-saints",
-                "abbreviation": "NGA",
+                "abbreviation": "NTGA",
                 "displayName": "North Georgia Saints",
                 "shortDisplayName": "NORGE",
                 "name": "Saints",
@@ -30052,7 +30691,7 @@
                 "id": "840",
                 "uid": "s:1~l:14~t:840",
                 "slug": "northwestern-college-ia-northwestern-college-ia",
-                "abbreviation": "NOR",
+                "abbreviation": "NWIA",
                 "displayName": "Northwestern College (IA) Northwestern College (Ia)",
                 "shortDisplayName": "NWCOLLIOWA",
                 "name": "Northwestern College (Ia)",
@@ -32312,7 +32951,7 @@
                 "id": "835",
                 "uid": "s:1~l:14~t:835",
                 "slug": "pineville-wildcats",
-                "abbreviation": "LCO",
+                "abbreviation": "LOUC",
                 "displayName": "PINEVILLE Wildcats",
                 "shortDisplayName": "LACOLLEGE",
                 "name": "Wildcats",
@@ -36799,7 +37438,7 @@
                 "id": "1067",
                 "uid": "s:1~l:14~t:1067",
                 "slug": "saint-paul-golden-bears",
-                "abbreviation": "CON",
+                "abbreviation": "CONC",
                 "displayName": "Saint Paul Golden Bears",
                 "shortDisplayName": "Cncrdia MN",
                 "name": "Golden Bears",
@@ -36997,7 +37636,7 @@
                 "id": "841",
                 "uid": "s:1~l:14~t:841",
                 "slug": "salisbury-sea-gulls",
-                "abbreviation": "SSU",
+                "abbreviation": "SALB",
                 "displayName": "Salisbury Sea Gulls",
                 "shortDisplayName": "SALISBURY",
                 "name": "Sea Gulls",
@@ -38148,7 +38787,7 @@
                 "id": "286",
                 "uid": "s:1~l:14~t:286",
                 "slug": "savannah-state-tigers",
-                "abbreviation": "SAV",
+                "abbreviation": "SAVS",
                 "displayName": "Savannah State Tigers",
                 "shortDisplayName": "Savannah St",
                 "name": "Tigers",
@@ -38505,7 +39144,7 @@
                 "id": "311",
                 "uid": "s:1~l:14~t:311",
                 "slug": "siena-saints",
-                "abbreviation": "SIE",
+                "abbreviation": "SU",
                 "displayName": "Siena Saints",
                 "shortDisplayName": "Siena",
                 "name": "Saints",
@@ -38663,7 +39302,7 @@
                 "id": "57",
                 "uid": "s:1~l:14~t:57",
                 "slug": "south-alabama-jaguars",
-                "abbreviation": "USA",
+                "abbreviation": "S ALA",
                 "displayName": "South Alabama Jaguars",
                 "shortDisplayName": "South Alabama",
                 "name": "Jaguars",
@@ -39020,7 +39659,7 @@
                 "id": "453",
                 "uid": "s:1~l:14~t:453",
                 "slug": "south-carolina-upstate-spartans",
-                "abbreviation": "UPST",
+                "abbreviation": "SCUP",
                 "displayName": "South Carolina Upstate Spartans",
                 "shortDisplayName": "SC Upstate",
                 "name": "Spartans",
@@ -40402,7 +41041,7 @@
                 "id": "105",
                 "uid": "s:1~l:14~t:105",
                 "slug": "st-bonaventure-bonnies",
-                "abbreviation": "SBU",
+                "abbreviation": "SBON",
                 "displayName": "St. Bonaventure Bonnies",
                 "shortDisplayName": "St Bonaventure",
                 "name": "Bonnies",
@@ -40776,7 +41415,7 @@
                 "id": "844",
                 "uid": "s:1~l:14~t:844",
                 "slug": "st-martins-saints",
-                "abbreviation": "SM",
+                "abbreviation": "STMT",
                 "displayName": "St. Martins Saints",
                 "shortDisplayName": "STMARTINS",
                 "name": "Saints",
@@ -41020,6 +41659,26 @@
                     "height": 500
                   },
                   {
+                    "href": "https://a.espncdn.com/guid/12c5c027-c75e-3b65-8da4-6dc42d07bf40/logos/primary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/12c5c027-c75e-3b65-8da4-6dc42d07bf40/logos/primary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "primary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
                     "href": "https://a.espncdn.com/guid/12c5c027-c75e-3b65-8da4-6dc42d07bf40/logos/primary_logo_on_primary_color.png",
                     "alt": "",
                     "rel": [
@@ -41055,6 +41714,46 @@
                     "rel": [
                       "full",
                       "primary_logo_white"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/12c5c027-c75e-3b65-8da4-6dc42d07bf40/logos/secondary_logo_on_white_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_white_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/12c5c027-c75e-3b65-8da4-6dc42d07bf40/logos/secondary_logo_on_black_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_black_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/12c5c027-c75e-3b65-8da4-6dc42d07bf40/logos/secondary_logo_on_primary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_primary_color"
+                    ],
+                    "width": 500,
+                    "height": 500
+                  },
+                  {
+                    "href": "https://a.espncdn.com/guid/12c5c027-c75e-3b65-8da4-6dc42d07bf40/logos/secondary_logo_on_secondary_color.png",
+                    "alt": "",
+                    "rel": [
+                      "full",
+                      "secondary_logo_on_secondary_color"
                     ],
                     "width": 500,
                     "height": 500
@@ -41763,7 +42462,6 @@
                 "id": "1153",
                 "uid": "s:1~l:14~t:1153",
                 "slug": "tbd",
-                "abbreviation": "TBD",
                 "displayName": "TBD",
                 "shortDisplayName": "TBD",
                 "name": "TBD",
@@ -41954,7 +42652,7 @@
                 "id": "845",
                 "uid": "s:1~l:14~t:845",
                 "slug": "tabor",
-                "abbreviation": "TAB",
+                "abbreviation": "TABR",
                 "displayName": "Tabor",
                 "shortDisplayName": "TABOR",
                 "name": "Tabor",
@@ -41971,7 +42669,7 @@
                 "id": "1145",
                 "uid": "s:1~l:14~t:1145",
                 "slug": "tarleton-state-texans",
-                "abbreviation": "TAR",
+                "abbreviation": "TaSt",
                 "displayName": "Tarleton State Texans",
                 "shortDisplayName": "Tarleton St",
                 "name": "Texans",
@@ -42962,7 +43660,7 @@
                 "id": "846",
                 "uid": "s:1~l:14~t:846",
                 "slug": "texas-lutheran-bulldogs",
-                "abbreviation": "TL",
+                "abbreviation": "TXLU",
                 "displayName": "Texas Lutheran Bulldogs",
                 "shortDisplayName": "Texas Lutheran",
                 "name": "Bulldogs",
@@ -43834,7 +44532,7 @@
                 "id": "305",
                 "uid": "s:1~l:14~t:305",
                 "slug": "towson-tigers",
-                "abbreviation": "TOW",
+                "abbreviation": "TOWU",
                 "displayName": "Towson Tigers",
                 "shortDisplayName": "Towson",
                 "name": "Tigers",
@@ -45024,7 +45722,7 @@
                 "id": "67",
                 "uid": "s:1~l:14~t:67",
                 "slug": "uc-riverside-highlanders",
-                "abbreviation": "UCR",
+                "abbreviation": "UCRV",
                 "displayName": "UC Riverside Highlanders",
                 "shortDisplayName": "UC Riverside",
                 "name": "Highlanders",
@@ -48634,7 +49332,7 @@
                 "id": "851",
                 "uid": "s:1~l:14~t:851",
                 "slug": "valdosta-blazers",
-                "abbreviation": "VAL",
+                "abbreviation": "VALD",
                 "displayName": "VALDOSTA Blazers",
                 "shortDisplayName": "VALDOSTA",
                 "name": "Blazers",
@@ -48990,7 +49688,7 @@
                 "id": "302",
                 "uid": "s:1~l:14~t:302",
                 "slug": "valparaiso-beacons",
-                "abbreviation": "VAL",
+                "abbreviation": "VALP",
                 "displayName": "Valparaiso Beacons",
                 "shortDisplayName": "Valparaiso",
                 "name": "Beacons",
@@ -50498,7 +51196,7 @@
                 "id": "852",
                 "uid": "s:1~l:14~t:852",
                 "slug": "wayne-state-ne-wildcats",
-                "abbreviation": "WAY",
+                "abbreviation": "WNST",
                 "displayName": "Wayne State (NE) Wildcats",
                 "shortDisplayName": "WAYNESTNE",
                 "name": "Wildcats",
@@ -50575,7 +51273,7 @@
                 "id": "129699",
                 "uid": "s:1~l:14~t:129699",
                 "slug": "west-georgia-wolves",
-                "abbreviation": "WES",
+                "abbreviation": "WGA",
                 "displayName": "West Georgia Wolves",
                 "shortDisplayName": "West Georgia",
                 "name": "Wolves",
@@ -51687,7 +52385,7 @@
                 "id": "289",
                 "uid": "s:1~l:14~t:289",
                 "slug": "william-mary-tribe",
-                "abbreviation": "W&M",
+                "abbreviation": "WMMY",
                 "displayName": "William & Mary Tribe",
                 "shortDisplayName": "William & Mary",
                 "name": "Tribe",
@@ -51806,7 +52504,7 @@
                 "id": "853",
                 "uid": "s:1~l:14~t:853",
                 "slug": "william-woods",
-                "abbreviation": "WIL",
+                "abbreviation": "WILL",
                 "displayName": "William Woods",
                 "shortDisplayName": "WILLIAMWDS",
                 "name": "William Woods",
@@ -51982,7 +52680,7 @@
                 "id": "464",
                 "uid": "s:1~l:14~t:464",
                 "slug": "wisconsin-badgers",
-                "abbreviation": "WIS",
+                "abbreviation": "WISC",
                 "displayName": "Wisconsin Badgers",
                 "shortDisplayName": "Wisconsin",
                 "name": "Badgers",
@@ -52021,11 +52719,11 @@
                 "id": "129763",
                 "uid": "s:1~l:14~t:129763",
                 "slug": "wisconsin-platteville-pioneers",
-                "abbreviation": "WIS",
+                "abbreviation": "UWP",
                 "displayName": "Wisconsin-Platteville Pioneers",
-                "shortDisplayName": "Wisconsin-Plat",
+                "shortDisplayName": "UW-Platteville",
                 "name": "Pioneers",
-                "nickname": "Wisconsin-Plat",
+                "nickname": "UW-Platteville",
                 "location": "Wisconsin-Platteville",
                 "isActive": true,
                 "isAllStar": false,
@@ -52416,7 +53114,7 @@
                 "id": "312",
                 "uid": "s:1~l:14~t:312",
                 "slug": "xavier-musketeers",
-                "abbreviation": "XAV",
+                "abbreviation": "XU",
                 "displayName": "Xavier Musketeers",
                 "shortDisplayName": "Xavier",
                 "name": "Musketeers",

@@ -252,7 +252,7 @@ Note: `liveSituation` fields can be partially null depending on what a specific 
 - `npm run build`: compile TypeScript to `dist/`
 - `npm run start`: run compiled server
 - `npm run test`: run parser tests
-- `npm run import:branding`: fetch ESPN + teamcolors, merge data, download logos locally
+- `npm run import:branding`: fetch ESPN + teamcolors + Pearatings baseball feeds, merge data, download logos locally
 - `npm run import:branding:meta`: same merge, but skip logo downloads
 - `npm run pdf:json -- --url https://stats.statbroadcast.com/broadcast/?id=635076`: download PDF and write structured JSON to `data/tmp/pdf-json/`
 - `npm run pdf:json -- --url https://stats.statbroadcast.com/broadcast/?id=635076 --include-raw-pdf`: include raw extracted PDF text in output (debug mode)
@@ -441,6 +441,7 @@ npm run import:branding -- --limit 50
 Generated files:
 
 - `data/branding/raw/espn-teams.json`
+- `data/branding/raw/pearatings-baseball-teams.json`
 - `data/branding/raw/teamcolors-ncaa.csv`
 - `data/branding/team-branding.json`
 - `public/data/team-branding.json`
@@ -450,5 +451,5 @@ Frontend usage:
 
 - `public/branding.js` loads `public/data/team-branding.json`
 - Scoreboard cards and game dashboard blocks automatically apply:
-  - local team logos (`/assets/logos/teams/*`)
+  - local team logos (`/assets/logos/teams/*`), preferring Pearatings baseball-specific marks when matched and falling back to ESPN assets otherwise
   - team primary/secondary color accents when a team match is found

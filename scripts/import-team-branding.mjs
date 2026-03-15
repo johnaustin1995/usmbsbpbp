@@ -11,6 +11,29 @@ const ESPN_TEAMS_URL =
   "https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/teams?limit=1000";
 const TEAMCOLORS_URL =
   "https://raw.githubusercontent.com/beanumber/teamcolors/master/data-csv/teamcolors_ncaa.csv";
+const PEARATINGS_BASE_URL = "https://pearatings.com";
+const PEARATINGS_SOURCES = [
+  {
+    key: "d1",
+    apiPath: "/api/cbase",
+    logoPath: "/api/baseball-logo",
+  },
+  {
+    key: "d2",
+    apiPath: "/api/d2-cbase",
+    logoPath: "/api/d2-baseball-logo",
+  },
+  {
+    key: "d3",
+    apiPath: "/api/d3-cbase",
+    logoPath: "/api/d3-baseball-logo",
+  },
+  {
+    key: "naia",
+    apiPath: "/api/naia-cbase",
+    logoPath: "/api/naia-baseball-logo",
+  },
+];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +53,121 @@ const manualNameAliases = new Map([
   ["texas a&m corpus christi", "A&M-Corpus Christi"],
   ["abilene chrstn", "Abilene Christian"],
 ]);
+
+const pearIdentityOverrides = new Map([
+  ["espn:118", "Col. of Charleston"],
+  ["espn:176", "Miami (FL)"],
+  ["espn:30", "Southern California"],
+]);
+
+const pearCandidateOverrides = new Map([
+  ["alcorn state", "Alcorn"],
+  ["alcorn st", "Alcorn"],
+  ["cal state bakersfield", "CSU Bakersfield"],
+  ["central missouri state", "Central Mo."],
+  ["loyola marymount", "LMU (CA)"],
+  ["mississippi valley state", "Mississippi Val."],
+  ["saint marys", "Saint Mary's (CA)"],
+  ["se louisiana", "Southeastern La."],
+  ["south carolina upstate", "USC Upstate"],
+  ["texas a and m corpus christi", "A&M-Corpus Christi"],
+  ["ut rio grande valley", "UTRGV"],
+  ["usc", "Southern California"],
+  ["western carolina", "Western Caro."],
+]);
+
+const pearPhraseAliases = [
+  ["texas a and m corpus christi", "a and m corpus christi"],
+  ["north carolina", "nc"],
+  ["n c", "nc"],
+  ["south carolina", "sc"],
+  ["s c", "sc"],
+  ["north dakota", "nd"],
+  ["n d", "nd"],
+  ["south dakota", "sd"],
+  ["s d", "sd"],
+  ["new mexico", "nm"],
+  ["n m", "nm"],
+  ["new hampshire", "nh"],
+  ["n h", "nh"],
+  ["new jersey", "nj"],
+  ["n j", "nj"],
+  ["new york", "ny"],
+  ["n y", "ny"],
+  ["west virginia", "wv"],
+  ["w v", "wv"],
+  ["rhode island", "ri"],
+  ["r i", "ri"],
+  ["los angeles", "la"],
+  ["cal state", "csu"],
+  ["cal st", "csu"],
+  ["se louisiana", "southeastern la"],
+  ["southeastern louisiana", "southeastern la"],
+  ["west point", ""],
+];
+
+const pearTokenAliases = new Map([
+  ["alabama", "ala"],
+  ["ala", "ala"],
+  ["arizona", "ariz"],
+  ["ariz", "ariz"],
+  ["arkansas", "ark"],
+  ["ark", "ark"],
+  ["california", "cal"],
+  ["cal", "cal"],
+  ["college", "college"],
+  ["col", "college"],
+  ["colorado", "colo"],
+  ["colo", "colo"],
+  ["connecticut", "conn"],
+  ["conn", "conn"],
+  ["florida", "fla"],
+  ["fla", "fla"],
+  ["georgia", "ga"],
+  ["ga", "ga"],
+  ["illinois", "ill"],
+  ["ill", "ill"],
+  ["indiana", "ind"],
+  ["ind", "ind"],
+  ["kentucky", "ky"],
+  ["ky", "ky"],
+  ["louisiana", "la"],
+  ["la", "la"],
+  ["maryland", "md"],
+  ["md", "md"],
+  ["massachusetts", "mass"],
+  ["mass", "mass"],
+  ["michigan", "mich"],
+  ["mich", "mich"],
+  ["minnesota", "minn"],
+  ["minn", "minn"],
+  ["mississippi", "miss"],
+  ["miss", "miss"],
+  ["missouri", "mo"],
+  ["mo", "mo"],
+  ["mount", "mt"],
+  ["mt", "mt"],
+  ["nebraska", "neb"],
+  ["neb", "neb"],
+  ["oklahoma", "okla"],
+  ["okla", "okla"],
+  ["pennsylvania", "pa"],
+  ["pa", "pa"],
+  ["saint", "st"],
+  ["st", "st"],
+  ["state", "st"],
+  ["tennessee", "tenn"],
+  ["tenn", "tenn"],
+  ["univ", "u"],
+  ["university", "u"],
+  ["u", "u"],
+  ["virginia", "va"],
+  ["va", "va"],
+  ["washington", "wash"],
+  ["wash", "wash"],
+]);
+
+const pearFillerTokens = new Set(["college", "of", "the", "u"]);
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
@@ -55,10 +193,20 @@ async function main() {
   const teamcolorIndex = buildTeamcolorIndex(teamcolorRows);
   console.log(`Loaded ${teamcolorRows.length} teamcolors rows.`);
 
-  const mergedTeams = limitedTeams.map((espnTeam) => mergeTeamBranding(espnTeam, teamcolorIndex));
+  console.log("Fetching Pearatings baseball team feeds...");
+  const pearatingsData = await loadPearatingsSources();
+  await writeJson(path.join(rawDir, "pearatings-baseball-teams.json"), pearatingsData);
+  const pearatingsIndex = buildPearatingsIndex(pearatingsData.sources);
+  const pearLoadedTeams = pearatingsData.sources.reduce((total, source) => total + source.teams.length, 0);
+  const pearLoadedDivisions = pearatingsData.sources.filter((source) => !source.error).length;
+  console.log(`Loaded ${pearLoadedTeams} Pearatings teams across ${pearLoadedDivisions} divisions.`);
+
+  const mergedTeams = limitedTeams.map((espnTeam) => mergeTeamBranding(espnTeam, teamcolorIndex, pearatingsIndex));
 
   let downloadedCount = 0;
   let failedDownloads = 0;
+  let removedCount = 0;
+  const referencedLogoFiles = new Set();
 
   if (!options.skipLogos) {
     console.log("Downloading local logo assets...");
@@ -71,8 +219,7 @@ async function main() {
       .filter(Boolean);
 
     await runWithConcurrency(logoJobs, 8, async (job) => {
-      const extension = extensionFromUrl(job.remote.href);
-      const filename = `${safeId(job.team.id)}-${job.slot}${extension}`;
+      const filename = buildLogoFilename(job.team, job.slot, job.remote);
       const localFilePath = path.join(logosDir, filename);
       const localWebPath = `/assets/logos/teams/${filename}`;
 
@@ -83,12 +230,43 @@ async function main() {
         }
 
         job.remote.localPath = localWebPath;
+        delete job.remote.fallback;
+        referencedLogoFiles.add(localFilePath);
       } catch (error) {
+        const fallback = job.remote.provider === "pearatings" ? cloneLogoEntry(job.remote.fallback) : null;
+        if (fallback?.href) {
+          try {
+            const fallbackFilename = buildLogoFilename(job.team, job.slot, fallback);
+            const fallbackFilePath = path.join(logosDir, fallbackFilename);
+            const fallbackWebPath = `/assets/logos/teams/${fallbackFilename}`;
+            const wrote = await downloadFile(fallback.href, fallbackFilePath, options.force);
+            if (wrote) {
+              downloadedCount += 1;
+            }
+
+            Object.keys(job.remote).forEach((key) => {
+              delete job.remote[key];
+            });
+            Object.assign(job.remote, fallback, {
+              localPath: fallbackWebPath,
+              error: null,
+            });
+            job.team.source.logoProvider = "espn-fallback";
+            referencedLogoFiles.add(fallbackFilePath);
+            return;
+          } catch {
+            // Fall through to the original Pear failure below.
+          }
+        }
+
         failedDownloads += 1;
+        delete job.remote.fallback;
         job.remote.localPath = null;
         job.remote.error = error instanceof Error ? error.message : "logo download failed";
       }
     });
+
+    removedCount = await removeUnusedLogoFiles(logosDir, referencedLogoFiles);
   }
 
   mergedTeams.sort((a, b) => a.school.localeCompare(b.school));
@@ -98,12 +276,21 @@ async function main() {
     sources: {
       espnTeamsApi: ESPN_TEAMS_URL,
       teamcolorsCsv: TEAMCOLORS_URL,
+      pearatings: pearatingsData.sources.map((source) => ({
+        key: source.key,
+        apiPath: source.apiPath,
+        logoPath: source.logoPath,
+        currentSeason: source.currentSeason,
+        teamCount: source.teams.length,
+        error: source.error,
+      })),
     },
     counts: summarizeCounts(mergedTeams, teamcolorRows.length),
     options,
     downloads: {
       downloaded: downloadedCount,
       failed: failedDownloads,
+      removed: removedCount,
       skipped: options.skipLogos,
     },
     teams: mergedTeams,
@@ -117,7 +304,7 @@ async function main() {
   if (options.skipLogos) {
     console.log("Skipped logo downloads (--skip-logos).");
   } else {
-    console.log(`Logos downloaded: ${downloadedCount}, failed: ${failedDownloads}`);
+    console.log(`Logos downloaded: ${downloadedCount}, failed: ${failedDownloads}, removed: ${removedCount}`);
   }
 }
 
@@ -248,7 +435,8 @@ function buildTeamcolorIndex(rows) {
   return index;
 }
 
-function mergeTeamBranding(espnTeam, teamcolorIndex) {
+function mergeTeamBranding(espnTeam, teamcolorIndex, pearatingsIndex) {
+  const identity = teamIdentity(espnTeam);
   const candidates = candidateSchoolNames(espnTeam);
   let teamcolorRow = null;
   let matchedBy = null;
@@ -284,11 +472,14 @@ function mergeTeamBranding(espnTeam, teamcolorIndex) {
   const teamcolorQuaternary = normalizeColor(teamcolorRow?.quaternary);
 
   const logos = Array.isArray(espnTeam.logos) ? espnTeam.logos : [];
-  const logoPrimary = pickLogo(logos, "default");
-  const logoDark = pickLogo(logos, "dark");
+  const espnLogoPrimary = pickLogo(logos, "default");
+  const espnLogoDark = pickLogo(logos, "dark");
+  const pearMatch = matchPearatingsTeam(espnTeam, pearatingsIndex);
+  const logoPrimary = pearMatch ? createPearatingsLogoEntry(pearMatch, espnLogoPrimary) : espnLogoPrimary;
+  const logoDark = pearMatch ? null : espnLogoDark;
 
   return {
-    id: teamIdentity(espnTeam),
+    id: identity,
     espnId: toNumberOrNull(espnTeam.id),
     school: firstNonEmpty([espnTeam.location, inferSchoolFromDisplayName(espnTeam.displayName)]),
     displayName: nonEmptyOrNull(espnTeam.displayName),
@@ -313,9 +504,14 @@ function mergeTeamBranding(espnTeam, teamcolorIndex) {
     aliases: uniqueStrings(candidates),
     source: {
       espn: true,
+      pearatings: Boolean(pearMatch),
+      pearatingsName: nonEmptyOrNull(pearMatch?.name),
+      pearatingsDivision: nonEmptyOrNull(pearMatch?.division),
+      pearatingsMatchedBy: nonEmptyOrNull(pearMatch?.matchedBy),
       teamcolors: Boolean(teamcolorRow),
       teamcolorsName: nonEmptyOrNull(teamcolorRow?.name),
       matchedBy: nonEmptyOrNull(matchedBy),
+      logoProvider: pearMatch ? "pearatings" : logoPrimary ? "espn" : null,
     },
   };
 }
@@ -354,6 +550,7 @@ function pickLogo(logos, relValue) {
       rel: Array.isArray(logo.rel) ? logo.rel : [],
       localPath: null,
       error: null,
+      provider: "espn",
     }));
 
   if (filtered.length === 0) {
@@ -366,6 +563,268 @@ function pickLogo(logos, relValue) {
   }
 
   return filtered.sort((a, b) => (b.width ?? 0) - (a.width ?? 0))[0];
+}
+
+async function loadPearatingsSources() {
+  const sources = await Promise.all(
+    PEARATINGS_SOURCES.map(async (source) => {
+      try {
+        const currentSeasonPayload = await fetchJson(`${PEARATINGS_BASE_URL}${source.apiPath}/current-season`);
+        const currentSeason = toNumberOrNull(currentSeasonPayload?.year);
+        if (!currentSeason) {
+          throw new Error(`Missing current season for ${source.key}`);
+        }
+
+        const teamsPayload = await fetchJson(
+          `${PEARATINGS_BASE_URL}${source.apiPath}/teams?season=${currentSeason}`,
+        );
+        const teams = uniqueStrings(Array.isArray(teamsPayload?.teams) ? teamsPayload.teams : []);
+
+        return {
+          ...source,
+          currentSeason,
+          teams,
+          error: null,
+        };
+      } catch (error) {
+        return {
+          ...source,
+          currentSeason: null,
+          teams: [],
+          error: error instanceof Error ? error.message : String(error),
+        };
+      }
+    }),
+  );
+
+  return {
+    fetchedAt: new Date().toISOString(),
+    baseUrl: PEARATINGS_BASE_URL,
+    sources,
+  };
+}
+
+function buildPearatingsIndex(sources) {
+  const entryById = new Map();
+  const nameBuckets = new Map();
+  const keyBuckets = new Map();
+
+  for (const source of sources) {
+    if (source.error || !Array.isArray(source.teams)) {
+      continue;
+    }
+
+    for (const teamName of source.teams) {
+      const entryId = `${source.key}:${teamName}`;
+      const entry = {
+        id: entryId,
+        name: teamName,
+        division: source.key,
+        logoUrl: `${PEARATINGS_BASE_URL}${source.logoPath}/${encodeURIComponent(teamName)}`,
+      };
+
+      entryById.set(entryId, entry);
+      addPearBucketValue(nameBuckets, teamName, entryId);
+
+      for (const key of buildPearatingsLookupKeys(teamName)) {
+        addPearBucketValue(keyBuckets, key, entryId);
+      }
+    }
+  }
+
+  return {
+    entryByExactName: collapseUniqueBuckets(nameBuckets, entryById),
+    entryByLookupKey: collapseUniqueBuckets(keyBuckets, entryById),
+  };
+}
+
+function addPearBucketValue(buckets, key, entryId) {
+  if (!buckets.has(key)) {
+    buckets.set(key, new Set());
+  }
+  buckets.get(key).add(entryId);
+}
+
+function collapseUniqueBuckets(buckets, entryById) {
+  const index = new Map();
+
+  for (const [key, entryIds] of buckets) {
+    if (entryIds.size !== 1) {
+      continue;
+    }
+
+    const [entryId] = [...entryIds];
+    const entry = entryById.get(entryId);
+    if (entry) {
+      index.set(key, entry);
+    }
+  }
+
+  return index;
+}
+
+function matchPearatingsTeam(espnTeam, pearatingsIndex) {
+  const identity = teamIdentity(espnTeam);
+  const identityOverride = pearIdentityOverrides.get(identity);
+  if (identityOverride) {
+    const entry = pearatingsIndex.entryByExactName.get(identityOverride);
+    if (entry) {
+      return {
+        ...entry,
+        matchedBy: identity,
+      };
+    }
+  }
+
+  for (const candidate of candidateSchoolNames(espnTeam)) {
+    const override = pearCandidateOverrides.get(canonicalizePearatingsName(candidate));
+    if (override) {
+      const entry = pearatingsIndex.entryByExactName.get(override);
+      if (entry) {
+        return {
+          ...entry,
+          matchedBy: `${candidate} -> ${override}`,
+        };
+      }
+    }
+
+    for (const key of buildPearatingsLookupKeys(candidate)) {
+      const entry = pearatingsIndex.entryByLookupKey.get(key);
+      if (entry) {
+        return {
+          ...entry,
+          matchedBy: candidate,
+        };
+      }
+    }
+  }
+
+  return null;
+}
+
+function createPearatingsLogoEntry(match, fallbackLogo) {
+  return {
+    href: match.logoUrl,
+    width: null,
+    height: null,
+    rel: ["pearatings", match.division, "baseball"],
+    localPath: null,
+    error: null,
+    provider: "pearatings",
+    division: match.division,
+    fallback: cloneLogoEntry(fallbackLogo),
+  };
+}
+
+function cloneLogoEntry(logo) {
+  if (!logo) {
+    return null;
+  }
+
+  return {
+    href: logo.href,
+    width: logo.width ?? null,
+    height: logo.height ?? null,
+    rel: Array.isArray(logo.rel) ? [...logo.rel] : [],
+    localPath: logo.localPath ?? null,
+    error: logo.error ?? null,
+    provider: logo.provider ?? null,
+    division: logo.division ?? null,
+  };
+}
+
+function buildPearatingsLookupKeys(value) {
+  const base = canonicalizePearatingsName(value);
+  if (!base) {
+    return [];
+  }
+
+  const keys = new Set([base]);
+  const withoutFillers = removePearFillerTokens(base);
+  if (withoutFillers && withoutFillers !== base) {
+    keys.add(withoutFillers);
+  }
+
+  const withoutTrailingState = trimTrailingPearToken(base, "st");
+  if (withoutTrailingState && withoutTrailingState !== base) {
+    keys.add(withoutTrailingState);
+  }
+
+  const withoutFillersAndState = trimTrailingPearToken(withoutFillers, "st");
+  if (withoutFillersAndState && withoutFillersAndState !== withoutFillers) {
+    keys.add(withoutFillersAndState);
+  }
+
+  const withoutCampusCode = trimTrailingCampusCode(base);
+  if (withoutCampusCode && withoutCampusCode !== base) {
+    keys.add(withoutCampusCode);
+  }
+
+  const withoutCampusCodeAndFillers = removePearFillerTokens(withoutCampusCode);
+  if (withoutCampusCodeAndFillers && withoutCampusCodeAndFillers !== withoutCampusCode) {
+    keys.add(withoutCampusCodeAndFillers);
+  }
+
+  return [...keys];
+}
+
+function canonicalizePearatingsName(value) {
+  let raw = String(value ?? "")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[.'’`]/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[^\w\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  for (const [from, to] of pearPhraseAliases) {
+    raw = raw.replace(new RegExp(`\\b${from}\\b`, "g"), to);
+  }
+
+  return raw
+    .split(/\s+/u)
+    .filter(Boolean)
+    .map((token) => pearTokenAliases.get(token) ?? token)
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function removePearFillerTokens(key) {
+  return String(key ?? "")
+    .split(/\s+/u)
+    .filter(Boolean)
+    .filter((token) => !pearFillerTokens.has(token))
+    .join(" ");
+}
+
+function trimTrailingPearToken(key, tokenToTrim) {
+  const tokens = String(key ?? "")
+    .split(/\s+/u)
+    .filter(Boolean);
+  if (tokens.length < 2 || tokens[tokens.length - 1] !== tokenToTrim) {
+    return null;
+  }
+
+  return tokens.slice(0, -1).join(" ");
+}
+
+function trimTrailingCampusCode(key) {
+  const tokens = String(key ?? "")
+    .split(/\s+/u)
+    .filter(Boolean);
+  if (tokens.length < 2) {
+    return null;
+  }
+
+  const last = tokens[tokens.length - 1];
+  if (!/^[a-z]{2,3}$/u.test(last)) {
+    return null;
+  }
+
+  return tokens.slice(0, -1).join(" ");
 }
 
 function normalizeSchoolName(value) {
@@ -440,10 +899,38 @@ async function downloadFile(url, outputFile, force) {
   return true;
 }
 
+async function removeUnusedLogoFiles(directory, referencedFiles) {
+  let entries = [];
+  try {
+    entries = await fs.readdir(directory, { withFileTypes: true });
+  } catch {
+    return 0;
+  }
+
+  let removed = 0;
+  for (const entry of entries) {
+    if (!entry.isFile()) {
+      continue;
+    }
+
+    const filePath = path.join(directory, entry.name);
+    if (referencedFiles.has(filePath)) {
+      continue;
+    }
+
+    await fs.unlink(filePath);
+    removed += 1;
+  }
+
+  return removed;
+}
+
 function summarizeCounts(teams, teamcolorTotal) {
   let matchedTeamcolors = 0;
   let withPrimaryColor = 0;
   let withSecondaryColor = 0;
+  let withPearLogo = 0;
+  let withEspnLogo = 0;
   let withRemoteLogo = 0;
   let withLocalLogo = 0;
 
@@ -456,6 +943,11 @@ function summarizeCounts(teams, teamcolorTotal) {
     }
     if (team.colors.secondary) {
       withSecondaryColor += 1;
+    }
+    if (team.logo.primary?.provider === "pearatings") {
+      withPearLogo += 1;
+    } else if (team.logo.primary?.href) {
+      withEspnLogo += 1;
     }
     if (team.logo.primary?.href) {
       withRemoteLogo += 1;
@@ -471,6 +963,8 @@ function summarizeCounts(teams, teamcolorTotal) {
     matchedTeamcolors,
     withPrimaryColor,
     withSecondaryColor,
+    withPearLogo,
+    withEspnLogo,
     withRemoteLogo,
     withLocalLogo,
   };
@@ -579,7 +1073,28 @@ function safeId(value) {
     .replace(/^-|-$/g, "");
 }
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : error);
-  process.exit(1);
-});
+function buildLogoFilename(team, slot, remote) {
+  const provider =
+    remote?.provider === "pearatings"
+      ? `pear-${safeId(remote.division || "baseball")}`
+      : safeId(remote?.provider || "remote");
+  const extension = extensionFromUrl(remote?.href);
+  const teamKey = team?.espnId ?? team?.id ?? "team";
+  return `${provider}-${safeId(teamKey)}-${slot}${extension}`;
+}
+
+const isDirectRun = Boolean(process.argv[1] && path.resolve(process.argv[1]) === __filename);
+
+export {
+  buildPearatingsIndex,
+  buildPearatingsLookupKeys,
+  canonicalizePearatingsName,
+  matchPearatingsTeam,
+};
+
+if (isDirectRun) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.message : error);
+    process.exit(1);
+  });
+}
