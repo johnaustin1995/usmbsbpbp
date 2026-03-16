@@ -18,8 +18,15 @@ import { getSouthernMissNews } from "./scrapers/southern-miss-news";
 import { getSouthernMissStats, type SouthernMissStatsPayload } from "./scrapers/southern-miss-stats";
 import { normalizeScoreDate } from "./utils/date";
 import { runWithConcurrency } from "./utils/async";
+import { buildScoresFallbackCandidate, chooseBestScoresFallback } from "./utils/scores-fallback";
 import { buildFrontendScoresFeed, normalizeLiveSummary } from "./normalize";
-import type { D1GameWithLive, D1TeamScheduleGame, D1TeamSeasonData, D1TeamsDatabasePayload } from "./types";
+import type {
+  D1GameWithLive,
+  D1ScoresPayload,
+  D1TeamScheduleGame,
+  D1TeamSeasonData,
+  D1TeamsDatabasePayload,
+} from "./types";
 
 const app = express();
 const port = Number.parseInt(process.env.PORT ?? "8787", 10);
@@ -893,15 +900,23 @@ async function getScoresPayloadForDate(date: string) {
     return await getD1Scores(date);
   } catch (primaryError) {
     const fallbackErrors: string[] = [];
+    const candidates: Array<ReturnType<typeof buildScoresFallbackCandidate>> = [];
     const primaryMessage = primaryError instanceof Error ? primaryError.message : String(primaryError);
     fallbackErrors.push(`D1 live scoreboard failed (${primaryMessage})`);
 
-    let teamsPayload: Awaited<ReturnType<typeof getD1ScoresFromTeamsPayload>> | null = null;
+    let teamsPayload: D1ScoresPayload | null = null;
     try {
       const teamsLoaded = await loadTeamsPayloadForScoreDate(date);
       teamsPayload = await getD1ScoresFromTeamsPayload(teamsLoaded.payload, date);
       if (teamsPayload.games.length > 0) {
-        return teamsPayload;
+        candidates.push(
+          buildScoresFallbackCandidate({
+            source: "teams-file",
+            payload: teamsPayload,
+            fetchedAt: teamsLoaded.payload.fetchedAt,
+            requestedDate: date,
+          })
+        );
       }
     } catch (teamsError) {
       const teamsMessage = teamsError instanceof Error ? teamsError.message : String(teamsError);
@@ -911,19 +926,29 @@ async function getScoresPayloadForDate(date: string) {
     try {
       const directoryPayload = await getD1ScoresFromTeamDirectory(date);
       if (directoryPayload.games.length > 0) {
-        return directoryPayload;
+        candidates.push(
+          buildScoresFallbackCandidate({
+            source: "team-directory",
+            payload: directoryPayload,
+            requestedDate: date,
+          })
+        );
       }
-
-      return teamsPayload ?? directoryPayload;
     } catch (directoryError) {
-      if (teamsPayload) {
-        return teamsPayload;
-      }
-
       const directoryMessage = directoryError instanceof Error ? directoryError.message : String(directoryError);
       fallbackErrors.push(`team directory fallback failed (${directoryMessage})`);
-      throw new Error(fallbackErrors.join("; "));
     }
+
+    const bestFallback = chooseBestScoresFallback(candidates);
+    if (bestFallback) {
+      return bestFallback.payload;
+    }
+
+    if (teamsPayload) {
+      return teamsPayload;
+    }
+
+    throw new Error(fallbackErrors.join("; "));
   }
 }
 
