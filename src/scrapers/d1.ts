@@ -90,9 +90,15 @@ interface D1TeamLookup {
 }
 
 interface ScheduleTileScore {
-  outcome: "W" | "L";
+  outcome: "W" | "L" | "T";
   currentScore: number;
   opponentScore: number;
+}
+
+interface TeamRecordState {
+  wins: number;
+  losses: number;
+  ties: number;
 }
 
 export async function getD1Scores(date: string): Promise<D1ScoresPayload> {
@@ -533,11 +539,16 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
   const decodedHtml = he.decode(rawHtml);
   const $ = load(decodedHtml);
   const games: D1Game[] = [];
+  const recordState: TeamRecordState = { wins: 0, losses: 0, ties: 0 };
 
   $(".d1-team-schedule-tile").each((index, tileNode) => {
     const tile = $(tileNode);
     const dateHref = cleanText(tile.find(".team-score a").first().attr("href"));
-    if (extractDateFromScoresHref(dateHref) !== date) {
+    const tileDate = extractDateFromScoresHref(dateHref);
+    const result = parseScheduleTileScore(tile.find(".box-score-header h5").first().text());
+
+    if (tileDate !== date) {
+      updateTeamRecordState(recordState, result);
       return;
     }
 
@@ -549,6 +560,7 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
 
     const currentSide = resolveCurrentTeamSide(team, homeName, roadName);
     if (!currentSide) {
+      updateTeamRecordState(recordState, result);
       return;
     }
 
@@ -556,10 +568,10 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const opponentParsed = parseTeam($, opponentNode);
     const opponentName = currentSide === "home" ? roadName : homeName;
     const opponent = findOpponentTeam(lookup, opponentParsed, opponentName);
-    const result = parseScheduleTileScore(tile.find(".box-score-header h5").first().text());
     const derivedScore = deriveTileScores(currentSide, result);
     const liveStatsLink = extractTeamScheduleLiveStatsUrl(tile);
     const timeLabel = cleanText(tile.find(".team-score a").first().text());
+    const currentTeamRecord = formatTeamRecord(recordState);
 
     const key =
       cleanText(tile.attr("data-matchup")).length > 0
@@ -569,10 +581,10 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
           )}`;
 
     const homeTeam = currentSide === "home"
-      ? buildCurrentTeamSnapshot(team, homeName, derivedScore.homeScore)
+      ? buildCurrentTeamSnapshot(team, homeName, derivedScore.homeScore, currentTeamRecord)
       : buildOpponentTeamSnapshot(opponentParsed, opponent, homeName, derivedScore.homeScore);
     const roadTeam = currentSide === "road"
-      ? buildCurrentTeamSnapshot(team, roadName, derivedScore.roadScore)
+      ? buildCurrentTeamSnapshot(team, roadName, derivedScore.roadScore, currentTeamRecord)
       : buildOpponentTeamSnapshot(opponentParsed, opponent, roadName, derivedScore.roadScore);
 
     const conferenceIds = uniqueStrings([
@@ -621,6 +633,8 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
       statbroadcastId: liveStatsLink?.id ?? null,
       statbroadcastQuery: liveStatsLink?.query ?? {},
     });
+
+    updateTeamRecordState(recordState, result);
   });
 
   return games;
@@ -788,13 +802,13 @@ function normalizeTeamKey(value: string): string {
 
 function parseScheduleTileScore(value: string): ScheduleTileScore | null {
   const clean = cleanText(value).replace(/\s+/g, " ");
-  const match = clean.match(/^([WL])\s*(\d+)\s*-\s*(\d+)$/i);
+  const match = clean.match(/^([WLT])\s*(\d+)\s*-\s*(\d+)$/i);
   if (!match) {
     return null;
   }
 
   return {
-    outcome: match[1].toUpperCase() as "W" | "L",
+    outcome: match[1].toUpperCase() as "W" | "L" | "T",
     currentScore: Number.parseInt(match[2], 10),
     opponentScore: Number.parseInt(match[3], 10),
   };
@@ -813,9 +827,25 @@ function deriveTileScores(
   }
 
   if (currentSide === "home") {
+    if (score.outcome === "T") {
+      return {
+        homeScore: score.currentScore,
+        roadScore: score.opponentScore,
+        isOver: true,
+      };
+    }
+
     return {
       homeScore: score.outcome === "W" ? score.currentScore : score.opponentScore,
       roadScore: score.outcome === "W" ? score.opponentScore : score.currentScore,
+      isOver: true,
+    };
+  }
+
+  if (score.outcome === "T") {
+    return {
+      homeScore: score.opponentScore,
+      roadScore: score.currentScore,
       isOver: true,
     };
   }
@@ -827,14 +857,42 @@ function deriveTileScores(
   };
 }
 
+function updateTeamRecordState(state: TeamRecordState, result: ScheduleTileScore | null): void {
+  if (!result) {
+    return;
+  }
+
+  if (result.outcome === "W") {
+    state.wins += 1;
+    return;
+  }
+
+  if (result.outcome === "L") {
+    state.losses += 1;
+    return;
+  }
+
+  state.ties += 1;
+}
+
+function formatTeamRecord(state: TeamRecordState): string {
+  if (state.ties > 0) {
+    return `${state.wins}-${state.losses}-${state.ties}`;
+  }
+
+  return `${state.wins}-${state.losses}`;
+}
+
 function buildCurrentTeamSnapshot(
   team: D1TeamSeasonData,
   name: string,
-  score: number | null
+  score: number | null,
+  record: string | null
 ): TeamSnapshot {
   return {
     id: team.id,
     name,
+    record,
     rank: null,
     score,
     logoUrl: team.logoUrl ?? null,
@@ -852,6 +910,7 @@ function buildOpponentTeamSnapshot(
   return {
     id: team?.id ?? partial.id,
     name,
+    record: partial.record,
     rank: partial.rank,
     score,
     logoUrl: partial.logoUrl ?? team?.logoUrl ?? null,
@@ -974,6 +1033,12 @@ function mergeScheduleDerivedGame(target: D1Game, source: D1Game): void {
   }
   if (target.homeTeam.logoUrl === null && source.homeTeam.logoUrl !== null) {
     target.homeTeam.logoUrl = source.homeTeam.logoUrl;
+  }
+  if (target.roadTeam.record === null && source.roadTeam.record !== null) {
+    target.roadTeam.record = source.roadTeam.record;
+  }
+  if (target.homeTeam.record === null && source.homeTeam.record !== null) {
+    target.homeTeam.record = source.homeTeam.record;
   }
   if (!target.isOver && source.isOver) {
     target.isOver = true;
@@ -1532,6 +1597,7 @@ function parseTeam($: ReturnType<typeof load>, node: Element | undefined): TeamS
     return {
       id: null,
       name: "",
+      record: null,
       rank: null,
       score: null,
       logoUrl: null,
@@ -1544,6 +1610,8 @@ function parseTeam($: ReturnType<typeof load>, node: Element | undefined): TeamS
   const rank = parseInteger(team.find(".team-rank").first().text());
 
   const titleNode = team.find(".team-title h5").first().clone();
+  const record = extractTeamRecord(titleNode.find("small").first().text());
+  titleNode.find("small").remove();
   titleNode.find(".team-rank").remove();
 
   const searchRaw = cleanText(team.attr("data-search"));
@@ -1551,12 +1619,23 @@ function parseTeam($: ReturnType<typeof load>, node: Element | undefined): TeamS
   return {
     id: parseInteger(team.attr("data-team-id")),
     name: cleanText(titleNode.text()),
+    record,
     rank,
     score: parseInteger(team.find(".score-meta.score-runs").first().text()),
     logoUrl: cleanText(team.find(".team-logo img").first().attr("src")) || null,
     teamUrl: cleanText(team.find(".team-title").first().attr("href")) || null,
     searchTokens: searchRaw.length > 0 ? searchRaw.split(" ") : [],
   };
+}
+
+function extractTeamRecord(value: string): string | null {
+  const clean = cleanText(value).replace(/^\(/, "").replace(/\)$/, "");
+  if (!clean) {
+    return null;
+  }
+
+  const firstPart = clean.split(",")[0]?.trim() ?? "";
+  return firstPart || null;
 }
 
 function extractStatBroadcastInfo(

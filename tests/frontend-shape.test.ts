@@ -18,6 +18,7 @@ describe("frontend normalization", () => {
         roadTeam: {
           id: 1,
           name: "Wake Forest",
+          record: "5-1",
           rank: 21,
           score: 2,
           logoUrl: null,
@@ -27,6 +28,7 @@ describe("frontend normalization", () => {
         homeTeam: {
           id: 2,
           name: "Houston",
+          record: "4-2",
           rank: null,
           score: 6,
           logoUrl: null,
@@ -47,6 +49,7 @@ describe("frontend normalization", () => {
     expect(frontend.totalGames).toBe(1);
     expect(frontend.cards[0].phase).toBe("live");
     expect(frontend.cards[0].teams[0].name).toBe("Wake Forest");
+    expect(frontend.cards[0].teams[0].record).toBe("5-1");
     expect(frontend.cards[0].teams[1].isWinner).toBe(true);
     expect(frontend.ticker[0].text).toContain("Wake Forest 2 at Houston 6");
   });
@@ -107,6 +110,7 @@ describe("frontend normalization", () => {
         roadTeam: {
           id: 1,
           name: "Alabama",
+          record: "7-2",
           rank: null,
           score: null,
           logoUrl: ncaaSvgLogo,
@@ -116,6 +120,7 @@ describe("frontend normalization", () => {
         homeTeam: {
           id: 2,
           name: "Auburn",
+          record: "6-3",
           rank: null,
           score: null,
           logoUrl: null,
@@ -154,6 +159,7 @@ describe("frontend normalization", () => {
         roadTeam: {
           id: 1,
           name: "Texas",
+          record: "8-1",
           rank: null,
           score: null,
           logoUrl: null,
@@ -163,6 +169,7 @@ describe("frontend normalization", () => {
         homeTeam: {
           id: 2,
           name: "Houston",
+          record: "7-2",
           rank: 18,
           score: null,
           logoUrl: null,

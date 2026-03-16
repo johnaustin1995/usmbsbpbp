@@ -80,6 +80,7 @@ export function normalizeGameCard(
   const awayTeam = normalizeTeam({
     side: "away",
     name: game.roadTeam.name,
+    record: game.roadTeam.record,
     rank: game.roadTeam.rank,
     score: awayScore,
     logoUrl: game.roadTeam.logoUrl,
@@ -92,6 +93,7 @@ export function normalizeGameCard(
   const homeTeam = normalizeTeam({
     side: "home",
     name: game.homeTeam.name,
+    record: game.homeTeam.record,
     rank: game.homeTeam.rank,
     score: homeScore,
     logoUrl: game.homeTeam.logoUrl,
@@ -149,6 +151,7 @@ function cardToTickerItem(card: FrontendGameCard): FrontendTickerItem {
 function normalizeTeam(input: {
   side: "away" | "home";
   name: string;
+  record: string | null;
   rank: number | null;
   score: number | null;
   logoUrl: string | null;
@@ -161,6 +164,7 @@ function normalizeTeam(input: {
     side: input.side,
     name: input.name,
     shortName: shortTeamName(input.name),
+    record: input.record,
     rank: resolveTeamRank(input.name, input.teamUrl, input.rank, input.rankLookup),
     score: input.score,
     logoUrl: resolveTeamLogoUrl(input.name, input.logoUrl),
@@ -184,6 +188,7 @@ function normalizeLiveTeam(input: {
     side: input.side,
     name: input.name,
     shortName: shortTeamName(input.name),
+    record: null,
     rank: extractRank(input.name),
     score: input.score,
     logoUrl: resolveTeamLogoUrl(input.name, null),

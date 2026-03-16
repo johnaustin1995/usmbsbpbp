@@ -47,6 +47,20 @@ describe("parseD1TeamScheduleScoresHtml", () => {
     const html = `
       <div
         class="d1-score-tile d1-team-schedule-tile winner"
+        data-matchup="632554"
+        data-home-name="Alabama"
+        data-road-name="Auburn"
+      >
+        <div class="box-score-header scoresclear">
+          <h5><span>W</span>5 - 2</h5>
+        </div>
+        <div class="team team-1" data-team-id="145999">
+          <a class="team-title" href="https://d1baseball.com/team/auburn/schedule/"><h5>Auburn</h5></a>
+          <h5 class="team-score"><a href="/scores/?date=20260314">Saturday, Mar 14<br>@ 6:00 PM</a></h5>
+        </div>
+      </div>
+      <div
+        class="d1-score-tile d1-team-schedule-tile winner"
         data-matchup="632555"
         data-home-name="Kentucky"
         data-road-name="Alabama"
@@ -63,7 +77,7 @@ describe("parseD1TeamScheduleScoresHtml", () => {
             <img src="https://cdn.example.com/kentucky.svg">
           </a>
           <a class="team-title" href="https://d1baseball.com/team/kentucky/schedule/">
-            <h5>Kentucky</h5>
+            <h5>Kentucky<small>(18-3, 4-1 SEC)</small></h5>
           </a>
           <h5 class="team-score">
             <a href="/scores/?date=20260315">Sunday, Mar 15<br>@ 1:00 PM</a>
@@ -91,9 +105,11 @@ describe("parseD1TeamScheduleScoresHtml", () => {
     expect(games).toHaveLength(1);
     expect(games[0].key).toBe("schedule-632555");
     expect(games[0].roadTeam.name).toBe("Alabama");
+    expect(games[0].roadTeam.record).toBe("1-0");
     expect(games[0].homeTeam.name).toBe("Kentucky");
     expect(games[0].roadTeam.score).toBe(4);
     expect(games[0].homeTeam.score).toBe(3);
+    expect(games[0].homeTeam.record).toBe("18-3");
     expect(games[0].statbroadcastId).toBe(632555);
     expect(games[0].statusText).toBe("Final");
     expect(games[0].conferenceNames).toEqual(["SEC"]);

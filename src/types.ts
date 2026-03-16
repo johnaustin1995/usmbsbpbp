@@ -1,6 +1,7 @@
 export interface TeamSnapshot {
   id: number | null;
   name: string;
+  record: string | null;
   rank: number | null;
   score: number | null;
   logoUrl: string | null;
@@ -340,6 +341,7 @@ export interface FrontendTeam {
   side: "away" | "home";
   name: string;
   shortName: string;
+  record: string | null;
   rank: number | null;
   score: number | null;
   logoUrl: string | null;
