@@ -2,7 +2,7 @@ import express from "express";
 import fs from "fs/promises";
 import path from "path";
 import { deriveLivePlayStates, extractLivePlayEvents } from "./pipelines/live-play-feed";
-import { getD1Scores, getD1ScoresFromTeamDirectory, getD1ScoresFromTeamsPayload } from "./scrapers/d1";
+import { getD1Rankings, getD1Scores, getD1ScoresFromTeamDirectory, getD1ScoresFromTeamsPayload } from "./scrapers/d1";
 import {
   getAvailableViewsForSport,
   getFinalGame,
@@ -565,6 +565,7 @@ app.get("/api/scores", async (req, res, next) => {
     const includeLiveMode = parseIncludeLiveMode(req.query.includeLive);
     const statbroadcastOnly = toBoolean(req.query.statbroadcastOnly);
     const view = parseView(req.query.view, "both");
+    const rankingsPromise = view === "raw" ? Promise.resolve(null) : getD1Rankings().catch(() => null);
 
     const payload = await getScoresPayloadForDate(date);
     const games = statbroadcastOnly
@@ -583,7 +584,8 @@ app.get("/api/scores", async (req, res, next) => {
         totalGames: games.length,
         games,
       };
-      const frontend = buildFrontendScoresFeed(date, payload.sourceUpdatedAt, gamesWithLive);
+      const rankings = await rankingsPromise;
+      const frontend = buildFrontendScoresFeed(date, payload.sourceUpdatedAt, gamesWithLive, rankings);
       respondByView(res, view, rawPayload, frontend);
       return;
     }
@@ -622,7 +624,8 @@ app.get("/api/scores", async (req, res, next) => {
       totalGames: enriched.length,
       games: enriched,
     };
-    const frontend = buildFrontendScoresFeed(date, payload.sourceUpdatedAt, gamesWithLive);
+    const rankings = await rankingsPromise;
+    const frontend = buildFrontendScoresFeed(date, payload.sourceUpdatedAt, gamesWithLive, rankings);
     respondByView(res, view, rawPayload, frontend);
   } catch (error) {
     next(error);

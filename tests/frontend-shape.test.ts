@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildFrontendScoresFeed, normalizeLiveSummary } from "../src/normalize";
-import type { D1GameWithLive, StatBroadcastLiveSummary } from "../src/types";
+import type { D1GameWithLive, D1RankingsPayload, StatBroadcastLiveSummary } from "../src/types";
 
 describe("frontend normalization", () => {
   it("builds card and ticker entries", () => {
@@ -137,5 +137,63 @@ describe("frontend normalization", () => {
     expect(logoUrl).toBeTruthy();
     expect(logoUrl).not.toBe(ncaaSvgLogo);
     expect(logoUrl).not.toMatch(/\.svg(?:$|[?#])/i);
+  });
+
+  it("prefers D1 rankings page data for team rank values", () => {
+    const games: D1GameWithLive[] = [
+      {
+        key: "game-3",
+        conferenceIds: ["sec"],
+        conferenceNames: ["SEC"],
+        statusText: "Scheduled",
+        matchupTimeEpoch: 1770973200,
+        matchupTimeIso: "2026-02-13T15:00:00.000Z",
+        inProgress: false,
+        isOver: false,
+        location: "Austin, TX",
+        roadTeam: {
+          id: 1,
+          name: "Texas",
+          rank: null,
+          score: null,
+          logoUrl: null,
+          teamUrl: "https://d1baseball.com/team/texas/",
+          searchTokens: [],
+        },
+        homeTeam: {
+          id: 2,
+          name: "Houston",
+          rank: 18,
+          score: null,
+          logoUrl: null,
+          teamUrl: "https://d1baseball.com/team/houston/",
+          searchTokens: [],
+        },
+        links: [],
+        liveStatsUrl: null,
+        statbroadcastId: null,
+        statbroadcastQuery: {},
+        live: null,
+        liveError: null,
+      },
+    ];
+    const rankings: D1RankingsPayload = {
+      sourceUpdatedAt: "March 9, 2026",
+      teams: [
+        {
+          rank: 2,
+          name: "Texas",
+          slug: "texas",
+          logoUrl: "https://cdn.d1baseball.com/logos/teams/128/texas.png",
+          teamUrl: "https://d1baseball.com/team/texas/",
+        },
+      ],
+    };
+
+    const frontend = buildFrontendScoresFeed("20260213", "2026-02-13T16:42:56.000Z", games, rankings);
+
+    expect(frontend.rankingsUpdatedAt).toBe("March 9, 2026");
+    expect(frontend.cards[0].teams[0].rank).toBe(2);
+    expect(frontend.cards[0].teams[1].rank).toBeNull();
   });
 });

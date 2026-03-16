@@ -37,6 +37,19 @@ export interface D1ScoresPayload {
   games: D1Game[];
 }
 
+export interface D1RankedTeam {
+  rank: number;
+  name: string;
+  slug: string | null;
+  logoUrl: string | null;
+  teamUrl: string | null;
+}
+
+export interface D1RankingsPayload {
+  sourceUpdatedAt: string | null;
+  teams: D1RankedTeam[];
+}
+
 export interface D1ConferenceDirectoryEntry {
   id: number | null;
   name: string;
@@ -364,6 +377,7 @@ export interface FrontendTickerItem {
 export interface FrontendScoresFeed {
   date: string;
   updatedAt: string | null;
+  rankingsUpdatedAt: string | null;
   totalGames: number;
   cards: FrontendGameCard[];
   ticker: FrontendTickerItem[];

@@ -1,5 +1,6 @@
 import {
   type D1GameWithLive,
+  type D1RankingsPayload,
   type FrontendGameCard,
   type FrontendGamePhase,
   type FrontendLiveSummary,
@@ -8,19 +9,22 @@ import {
   type FrontendTickerItem,
   type StatBroadcastLiveSummary,
 } from "./types";
-import { getBrandingLogoUrl } from "./utils/team-branding";
+import { getBrandingLogoUrl, normalizeBrandingTeamName } from "./utils/team-branding";
 
 export function buildFrontendScoresFeed(
   date: string,
   updatedAt: string | null,
-  games: D1GameWithLive[]
+  games: D1GameWithLive[],
+  rankings: D1RankingsPayload | null = null
 ): FrontendScoresFeed {
-  const cards = games.map(normalizeGameCard);
+  const rankLookup = buildRankLookup(rankings);
+  const cards = games.map((game) => normalizeGameCard(game, rankLookup));
   const ticker = cards.map(cardToTickerItem);
 
   return {
     date,
     updatedAt,
+    rankingsUpdatedAt: rankings?.sourceUpdatedAt ?? null,
     totalGames: cards.length,
     cards,
     ticker,
@@ -59,7 +63,10 @@ export function normalizeLiveSummary(live: StatBroadcastLiveSummary): FrontendLi
   };
 }
 
-export function normalizeGameCard(game: D1GameWithLive): FrontendGameCard {
+export function normalizeGameCard(
+  game: D1GameWithLive,
+  rankLookup: RankingLookup | null = null
+): FrontendGameCard {
   const phase = inferPhase({
     isOver: game.isOver || game.live?.event.completed === true,
     inProgress: game.inProgress,
@@ -79,6 +86,7 @@ export function normalizeGameCard(game: D1GameWithLive): FrontendGameCard {
     teamUrl: game.roadTeam.teamUrl,
     otherScore: homeScore,
     phase,
+    rankLookup,
   });
 
   const homeTeam = normalizeTeam({
@@ -90,6 +98,7 @@ export function normalizeGameCard(game: D1GameWithLive): FrontendGameCard {
     teamUrl: game.homeTeam.teamUrl,
     otherScore: awayScore,
     phase,
+    rankLookup,
   });
 
   const displayTime =
@@ -146,12 +155,13 @@ function normalizeTeam(input: {
   teamUrl: string | null;
   otherScore: number | null;
   phase: FrontendGamePhase;
+  rankLookup: RankingLookup | null;
 }): FrontendTeam {
   return {
     side: input.side,
     name: input.name,
     shortName: shortTeamName(input.name),
-    rank: input.rank,
+    rank: resolveTeamRank(input.name, input.teamUrl, input.rank, input.rankLookup),
     score: input.score,
     logoUrl: resolveTeamLogoUrl(input.name, input.logoUrl),
     teamUrl: input.teamUrl,
@@ -184,6 +194,11 @@ function normalizeLiveTeam(input: {
       input.otherScore !== null &&
       input.score > input.otherScore,
   };
+}
+
+interface RankingLookup {
+  byName: Map<string, number>;
+  bySlug: Map<string, number>;
 }
 
 function inferPhase(input: {
@@ -261,6 +276,57 @@ function extractRank(name: string): number | null {
   return Number.parseInt(match[1], 10);
 }
 
+function buildRankLookup(rankings: D1RankingsPayload | null): RankingLookup | null {
+  if (!rankings || rankings.teams.length === 0) {
+    return null;
+  }
+
+  const byName = new Map<string, number>();
+  const bySlug = new Map<string, number>();
+  for (const team of rankings.teams) {
+    const normalizedName = normalizeBrandingTeamName(team.name);
+    if (normalizedName && !byName.has(normalizedName)) {
+      byName.set(normalizedName, team.rank);
+    }
+
+    const slug = cleanTeamSlug(team.teamUrl ?? null) ?? normalizeBrandingTeamName(team.slug);
+    if (slug && !bySlug.has(slug)) {
+      bySlug.set(slug, team.rank);
+    }
+  }
+
+  return { byName, bySlug };
+}
+
+function resolveTeamRank(
+  teamName: string,
+  teamUrl: string | null,
+  sourceRank: number | null,
+  rankLookup: RankingLookup | null
+): number | null {
+  if (!rankLookup) {
+    return sourceRank;
+  }
+
+  const slug = cleanTeamSlug(teamUrl);
+  if (slug) {
+    const bySlug = rankLookup.bySlug.get(slug);
+    if (bySlug !== undefined) {
+      return bySlug;
+    }
+  }
+
+  const normalizedName = normalizeBrandingTeamName(teamName);
+  if (normalizedName) {
+    const byName = rankLookup.byName.get(normalizedName);
+    if (byName !== undefined) {
+      return byName;
+    }
+  }
+
+  return null;
+}
+
 function resolveTeamLogoUrl(teamName: string, sourceLogoUrl: string | null): string | null {
   const brandedLogoUrl = getBrandingLogoUrl(teamName);
   if (!sourceLogoUrl) {
@@ -276,4 +342,23 @@ function resolveTeamLogoUrl(teamName: string, sourceLogoUrl: string | null): str
 
 function isSvgLogoUrl(value: string): boolean {
   return /\.svg(?:$|[?#])/i.test(value);
+}
+
+function cleanTeamSlug(teamUrl: string | null): string | null {
+  if (!teamUrl) {
+    return null;
+  }
+
+  try {
+    const parsed = new URL(teamUrl, "https://d1baseball.com");
+    const segments = parsed.pathname.split("/").filter(Boolean);
+    const teamIndex = segments.indexOf("team");
+    if (teamIndex < 0) {
+      return null;
+    }
+
+    return normalizeBrandingTeamName(segments[teamIndex + 1] ?? "");
+  } catch {
+    return null;
+  }
 }

@@ -11,6 +11,8 @@ import type {
   D1ConferenceDirectoryEntry,
   D1ConferenceMembership,
   D1Game,
+  D1RankedTeam,
+  D1RankingsPayload,
   D1ScheduleOutcome,
   D1ScoresPayload,
   D1TeamDirectoryEntry,
@@ -25,9 +27,11 @@ import type {
 const D1_SCORES_ENDPOINT = "https://d1baseball.com/wp-content/plugins/integritive/dynamic-scores.php";
 const D1_SCORES_PAGE = "https://d1baseball.com/scores/";
 const D1_DYNAMIC_CONTENT_ENDPOINT = "https://d1baseball.com/wp-json/d1/v1/dynamic-content/";
+const D1_RANKINGS_ENDPOINT = "https://d1baseball.com/rankings/";
 const D1_TEAMS_ENDPOINT = "https://d1baseball.com/teams/";
 const CACHE_TTL_MS = 15_000;
 const TEAM_SCHEDULE_CACHE_TTL_MS = 60_000;
+const RANKINGS_CACHE_TTL_MS = 15 * 60_000;
 const TEAM_SCHEDULE_DYNAMIC_KEY = "dynamic-team-schedule";
 const TEAM_SCHEDULE_CALLBACK = "team_schedule";
 const TEAM_SCHEDULE_ARG_KEY = "team_id_643";
@@ -67,6 +71,7 @@ const TEAM_SCHEDULE_DYNAMIC_HEADERS = {
 const TEAMS_HEADERS = { ...BASE_BROWSER_HEADERS, Referer: D1_TEAMS_ENDPOINT };
 
 const cache = new TtlCache<string, D1ScoresPayload>();
+const rankingsCache = new TtlCache<string, D1RankingsPayload>();
 const teamScheduleScoresCache = new TtlCache<string, D1ScoresPayload>();
 const execFileAsync = promisify(execFile);
 
@@ -97,6 +102,19 @@ export async function getD1Scores(date: string): Promise<D1ScoresPayload> {
   const html = await fetchD1ScoreHtml(date);
   const parsed = parseD1ScoreHtml(html, date);
   cache.set(date, parsed, CACHE_TTL_MS);
+  return parsed;
+}
+
+export async function getD1Rankings(): Promise<D1RankingsPayload> {
+  const cacheKey = "current";
+  const cached = rankingsCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const html = await fetchD1Html(D1_RANKINGS_ENDPOINT);
+  const parsed = parseD1RankingsHtml(html);
+  rankingsCache.set(cacheKey, parsed, RANKINGS_CACHE_TTL_MS);
   return parsed;
 }
 
@@ -446,6 +464,54 @@ export function parseD1ScoreHtml(rawHtml: string, date: string): D1ScoresPayload
     date,
     sourceUpdatedAt,
     games,
+  };
+}
+
+export function parseD1RankingsHtml(rawHtml: string): D1RankingsPayload {
+  const decodedHtml = he.decode(rawHtml);
+  const $ = load(decodedHtml);
+  const table = $("table.standings.rankings").first();
+
+  if (table.length === 0) {
+    throw new Error("D1 rankings page did not include a rankings table.");
+  }
+
+  const updatedText = cleanText(table.closest(".avia_codeblock").find(".updated").first().text());
+  const sourceUpdatedAt =
+    cleanText(updatedText.replace(/^Updated\s+/i, "").split("|")[0] ?? "") || null;
+
+  const teams: D1RankedTeam[] = [];
+  table.find("tbody tr").each((_, rowNode) => {
+    const row = $(rowNode);
+    const cells = row.find("td");
+    const rank = parseInteger(cells.first().text());
+    const teamCell = cells.eq(1);
+    const teamLink = teamCell.find("a").first();
+    const name = cleanText(teamLink.text());
+    const teamUrl = toAbsoluteUrl(teamLink.attr("href"), D1_RANKINGS_ENDPOINT);
+    const slug = teamUrl ? extractSlug(teamUrl, "team") : null;
+    const logoUrl = cleanText(teamCell.find("img.team-logo").first().attr("src")) || null;
+
+    if (rank === null || !name) {
+      return;
+    }
+
+    teams.push({
+      rank,
+      name,
+      slug,
+      logoUrl,
+      teamUrl,
+    });
+  });
+
+  if (teams.length === 0) {
+    throw new Error("D1 rankings page did not include ranked teams.");
+  }
+
+  return {
+    sourceUpdatedAt,
+    teams,
   };
 }
 
