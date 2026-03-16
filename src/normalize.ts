@@ -8,6 +8,7 @@ import {
   type FrontendTickerItem,
   type StatBroadcastLiveSummary,
 } from "./types";
+import { getBrandingLogoUrl } from "./utils/team-branding";
 
 export function buildFrontendScoresFeed(
   date: string,
@@ -152,7 +153,7 @@ function normalizeTeam(input: {
     shortName: shortTeamName(input.name),
     rank: input.rank,
     score: input.score,
-    logoUrl: input.logoUrl,
+    logoUrl: resolveTeamLogoUrl(input.name, input.logoUrl),
     teamUrl: input.teamUrl,
     isWinner:
       (input.phase === "live" || input.phase === "final") &&
@@ -175,7 +176,7 @@ function normalizeLiveTeam(input: {
     shortName: shortTeamName(input.name),
     rank: extractRank(input.name),
     score: input.score,
-    logoUrl: null,
+    logoUrl: resolveTeamLogoUrl(input.name, null),
     teamUrl: null,
     isWinner:
       (input.phase === "live" || input.phase === "final") &&
@@ -258,4 +259,21 @@ function extractRank(name: string): number | null {
   }
 
   return Number.parseInt(match[1], 10);
+}
+
+function resolveTeamLogoUrl(teamName: string, sourceLogoUrl: string | null): string | null {
+  const brandedLogoUrl = getBrandingLogoUrl(teamName);
+  if (!sourceLogoUrl) {
+    return brandedLogoUrl;
+  }
+
+  if (isSvgLogoUrl(sourceLogoUrl) && brandedLogoUrl) {
+    return brandedLogoUrl;
+  }
+
+  return sourceLogoUrl;
+}
+
+function isSvgLogoUrl(value: string): boolean {
+  return /\.svg(?:$|[?#])/i.test(value);
 }

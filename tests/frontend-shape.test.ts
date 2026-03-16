@@ -90,4 +90,52 @@ describe("frontend normalization", () => {
     expect(frontendLive.teams[1].isWinner).toBe(true);
     expect(frontendLive.status).toBe("Top 7th");
   });
+
+  it("swaps SVG scoreboard logos for branding logos that iOS can render", () => {
+    const ncaaSvgLogo = "https://www.ncaa.com/sites/default/files/images/logos/schools/bgl/alabama.svg";
+    const games: D1GameWithLive[] = [
+      {
+        key: "game-2",
+        conferenceIds: ["sec"],
+        conferenceNames: ["SEC"],
+        statusText: "Scheduled",
+        matchupTimeEpoch: 1770973200,
+        matchupTimeIso: "2026-02-13T15:00:00.000Z",
+        inProgress: false,
+        isOver: false,
+        location: "Tuscaloosa, AL",
+        roadTeam: {
+          id: 1,
+          name: "Alabama",
+          rank: null,
+          score: null,
+          logoUrl: ncaaSvgLogo,
+          teamUrl: null,
+          searchTokens: [],
+        },
+        homeTeam: {
+          id: 2,
+          name: "Auburn",
+          rank: null,
+          score: null,
+          logoUrl: null,
+          teamUrl: null,
+          searchTokens: [],
+        },
+        links: [],
+        liveStatsUrl: null,
+        statbroadcastId: null,
+        statbroadcastQuery: {},
+        live: null,
+        liveError: null,
+      },
+    ];
+
+    const frontend = buildFrontendScoresFeed("20260213", "2026-02-13T16:42:56.000Z", games);
+    const logoUrl = frontend.cards[0].teams[0].logoUrl;
+
+    expect(logoUrl).toBeTruthy();
+    expect(logoUrl).not.toBe(ncaaSvgLogo);
+    expect(logoUrl).not.toMatch(/\.svg(?:$|[?#])/i);
+  });
 });
