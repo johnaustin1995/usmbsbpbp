@@ -147,4 +147,78 @@ describe("parseD1TeamScheduleScoresHtml", () => {
     expect(games[0].statusText).toBe("Final");
     expect(games[0].conferenceNames).toEqual(["SEC"]);
   });
+
+  it("keeps scheduled tiles upcoming and uses the first-pitch time as the status label", () => {
+    const airForce: D1TeamSeasonData = {
+      id: 144356,
+      name: "Air Force",
+      slug: "airforce",
+      season: "2026",
+      conference: {
+        id: 18,
+        name: "Mountain West",
+        slug: "mountain-west",
+        url: "https://d1baseball.com/conference/mountain-west/",
+      },
+      logoUrl: "https://cdn.example.com/airforce.svg",
+      teamUrl: "https://d1baseball.com/team/airforce/",
+      scheduleUrl: "https://d1baseball.com/team/airforce/schedule/",
+      statsUrl: "https://d1baseball.com/team/airforce/stats/",
+      schedule: [],
+      statsTables: [],
+      errors: [],
+    };
+
+    const stThomas: D1TeamSeasonData = {
+      id: 145901,
+      name: "St. Thomas (MN)",
+      slug: "stthomas",
+      season: "2026",
+      conference: {
+        id: 31,
+        name: "Summit League",
+        slug: "summit",
+        url: "https://d1baseball.com/conference/summit/",
+      },
+      logoUrl: "https://cdn.example.com/stthomas.svg",
+      teamUrl: "https://d1baseball.com/team/stthomas/",
+      scheduleUrl: "https://d1baseball.com/team/stthomas/schedule/",
+      statsUrl: "https://d1baseball.com/team/stthomas/stats/",
+      schedule: [],
+      statsTables: [],
+      errors: [],
+    };
+
+    const html = `
+      <div
+        class="d1-score-tile d1-team-schedule-tile in-progress"
+        data-home-name="Air Force"
+        data-road-name="St. Thomas"
+      >
+        <div class="box-score-header scoresclear">
+          <h5></h5>
+          <div class="box-score-links">
+            <a target="_blank" href="https://stats.statbroadcast.com/broadcast/?id=629647">Box Score</a>
+          </div>
+        </div>
+        <div class="team team-1" data-search="st. thomas" data-team-id="145901">
+          <h5 class="team-location">vs</h5>
+          <a class="team-title" href="https://d1baseball.com/team/stthomas/schedule/"><h5>St. Thomas</h5></a>
+          <h5 class="team-score"><a href="/scores/?date=20260316">Monday, Mar 16<br>@ 3:00 PM</a></h5>
+        </div>
+        <div class="box-score-footer scoresclear">
+          <p>USAF Academy, CO</p>
+        </div>
+      </div>
+    `;
+
+    const games = parseD1TeamScheduleScoresHtml(html, airForce, "20260316", [airForce, stThomas]);
+
+    expect(games).toHaveLength(1);
+    expect(games[0].statusText).toBe("3:00 PM");
+    expect(games[0].inProgress).toBe(false);
+    expect(games[0].isOver).toBe(false);
+    expect(games[0].roadTeam.name).toBe("St. Thomas");
+    expect(games[0].homeTeam.name).toBe("Air Force");
+  });
 });

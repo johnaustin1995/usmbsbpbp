@@ -608,6 +608,8 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const derivedScore = deriveTileScores(currentSide, result);
     const liveStatsLink = extractTeamScheduleLiveStatsUrl(tile);
     const timeLabel = cleanText(tile.find(".team-score a").first().text());
+    const rawStatusText = cleanText(tile.find(".box-score-header h5").first().text());
+    const scheduledTimeText = extractScheduledTimeLabel(timeLabel);
     const currentTeamRecord = computeOverallRecordBeforeDate(team.schedule, date);
 
     const key =
@@ -641,7 +643,7 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
 
     const statusText = derivedScore.isOver
       ? "Final"
-      : cleanText(tile.find(".box-score-header h5").first().text()) || "Scheduled";
+      : normalizeScheduleTileStatus(rawStatusText, scheduledTimeText);
 
     games.push({
       key,
@@ -650,7 +652,7 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
       statusText,
       matchupTimeEpoch: null,
       matchupTimeIso: null,
-      inProgress: !derivedScore.isOver && liveStatsLink?.id !== null && date === currentEasternDate(),
+      inProgress: !derivedScore.isOver && isScheduleTileLive(rawStatusText),
       isOver: derivedScore.isOver,
       location: cleanText(tile.find(".box-score-footer p").first().text()) || null,
       roadTeam,
@@ -890,6 +892,39 @@ function deriveTileScores(
     roadScore: score.outcome === "W" ? score.currentScore : score.opponentScore,
     isOver: true,
   };
+}
+
+function normalizeScheduleTileStatus(
+  rawStatusText: string,
+  scheduledTimeText: string | null
+): string {
+  if (rawStatusText.length === 0) {
+    return scheduledTimeText ?? "Scheduled";
+  }
+
+  if (/^(scheduled|pregame)$/i.test(rawStatusText) && scheduledTimeText) {
+    return scheduledTimeText;
+  }
+
+  return rawStatusText;
+}
+
+function isScheduleTileLive(rawStatusText: string): boolean {
+  return /(top|bot|bottom|mid|middle|end)\s*\d|live/i.test(rawStatusText);
+}
+
+function extractScheduledTimeLabel(value: string): string | null {
+  const clean = cleanText(value).replace(/\s+/g, " ");
+  if (!clean) {
+    return null;
+  }
+
+  const match = clean.match(/@\s*([0-9]{1,2}:[0-9]{2}\s*[AP]M)$/i);
+  if (!match) {
+    return null;
+  }
+
+  return match[1].replace(/\s+/g, " ").toUpperCase();
 }
 
 function computeOverallRecordBeforeDate(
