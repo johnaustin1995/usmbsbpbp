@@ -1,7 +1,9 @@
 import axios from "axios";
+import { execFile } from "child_process";
 import { load } from "cheerio";
 import type { Element } from "domhandler";
 import he from "he";
+import { promisify } from "util";
 import { runWithConcurrency } from "../utils/async";
 import { TtlCache } from "../utils/cache";
 import { cleanText, parseInteger } from "../utils/text";
@@ -21,23 +23,69 @@ import type {
 } from "../types";
 
 const D1_SCORES_ENDPOINT = "https://d1baseball.com/wp-content/plugins/integritive/dynamic-scores.php";
+const D1_SCORES_PAGE = "https://d1baseball.com/scores/";
+const D1_DYNAMIC_CONTENT_ENDPOINT = "https://d1baseball.com/wp-json/d1/v1/dynamic-content/";
 const D1_TEAMS_ENDPOINT = "https://d1baseball.com/teams/";
 const CACHE_TTL_MS = 15_000;
+const TEAM_SCHEDULE_CACHE_TTL_MS = 60_000;
+const TEAM_SCHEDULE_DYNAMIC_KEY = "dynamic-team-schedule";
+const TEAM_SCHEDULE_CALLBACK = "team_schedule";
+const TEAM_SCHEDULE_ARG_KEY = "team_id_643";
 
 const BASE_BROWSER_HEADERS = {
   Origin: "https://d1baseball.com",
   "User-Agent":
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
 };
-const SCORES_HEADERS = { ...BASE_BROWSER_HEADERS, Referer: "https://d1baseball.com/scores/" };
+const SCORES_HEADERS = {
+  ...BASE_BROWSER_HEADERS,
+  Accept: "application/json, text/javascript, */*; q=0.01",
+  "Accept-Language": "en-US,en;q=0.9",
+  Referer: D1_SCORES_PAGE,
+  "Sec-Fetch-Dest": "empty",
+  "Sec-Fetch-Mode": "cors",
+  "Sec-Fetch-Site": "same-origin",
+  "X-Requested-With": "XMLHttpRequest",
+};
+const SCORES_PAGE_HEADERS = {
+  ...BASE_BROWSER_HEADERS,
+  Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+  "Accept-Language": "en-US,en;q=0.9",
+  Referer: D1_SCORES_PAGE,
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Site": "same-origin",
+  "Sec-Fetch-User": "?1",
+  "Upgrade-Insecure-Requests": "1",
+};
+const TEAM_SCHEDULE_DYNAMIC_HEADERS = {
+  ...BASE_BROWSER_HEADERS,
+  Accept: "application/json, text/plain, */*",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Content-Type": "application/json",
+};
 const TEAMS_HEADERS = { ...BASE_BROWSER_HEADERS, Referer: D1_TEAMS_ENDPOINT };
 
 const cache = new TtlCache<string, D1ScoresPayload>();
+const teamScheduleScoresCache = new TtlCache<string, D1ScoresPayload>();
+const execFileAsync = promisify(execFile);
 
 interface D1RawResponse {
   content?: {
     "d1-scores"?: string;
   };
+}
+
+interface D1TeamLookup {
+  byId: Map<number, D1TeamSeasonData>;
+  bySlug: Map<string, D1TeamSeasonData>;
+  byName: Map<string, D1TeamSeasonData>;
+}
+
+interface ScheduleTileScore {
+  outcome: "W" | "L";
+  currentScore: number;
+  opponentScore: number;
 }
 
 export async function getD1Scores(date: string): Promise<D1ScoresPayload> {
@@ -46,30 +94,258 @@ export async function getD1Scores(date: string): Promise<D1ScoresPayload> {
     return cached;
   }
 
-  const response = await axios.get<D1RawResponse>(D1_SCORES_ENDPOINT, {
-    params: { date, v: d1CacheBustMinute() },
-    headers: SCORES_HEADERS,
-    timeout: 20_000,
-    responseType: "json",
-    validateStatus: (status) => status >= 200 && status < 500,
-  });
-
-  if (response.status >= 400) {
-    throw new Error(`D1 request failed (${response.status})`);
-  }
-
-  const html = response.data?.content?.["d1-scores"];
-  if (!html) {
-    throw new Error("D1 response did not include score HTML.");
-  }
-
+  const html = await fetchD1ScoreHtml(date);
   const parsed = parseD1ScoreHtml(html, date);
   cache.set(date, parsed, CACHE_TTL_MS);
   return parsed;
 }
 
+export async function getD1ScoresFromTeamsPayload(
+  teamsPayload: D1TeamsDatabasePayload,
+  date: string
+): Promise<D1ScoresPayload> {
+  const cacheKey = `${teamsPayload.fetchedAt}:${date}`;
+  const cached = teamScheduleScoresCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const candidateTeams = teamsPayload.teams.filter((team) => team.id !== null && hasGameOnDate(team, date));
+  return buildScoresFromScheduleTeams(candidateTeams, date, cacheKey);
+}
+
+export async function getD1ScoresFromTeamDirectory(date: string): Promise<D1ScoresPayload> {
+  const cacheKey = `directory:${date}`;
+  const cached = teamScheduleScoresCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const indexHtml = await fetchD1Html(D1_TEAMS_ENDPOINT);
+  const directory = parseD1TeamsDirectoryHtml(indexHtml);
+  const season = /^\d{8}$/.test(date) ? date.slice(0, 4) : directory.season;
+  const teams = directory.teams.map((entry) => toScheduleLookupTeam(entry, season));
+  return buildScoresFromScheduleTeams(teams, date, cacheKey);
+}
+
 function d1CacheBustMinute(): number {
   return Math.floor(Date.now() / 60_000) * 60;
+}
+
+async function fetchD1ScoreHtml(date: string): Promise<string> {
+  const cacheBustMinute = d1CacheBustMinute();
+  let lastError: unknown = null;
+
+  try {
+    return await fetchD1ScoreHtmlWithAxios(date, cacheBustMinute);
+  } catch (error) {
+    lastError = error;
+  }
+
+  try {
+    await warmD1ScoresPage(date);
+    return await fetchD1ScoreHtmlWithAxios(date, cacheBustMinute);
+  } catch (error) {
+    lastError = error;
+  }
+
+  try {
+    return await fetchD1ScoreHtmlWithCurl(date, cacheBustMinute);
+  } catch (error) {
+    if (!(error instanceof Error && error.message === "curl is not installed.") || lastError === null) {
+      lastError = error;
+    }
+  }
+
+  throw lastError instanceof Error ? lastError : new Error("Failed to load D1 scores.");
+}
+
+async function fetchD1ScoreHtmlWithAxios(date: string, cacheBustMinute: number): Promise<string> {
+  const response = await axios.get<string>(D1_SCORES_ENDPOINT, {
+    params: { date, v: cacheBustMinute },
+    headers: buildScoresHeaders(date),
+    timeout: 20_000,
+    responseType: "text",
+    transformResponse: [(value) => value],
+    validateStatus: (status) => status >= 200 && status < 500,
+  });
+
+  return extractScoreHtmlFromResponse(response.status, String(response.data ?? ""));
+}
+
+async function fetchD1ScoreHtmlWithCurl(date: string, cacheBustMinute: number): Promise<string> {
+  const url = new URL(D1_SCORES_ENDPOINT);
+  url.searchParams.set("date", date);
+  url.searchParams.set("v", String(cacheBustMinute));
+
+  const statusMarker = "__CURL_HTTP_STATUS__:";
+  const args = [
+    "--silent",
+    "--show-error",
+    "--location",
+    "--max-time",
+    "20",
+    "--write-out",
+    `\n${statusMarker}%{http_code}`,
+    "--output",
+    "-",
+  ];
+
+  for (const [name, value] of Object.entries(buildScoresHeaders(date))) {
+    args.push("--header", `${name}: ${value}`);
+  }
+  args.push(url.toString());
+
+  let stdout = "";
+  try {
+    const result = await execFileAsync("curl", args, {
+      maxBuffer: 10 * 1024 * 1024,
+      timeout: 25_000,
+    });
+    stdout = result.stdout;
+  } catch (error) {
+    if (
+      error &&
+      typeof error === "object" &&
+      "code" in error &&
+      (error as { code?: string }).code === "ENOENT"
+    ) {
+      throw new Error("curl is not installed.");
+    }
+
+    const fallbackStdout =
+      error && typeof error === "object" && "stdout" in error
+        ? String((error as { stdout?: string }).stdout ?? "")
+        : "";
+    if (!fallbackStdout) {
+      throw new Error(`curl fallback failed: ${errorToMessage(error)}`);
+    }
+    stdout = fallbackStdout;
+  }
+
+  const markerIndex = stdout.lastIndexOf(statusMarker);
+  if (markerIndex < 0) {
+    throw new Error("curl fallback returned an invalid response.");
+  }
+
+  const body = stdout.slice(0, markerIndex);
+  const statusText = stdout.slice(markerIndex + statusMarker.length).trim();
+  const status = Number.parseInt(statusText, 10);
+  if (!Number.isFinite(status)) {
+    throw new Error("curl fallback returned an invalid status.");
+  }
+
+  return extractScoreHtmlFromResponse(status, body);
+}
+
+async function warmD1ScoresPage(date: string): Promise<void> {
+  await axios.get<string>(D1_SCORES_PAGE, {
+    params: { date },
+    headers: buildScoresPageHeaders(date),
+    timeout: 20_000,
+    responseType: "text",
+    transformResponse: [(value) => value],
+    validateStatus: (status) => status >= 200 && status < 500,
+  });
+}
+
+async function buildScoresFromScheduleTeams(
+  teams: D1TeamSeasonData[],
+  date: string,
+  cacheKey: string
+): Promise<D1ScoresPayload> {
+  const lookup = buildTeamLookup(teams);
+
+  const parsedByTeam = await runWithConcurrency(teams, 10, async (team) => {
+    try {
+      const html = await fetchDynamicTeamScheduleHtml(team);
+      return parseD1TeamScheduleScoresHtmlWithLookup(html, team, date, lookup);
+    } catch {
+      return [] as D1Game[];
+    }
+  });
+
+  const byKey = new Map<string, D1Game>();
+  for (const games of parsedByTeam) {
+    for (const game of games) {
+      const existing = byKey.get(game.key);
+      if (!existing) {
+        byKey.set(game.key, game);
+        continue;
+      }
+
+      mergeScheduleDerivedGame(existing, game);
+    }
+  }
+
+  const payload: D1ScoresPayload = {
+    date,
+    sourceUpdatedAt: new Date().toISOString(),
+    games: Array.from(byKey.values()).sort(compareScheduleDerivedGames),
+  };
+  teamScheduleScoresCache.set(cacheKey, payload, TEAM_SCHEDULE_CACHE_TTL_MS);
+  return payload;
+}
+
+function buildScoresHeaders(date: string): Record<string, string> {
+  return {
+    ...SCORES_HEADERS,
+    Referer: `${D1_SCORES_PAGE}?date=${date}`,
+  };
+}
+
+function buildScoresPageHeaders(date: string): Record<string, string> {
+  return {
+    ...SCORES_PAGE_HEADERS,
+    Referer: `${D1_SCORES_PAGE}?date=${date}`,
+  };
+}
+
+function extractScoreHtmlFromResponse(status: number, rawBody: string): string {
+  if (status >= 400) {
+    if (isCloudflareChallenge(rawBody)) {
+      throw new Error(`D1 request blocked by Cloudflare (${status})`);
+    }
+    throw new Error(`D1 request failed (${status})`);
+  }
+
+  const parsed = parseD1ScoresResponseBody(rawBody);
+  const html = parsed.content?.["d1-scores"];
+  if (!html) {
+    throw new Error("D1 response did not include score HTML.");
+  }
+
+  return html;
+}
+
+function parseD1ScoresResponseBody(rawBody: string): D1RawResponse {
+  const body = rawBody.trim();
+  if (!body) {
+    throw new Error("D1 returned an empty response.");
+  }
+
+  if (isCloudflareChallenge(body)) {
+    throw new Error("D1 request blocked by Cloudflare.");
+  }
+
+  try {
+    const parsed = JSON.parse(body) as D1RawResponse;
+    if (!parsed || typeof parsed !== "object") {
+      throw new Error("D1 returned an invalid JSON response.");
+    }
+    return parsed;
+  } catch (error) {
+    if (error instanceof Error && /Cloudflare|invalid JSON/i.test(error.message)) {
+      throw error;
+    }
+    throw new Error("D1 returned a non-JSON response.");
+  }
+}
+
+function isCloudflareChallenge(body: string): boolean {
+  return /cf-mitigated|challenge-platform|Just a moment|Enable JavaScript and cookies to continue/i.test(
+    body
+  );
 }
 
 export function parseD1ScoreHtml(rawHtml: string, date: string): D1ScoresPayload {
@@ -87,7 +363,8 @@ export function parseD1ScoreHtml(rawHtml: string, date: string): D1ScoresPayload
 
     section.find(".d1-score-tile").each((__, tileNode) => {
       const tile = $(tileNode);
-      const key = cleanText(tile.attr("data-key")) || `${conferenceId}-${__}`;
+      const rawKey = cleanText(tile.attr("data-key"));
+      const key = rawKey || `${conferenceId}-${__}`;
 
       const statusText = cleanText(tile.find(".status-wrapper h5").first().text());
       const matchupTimeEpoch = parseInteger(tile.attr("data-matchup-time"));
@@ -112,6 +389,15 @@ export function parseD1ScoreHtml(rawHtml: string, date: string): D1ScoresPayload
       const teams = tile.find(".team").toArray();
       const roadTeam = parseTeam($, teams[0]);
       const homeTeam = parseTeam($, teams[1]);
+      const hasScoreData =
+        rawKey.length > 0 ||
+        statusText.length > 0 ||
+        links.length > 0 ||
+        roadTeam.name.length > 0 ||
+        homeTeam.name.length > 0;
+      if (!hasScoreData) {
+        return;
+      }
 
       const game: D1Game = {
         key,
@@ -161,6 +447,484 @@ export function parseD1ScoreHtml(rawHtml: string, date: string): D1ScoresPayload
     sourceUpdatedAt,
     games,
   };
+}
+
+export function parseD1TeamScheduleScoresHtml(
+  rawHtml: string,
+  team: D1TeamSeasonData,
+  date: string,
+  allTeams: D1TeamSeasonData[] = [team]
+): D1Game[] {
+  const lookup = buildTeamLookup(allTeams);
+  return parseD1TeamScheduleScoresHtmlWithLookup(rawHtml, team, date, lookup);
+}
+
+function parseD1TeamScheduleScoresHtmlWithLookup(
+  rawHtml: string,
+  team: D1TeamSeasonData,
+  date: string,
+  lookup: D1TeamLookup
+): D1Game[] {
+  const decodedHtml = he.decode(rawHtml);
+  const $ = load(decodedHtml);
+  const games: D1Game[] = [];
+
+  $(".d1-team-schedule-tile").each((index, tileNode) => {
+    const tile = $(tileNode);
+    const dateHref = cleanText(tile.find(".team-score a").first().attr("href"));
+    if (extractDateFromScoresHref(dateHref) !== date) {
+      return;
+    }
+
+    const homeName = decodeScheduleName(tile.attr("data-home-name"));
+    const roadName = decodeScheduleName(tile.attr("data-road-name"));
+    if (!homeName || !roadName) {
+      return;
+    }
+
+    const currentSide = resolveCurrentTeamSide(team, homeName, roadName);
+    if (!currentSide) {
+      return;
+    }
+
+    const opponentNode = tile.find(".team").first().get(0);
+    const opponentParsed = parseTeam($, opponentNode);
+    const opponentName = currentSide === "home" ? roadName : homeName;
+    const opponent = findOpponentTeam(lookup, opponentParsed, opponentName);
+    const result = parseScheduleTileScore(tile.find(".box-score-header h5").first().text());
+    const derivedScore = deriveTileScores(currentSide, result);
+    const liveStatsLink = extractTeamScheduleLiveStatsUrl(tile);
+    const timeLabel = cleanText(tile.find(".team-score a").first().text());
+
+    const key =
+      cleanText(tile.attr("data-matchup")).length > 0
+        ? `schedule-${cleanText(tile.attr("data-matchup"))}`
+        : `${date}:${normalizeTeamKey(roadName)}:${normalizeTeamKey(homeName)}:${normalizeTeamKey(
+            timeLabel || cleanText(tile.find(".box-score-footer p").first().text()) || String(index)
+          )}`;
+
+    const homeTeam = currentSide === "home"
+      ? buildCurrentTeamSnapshot(team, homeName, derivedScore.homeScore)
+      : buildOpponentTeamSnapshot(opponentParsed, opponent, homeName, derivedScore.homeScore);
+    const roadTeam = currentSide === "road"
+      ? buildCurrentTeamSnapshot(team, roadName, derivedScore.roadScore)
+      : buildOpponentTeamSnapshot(opponentParsed, opponent, roadName, derivedScore.roadScore);
+
+    const conferenceIds = uniqueStrings([
+      team.conference?.slug ?? null,
+      team.conference?.id !== null && team.conference?.id !== undefined
+        ? String(team.conference.id)
+        : null,
+      opponent?.conference?.slug ?? null,
+      opponent?.conference?.id !== null && opponent?.conference?.id !== undefined
+        ? String(opponent.conference.id)
+        : null,
+    ]);
+    const conferenceNames = uniqueStrings([
+      team.conference?.name ?? null,
+      opponent?.conference?.name ?? null,
+    ]);
+
+    const statusText = derivedScore.isOver
+      ? "Final"
+      : cleanText(tile.find(".box-score-header h5").first().text()) || "Scheduled";
+
+    games.push({
+      key,
+      conferenceIds,
+      conferenceNames,
+      statusText,
+      matchupTimeEpoch: null,
+      matchupTimeIso: null,
+      inProgress: !derivedScore.isOver && liveStatsLink?.id !== null && date === currentEasternDate(),
+      isOver: derivedScore.isOver,
+      location: cleanText(tile.find(".box-score-footer p").first().text()) || null,
+      roadTeam,
+      homeTeam,
+      links: tile
+        .find(".box-score-links a")
+        .map((linkIndex, linkNode) => {
+          const link = $(linkNode);
+          return {
+            label: cleanText(link.text()) || `Link ${linkIndex + 1}`,
+            url: cleanText(link.attr("href")),
+          };
+        })
+        .get()
+        .filter((entry) => entry.url.length > 0),
+      liveStatsUrl: liveStatsLink?.url ?? null,
+      statbroadcastId: liveStatsLink?.id ?? null,
+      statbroadcastQuery: liveStatsLink?.query ?? {},
+    });
+  });
+
+  return games;
+}
+
+async function fetchDynamicTeamScheduleHtml(team: D1TeamSeasonData): Promise<string> {
+  if (team.id === null || team.id === undefined) {
+    throw new Error(`Missing D1 team id for ${team.name}.`);
+  }
+
+  const response = await axios.post<{ content?: Record<string, string> }>(
+    D1_DYNAMIC_CONTENT_ENDPOINT,
+    {
+      [TEAM_SCHEDULE_DYNAMIC_KEY]: {
+        callback: TEAM_SCHEDULE_CALLBACK,
+        args: {
+          [TEAM_SCHEDULE_ARG_KEY]: String(team.id),
+        },
+      },
+    },
+    {
+      timeout: 20_000,
+      headers: {
+        ...TEAM_SCHEDULE_DYNAMIC_HEADERS,
+        Referer: team.teamUrl || `${D1_TEAMS_ENDPOINT}team/${team.slug ?? ""}/`,
+      },
+      validateStatus: (status) => status >= 200 && status < 500,
+    }
+  );
+
+  if (response.status >= 400) {
+    throw new Error(`D1 dynamic team schedule request failed (${response.status})`);
+  }
+
+  const html = cleanText(response.data?.content?.[TEAM_SCHEDULE_DYNAMIC_KEY] ?? "");
+  if (!html) {
+    throw new Error(`D1 dynamic team schedule did not include HTML for ${team.name}.`);
+  }
+
+  return html;
+}
+
+function buildTeamLookup(teams: D1TeamSeasonData[]): D1TeamLookup {
+  const byId = new Map<number, D1TeamSeasonData>();
+  const bySlug = new Map<string, D1TeamSeasonData>();
+  const byName = new Map<string, D1TeamSeasonData>();
+
+  for (const team of teams) {
+    if (team.id !== null && team.id !== undefined) {
+      byId.set(team.id, team);
+    }
+
+    const slug = cleanText(team.slug ?? "").toLowerCase();
+    if (slug) {
+      bySlug.set(slug, team);
+    }
+
+    const normalizedName = normalizeTeamKey(team.name);
+    if (normalizedName) {
+      byName.set(normalizedName, team);
+    }
+  }
+
+  return { byId, bySlug, byName };
+}
+
+function toScheduleLookupTeam(
+  entry: D1TeamDirectoryEntry,
+  season: string | null
+): D1TeamSeasonData {
+  const teamUrl = season ? toSeasonUrl(entry.baseUrl, season) : entry.url;
+  return {
+    id: entry.id,
+    name: entry.name,
+    slug: entry.slug,
+    season,
+    conference: null,
+    logoUrl: null,
+    teamUrl,
+    scheduleUrl: toAbsoluteUrl("schedule/", teamUrl) ?? `${teamUrl}schedule/`,
+    statsUrl: toAbsoluteUrl("stats/", teamUrl) ?? `${teamUrl}stats/`,
+    schedule: [],
+    statsTables: [],
+    errors: [],
+  };
+}
+
+function hasGameOnDate(team: D1TeamSeasonData, date: string): boolean {
+  return team.schedule.some((game) => extractDateFromScoresHref(game.dateUrl) === date);
+}
+
+function resolveCurrentTeamSide(
+  team: D1TeamSeasonData,
+  homeName: string,
+  roadName: string
+): "home" | "road" | null {
+  const teamName = normalizeTeamKey(team.name);
+  if (teamName === normalizeTeamKey(homeName)) {
+    return "home";
+  }
+
+  if (teamName === normalizeTeamKey(roadName)) {
+    return "road";
+  }
+
+  const teamSlug = cleanText(team.slug ?? "").toLowerCase();
+  if (teamSlug) {
+    if (teamSlug === normalizeTeamKey(homeName).replace(/\s+/g, "")) {
+      return "home";
+    }
+    if (teamSlug === normalizeTeamKey(roadName).replace(/\s+/g, "")) {
+      return "road";
+    }
+  }
+
+  return null;
+}
+
+function decodeScheduleName(value: string | undefined): string {
+  const decoded = he.decode(value ?? "")
+    .replace(/&#;/g, "&")
+    .replace(/\s+/g, " ");
+  return cleanText(decoded);
+}
+
+function normalizeTeamKey(value: string): string {
+  return cleanText(he.decode(value))
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^\w\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseScheduleTileScore(value: string): ScheduleTileScore | null {
+  const clean = cleanText(value).replace(/\s+/g, " ");
+  const match = clean.match(/^([WL])\s*(\d+)\s*-\s*(\d+)$/i);
+  if (!match) {
+    return null;
+  }
+
+  return {
+    outcome: match[1].toUpperCase() as "W" | "L",
+    currentScore: Number.parseInt(match[2], 10),
+    opponentScore: Number.parseInt(match[3], 10),
+  };
+}
+
+function deriveTileScores(
+  currentSide: "home" | "road",
+  score: ScheduleTileScore | null
+): { homeScore: number | null; roadScore: number | null; isOver: boolean } {
+  if (!score) {
+    return {
+      homeScore: null,
+      roadScore: null,
+      isOver: false,
+    };
+  }
+
+  if (currentSide === "home") {
+    return {
+      homeScore: score.outcome === "W" ? score.currentScore : score.opponentScore,
+      roadScore: score.outcome === "W" ? score.opponentScore : score.currentScore,
+      isOver: true,
+    };
+  }
+
+  return {
+    homeScore: score.outcome === "W" ? score.opponentScore : score.currentScore,
+    roadScore: score.outcome === "W" ? score.currentScore : score.opponentScore,
+    isOver: true,
+  };
+}
+
+function buildCurrentTeamSnapshot(
+  team: D1TeamSeasonData,
+  name: string,
+  score: number | null
+): TeamSnapshot {
+  return {
+    id: team.id,
+    name,
+    rank: null,
+    score,
+    logoUrl: team.logoUrl ?? null,
+    teamUrl: team.teamUrl,
+    searchTokens: tokenizeTeamName(name),
+  };
+}
+
+function buildOpponentTeamSnapshot(
+  partial: TeamSnapshot,
+  team: D1TeamSeasonData | null,
+  name: string,
+  score: number | null
+): TeamSnapshot {
+  return {
+    id: team?.id ?? partial.id,
+    name,
+    rank: partial.rank,
+    score,
+    logoUrl: partial.logoUrl ?? team?.logoUrl ?? null,
+    teamUrl: partial.teamUrl ?? team?.teamUrl ?? null,
+    searchTokens: tokenizeTeamName(name),
+  };
+}
+
+function tokenizeTeamName(name: string): string[] {
+  return normalizeTeamKey(name)
+    .split(" ")
+    .filter((token) => token.length > 0);
+}
+
+function findOpponentTeam(
+  lookup: D1TeamLookup,
+  partial: TeamSnapshot,
+  fallbackName: string
+): D1TeamSeasonData | null {
+  if (partial.id !== null && partial.id !== undefined) {
+    const byId = lookup.byId.get(partial.id);
+    if (byId) {
+      return byId;
+    }
+  }
+
+  const slugFromUrl = extractSlug(partial.teamUrl ?? "", "team");
+  if (slugFromUrl) {
+    const bySlug = lookup.bySlug.get(slugFromUrl);
+    if (bySlug) {
+      return bySlug;
+    }
+  }
+
+  const normalizedPartial = normalizeTeamKey(partial.name || fallbackName);
+  return lookup.byName.get(normalizedPartial) ?? null;
+}
+
+function extractTeamScheduleLiveStatsUrl(tile: any): {
+  url: string;
+  id: number;
+  query: Record<string, string>;
+} | null {
+  const links = tile.find(".box-score-links a").toArray() as Element[];
+  for (const linkNode of links) {
+    const href = cleanText(linkNode.attribs?.href);
+    const statbroadcast = extractStatBroadcastInfo(href || null);
+    if (href && statbroadcast) {
+      return {
+        url: href,
+        id: statbroadcast.id,
+        query: statbroadcast.query,
+      };
+    }
+  }
+
+  return null;
+}
+
+function extractDateFromScoresHref(href: string | null | undefined): string | null {
+  const value = cleanText(href ?? "");
+  if (!value) {
+    return null;
+  }
+
+  try {
+    const parsed = new URL(value, D1_SCORES_PAGE);
+    const date = cleanText(parsed.searchParams.get("date"));
+    return /^\d{8}$/.test(date) ? date : null;
+  } catch {
+    return null;
+  }
+}
+
+function currentEasternDate(): string {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+
+  const year = parts.find((part) => part.type === "year")?.value ?? "";
+  const month = parts.find((part) => part.type === "month")?.value ?? "";
+  const day = parts.find((part) => part.type === "day")?.value ?? "";
+  return `${year}${month}${day}`;
+}
+
+function mergeScheduleDerivedGame(target: D1Game, source: D1Game): void {
+  for (const conferenceId of source.conferenceIds) {
+    if (!target.conferenceIds.includes(conferenceId)) {
+      target.conferenceIds.push(conferenceId);
+    }
+  }
+
+  for (const conferenceName of source.conferenceNames) {
+    if (!target.conferenceNames.includes(conferenceName)) {
+      target.conferenceNames.push(conferenceName);
+    }
+  }
+
+  if (!target.location && source.location) {
+    target.location = source.location;
+  }
+  if (!target.liveStatsUrl && source.liveStatsUrl) {
+    target.liveStatsUrl = source.liveStatsUrl;
+  }
+  if (target.statbroadcastId === null && source.statbroadcastId !== null) {
+    target.statbroadcastId = source.statbroadcastId;
+    target.statbroadcastQuery = source.statbroadcastQuery;
+  }
+  if (target.roadTeam.score === null && source.roadTeam.score !== null) {
+    target.roadTeam.score = source.roadTeam.score;
+  }
+  if (target.homeTeam.score === null && source.homeTeam.score !== null) {
+    target.homeTeam.score = source.homeTeam.score;
+  }
+  if (target.roadTeam.logoUrl === null && source.roadTeam.logoUrl !== null) {
+    target.roadTeam.logoUrl = source.roadTeam.logoUrl;
+  }
+  if (target.homeTeam.logoUrl === null && source.homeTeam.logoUrl !== null) {
+    target.homeTeam.logoUrl = source.homeTeam.logoUrl;
+  }
+  if (!target.isOver && source.isOver) {
+    target.isOver = true;
+    target.inProgress = false;
+    target.statusText = source.statusText;
+  }
+  if (!target.inProgress && source.inProgress) {
+    target.inProgress = true;
+  }
+
+  const existingLinks = new Set(target.links.map((entry) => `${entry.label}|${entry.url}`));
+  for (const link of source.links) {
+    const key = `${link.label}|${link.url}`;
+    if (!existingLinks.has(key)) {
+      target.links.push(link);
+      existingLinks.add(key);
+    }
+  }
+}
+
+function compareScheduleDerivedGames(a: D1Game, b: D1Game): number {
+  const phaseRank = (game: D1Game): number => {
+    if (game.inProgress) {
+      return 0;
+    }
+    if (game.isOver) {
+      return 2;
+    }
+    return 1;
+  };
+
+  const rankDiff = phaseRank(a) - phaseRank(b);
+  if (rankDiff !== 0) {
+    return rankDiff;
+  }
+
+  return a.key.localeCompare(b.key);
+}
+
+function uniqueStrings(values: Array<string | null>): string[] {
+  return Array.from(
+    new Set(
+      values
+        .map((value) => cleanText(value ?? ""))
+        .filter((value) => value.length > 0)
+    )
+  );
 }
 
 export interface GetD1TeamsDatabaseOptions {

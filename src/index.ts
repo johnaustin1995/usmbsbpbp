@@ -2,7 +2,7 @@ import express from "express";
 import fs from "fs/promises";
 import path from "path";
 import { deriveLivePlayStates, extractLivePlayEvents } from "./pipelines/live-play-feed";
-import { getD1Scores } from "./scrapers/d1";
+import { getD1Scores, getD1ScoresFromTeamDirectory, getD1ScoresFromTeamsPayload } from "./scrapers/d1";
 import {
   getAvailableViewsForSport,
   getFinalGame,
@@ -566,7 +566,7 @@ app.get("/api/scores", async (req, res, next) => {
     const statbroadcastOnly = toBoolean(req.query.statbroadcastOnly);
     const view = parseView(req.query.view, "both");
 
-    const payload = await getD1Scores(date);
+    const payload = await getScoresPayloadForDate(date);
     const games = statbroadcastOnly
       ? payload.games.filter((game) => game.statbroadcastId !== null)
       : payload.games;
@@ -641,6 +641,98 @@ app.get("/api/live/:id", async (req, res, next) => {
     const live = await getLiveSummary(id);
     const frontend = normalizeLiveSummary(live);
     respondByView(res, view, live, frontend);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/live/:id/dashboard", async (req, res, next) => {
+  try {
+    const id = Number.parseInt(req.params.id, 10);
+    if (!Number.isFinite(id)) {
+      res.status(400).json({ error: "Invalid statbroadcast id." });
+      return;
+    }
+
+    let summaryError: string | null = null;
+    let summary = null as Awaited<ReturnType<typeof getLiveSummary>> | null;
+    try {
+      summary = await getLiveSummary(id);
+    } catch (error) {
+      summaryError = error instanceof Error ? error.message : String(error);
+    }
+
+    let plays = [] as Array<{
+      key: string;
+      order: number;
+      inning: number | null;
+      half: "top" | "bottom" | null;
+      text: string;
+      batter: string | null;
+      pitcher: string | null;
+      scoringDecision: string | null;
+      isSubstitution: boolean;
+      outsAfterPlay: number | null;
+      awayScore: number | null;
+      homeScore: number | null;
+    }>;
+
+    let playsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
+    let lineupsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
+    let playsError: string | null = null;
+    let lineupsError: string | null = null;
+
+    if (summary) {
+      const [playsResult, lineupsResult] = await Promise.allSettled([
+        getLiveStats(id, "plays"),
+        getLiveStats(id, "lineups"),
+      ]);
+
+      if (playsResult.status === "fulfilled") {
+        playsSections = playsResult.value.sections;
+        const events = extractLivePlayEvents(playsResult.value);
+        const states = deriveLivePlayStates(events, summary);
+        plays = events.map((play) => {
+          const state = states.get(play.key);
+          return {
+            key: play.key,
+            order: play.order,
+            inning: play.inning,
+            half: play.half,
+            text: play.text,
+            batter: play.batter,
+            pitcher: play.pitcher,
+            scoringDecision: play.scoringDecision,
+            isSubstitution: play.isSubstitution,
+            outsAfterPlay: state?.outsAfterPlay ?? play.outs ?? null,
+            awayScore: state?.awayScore ?? summary.visitorScore,
+            homeScore: state?.homeScore ?? summary.homeScore,
+          };
+        });
+      } else {
+        playsError = playsResult.reason instanceof Error ? playsResult.reason.message : String(playsResult.reason);
+      }
+
+      if (lineupsResult.status === "fulfilled") {
+        lineupsSections = lineupsResult.value.sections;
+      } else {
+        lineupsError = lineupsResult.reason instanceof Error ? lineupsResult.reason.message : String(lineupsResult.reason);
+      }
+    }
+
+    res.json({
+      gameId: id,
+      live: {
+        summary,
+        summaryFrontend: summary ? normalizeLiveSummary(summary) : null,
+        summaryError,
+        plays,
+        playsSections,
+        playsError,
+        lineupsSections,
+        lineupsError,
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -792,6 +884,58 @@ app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`NCAA baseball API listening on http://localhost:${port}`);
 });
+
+async function getScoresPayloadForDate(date: string) {
+  try {
+    return await getD1Scores(date);
+  } catch (primaryError) {
+    const fallbackErrors: string[] = [];
+    const primaryMessage = primaryError instanceof Error ? primaryError.message : String(primaryError);
+    fallbackErrors.push(`D1 live scoreboard failed (${primaryMessage})`);
+
+    let teamsPayload: Awaited<ReturnType<typeof getD1ScoresFromTeamsPayload>> | null = null;
+    try {
+      const teamsLoaded = await loadTeamsPayloadForScoreDate(date);
+      teamsPayload = await getD1ScoresFromTeamsPayload(teamsLoaded.payload, date);
+      if (teamsPayload.games.length > 0) {
+        return teamsPayload;
+      }
+    } catch (teamsError) {
+      const teamsMessage = teamsError instanceof Error ? teamsError.message : String(teamsError);
+      fallbackErrors.push(`team schedule file fallback failed (${teamsMessage})`);
+    }
+
+    try {
+      const directoryPayload = await getD1ScoresFromTeamDirectory(date);
+      if (directoryPayload.games.length > 0) {
+        return directoryPayload;
+      }
+
+      return teamsPayload ?? directoryPayload;
+    } catch (directoryError) {
+      if (teamsPayload) {
+        return teamsPayload;
+      }
+
+      const directoryMessage = directoryError instanceof Error ? directoryError.message : String(directoryError);
+      fallbackErrors.push(`team directory fallback failed (${directoryMessage})`);
+      throw new Error(fallbackErrors.join("; "));
+    }
+  }
+}
+
+async function loadTeamsPayloadForScoreDate(date: string): Promise<LoadedTeamsPayload> {
+  const season = /^\d{8}$/.test(date) ? date.slice(0, 4) : null;
+  if (!season) {
+    return loadTeamsPayload({ season: null, file: null });
+  }
+
+  try {
+    return await loadTeamsPayload({ season, file: null });
+  } catch {
+    return loadTeamsPayload({ season: null, file: null });
+  }
+}
 
 interface LoadTeamsPayloadOptions {
   season: string | null;
