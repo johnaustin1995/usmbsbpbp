@@ -2,7 +2,10 @@ import axios from "axios";
 import { execFile } from "child_process";
 import { load } from "cheerio";
 import type { Element } from "domhandler";
+import { mkdtemp, rm } from "fs/promises";
 import he from "he";
+import { tmpdir } from "os";
+import { join } from "path";
 import { promisify } from "util";
 import { runWithConcurrency } from "../utils/async";
 import { TtlCache } from "../utils/cache";
@@ -95,12 +98,6 @@ interface ScheduleTileScore {
   opponentScore: number;
 }
 
-interface TeamRecordState {
-  wins: number;
-  losses: number;
-  ties: number;
-}
-
 export async function getD1Scores(date: string): Promise<D1ScoresPayload> {
   const cached = cache.get(date);
   if (cached) {
@@ -148,7 +145,8 @@ export async function getD1ScoresFromTeamDirectory(date: string): Promise<D1Scor
   }
 
   const teams = await getScheduleLookupTeamsFromDirectory(date);
-  return buildScoresFromScheduleTeams(teams, date, cacheKey);
+  const candidateTeams = teams.filter((team) => team.id !== null);
+  return buildScoresFromScheduleTeams(candidateTeams, date, cacheKey);
 }
 
 function d1CacheBustMinute(): number {
@@ -200,32 +198,20 @@ async function fetchD1ScoreHtmlWithCurl(date: string, cacheBustMinute: number): 
   const url = new URL(D1_SCORES_ENDPOINT);
   url.searchParams.set("date", date);
   url.searchParams.set("v", String(cacheBustMinute));
-
-  const statusMarker = "__CURL_HTTP_STATUS__:";
-  const args = [
-    "--silent",
-    "--show-error",
-    "--location",
-    "--max-time",
-    "20",
-    "--write-out",
-    `\n${statusMarker}%{http_code}`,
-    "--output",
-    "-",
-  ];
-
-  for (const [name, value] of Object.entries(buildScoresHeaders(date))) {
-    args.push("--header", `${name}: ${value}`);
-  }
-  args.push(url.toString());
-
-  let stdout = "";
   try {
-    const result = await execFileAsync("curl", args, {
-      maxBuffer: 10 * 1024 * 1024,
-      timeout: 25_000,
-    });
-    stdout = result.stdout;
+    const tempDir = await mkdtemp(join(tmpdir(), "d1-scores-"));
+    const cookieJar = join(tempDir, "cookies.txt");
+
+    try {
+      const warmUrl = new URL(D1_SCORES_PAGE);
+      warmUrl.searchParams.set("date", date);
+      await curlRequest(warmUrl.toString(), buildScoresPageHeaders(date), cookieJar);
+
+      const { status, body } = await curlRequest(url.toString(), buildScoresHeaders(date), cookieJar);
+      return extractScoreHtmlFromResponse(status, body);
+    } finally {
+      await rm(tempDir, { recursive: true, force: true }).catch(() => undefined);
+    }
   } catch (error) {
     if (
       error &&
@@ -236,6 +222,56 @@ async function fetchD1ScoreHtmlWithCurl(date: string, cacheBustMinute: number): 
       throw new Error("curl is not installed.");
     }
 
+    throw error;
+  }
+}
+
+async function warmD1ScoresPage(date: string): Promise<void> {
+  await axios.get<string>(D1_SCORES_PAGE, {
+    params: { date },
+    headers: buildScoresPageHeaders(date),
+    timeout: 20_000,
+    responseType: "text",
+    transformResponse: [(value) => value],
+    validateStatus: (status) => status >= 200 && status < 500,
+  });
+}
+
+async function curlRequest(
+  url: string,
+  headers: Record<string, string>,
+  cookieJar: string
+): Promise<{ status: number; body: string }> {
+  const statusMarker = "__CURL_HTTP_STATUS__:";
+  const args = [
+    "--silent",
+    "--show-error",
+    "--location",
+    "--max-time",
+    "20",
+    "--cookie-jar",
+    cookieJar,
+    "--cookie",
+    cookieJar,
+    "--write-out",
+    `\n${statusMarker}%{http_code}`,
+    "--output",
+    "-",
+  ];
+
+  for (const [name, value] of Object.entries(headers)) {
+    args.push("--header", `${name}: ${value}`);
+  }
+  args.push(url);
+
+  let stdout = "";
+  try {
+    const result = await execFileAsync("curl", args, {
+      maxBuffer: 10 * 1024 * 1024,
+      timeout: 25_000,
+    });
+    stdout = result.stdout;
+  } catch (error) {
     const fallbackStdout =
       error && typeof error === "object" && "stdout" in error
         ? String((error as { stdout?: string }).stdout ?? "")
@@ -258,18 +294,7 @@ async function fetchD1ScoreHtmlWithCurl(date: string, cacheBustMinute: number): 
     throw new Error("curl fallback returned an invalid status.");
   }
 
-  return extractScoreHtmlFromResponse(status, body);
-}
-
-async function warmD1ScoresPage(date: string): Promise<void> {
-  await axios.get<string>(D1_SCORES_PAGE, {
-    params: { date },
-    headers: buildScoresPageHeaders(date),
-    timeout: 20_000,
-    responseType: "text",
-    transformResponse: [(value) => value],
-    validateStatus: (status) => status >= 200 && status < 500,
-  });
+  return { status, body };
 }
 
 async function buildScoresFromScheduleTeams(
@@ -282,6 +307,21 @@ async function buildScoresFromScheduleTeams(
   const parsedByTeam = await runWithConcurrency(teams, 10, async (team) => {
     try {
       const html = await fetchDynamicTeamScheduleHtml(team);
+      if (!html.includes(`date=${date}`)) {
+        return [] as D1Game[];
+      }
+
+      if (team.schedule.length === 0) {
+        try {
+          const scheduleHtml = await fetchD1Html(team.scheduleUrl);
+          const scheduleData = parseD1TeamScheduleHtml(scheduleHtml);
+          team.schedule = scheduleData.games;
+          team.logoUrl = team.logoUrl ?? scheduleData.logoUrl ?? null;
+        } catch {
+          // Keep the dynamic-only fallback if the full schedule page cannot be fetched.
+        }
+      }
+
       return parseD1TeamScheduleScoresHtmlWithLookup(html, team, date, lookup);
     } catch {
       return [] as D1Game[];
@@ -539,7 +579,6 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
   const decodedHtml = he.decode(rawHtml);
   const $ = load(decodedHtml);
   const games: D1Game[] = [];
-  const recordState: TeamRecordState = { wins: 0, losses: 0, ties: 0 };
 
   $(".d1-team-schedule-tile").each((index, tileNode) => {
     const tile = $(tileNode);
@@ -548,7 +587,6 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const result = parseScheduleTileScore(tile.find(".box-score-header h5").first().text());
 
     if (tileDate !== date) {
-      updateTeamRecordState(recordState, result);
       return;
     }
 
@@ -560,7 +598,6 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
 
     const currentSide = resolveCurrentTeamSide(team, homeName, roadName);
     if (!currentSide) {
-      updateTeamRecordState(recordState, result);
       return;
     }
 
@@ -571,7 +608,7 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const derivedScore = deriveTileScores(currentSide, result);
     const liveStatsLink = extractTeamScheduleLiveStatsUrl(tile);
     const timeLabel = cleanText(tile.find(".team-score a").first().text());
-    const currentTeamRecord = formatTeamRecord(recordState);
+    const currentTeamRecord = computeOverallRecordBeforeDate(team.schedule, date);
 
     const key =
       cleanText(tile.attr("data-matchup")).length > 0
@@ -582,10 +619,10 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
 
     const homeTeam = currentSide === "home"
       ? buildCurrentTeamSnapshot(team, homeName, derivedScore.homeScore, currentTeamRecord)
-      : buildOpponentTeamSnapshot(opponentParsed, opponent, homeName, derivedScore.homeScore);
+      : buildOpponentTeamSnapshot(opponentParsed, opponent, homeName, derivedScore.homeScore, date);
     const roadTeam = currentSide === "road"
       ? buildCurrentTeamSnapshot(team, roadName, derivedScore.roadScore, currentTeamRecord)
-      : buildOpponentTeamSnapshot(opponentParsed, opponent, roadName, derivedScore.roadScore);
+      : buildOpponentTeamSnapshot(opponentParsed, opponent, roadName, derivedScore.roadScore, date);
 
     const conferenceIds = uniqueStrings([
       team.conference?.slug ?? null,
@@ -633,8 +670,6 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
       statbroadcastId: liveStatsLink?.id ?? null,
       statbroadcastQuery: liveStatsLink?.query ?? {},
     });
-
-    updateTeamRecordState(recordState, result);
   });
 
   return games;
@@ -857,30 +892,41 @@ function deriveTileScores(
   };
 }
 
-function updateTeamRecordState(state: TeamRecordState, result: ScheduleTileScore | null): void {
-  if (!result) {
-    return;
+function computeOverallRecordBeforeDate(
+  schedule: D1TeamScheduleGame[],
+  date: string
+): string | null {
+  if (schedule.length === 0) {
+    return null;
   }
 
-  if (result.outcome === "W") {
-    state.wins += 1;
-    return;
+  let wins = 0;
+  let losses = 0;
+  let sawDatedGame = false;
+
+  for (const game of schedule) {
+    const gameDate = extractDateFromScoresHref(game.dateUrl);
+    if (!gameDate) {
+      continue;
+    }
+
+    sawDatedGame = true;
+    if (gameDate >= date) {
+      continue;
+    }
+
+    if (game.outcome === "win") {
+      wins += 1;
+    } else if (game.outcome === "loss") {
+      losses += 1;
+    }
   }
 
-  if (result.outcome === "L") {
-    state.losses += 1;
-    return;
+  if (!sawDatedGame) {
+    return null;
   }
 
-  state.ties += 1;
-}
-
-function formatTeamRecord(state: TeamRecordState): string {
-  if (state.ties > 0) {
-    return `${state.wins}-${state.losses}-${state.ties}`;
-  }
-
-  return `${state.wins}-${state.losses}`;
+  return `${wins}-${losses}`;
 }
 
 function buildCurrentTeamSnapshot(
@@ -905,12 +951,13 @@ function buildOpponentTeamSnapshot(
   partial: TeamSnapshot,
   team: D1TeamSeasonData | null,
   name: string,
-  score: number | null
+  score: number | null,
+  date: string
 ): TeamSnapshot {
   return {
     id: team?.id ?? partial.id,
     name,
-    record: partial.record,
+    record: partial.record ?? (team ? computeOverallRecordBeforeDate(team.schedule, date) : null),
     rank: partial.rank,
     score,
     logoUrl: partial.logoUrl ?? team?.logoUrl ?? null,

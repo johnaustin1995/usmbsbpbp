@@ -72,6 +72,53 @@ describe("getD1ScoresFromTeamDirectory", () => {
       </div>
     `;
 
+    const fullScheduleHtml = `
+      <h1 class="single-team-title">Alabama</h1>
+      <div id="team-header">
+        <div class="team-logo">
+          <img src="https://cdn.example.com/alabama.png">
+        </div>
+      </div>
+      <table class="full-team-schedule">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Loc</th>
+            <th>Opponent</th>
+            <th>Result</th>
+            <th>Info</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-schedule-id="prev-win">
+            <td><a href="/scores/?date=20260314">Saturday, Mar 14</a></td>
+            <td>A</td>
+            <td>
+              <a class="team-logo-name" href="/team/auburn/2026/">
+                <span class="team-name">Auburn</span>
+              </a>
+            </td>
+            <td class="win">W, 5-2</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr data-schedule-id="current">
+            <td><a href="/scores/?date=20260315">Sunday, Mar 15</a></td>
+            <td>A</td>
+            <td>
+              <a class="team-logo-name" href="/team/kentucky/2026/">
+                <span class="team-name">Kentucky</span>
+              </a>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+
     mockedGet.mockImplementation(async (url: string) => {
       if (url === "https://d1baseball.com/teams/") {
         return { status: 200, data: directoryHtml };
@@ -79,6 +126,10 @@ describe("getD1ScoresFromTeamDirectory", () => {
 
       if (url === "https://d1baseball.com/conference/sec/2026/") {
         return { status: 200, data: conferenceHtml };
+      }
+
+      if (url === "https://d1baseball.com/team/alabama/2026/schedule/") {
+        return { status: 200, data: fullScheduleHtml };
       }
 
       throw new Error(`Unexpected GET ${url}`);
@@ -98,5 +149,6 @@ describe("getD1ScoresFromTeamDirectory", () => {
     expect(payload.games).toHaveLength(1);
     expect(payload.games[0].conferenceNames).toEqual(["SEC"]);
     expect(payload.games[0].conferenceIds).toContain("sec");
+    expect(payload.games[0].roadTeam.record).toBe("1-0");
   });
 });

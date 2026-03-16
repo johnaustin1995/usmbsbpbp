@@ -19,7 +19,38 @@ describe("parseD1TeamScheduleScoresHtml", () => {
       teamUrl: "https://d1baseball.com/team/alabama/",
       scheduleUrl: "https://d1baseball.com/team/alabama/schedule/",
       statsUrl: "https://d1baseball.com/team/alabama/stats/",
-      schedule: [],
+      schedule: [
+        {
+          scheduleId: "prev-win",
+          dateLabel: "Saturday, Mar 14",
+          dateUrl: "https://d1baseball.com/scores/?date=20260314",
+          locationType: null,
+          opponentName: "Auburn",
+          opponentSlug: "auburn",
+          opponentUrl: "https://d1baseball.com/team/auburn/",
+          opponentLogoUrl: null,
+          resultText: "W, 5-2",
+          resultUrl: null,
+          outcome: "win",
+          notes: null,
+          columns: {},
+        },
+        {
+          scheduleId: "current",
+          dateLabel: "Sunday, Mar 15",
+          dateUrl: "https://d1baseball.com/scores/?date=20260315",
+          locationType: null,
+          opponentName: "Kentucky",
+          opponentSlug: "kentucky",
+          opponentUrl: "https://d1baseball.com/team/kentucky/",
+          opponentLogoUrl: null,
+          resultText: null,
+          resultUrl: null,
+          outcome: "unknown",
+          notes: null,
+          columns: {},
+        },
+      ],
       statsTables: [],
       errors: [],
     };
@@ -39,26 +70,28 @@ describe("parseD1TeamScheduleScoresHtml", () => {
       teamUrl: "https://d1baseball.com/team/kentucky/",
       scheduleUrl: "https://d1baseball.com/team/kentucky/schedule/",
       statsUrl: "https://d1baseball.com/team/kentucky/stats/",
-      schedule: [],
+      schedule: [
+        {
+          scheduleId: "preseason",
+          dateLabel: "Friday, Feb 13",
+          dateUrl: "https://d1baseball.com/scores/?date=20260213",
+          locationType: null,
+          opponentName: "Campbell",
+          opponentSlug: "campbell",
+          opponentUrl: "https://d1baseball.com/team/campbell/",
+          opponentLogoUrl: null,
+          resultText: "W, 6-2",
+          resultUrl: null,
+          outcome: "win",
+          notes: null,
+          columns: {},
+        },
+      ],
       statsTables: [],
       errors: [],
     };
 
     const html = `
-      <div
-        class="d1-score-tile d1-team-schedule-tile winner"
-        data-matchup="632554"
-        data-home-name="Alabama"
-        data-road-name="Auburn"
-      >
-        <div class="box-score-header scoresclear">
-          <h5><span>W</span>5 - 2</h5>
-        </div>
-        <div class="team team-1" data-team-id="145999">
-          <a class="team-title" href="https://d1baseball.com/team/auburn/schedule/"><h5>Auburn</h5></a>
-          <h5 class="team-score"><a href="/scores/?date=20260314">Saturday, Mar 14<br>@ 6:00 PM</a></h5>
-        </div>
-      </div>
       <div
         class="d1-score-tile d1-team-schedule-tile winner"
         data-matchup="632555"
