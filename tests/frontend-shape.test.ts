@@ -203,4 +203,52 @@ describe("frontend normalization", () => {
     expect(frontend.cards[0].teams[0].rank).toBe(2);
     expect(frontend.cards[0].teams[1].rank).toBeNull();
   });
+
+  it("does not expose placeholder start times for canceled games", () => {
+    const games: D1GameWithLive[] = [
+      {
+        key: "game-4",
+        conferenceIds: ["summit"],
+        conferenceNames: ["Summit League"],
+        statusText: "Canceled",
+        matchupTimeEpoch: 1773705540,
+        matchupTimeIso: "2026-03-16T23:59:00.000Z",
+        inProgress: false,
+        isOver: false,
+        location: "Omaha, NE",
+        roadTeam: {
+          id: 1,
+          name: "Maine",
+          record: "4-11",
+          rank: null,
+          score: null,
+          logoUrl: null,
+          teamUrl: null,
+          searchTokens: [],
+        },
+        homeTeam: {
+          id: 2,
+          name: "Omaha",
+          record: "4-10",
+          rank: null,
+          score: null,
+          logoUrl: null,
+          teamUrl: null,
+          searchTokens: [],
+        },
+        links: [],
+        liveStatsUrl: null,
+        statbroadcastId: null,
+        statbroadcastQuery: {},
+        live: null,
+        liveError: null,
+      },
+    ];
+
+    const frontend = buildFrontendScoresFeed("20260316", "2026-03-16T16:42:56.000Z", games);
+
+    expect(frontend.cards[0].status).toBe("Canceled");
+    expect(frontend.cards[0].displayTime).toBeNull();
+    expect(frontend.cards[0].startTimeIso).toBeNull();
+  });
 });

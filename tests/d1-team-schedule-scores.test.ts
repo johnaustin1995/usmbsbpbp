@@ -164,7 +164,23 @@ describe("parseD1TeamScheduleScoresHtml", () => {
       teamUrl: "https://d1baseball.com/team/airforce/",
       scheduleUrl: "https://d1baseball.com/team/airforce/schedule/",
       statsUrl: "https://d1baseball.com/team/airforce/stats/",
-      schedule: [],
+      schedule: [
+        {
+          scheduleId: "airforce-stthomas",
+          dateLabel: "Monday, Mar 16",
+          dateUrl: "https://d1baseball.com/scores/?date=20260316",
+          locationType: "vs",
+          opponentName: "St. Thomas",
+          opponentSlug: "stthomas",
+          opponentUrl: "https://d1baseball.com/team/stthomas/",
+          opponentLogoUrl: null,
+          resultText: null,
+          resultUrl: null,
+          outcome: "unknown",
+          notes: "USAF Academy, CO",
+          columns: {},
+        },
+      ],
       statsTables: [],
       errors: [],
     };
@@ -220,5 +236,90 @@ describe("parseD1TeamScheduleScoresHtml", () => {
     expect(games[0].isOver).toBe(false);
     expect(games[0].roadTeam.name).toBe("St. Thomas");
     expect(games[0].homeTeam.name).toBe("Air Force");
+  });
+
+  it("uses canceled from the schedule row instead of a placeholder 11:59 PM time", () => {
+    const maine: D1TeamSeasonData = {
+      id: 145229,
+      name: "Maine",
+      slug: "maine",
+      season: "2026",
+      conference: {
+        id: 2,
+        name: "America East",
+        slug: "america-east",
+        url: "https://d1baseball.com/conference/america-east/",
+      },
+      logoUrl: "https://cdn.example.com/maine.svg",
+      teamUrl: "https://d1baseball.com/team/maine/",
+      scheduleUrl: "https://d1baseball.com/team/maine/schedule/",
+      statsUrl: "https://d1baseball.com/team/maine/stats/",
+      schedule: [
+        {
+          scheduleId: "maine-omaha",
+          dateLabel: "Monday, Mar 16",
+          dateUrl: "https://d1baseball.com/scores/?date=20260316",
+          locationType: "@",
+          opponentName: "Omaha",
+          opponentSlug: "nebomaha",
+          opponentUrl: "https://d1baseball.com/team/nebomaha/",
+          opponentLogoUrl: null,
+          resultText: null,
+          resultUrl: null,
+          outcome: "unknown",
+          notes: "Canceled",
+          columns: { notes: "Canceled" },
+        },
+      ],
+      statsTables: [],
+      errors: [],
+    };
+
+    const omaha: D1TeamSeasonData = {
+      id: 145438,
+      name: "Omaha",
+      slug: "nebomaha",
+      season: "2026",
+      conference: {
+        id: 31,
+        name: "Summit League",
+        slug: "summit",
+        url: "https://d1baseball.com/conference/summit/",
+      },
+      logoUrl: "https://cdn.example.com/omaha.svg",
+      teamUrl: "https://d1baseball.com/team/nebomaha/",
+      scheduleUrl: "https://d1baseball.com/team/nebomaha/schedule/",
+      statsUrl: "https://d1baseball.com/team/nebomaha/stats/",
+      schedule: [],
+      statsTables: [],
+      errors: [],
+    };
+
+    const html = `
+      <div
+        class="d1-score-tile d1-team-schedule-tile in-progress"
+        data-home-name="Omaha"
+        data-road-name="Maine"
+      >
+        <div class="box-score-header scoresclear">
+          <h5></h5>
+        </div>
+        <div class="team team-1" data-search="omaha" data-team-id="145438">
+          <h5 class="team-location">@</h5>
+          <a class="team-title" href="https://d1baseball.com/team/nebomaha/schedule/"><h5>Omaha</h5></a>
+          <h5 class="team-score"><a href="/scores/?date=20260316">Monday, Mar 16<br>@ 11:59 PM</a></h5>
+        </div>
+        <div class="box-score-footer scoresclear">
+          <p>Canceled</p>
+        </div>
+      </div>
+    `;
+
+    const games = parseD1TeamScheduleScoresHtml(html, maine, "20260316", [maine, omaha]);
+
+    expect(games).toHaveLength(1);
+    expect(games[0].statusText).toBe("Canceled");
+    expect(games[0].inProgress).toBe(false);
+    expect(games[0].isOver).toBe(false);
   });
 });

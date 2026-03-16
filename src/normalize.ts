@@ -76,6 +76,9 @@ export function normalizeGameCard(
   const status = normalizeStatus(phase, game.live?.statusText ?? game.statusText);
   const awayScore = firstDefinedNumber(game.live?.visitorScore, game.roadTeam.score);
   const homeScore = firstDefinedNumber(game.live?.homeScore, game.homeTeam.score);
+  const exposesStartTime = shouldExposeStartTime(phase, status);
+  const startTimeIso = exposesStartTime ? game.matchupTimeIso : null;
+  const startTimeEpoch = exposesStartTime ? game.matchupTimeEpoch : null;
 
   const awayTeam = normalizeTeam({
     side: "away",
@@ -103,10 +106,7 @@ export function normalizeGameCard(
     rankLookup,
   });
 
-  const displayTime =
-    phase === "upcoming"
-      ? game.matchupTimeIso
-      : status;
+  const displayTime = phase === "upcoming" ? startTimeIso : status;
 
   return {
     id: game.key,
@@ -114,8 +114,8 @@ export function normalizeGameCard(
     phase,
     status,
     displayTime,
-    startTimeEpoch: game.matchupTimeEpoch,
-    startTimeIso: game.matchupTimeIso,
+    startTimeEpoch,
+    startTimeIso,
     location: game.location,
     conferences: game.conferenceNames,
     statbroadcastId: game.statbroadcastId,
@@ -255,6 +255,14 @@ function normalizeStatus(phase: FrontendGamePhase, status: string | null): strin
   }
 
   return "Scheduled";
+}
+
+function shouldExposeStartTime(phase: FrontendGamePhase, status: string): boolean {
+  if (phase !== "upcoming") {
+    return false;
+  }
+
+  return !/(cancel(?:ed|led)|postponed|ppd|suspended)/i.test(status);
 }
 
 function firstDefinedNumber(...values: Array<number | null | undefined>): number | null {

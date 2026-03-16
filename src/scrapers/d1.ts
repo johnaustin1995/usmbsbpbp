@@ -611,6 +611,8 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const rawStatusText = cleanText(tile.find(".box-score-header h5").first().text());
     const scheduledTimeText = extractScheduledTimeLabel(timeLabel);
     const currentTeamRecord = computeOverallRecordBeforeDate(team.schedule, date);
+    const currentScheduleGame = findScheduleGameForDate(team.schedule, date, opponentName);
+    const scheduleStatusOverride = extractScheduleStatusOverride(currentScheduleGame);
 
     const key =
       cleanText(tile.attr("data-matchup")).length > 0
@@ -643,7 +645,7 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
 
     const statusText = derivedScore.isOver
       ? "Final"
-      : normalizeScheduleTileStatus(rawStatusText, scheduledTimeText);
+      : normalizeScheduleTileStatus(rawStatusText, scheduledTimeText, scheduleStatusOverride);
 
     games.push({
       key,
@@ -896,8 +898,13 @@ function deriveTileScores(
 
 function normalizeScheduleTileStatus(
   rawStatusText: string,
-  scheduledTimeText: string | null
+  scheduledTimeText: string | null,
+  scheduleStatusOverride: string | null
 ): string {
+  if (scheduleStatusOverride) {
+    return scheduleStatusOverride;
+  }
+
   if (rawStatusText.length === 0) {
     return scheduledTimeText ?? "Scheduled";
   }
@@ -925,6 +932,46 @@ function extractScheduledTimeLabel(value: string): string | null {
   }
 
   return match[1].replace(/\s+/g, " ").toUpperCase();
+}
+
+function findScheduleGameForDate(
+  schedule: D1TeamScheduleGame[],
+  date: string,
+  opponentName: string
+): D1TeamScheduleGame | null {
+  const onDate = schedule.filter((game) => extractDateFromScoresHref(game.dateUrl) === date);
+  if (onDate.length === 0) {
+    return null;
+  }
+
+  const normalizedOpponent = normalizeTeamKey(opponentName);
+  const exactMatch = onDate.find((game) => normalizeTeamKey(game.opponentName ?? "") === normalizedOpponent);
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  return onDate.length === 1 ? onDate[0] : null;
+}
+
+function extractScheduleStatusOverride(game: D1TeamScheduleGame | null): string | null {
+  if (!game) {
+    return null;
+  }
+
+  const candidates = [
+    game.resultText,
+    game.notes,
+    ...Object.values(game.columns),
+  ];
+
+  for (const candidate of candidates) {
+    const clean = cleanText(candidate ?? "");
+    if (/^cancel(?:ed|led)$/i.test(clean)) {
+      return "Canceled";
+    }
+  }
+
+  return null;
 }
 
 function computeOverallRecordBeforeDate(
