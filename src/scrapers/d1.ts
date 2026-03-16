@@ -31,6 +31,7 @@ const D1_RANKINGS_ENDPOINT = "https://d1baseball.com/rankings/";
 const D1_TEAMS_ENDPOINT = "https://d1baseball.com/teams/";
 const CACHE_TTL_MS = 15_000;
 const TEAM_SCHEDULE_CACHE_TTL_MS = 60_000;
+const DIRECTORY_LOOKUP_CACHE_TTL_MS = 15 * 60_000;
 const RANKINGS_CACHE_TTL_MS = 15 * 60_000;
 const TEAM_SCHEDULE_DYNAMIC_KEY = "dynamic-team-schedule";
 const TEAM_SCHEDULE_CALLBACK = "team_schedule";
@@ -73,6 +74,7 @@ const TEAMS_HEADERS = { ...BASE_BROWSER_HEADERS, Referer: D1_TEAMS_ENDPOINT };
 const cache = new TtlCache<string, D1ScoresPayload>();
 const rankingsCache = new TtlCache<string, D1RankingsPayload>();
 const teamScheduleScoresCache = new TtlCache<string, D1ScoresPayload>();
+const directoryLookupCache = new TtlCache<string, D1TeamSeasonData[]>();
 const execFileAsync = promisify(execFile);
 
 interface D1RawResponse {
@@ -139,10 +141,7 @@ export async function getD1ScoresFromTeamDirectory(date: string): Promise<D1Scor
     return cached;
   }
 
-  const indexHtml = await fetchD1Html(D1_TEAMS_ENDPOINT);
-  const directory = parseD1TeamsDirectoryHtml(indexHtml);
-  const season = /^\d{8}$/.test(date) ? date.slice(0, 4) : directory.season;
-  const teams = directory.teams.map((entry) => toScheduleLookupTeam(entry, season));
+  const teams = await getScheduleLookupTeamsFromDirectory(date);
   return buildScoresFromScheduleTeams(teams, date, cacheKey);
 }
 
@@ -688,9 +687,40 @@ function buildTeamLookup(teams: D1TeamSeasonData[]): D1TeamLookup {
   return { byId, bySlug, byName };
 }
 
+async function getScheduleLookupTeamsFromDirectory(date: string): Promise<D1TeamSeasonData[]> {
+  const indexHtml = await fetchD1Html(D1_TEAMS_ENDPOINT);
+  const directory = parseD1TeamsDirectoryHtml(indexHtml);
+  const season = /^\d{8}$/.test(date) ? date.slice(0, 4) : directory.season;
+  const cacheKey = season || "current";
+  const cached = directoryLookupCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const conferences = directory.conferences.map((conference) => ({
+    ...conference,
+    url:
+      season && conference.slug
+        ? toSeasonUrl(toCanonicalBaseUrl(conference.url, "conference", conference.slug), season)
+        : conference.url,
+  }));
+  const membership = await mapConferenceMemberships(conferences, 4);
+  const teams = directory.teams.map((entry) =>
+    toScheduleLookupTeam(
+      entry,
+      season,
+      entry.slug ? membership.byTeamSlug.get(entry.slug.toLowerCase()) ?? null : null
+    )
+  );
+
+  directoryLookupCache.set(cacheKey, teams, DIRECTORY_LOOKUP_CACHE_TTL_MS);
+  return teams;
+}
+
 function toScheduleLookupTeam(
   entry: D1TeamDirectoryEntry,
-  season: string | null
+  season: string | null,
+  conference: D1ConferenceDirectoryEntry | null = null
 ): D1TeamSeasonData {
   const teamUrl = season ? toSeasonUrl(entry.baseUrl, season) : entry.url;
   return {
@@ -698,7 +728,7 @@ function toScheduleLookupTeam(
     name: entry.name,
     slug: entry.slug,
     season,
-    conference: null,
+    conference,
     logoUrl: null,
     teamUrl,
     scheduleUrl: toAbsoluteUrl("schedule/", teamUrl) ?? `${teamUrl}schedule/`,
