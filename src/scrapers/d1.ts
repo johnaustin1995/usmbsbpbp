@@ -340,7 +340,7 @@ async function buildScoresFromScheduleTeams(
   }
 
   const games = Array.from(byKey.values()).sort(compareScheduleDerivedGames);
-  await hydrateMissingGameRecords(games, teams, date, lookup);
+  applyLoadedTeamRecordsToGames(games, teams, date);
 
   const payload: D1ScoresPayload = {
     date,
@@ -731,10 +731,12 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const timeLabel = cleanText(tile.find(".team-score a").first().text());
     const rawStatusText = cleanText(tile.find(".box-score-header h5").first().text());
     const scheduledTimeText = extractScheduledTimeLabel(timeLabel);
-    const currentTeamRecord = computeOverallRecordBeforeDate(team.schedule, date);
+    const parsedTileTeam = parseTeam($, tile.find(".team").first().get(0));
+    const parsedCurrentTeam = snapshotMatchesTeam(parsedTileTeam, team) ? parsedTileTeam : null;
+    const currentTeamRecord = computeOverallRecordBeforeDate(team.schedule, date) ?? parsedCurrentTeam?.record ?? null;
     const currentScheduleGame = findScheduleGameForDate(team.schedule, date, opponentName);
     const opponentPartial = buildScheduleOpponentSnapshotSeed({
-      parsedTileTeam: parseTeam($, tile.find(".team").first().get(0)),
+      parsedTileTeam,
       currentTeam: team,
       scheduleGame: currentScheduleGame,
       opponentName,
@@ -751,10 +753,10 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
           )}`;
 
     const homeTeam = currentSide === "home"
-      ? buildCurrentTeamSnapshot(team, homeName, derivedScore.homeScore, currentTeamRecord)
+      ? buildCurrentTeamSnapshot(team, parsedCurrentTeam, homeName, derivedScore.homeScore, currentTeamRecord)
       : buildOpponentTeamSnapshot(opponentPartial, opponent, homeName, derivedScore.homeScore, date);
     const roadTeam = currentSide === "road"
-      ? buildCurrentTeamSnapshot(team, roadName, derivedScore.roadScore, currentTeamRecord)
+      ? buildCurrentTeamSnapshot(team, parsedCurrentTeam, roadName, derivedScore.roadScore, currentTeamRecord)
       : buildOpponentTeamSnapshot(opponentPartial, opponent, roadName, derivedScore.roadScore, date);
 
     const conferenceIds = uniqueStrings([
@@ -1172,6 +1174,7 @@ function computeOverallRecordBeforeDate(
 
 function buildCurrentTeamSnapshot(
   team: D1TeamSeasonData,
+  parsedTileTeam: TeamSnapshot | null,
   name: string,
   score: number | null,
   record: string | null
@@ -1182,8 +1185,8 @@ function buildCurrentTeamSnapshot(
     record,
     rank: null,
     score,
-    logoUrl: team.logoUrl ?? null,
-    teamUrl: team.teamUrl,
+    logoUrl: team.logoUrl ?? parsedTileTeam?.logoUrl ?? null,
+    teamUrl: team.teamUrl ?? parsedTileTeam?.teamUrl ?? null,
     searchTokens: tokenizeTeamName(name),
   };
 }

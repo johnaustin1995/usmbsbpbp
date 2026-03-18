@@ -598,6 +598,83 @@ describe("parseD1TeamScheduleScoresHtml", () => {
     expect(games[0].statbroadcastId).toBe(630993);
   });
 
+  it("keeps the current team record from the schedule tile when season data is unavailable", () => {
+    const duke: D1TeamSeasonData = {
+      id: 145500,
+      name: "Duke",
+      slug: "duke",
+      season: "2026",
+      conference: {
+        id: 1,
+        name: "ACC",
+        slug: "acc",
+        url: "https://d1baseball.com/conference/acc/",
+      },
+      logoUrl: null,
+      teamUrl: "https://d1baseball.com/team/duke/",
+      scheduleUrl: "https://d1baseball.com/team/duke/schedule/",
+      statsUrl: "https://d1baseball.com/team/duke/stats/",
+      schedule: [],
+      statsTables: [],
+      errors: [],
+    };
+
+    const campbell: D1TeamSeasonData = {
+      id: 145421,
+      name: "Campbell",
+      slug: "campbell",
+      season: "2026",
+      conference: {
+        id: 9,
+        name: "CAA",
+        slug: "caa",
+        url: "https://d1baseball.com/conference/caa/",
+      },
+      logoUrl: null,
+      teamUrl: "https://d1baseball.com/team/campbell/",
+      scheduleUrl: "https://d1baseball.com/team/campbell/schedule/",
+      statsUrl: "https://d1baseball.com/team/campbell/stats/",
+      schedule: [],
+      statsTables: [],
+      errors: [],
+    };
+
+    const html = `
+      <div
+        class="d1-score-tile d1-team-schedule-tile in-progress"
+        data-home-name="Campbell"
+        data-road-name="Duke"
+      >
+        <div class="box-score-header scoresclear">
+          <h5>Top 7</h5>
+          <div class="box-score-links">
+            <a target="_blank" href="https://stats.statbroadcast.com/broadcast/?id=630993">Box Score</a>
+          </div>
+        </div>
+        <div class="team team-1" data-search="duke" data-team-id="145500">
+          <h5 class="team-location">@</h5>
+          <a class="team-logo" href="https://d1baseball.com/team/duke/schedule/">
+            <img src="https://cdn.example.com/duke.svg">
+          </a>
+          <a class="team-title" href="https://d1baseball.com/team/duke/schedule/">
+            <h5>Duke<small>(12-5, 2-1 ACC)</small></h5>
+          </a>
+          <h5 class="team-score"><a href="/scores/?date=20260317">Tuesday, Mar 17<br>@ 6:00 PM</a></h5>
+        </div>
+        <div class="box-score-footer scoresclear">
+          <p>Buies Creek, N.C.</p>
+        </div>
+      </div>
+    `;
+
+    const games = parseD1TeamScheduleScoresHtml(html, duke, "20260317", [duke, campbell]);
+
+    expect(games).toHaveLength(1);
+    expect(games[0].roadTeam.name).toBe("Duke");
+    expect(games[0].roadTeam.record).toBe("12-5");
+    expect(games[0].roadTeam.logoUrl).toBe("https://cdn.example.com/duke.svg");
+  });
+
   it("uses canceled from the schedule row instead of a placeholder 11:59 PM time", () => {
     const maine: D1TeamSeasonData = {
       id: 145229,
