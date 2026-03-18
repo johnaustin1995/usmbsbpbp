@@ -19,6 +19,20 @@ describe("parseSidearmSiteConfig", () => {
       sport: "baseball",
     });
   });
+
+  it("prefers livestats_foldername over client_shortname when both are present", () => {
+    const html = `
+      <script>
+        window.client_shortname = "brownuni";
+        window.livestats_foldername = "brown";
+      </script>
+    `;
+
+    expect(parseSidearmSiteConfig(html, "https://brownbears.com/sidearmstats/baseball/")).toEqual({
+      folder: "brown",
+      sport: "baseball",
+    });
+  });
 });
 
 describe("parseSidearmLiveGameStatus", () => {

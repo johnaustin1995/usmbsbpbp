@@ -245,8 +245,13 @@ export async function getSidearmLiveDashboard(liveStatsUrl: string): Promise<Sid
 }
 
 export function parseSidearmSiteConfig(rawHtml: string, liveStatsUrl: string): SidearmSiteConfig | null {
-  const folderMatch = rawHtml.match(/window\.(?:livestats_foldername|client_shortname)\s*=\s*"([^"]+)"/i);
-  const folder = cleanText(folderMatch?.[1] ?? "");
+  const liveStatsFolder = cleanText(
+    rawHtml.match(/window\.livestats_foldername\s*=\s*"([^"]+)"/i)?.[1] ?? ""
+  );
+  const clientShortname = cleanText(
+    rawHtml.match(/window\.client_shortname\s*=\s*"([^"]+)"/i)?.[1] ?? ""
+  );
+  const folder = liveStatsFolder || clientShortname;
   if (!folder) {
     return null;
   }
