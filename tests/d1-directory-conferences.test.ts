@@ -35,9 +35,26 @@ describe("getD1ScoresFromTeamDirectory", () => {
     const conferenceHtml = `
       <div id="conference-standings">
         <table class="conference-standings-table">
+          <thead>
+            <tr>
+              <td class="team-header text-left">Team</td>
+              <td>Record</td>
+              <td>Win %</td>
+              <td>GB</td>
+              <td>Overall</td>
+              <td>Overall %</td>
+              <td>Streak</td>
+            </tr>
+          </thead>
           <tbody>
             <tr>
               <td class="team"><a href="/team/alabama/2026/">Alabama</a></td>
+              <td>1-0</td>
+              <td>1.000</td>
+              <td>-</td>
+              <td>18-2</td>
+              <td>0.900</td>
+              <td>W1</td>
             </tr>
           </tbody>
         </table>
@@ -98,6 +115,6 @@ describe("getD1ScoresFromTeamDirectory", () => {
     expect(payload.games).toHaveLength(1);
     expect(payload.games[0].conferenceNames).toEqual(["SEC"]);
     expect(payload.games[0].conferenceIds).toContain("sec");
-    expect(payload.games[0].roadTeam.record).toBeNull();
+    expect(payload.games[0].roadTeam.record).toBe("18-2");
   });
 });

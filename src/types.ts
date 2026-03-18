@@ -70,6 +70,7 @@ export interface D1ConferenceMembership {
   slug: string;
   name: string;
   url: string;
+  overallRecord?: string | null;
 }
 
 export type D1ScheduleOutcome = "win" | "loss" | "unknown";
@@ -109,6 +110,7 @@ export interface D1TeamSeasonData {
   slug: string | null;
   season: string | null;
   conference: D1ConferenceDirectoryEntry | null;
+  overallRecord?: string | null;
   logoUrl: string | null;
   teamUrl: string;
   scheduleUrl: string;

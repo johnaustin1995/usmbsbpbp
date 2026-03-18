@@ -733,7 +733,8 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const scheduledTimeText = extractScheduledTimeLabel(timeLabel);
     const parsedTileTeam = parseTeam($, tile.find(".team").first().get(0));
     const parsedCurrentTeam = snapshotMatchesTeam(parsedTileTeam, team) ? parsedTileTeam : null;
-    const currentTeamRecord = computeOverallRecordBeforeDate(team.schedule, date) ?? parsedCurrentTeam?.record ?? null;
+    const currentTeamRecord =
+      computeOverallRecordBeforeDate(team.schedule, date) ?? team.overallRecord ?? parsedCurrentTeam?.record ?? null;
     const currentScheduleGame = findScheduleGameForDate(team.schedule, date, opponentName);
     const opponentPartial = buildScheduleOpponentSnapshotSeed({
       parsedTileTeam,
@@ -895,7 +896,8 @@ async function getScheduleLookupTeamsFromDirectory(date: string): Promise<D1Team
     toScheduleLookupTeam(
       entry,
       season,
-      entry.slug ? membership.byTeamSlug.get(entry.slug.toLowerCase()) ?? null : null
+      entry.slug ? membership.byTeamSlug.get(entry.slug.toLowerCase()) ?? null : null,
+      entry.slug ? membership.byTeamRecord.get(entry.slug.toLowerCase()) ?? null : null
     )
   );
 
@@ -906,7 +908,8 @@ async function getScheduleLookupTeamsFromDirectory(date: string): Promise<D1Team
 function toScheduleLookupTeam(
   entry: D1TeamDirectoryEntry,
   season: string | null,
-  conference: D1ConferenceDirectoryEntry | null = null
+  conference: D1ConferenceDirectoryEntry | null = null,
+  overallRecord: string | null = null
 ): D1TeamSeasonData {
   const teamUrl = season ? toSeasonUrl(entry.baseUrl, season) : entry.url;
   return {
@@ -915,6 +918,7 @@ function toScheduleLookupTeam(
     slug: entry.slug,
     season,
     conference,
+    overallRecord,
     logoUrl: null,
     teamUrl,
     scheduleUrl: toAbsoluteUrl("schedule/", teamUrl) ?? `${teamUrl}schedule/`,
@@ -1238,6 +1242,8 @@ function applyLoadedTeamRecord(
   const record = computeOverallRecordBeforeDate(team.schedule, date);
   if (record !== null) {
     snapshot.record = record;
+  } else if (snapshot.record === null && team.overallRecord) {
+    snapshot.record = team.overallRecord;
   }
 
   if (team.teamUrl) {
@@ -1259,7 +1265,7 @@ function buildOpponentTeamSnapshot(
   return {
     id: team?.id ?? partial.id,
     name,
-    record: partial.record ?? (team ? computeOverallRecordBeforeDate(team.schedule, date) : null),
+    record: partial.record ?? (team ? computeOverallRecordBeforeDate(team.schedule, date) ?? team.overallRecord ?? null : null),
     rank: partial.rank,
     score,
     logoUrl: partial.logoUrl ?? team?.logoUrl ?? null,
@@ -1480,6 +1486,7 @@ interface ParsedD1TeamStats {
 
 interface ConferenceMembershipResult {
   byTeamSlug: Map<string, D1ConferenceDirectoryEntry>;
+  byTeamRecord: Map<string, string>;
   errors: string[];
 }
 
@@ -1518,6 +1525,9 @@ export async function getD1TeamsDatabase(
 
     const conference = directoryEntry.slug
       ? membership.byTeamSlug.get(directoryEntry.slug.toLowerCase()) ?? null
+      : null;
+    const overallRecord = directoryEntry.slug
+      ? membership.byTeamRecord.get(directoryEntry.slug.toLowerCase()) ?? null
       : null;
 
     const errors: string[] = [];
@@ -1564,6 +1574,7 @@ export async function getD1TeamsDatabase(
       slug: directoryEntry.slug,
       season,
       conference,
+      overallRecord,
       logoUrl,
       teamUrl,
       scheduleUrl,
@@ -1637,9 +1648,20 @@ export function parseD1TeamsDirectoryHtml(rawHtml: string): ParsedD1TeamsDirecto
 export function parseD1ConferencePageHtml(rawHtml: string): D1ConferenceMembership[] {
   const $ = load(he.decode(rawHtml));
   const bySlug = new Map<string, D1ConferenceMembership>();
+  const table = $("#conference-standings .conference-standings-table").first();
+  const headerKeys = buildHeaderKeys(
+    table
+      .find("thead tr")
+      .first()
+      .find("td, th")
+      .map((_, node) => cleanText($(node).text()))
+      .get()
+  );
+  const overallIndex = headerKeys.findIndex((key) => key === "overall");
 
-  $("#conference-standings .conference-standings-table tbody td.team a").each((_, node) => {
-    const anchor = $(node);
+  table.find("tbody tr").each((_, rowNode) => {
+    const row = $(rowNode);
+    const anchor = row.find("td.team a").first();
     const url = toAbsoluteUrl(anchor.attr("href"), D1_TEAMS_ENDPOINT);
     if (!url) {
       return;
@@ -1651,14 +1673,24 @@ export function parseD1ConferencePageHtml(rawHtml: string): D1ConferenceMembersh
       return;
     }
 
+    const cells = row.find("td").toArray();
+    const overallRecord =
+      overallIndex >= 0 ? normalizeConferenceOverallRecord(cleanText($(cells[overallIndex]).text())) : null;
+
     bySlug.set(slug, {
       slug,
       name,
       url,
+      overallRecord,
     });
   });
 
   return Array.from(bySlug.values());
+}
+
+function normalizeConferenceOverallRecord(value: string): string | null {
+  const clean = cleanText(value);
+  return /^\d+\s*-\s*\d+$/.test(clean) ? clean.replace(/\s+/g, "") : null;
 }
 
 export function parseD1TeamScheduleHtml(rawHtml: string): ParsedD1TeamSchedule {
@@ -1800,6 +1832,7 @@ async function mapConferenceMemberships(
   concurrency: number
 ): Promise<ConferenceMembershipResult> {
   const byTeamSlug = new Map<string, D1ConferenceDirectoryEntry>();
+  const byTeamRecord = new Map<string, string>();
   const errors: string[] = [];
 
   await runWithConcurrency(conferences, concurrency, async (conference) => {
@@ -1821,13 +1854,16 @@ async function mapConferenceMemberships(
         }
 
         byTeamSlug.set(membership.slug, conference);
+        if (membership.overallRecord) {
+          byTeamRecord.set(membership.slug, membership.overallRecord);
+        }
       });
     } catch (error) {
       errors.push(`Conference scrape failed for "${conference.name}": ${errorToMessage(error)}`);
     }
   });
 
-  return { byTeamSlug, errors };
+  return { byTeamSlug, byTeamRecord, errors };
 }
 
 async function fetchD1Html(url: string): Promise<string> {
