@@ -33,6 +33,7 @@ const D1_DYNAMIC_CONTENT_ENDPOINT = "https://d1baseball.com/wp-json/d1/v1/dynami
 const D1_RANKINGS_ENDPOINT = "https://d1baseball.com/rankings/";
 const D1_TEAMS_ENDPOINT = "https://d1baseball.com/teams/";
 const CACHE_TTL_MS = 15_000;
+const LAST_SUCCESSFUL_CACHE_TTL_MS = 6 * 60 * 60_000;
 const TEAM_SCHEDULE_CACHE_TTL_MS = 60_000;
 const DIRECTORY_LOOKUP_CACHE_TTL_MS = 15 * 60_000;
 const RANKINGS_CACHE_TTL_MS = 15 * 60_000;
@@ -66,6 +67,10 @@ const SCORES_PAGE_HEADERS = {
   "Sec-Fetch-User": "?1",
   "Upgrade-Insecure-Requests": "1",
 };
+const MINIMAL_SCORES_HEADERS = {
+  "User-Agent": BASE_BROWSER_HEADERS["User-Agent"],
+  Accept: "*/*",
+};
 const TEAM_SCHEDULE_DYNAMIC_HEADERS = {
   ...BASE_BROWSER_HEADERS,
   Accept: "application/json, text/plain, */*",
@@ -75,6 +80,7 @@ const TEAM_SCHEDULE_DYNAMIC_HEADERS = {
 const TEAMS_HEADERS = { ...BASE_BROWSER_HEADERS, Referer: D1_TEAMS_ENDPOINT };
 
 const cache = new TtlCache<string, D1ScoresPayload>();
+const lastSuccessfulScoresCache = new TtlCache<string, D1ScoresPayload>();
 const rankingsCache = new TtlCache<string, D1RankingsPayload>();
 const teamScheduleScoresCache = new TtlCache<string, D1ScoresPayload>();
 const directoryLookupCache = new TtlCache<string, D1TeamSeasonData[]>();
@@ -112,7 +118,12 @@ export async function getD1Scores(date: string): Promise<D1ScoresPayload> {
   const html = await fetchD1ScoreHtml(date);
   const parsed = parseD1ScoreHtml(html, date);
   cache.set(date, parsed, CACHE_TTL_MS);
+  lastSuccessfulScoresCache.set(date, parsed, LAST_SUCCESSFUL_CACHE_TTL_MS);
   return parsed;
+}
+
+export function getCachedD1Scores(date: string): D1ScoresPayload | null {
+  return lastSuccessfulScoresCache.get(date);
 }
 
 export async function getD1Rankings(): Promise<D1RankingsPayload> {
@@ -183,6 +194,20 @@ async function fetchD1ScoreHtml(date: string): Promise<string> {
     }
   }
 
+  try {
+    return await fetchD1ScoreHtmlWithMinimalAxios(date, cacheBustMinute);
+  } catch (error) {
+    lastError = error;
+  }
+
+  try {
+    return await fetchD1ScoreHtmlWithMinimalCurl(date, cacheBustMinute);
+  } catch (error) {
+    if (!(error instanceof Error && error.message === "curl is not installed.") || lastError === null) {
+      lastError = error;
+    }
+  }
+
   throw lastError instanceof Error ? lastError : new Error("Failed to load D1 scores.");
 }
 
@@ -231,6 +256,41 @@ async function fetchD1ScoreHtmlWithCurl(date: string, cacheBustMinute: number): 
   }
 }
 
+async function fetchD1ScoreHtmlWithMinimalAxios(date: string, cacheBustMinute: number): Promise<string> {
+  const response = await axios.get<string>(D1_SCORES_ENDPOINT, {
+    params: { date, v: cacheBustMinute },
+    headers: MINIMAL_SCORES_HEADERS,
+    timeout: 20_000,
+    responseType: "text",
+    transformResponse: [(value) => value],
+    validateStatus: (status) => status >= 200 && status < 500,
+  });
+
+  return extractScoreHtmlFromResponse(response.status, String(response.data ?? ""));
+}
+
+async function fetchD1ScoreHtmlWithMinimalCurl(date: string, cacheBustMinute: number): Promise<string> {
+  const url = new URL(D1_SCORES_ENDPOINT);
+  url.searchParams.set("date", date);
+  url.searchParams.set("v", String(cacheBustMinute));
+
+  try {
+    const { status, body } = await curlRequest(url.toString(), MINIMAL_SCORES_HEADERS);
+    return extractScoreHtmlFromResponse(status, body);
+  } catch (error) {
+    if (
+      error &&
+      typeof error === "object" &&
+      "code" in error &&
+      (error as { code?: string }).code === "ENOENT"
+    ) {
+      throw new Error("curl is not installed.");
+    }
+
+    throw error;
+  }
+}
+
 async function warmD1ScoresPage(date: string): Promise<void> {
   await axios.get<string>(D1_SCORES_PAGE, {
     params: { date },
@@ -245,7 +305,7 @@ async function warmD1ScoresPage(date: string): Promise<void> {
 async function curlRequest(
   url: string,
   headers: Record<string, string>,
-  cookieJar: string
+  cookieJar?: string
 ): Promise<{ status: number; body: string }> {
   const statusMarker = "__CURL_HTTP_STATUS__:";
   const args = [
@@ -254,15 +314,15 @@ async function curlRequest(
     "--location",
     "--max-time",
     "20",
-    "--cookie-jar",
-    cookieJar,
-    "--cookie",
-    cookieJar,
     "--write-out",
     `\n${statusMarker}%{http_code}`,
     "--output",
     "-",
   ];
+
+  if (cookieJar) {
+    args.push("--cookie-jar", cookieJar, "--cookie", cookieJar);
+  }
 
   for (const [name, value] of Object.entries(headers)) {
     args.push("--header", `${name}: ${value}`);

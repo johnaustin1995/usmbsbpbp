@@ -2,7 +2,13 @@ import express from "express";
 import fs from "fs/promises";
 import path from "path";
 import { deriveLivePlayStates, extractLivePlayEvents } from "./pipelines/live-play-feed";
-import { getD1Rankings, getD1Scores, getD1ScoresFromTeamDirectory, getD1ScoresFromTeamsPayload } from "./scrapers/d1";
+import {
+  getCachedD1Scores,
+  getD1Rankings,
+  getD1Scores,
+  getD1ScoresFromTeamDirectory,
+  getD1ScoresFromTeamsPayload,
+} from "./scrapers/d1";
 import {
   getAvailableViewsForSport,
   getFinalGame,
@@ -18,6 +24,7 @@ import { getSouthernMissNews } from "./scrapers/southern-miss-news";
 import { getSouthernMissStats, type SouthernMissStatsPayload } from "./scrapers/southern-miss-stats";
 import { normalizeScoreDate } from "./utils/date";
 import { runWithConcurrency } from "./utils/async";
+import { isRecentScoresPayload, mergePrimaryScoresIntoFallback } from "./utils/merge-primary-scores";
 import { buildScoresFallbackCandidate, chooseBestScoresFallback } from "./utils/scores-fallback";
 import { buildFrontendScoresFeed, normalizeLiveSummary } from "./normalize";
 import type {
@@ -899,6 +906,7 @@ async function getScoresPayloadForDate(date: string) {
   try {
     return await getD1Scores(date);
   } catch (primaryError) {
+    const cachedPrimary = getCachedD1Scores(date);
     const fallbackErrors: string[] = [];
     const candidates: Array<ReturnType<typeof buildScoresFallbackCandidate>> = [];
     const primaryMessage = primaryError instanceof Error ? primaryError.message : String(primaryError);
@@ -941,7 +949,15 @@ async function getScoresPayloadForDate(date: string) {
 
     const bestFallback = chooseBestScoresFallback(candidates);
     if (bestFallback) {
+      if (cachedPrimary && isRecentScoresPayload(cachedPrimary)) {
+        return mergePrimaryScoresIntoFallback(bestFallback.payload, cachedPrimary);
+      }
+
       return bestFallback.payload;
+    }
+
+    if (cachedPrimary && isRecentScoresPayload(cachedPrimary)) {
+      return cachedPrimary;
     }
 
     if (teamsPayload) {
