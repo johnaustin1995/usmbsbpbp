@@ -54,7 +54,7 @@ export function normalizeLiveSummary(live: StatBroadcastLiveSummary): FrontendLi
     id: live.id,
     title: live.event.title,
     phase,
-    status: normalizeStatus(phase, live.statusText),
+    status: normalizeStatus(phase, live.statusText, live.situation),
     teams: [awayTeam, homeTeam],
     lineScore: live.lineScore,
     situation: live.situation,
@@ -73,7 +73,7 @@ export function normalizeGameCard(
     status: game.live?.statusText ?? game.statusText,
   });
 
-  const status = normalizeStatus(phase, game.live?.statusText ?? game.statusText);
+  const status = normalizeStatus(phase, game.live?.statusText ?? game.statusText, game.live?.situation ?? null);
   const awayScore = firstDefinedNumber(game.live?.visitorScore, game.roadTeam.score);
   const homeScore = firstDefinedNumber(game.live?.homeScore, game.homeTeam.score);
   const exposesStartTime = shouldExposeStartTime(phase, status);
@@ -236,22 +236,23 @@ function inferPhase(input: {
   return "upcoming";
 }
 
-function normalizeStatus(phase: FrontendGamePhase, status: string | null): string {
+function normalizeStatus(
+  phase: FrontendGamePhase,
+  status: string | null,
+  situation: StatBroadcastLiveSummary["situation"] | null = null
+): string {
   const clean = (status ?? "").replace(/\s+/g, " ").trim();
-  if (clean.length > 0) {
-    if (phase === "final" && !clean.toLowerCase().includes("final")) {
-      return `Final (${clean})`;
-    }
-
-    return clean;
-  }
 
   if (phase === "final") {
     return "Final";
   }
 
   if (phase === "live") {
-    return "Live";
+    return normalizeLiveStatus(clean, situation);
+  }
+
+  if (clean.length > 0) {
+    return clean;
   }
 
   return "Scheduled";
@@ -263,6 +264,77 @@ function shouldExposeStartTime(phase: FrontendGamePhase, status: string): boolea
   }
 
   return !/(cancel(?:ed|led)|postponed|ppd|suspended)/i.test(status);
+}
+
+function normalizeLiveStatus(
+  status: string,
+  situation: StatBroadcastLiveSummary["situation"] | null
+): string {
+  const situationLabel = formatLiveSituationLabel(situation);
+  if (situationLabel) {
+    return situationLabel;
+  }
+
+  const parsedStatus = formatStatusTextAsInning(status);
+  if (parsedStatus) {
+    return parsedStatus;
+  }
+
+  if (/^\d+\s*-\s*\d+$/.test(status)) {
+    return "Live";
+  }
+
+  return status || "Live";
+}
+
+function formatLiveSituationLabel(
+  situation: StatBroadcastLiveSummary["situation"] | null
+): string | null {
+  if (!situation) {
+    return null;
+  }
+
+  if (typeof situation.inning === "number" && Number.isFinite(situation.inning)) {
+    if (situation.half === "top") {
+      return `Top ${situation.inning}`;
+    }
+
+    if (situation.half === "bottom") {
+      return `Bot ${situation.inning}`;
+    }
+  }
+
+  const inningText = (situation.inningText ?? "").replace(/\s+/g, " ").trim();
+  return formatStatusTextAsInning(inningText);
+}
+
+function formatStatusTextAsInning(status: string): string | null {
+  const clean = status.replace(/\s+/g, " ").trim();
+  if (!clean) {
+    return null;
+  }
+
+  const match = clean.match(/\b(top|bot|bottom|mid|middle|end)\s*(?:of\s+the\s+)?(\d+)/i);
+  if (!match) {
+    return null;
+  }
+
+  const half = match[1].toLowerCase();
+  const inning = match[2];
+
+  if (half === "top") {
+    return `Top ${inning}`;
+  }
+
+  if (half === "bot" || half === "bottom") {
+    return `Bot ${inning}`;
+  }
+
+  if (half === "mid" || half === "middle") {
+    return `Mid ${inning}`;
+  }
+
+  return `End ${inning}`;
 }
 
 function firstDefinedNumber(...values: Array<number | null | undefined>): number | null {

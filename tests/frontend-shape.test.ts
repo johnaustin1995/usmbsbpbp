@@ -48,6 +48,7 @@ describe("frontend normalization", () => {
 
     expect(frontend.totalGames).toBe(1);
     expect(frontend.cards[0].phase).toBe("live");
+    expect(frontend.cards[0].status).toBe("Top 7");
     expect(frontend.cards[0].teams[0].name).toBe("Wake Forest");
     expect(frontend.cards[0].teams[0].record).toBe("5-1");
     expect(frontend.cards[0].teams[1].isWinner).toBe(true);
@@ -91,7 +92,7 @@ describe("frontend normalization", () => {
     expect(frontendLive.phase).toBe("live");
     expect(frontendLive.teams[0].rank).toBe(21);
     expect(frontendLive.teams[1].isWinner).toBe(true);
-    expect(frontendLive.status).toBe("Top 7th");
+    expect(frontendLive.status).toBe("Top 7");
   });
 
   it("swaps SVG scoreboard logos for branding logos that iOS can render", () => {
@@ -250,5 +251,53 @@ describe("frontend normalization", () => {
     expect(frontend.cards[0].status).toBe("Canceled");
     expect(frontend.cards[0].displayTime).toBeNull();
     expect(frontend.cards[0].startTimeIso).toBeNull();
+  });
+
+  it("collapses final game labels to Final", () => {
+    const games: D1GameWithLive[] = [
+      {
+        key: "game-5",
+        conferenceIds: ["big-12"],
+        conferenceNames: ["Big 12"],
+        statusText: "FINAL",
+        matchupTimeEpoch: 1770973200,
+        matchupTimeIso: "2026-02-13T15:00:00.000Z",
+        inProgress: false,
+        isOver: true,
+        location: "Austin, TX",
+        roadTeam: {
+          id: 1,
+          name: "Texas Tech",
+          record: "7-3",
+          rank: null,
+          score: 4,
+          logoUrl: null,
+          teamUrl: null,
+          searchTokens: [],
+        },
+        homeTeam: {
+          id: 2,
+          name: "Texas",
+          record: "8-2",
+          rank: null,
+          score: 6,
+          logoUrl: null,
+          teamUrl: null,
+          searchTokens: [],
+        },
+        links: [],
+        liveStatsUrl: null,
+        statbroadcastId: null,
+        statbroadcastQuery: {},
+        live: null,
+        liveError: null,
+      },
+    ];
+
+    const frontend = buildFrontendScoresFeed("20260213", "2026-02-13T16:42:56.000Z", games);
+
+    expect(frontend.cards[0].phase).toBe("final");
+    expect(frontend.cards[0].status).toBe("Final");
+    expect(frontend.cards[0].displayTime).toBe("Final");
   });
 });
