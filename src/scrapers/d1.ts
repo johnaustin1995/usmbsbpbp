@@ -601,10 +601,7 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
       return;
     }
 
-    const opponentNode = tile.find(".team").first().get(0);
-    const opponentParsed = parseTeam($, opponentNode);
     const opponentName = currentSide === "home" ? roadName : homeName;
-    const opponent = findOpponentTeam(lookup, opponentParsed, opponentName);
     const derivedScore = deriveTileScores(currentSide, result);
     const liveStatsLink = extractTeamScheduleLiveStatsUrl(tile);
     const timeLabel = cleanText(tile.find(".team-score a").first().text());
@@ -612,6 +609,13 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const scheduledTimeText = extractScheduledTimeLabel(timeLabel);
     const currentTeamRecord = computeOverallRecordBeforeDate(team.schedule, date);
     const currentScheduleGame = findScheduleGameForDate(team.schedule, date, opponentName);
+    const opponentPartial = buildScheduleOpponentSnapshotSeed({
+      parsedTileTeam: parseTeam($, tile.find(".team").first().get(0)),
+      currentTeam: team,
+      scheduleGame: currentScheduleGame,
+      opponentName,
+    });
+    const opponent = findOpponentTeam(lookup, opponentPartial, opponentName);
     const scheduleStatusOverride = extractScheduleStatusOverride(currentScheduleGame);
     const inferredInProgress = inferScheduleTileInProgress(tile, rawStatusText, derivedScore.isOver);
 
@@ -624,10 +628,10 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
 
     const homeTeam = currentSide === "home"
       ? buildCurrentTeamSnapshot(team, homeName, derivedScore.homeScore, currentTeamRecord)
-      : buildOpponentTeamSnapshot(opponentParsed, opponent, homeName, derivedScore.homeScore, date);
+      : buildOpponentTeamSnapshot(opponentPartial, opponent, homeName, derivedScore.homeScore, date);
     const roadTeam = currentSide === "road"
       ? buildCurrentTeamSnapshot(team, roadName, derivedScore.roadScore, currentTeamRecord)
-      : buildOpponentTeamSnapshot(opponentParsed, opponent, roadName, derivedScore.roadScore, date);
+      : buildOpponentTeamSnapshot(opponentPartial, opponent, roadName, derivedScore.roadScore, date);
 
     const conferenceIds = uniqueStrings([
       team.conference?.slug ?? null,
@@ -1060,6 +1064,27 @@ function buildCurrentTeamSnapshot(
   };
 }
 
+function buildScheduleOpponentSnapshotSeed(input: {
+  parsedTileTeam: TeamSnapshot;
+  currentTeam: D1TeamSeasonData;
+  scheduleGame: D1TeamScheduleGame | null;
+  opponentName: string;
+}): TeamSnapshot {
+  const parsedLooksLikeCurrentTeam = snapshotMatchesTeam(input.parsedTileTeam, input.currentTeam);
+  const name = input.scheduleGame?.opponentName ?? input.opponentName;
+
+  return {
+    id: parsedLooksLikeCurrentTeam ? null : input.parsedTileTeam.id,
+    name,
+    record: parsedLooksLikeCurrentTeam ? null : input.parsedTileTeam.record,
+    rank: parsedLooksLikeCurrentTeam ? null : input.parsedTileTeam.rank,
+    score: parsedLooksLikeCurrentTeam ? null : input.parsedTileTeam.score,
+    logoUrl: input.scheduleGame?.opponentLogoUrl ?? (parsedLooksLikeCurrentTeam ? null : input.parsedTileTeam.logoUrl),
+    teamUrl: input.scheduleGame?.opponentUrl ?? (parsedLooksLikeCurrentTeam ? null : input.parsedTileTeam.teamUrl),
+    searchTokens: tokenizeTeamName(name),
+  };
+}
+
 function buildOpponentTeamSnapshot(
   partial: TeamSnapshot,
   team: D1TeamSeasonData | null,
@@ -1107,6 +1132,20 @@ function findOpponentTeam(
 
   const normalizedPartial = normalizeTeamKey(partial.name || fallbackName);
   return lookup.byName.get(normalizedPartial) ?? null;
+}
+
+function snapshotMatchesTeam(snapshot: TeamSnapshot, team: D1TeamSeasonData): boolean {
+  if (snapshot.id !== null && team.id !== null && snapshot.id === team.id) {
+    return true;
+  }
+
+  const snapshotSlug = extractSlug(snapshot.teamUrl ?? "", "team");
+  if (snapshotSlug && team.slug && snapshotSlug === team.slug) {
+    return true;
+  }
+
+  const snapshotName = normalizeTeamKey(snapshot.name);
+  return snapshotName.length > 0 && snapshotName === normalizeTeamKey(team.name);
 }
 
 function extractTeamScheduleLiveStatsUrl(tile: any): {

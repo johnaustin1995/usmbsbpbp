@@ -290,7 +290,23 @@ describe("parseD1TeamScheduleScoresHtml", () => {
       teamUrl: "https://d1baseball.com/team/salabama/",
       scheduleUrl: "https://d1baseball.com/team/salabama/schedule/",
       statsUrl: "https://d1baseball.com/team/salabama/stats/",
-      schedule: [],
+      schedule: [
+        {
+          scheduleId: "south-alabama-prev",
+          dateLabel: "Sunday, Mar 15",
+          dateUrl: "https://d1baseball.com/scores/?date=20260315",
+          locationType: "vs",
+          opponentName: "Troy",
+          opponentSlug: "troy",
+          opponentUrl: "https://d1baseball.com/team/troy/",
+          opponentLogoUrl: null,
+          resultText: "W, 6-2",
+          resultUrl: null,
+          outcome: "win",
+          notes: "Mobile, Ala.",
+          columns: {},
+        },
+      ],
       statsTables: [],
       errors: [],
     };
@@ -326,6 +342,7 @@ describe("parseD1TeamScheduleScoresHtml", () => {
     expect(games[0].isOver).toBe(false);
     expect(games[0].roadTeam.name).toBe("Alabama");
     expect(games[0].homeTeam.name).toBe("South Alabama");
+    expect(games[0].homeTeam.record).toBe("1-0");
   });
 
   it("treats in-progress tiles with score-like headers as live candidates", () => {
