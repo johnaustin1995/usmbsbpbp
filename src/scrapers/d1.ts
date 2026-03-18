@@ -7,6 +7,7 @@ import he from "he";
 import { tmpdir } from "os";
 import { join } from "path";
 import { promisify } from "util";
+import { getSidearmLiveGameStatus } from "./sidearm-live";
 import { runWithConcurrency } from "../utils/async";
 import { TtlCache } from "../utils/cache";
 import { cleanText, parseInteger } from "../utils/text";
@@ -406,6 +407,7 @@ async function buildScoresFromScheduleTeams(
 
   const games = Array.from(byKey.values()).sort(compareScheduleDerivedGames);
   applyLoadedTeamRecordsToGames(games, teams, date);
+  await hydrateSidearmLiveStatuses(games);
 
   const payload: D1ScoresPayload = {
     date,
@@ -414,6 +416,34 @@ async function buildScoresFromScheduleTeams(
   };
   teamScheduleScoresCache.set(cacheKey, payload, TEAM_SCHEDULE_CACHE_TTL_MS);
   return payload;
+}
+
+async function hydrateSidearmLiveStatuses(games: D1Game[]): Promise<void> {
+  const candidates = games.filter(
+    (game) =>
+      game.inProgress &&
+      game.statbroadcastId === null &&
+      typeof game.liveStatsUrl === "string" &&
+      /\/sidearmstats\//i.test(game.liveStatsUrl)
+  );
+
+  await runWithConcurrency(candidates, 4, async (game) => {
+    try {
+      const live = await getSidearmLiveGameStatus(game.liveStatsUrl ?? "");
+      if (!live) {
+        return;
+      }
+
+      game.statusText = live.statusText;
+      game.inProgress = live.inProgress;
+      game.isOver = live.isOver;
+      game.roadTeam.score = live.roadScore ?? game.roadTeam.score;
+      game.homeTeam.score = live.homeScore ?? game.homeTeam.score;
+      game.location = game.location ?? live.location;
+    } catch {
+      // Keep the D1-derived fallback status if Sidearm is unavailable.
+    }
+  });
 }
 
 async function fetchTeamScheduleLookupHtml(team: D1TeamSeasonData): Promise<string> {
