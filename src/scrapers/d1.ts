@@ -613,6 +613,7 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const currentTeamRecord = computeOverallRecordBeforeDate(team.schedule, date);
     const currentScheduleGame = findScheduleGameForDate(team.schedule, date, opponentName);
     const scheduleStatusOverride = extractScheduleStatusOverride(currentScheduleGame);
+    const inferredInProgress = inferScheduleTileInProgress(tile, rawStatusText, derivedScore.isOver);
 
     const key =
       cleanText(tile.attr("data-matchup")).length > 0
@@ -645,7 +646,9 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
 
     const statusText = derivedScore.isOver
       ? "Final"
-      : normalizeScheduleTileStatus(rawStatusText, scheduledTimeText, scheduleStatusOverride);
+      : inferredInProgress && isScoreOnlyScheduleStatus(rawStatusText)
+        ? rawStatusText
+        : normalizeScheduleTileStatus(rawStatusText, scheduledTimeText, scheduleStatusOverride);
 
     games.push({
       key,
@@ -654,7 +657,7 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
       statusText,
       matchupTimeEpoch: null,
       matchupTimeIso: null,
-      inProgress: !derivedScore.isOver && isScheduleTileLive(rawStatusText),
+      inProgress: inferredInProgress,
       isOver: derivedScore.isOver,
       location: cleanText(tile.find(".box-score-footer p").first().text()) || null,
       roadTeam,
@@ -922,6 +925,26 @@ function normalizeScheduleTileStatus(
 
 function isScheduleTileLive(rawStatusText: string): boolean {
   return /(top|bot|bottom|mid|middle|end)\s*\d|live/i.test(rawStatusText);
+}
+
+function inferScheduleTileInProgress(
+  tile: any,
+  rawStatusText: string,
+  isOver: boolean
+): boolean {
+  if (isOver) {
+    return false;
+  }
+
+  if (isScheduleTileLive(rawStatusText)) {
+    return true;
+  }
+
+  if (!isScoreOnlyScheduleStatus(rawStatusText)) {
+    return false;
+  }
+
+  return tile.hasClass("in-progress") || tile.attr("data-in-progress") === "1";
 }
 
 function isScoreOnlyScheduleStatus(rawStatusText: string): boolean {
