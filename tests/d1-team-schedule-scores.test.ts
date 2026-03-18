@@ -238,6 +238,96 @@ describe("parseD1TeamScheduleScoresHtml", () => {
     expect(games[0].homeTeam.name).toBe("Air Force");
   });
 
+  it("ignores score-like header text on upcoming tiles and keeps the first-pitch time", () => {
+    const alabama: D1TeamSeasonData = {
+      id: 145427,
+      name: "Alabama",
+      slug: "alabama",
+      season: "2026",
+      conference: {
+        id: 3,
+        name: "SEC",
+        slug: "sec",
+        url: "https://d1baseball.com/conference/sec/",
+      },
+      logoUrl: "https://cdn.example.com/alabama.svg",
+      teamUrl: "https://d1baseball.com/team/alabama/",
+      scheduleUrl: "https://d1baseball.com/team/alabama/schedule/",
+      statsUrl: "https://d1baseball.com/team/alabama/stats/",
+      schedule: [
+        {
+          scheduleId: "alabama-south-alabama",
+          dateLabel: "Tuesday, Mar 17",
+          dateUrl: "https://d1baseball.com/scores/?date=20260317",
+          locationType: "@",
+          opponentName: "South Alabama",
+          opponentSlug: "salabama",
+          opponentUrl: "https://d1baseball.com/team/salabama/",
+          opponentLogoUrl: null,
+          resultText: null,
+          resultUrl: null,
+          outcome: "unknown",
+          notes: "Mobile, Ala. , Stanky Field",
+          columns: {},
+        },
+      ],
+      statsTables: [],
+      errors: [],
+    };
+
+    const southAlabama: D1TeamSeasonData = {
+      id: 145812,
+      name: "South Alabama",
+      slug: "salabama",
+      season: "2026",
+      conference: {
+        id: 29,
+        name: "Sun Belt",
+        slug: "sun-belt",
+        url: "https://d1baseball.com/conference/sun-belt/",
+      },
+      logoUrl: "https://cdn.example.com/south-alabama.svg",
+      teamUrl: "https://d1baseball.com/team/salabama/",
+      scheduleUrl: "https://d1baseball.com/team/salabama/schedule/",
+      statsUrl: "https://d1baseball.com/team/salabama/stats/",
+      schedule: [],
+      statsTables: [],
+      errors: [],
+    };
+
+    const html = `
+      <div
+        class="d1-score-tile d1-team-schedule-tile"
+        data-home-name="South Alabama"
+        data-road-name="Alabama"
+      >
+        <div class="box-score-header scoresclear">
+          <h5>2 - 0</h5>
+          <div class="box-score-links">
+            <a target="_blank" href="https://stats.statbroadcast.com/broadcast/?id=634643">Box Score</a>
+          </div>
+        </div>
+        <div class="team team-1" data-search="alabama" data-team-id="145427">
+          <h5 class="team-location">@</h5>
+          <a class="team-title" href="https://d1baseball.com/team/alabama/schedule/"><h5>Alabama</h5></a>
+          <h5 class="team-score"><a href="/scores/?date=20260317">Tuesday, Mar 17<br>@ 7:30 PM</a></h5>
+        </div>
+        <div class="box-score-footer scoresclear">
+          <p>Mobile, Ala. , Stanky Field</p>
+        </div>
+      </div>
+    `;
+
+    const games = parseD1TeamScheduleScoresHtml(html, alabama, "20260317", [alabama, southAlabama]);
+
+    expect(games).toHaveLength(1);
+    expect(games[0].statusText).toBe("7:30 PM");
+    expect(games[0].inProgress).toBe(false);
+    expect(games[0].isOver).toBe(false);
+    expect(games[0].roadTeam.name).toBe("Alabama");
+    expect(games[0].homeTeam.name).toBe("South Alabama");
+  });
+
   it("uses canceled from the schedule row instead of a placeholder 11:59 PM time", () => {
     const maine: D1TeamSeasonData = {
       id: 145229,

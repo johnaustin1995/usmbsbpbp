@@ -905,6 +905,10 @@ function normalizeScheduleTileStatus(
     return scheduleStatusOverride;
   }
 
+  if (isScoreOnlyScheduleStatus(rawStatusText)) {
+    return scheduledTimeText ?? "Scheduled";
+  }
+
   if (rawStatusText.length === 0) {
     return scheduledTimeText ?? "Scheduled";
   }
@@ -918,6 +922,10 @@ function normalizeScheduleTileStatus(
 
 function isScheduleTileLive(rawStatusText: string): boolean {
   return /(top|bot|bottom|mid|middle|end)\s*\d|live/i.test(rawStatusText);
+}
+
+function isScoreOnlyScheduleStatus(rawStatusText: string): boolean {
+  return /^\d+\s*-\s*\d+$/.test(rawStatusText);
 }
 
 function extractScheduledTimeLabel(value: string): string | null {
