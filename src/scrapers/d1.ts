@@ -304,28 +304,26 @@ async function buildScoresFromScheduleTeams(
 ): Promise<D1ScoresPayload> {
   const lookup = buildTeamLookup(teams);
 
-  const parsedByTeam = await runWithConcurrency(teams, 10, async (team) => {
+  const dynamicHtmlByTeam = await runWithConcurrency(teams, 10, async (team) => {
     try {
-      const html = await fetchDynamicTeamScheduleHtml(team);
-      if (!html.includes(`date=${date}`)) {
-        return [] as D1Game[];
-      }
-
-      if (team.schedule.length === 0) {
-        try {
-          const scheduleHtml = await fetchD1Html(team.scheduleUrl);
-          const scheduleData = parseD1TeamScheduleHtml(scheduleHtml);
-          team.schedule = scheduleData.games;
-          team.logoUrl = team.logoUrl ?? scheduleData.logoUrl ?? null;
-        } catch {
-          // Keep the dynamic-only fallback if the full schedule page cannot be fetched.
-        }
-      }
-
-      return parseD1TeamScheduleScoresHtmlWithLookup(html, team, date, lookup);
+      return {
+        team,
+        html: await fetchTeamScheduleLookupHtml(team),
+      };
     } catch {
+      return {
+        team,
+        html: "",
+      };
+    }
+  });
+
+  const parsedByTeam = dynamicHtmlByTeam.map(({ team, html }) => {
+    if (!html.includes(`date=${date}`)) {
       return [] as D1Game[];
     }
+
+    return parseD1TeamScheduleScoresHtmlWithLookup(html, team, date, lookup);
   });
 
   const byKey = new Map<string, D1Game>();
@@ -341,13 +339,139 @@ async function buildScoresFromScheduleTeams(
     }
   }
 
+  const games = Array.from(byKey.values()).sort(compareScheduleDerivedGames);
+  await hydrateMissingGameRecords(games, teams, date, lookup);
+
   const payload: D1ScoresPayload = {
     date,
     sourceUpdatedAt: new Date().toISOString(),
-    games: Array.from(byKey.values()).sort(compareScheduleDerivedGames),
+    games,
   };
   teamScheduleScoresCache.set(cacheKey, payload, TEAM_SCHEDULE_CACHE_TTL_MS);
   return payload;
+}
+
+async function fetchTeamScheduleLookupHtml(team: D1TeamSeasonData): Promise<string> {
+  try {
+    return await fetchDynamicTeamScheduleHtml(team);
+  } catch {
+    return "";
+  }
+}
+
+async function hydrateMissingGameRecords(
+  games: D1Game[],
+  teams: D1TeamSeasonData[],
+  date: string,
+  lookup: D1TeamLookup
+): Promise<void> {
+  const teamsNeedingSchedules = collectTeamsMissingRecords(games, lookup, date);
+
+  await runWithConcurrency(teamsNeedingSchedules, 2, async (team) => {
+    if (computeOverallRecordBeforeDate(team.schedule, date) !== null) {
+      return;
+    }
+
+    await hydrateTeamScheduleForRecordLookup(team);
+  });
+
+  applyLoadedTeamRecordsToGames(games, teams, date);
+}
+
+function collectTeamsMissingRecords(
+  games: D1Game[],
+  lookup: D1TeamLookup,
+  date: string
+): D1TeamSeasonData[] {
+  const byKey = new Map<string, D1TeamSeasonData>();
+
+  for (const game of games) {
+    for (const snapshot of [game.roadTeam, game.homeTeam]) {
+      if (snapshot.record) {
+        continue;
+      }
+
+      const team = findOpponentTeam(lookup, snapshot, snapshot.name);
+      if (!team) {
+        continue;
+      }
+
+      if (computeOverallRecordBeforeDate(team.schedule, date) !== null) {
+        continue;
+      }
+
+      byKey.set(teamLookupKey(team), team);
+    }
+  }
+
+  return Array.from(byKey.values());
+}
+
+async function hydrateTeamScheduleForRecordLookup(team: D1TeamSeasonData): Promise<void> {
+  for (const url of buildTeamScheduleLookupUrls(team)) {
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      try {
+        const html = await fetchD1Html(url);
+        const scheduleData = parseD1TeamScheduleHtml(html);
+        if (scheduleData.games.length === 0) {
+          continue;
+        }
+
+        team.schedule = scheduleData.games;
+        team.logoUrl = team.logoUrl ?? scheduleData.logoUrl ?? null;
+        team.scheduleUrl = url;
+        return;
+      } catch {
+        if (attempt === 1) {
+          break;
+        }
+      }
+    }
+  }
+}
+
+function buildTeamScheduleLookupUrls(team: D1TeamSeasonData): string[] {
+  const urls = new Set<string>();
+
+  if (team.scheduleUrl) {
+    urls.add(team.scheduleUrl);
+  }
+
+  const canonicalTeamUrl = canonicalSeasonTeamUrl(team);
+  if (canonicalTeamUrl) {
+    const scheduleUrl = toAbsoluteUrl("schedule/", canonicalTeamUrl) ?? `${canonicalTeamUrl}schedule/`;
+    urls.add(scheduleUrl);
+  }
+
+  if (team.slug) {
+    urls.add(`${D1_TEAMS_ENDPOINT}team/${team.slug}/schedule/`);
+    if (team.season) {
+      urls.add(`${D1_TEAMS_ENDPOINT}team/${team.slug}/${team.season}/schedule/`);
+    }
+  }
+
+  return Array.from(urls);
+}
+
+function canonicalSeasonTeamUrl(team: D1TeamSeasonData): string | null {
+  if (team.slug) {
+    const baseUrl = toCanonicalBaseUrl(team.teamUrl ?? `${D1_TEAMS_ENDPOINT}team/${team.slug}/`, "team", team.slug);
+    return team.season ? toSeasonUrl(baseUrl, team.season) : baseUrl;
+  }
+
+  return team.teamUrl;
+}
+
+function teamLookupKey(team: D1TeamSeasonData): string {
+  if (team.id !== null && team.id !== undefined) {
+    return `id:${team.id}`;
+  }
+
+  if (team.slug) {
+    return `slug:${team.slug}`;
+  }
+
+  return `name:${normalizeTeamKey(team.name)}`;
 }
 
 function buildScoresHeaders(date: string): Record<string, string> {
@@ -1083,6 +1207,43 @@ function buildScheduleOpponentSnapshotSeed(input: {
     teamUrl: input.scheduleGame?.opponentUrl ?? (parsedLooksLikeCurrentTeam ? null : input.parsedTileTeam.teamUrl),
     searchTokens: tokenizeTeamName(name),
   };
+}
+
+export function applyLoadedTeamRecordsToGames(
+  games: D1Game[],
+  teams: D1TeamSeasonData[],
+  date: string
+): void {
+  const lookup = buildTeamLookup(teams);
+
+  for (const game of games) {
+    applyLoadedTeamRecord(game.roadTeam, lookup, date);
+    applyLoadedTeamRecord(game.homeTeam, lookup, date);
+  }
+}
+
+function applyLoadedTeamRecord(
+  snapshot: TeamSnapshot,
+  lookup: D1TeamLookup,
+  date: string
+): void {
+  const team = findOpponentTeam(lookup, snapshot, snapshot.name);
+  if (!team) {
+    return;
+  }
+
+  const record = computeOverallRecordBeforeDate(team.schedule, date);
+  if (record !== null) {
+    snapshot.record = record;
+  }
+
+  if (team.teamUrl) {
+    snapshot.teamUrl = team.teamUrl;
+  }
+
+  if (snapshot.logoUrl === null && team.logoUrl) {
+    snapshot.logoUrl = team.logoUrl;
+  }
 }
 
 function buildOpponentTeamSnapshot(

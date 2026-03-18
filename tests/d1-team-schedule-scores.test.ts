@@ -1,8 +1,172 @@
 import { describe, expect, it } from "vitest";
-import { parseD1TeamScheduleScoresHtml } from "../src/scrapers/d1";
-import type { D1TeamSeasonData } from "../src/types";
+import { applyLoadedTeamRecordsToGames, parseD1TeamScheduleScoresHtml } from "../src/scrapers/d1";
+import type { D1Game, D1TeamSeasonData } from "../src/types";
 
 describe("parseD1TeamScheduleScoresHtml", () => {
+  it("fills missing records from loaded season schedules for both teams", () => {
+    const duke: D1TeamSeasonData = {
+      id: 145500,
+      name: "Duke",
+      slug: "duke",
+      season: "2026",
+      conference: {
+        id: 1,
+        name: "ACC",
+        slug: "acc",
+        url: "https://d1baseball.com/conference/acc/",
+      },
+      logoUrl: "https://cdn.example.com/duke.svg",
+      teamUrl: "https://d1baseball.com/team/duke/2026/",
+      scheduleUrl: "https://d1baseball.com/team/duke/2026/schedule/",
+      statsUrl: "https://d1baseball.com/team/duke/2026/stats/",
+      schedule: [
+        {
+          scheduleId: "duke-prev-1",
+          dateLabel: "Friday, Mar 13",
+          dateUrl: "https://d1baseball.com/scores/?date=20260313",
+          locationType: "@",
+          opponentName: "Virginia",
+          opponentSlug: "virginia",
+          opponentUrl: "https://d1baseball.com/team/virginia/",
+          opponentLogoUrl: null,
+          resultText: "W 4 - 2",
+          resultUrl: null,
+          outcome: "win",
+          notes: null,
+          columns: {},
+        },
+        {
+          scheduleId: "duke-prev-2",
+          dateLabel: "Saturday, Mar 14",
+          dateUrl: "https://d1baseball.com/scores/?date=20260314",
+          locationType: "@",
+          opponentName: "Virginia",
+          opponentSlug: "virginia",
+          opponentUrl: "https://d1baseball.com/team/virginia/",
+          opponentLogoUrl: null,
+          resultText: "L 5 - 3",
+          resultUrl: null,
+          outcome: "loss",
+          notes: null,
+          columns: {},
+        },
+        {
+          scheduleId: "duke-current",
+          dateLabel: "Tuesday, Mar 17",
+          dateUrl: "https://d1baseball.com/scores/?date=20260317",
+          locationType: "@",
+          opponentName: "Campbell",
+          opponentSlug: "campbell",
+          opponentUrl: "https://d1baseball.com/team/campbell/",
+          opponentLogoUrl: null,
+          resultText: null,
+          resultUrl: null,
+          outcome: "unknown",
+          notes: null,
+          columns: {},
+        },
+      ],
+      statsTables: [],
+      errors: [],
+    };
+
+    const campbell: D1TeamSeasonData = {
+      id: 145421,
+      name: "Campbell",
+      slug: "campbell",
+      season: "2026",
+      conference: {
+        id: 9,
+        name: "CAA",
+        slug: "caa",
+        url: "https://d1baseball.com/conference/caa/",
+      },
+      logoUrl: "https://cdn.example.com/campbell.svg",
+      teamUrl: "https://d1baseball.com/team/campbell/2026/",
+      scheduleUrl: "https://d1baseball.com/team/campbell/2026/schedule/",
+      statsUrl: "https://d1baseball.com/team/campbell/2026/stats/",
+      schedule: [
+        {
+          scheduleId: "campbell-prev-1",
+          dateLabel: "Friday, Mar 13",
+          dateUrl: "https://d1baseball.com/scores/?date=20260313",
+          locationType: "vs",
+          opponentName: "Elon",
+          opponentSlug: "elon",
+          opponentUrl: "https://d1baseball.com/team/elon/",
+          opponentLogoUrl: null,
+          resultText: "W 8 - 1",
+          resultUrl: null,
+          outcome: "win",
+          notes: null,
+          columns: {},
+        },
+        {
+          scheduleId: "campbell-current",
+          dateLabel: "Tuesday, Mar 17",
+          dateUrl: "https://d1baseball.com/scores/?date=20260317",
+          locationType: "vs",
+          opponentName: "Duke",
+          opponentSlug: "duke",
+          opponentUrl: "https://d1baseball.com/team/duke/",
+          opponentLogoUrl: null,
+          resultText: null,
+          resultUrl: null,
+          outcome: "unknown",
+          notes: null,
+          columns: {},
+        },
+      ],
+      statsTables: [],
+      errors: [],
+    };
+
+    const games: D1Game[] = [
+      {
+        key: "duke-campbell",
+        conferenceIds: ["acc", "caa"],
+        conferenceNames: ["ACC", "CAA"],
+        statusText: "Top 7",
+        matchupTimeEpoch: null,
+        matchupTimeIso: null,
+        inProgress: true,
+        isOver: false,
+        location: "Buies Creek, N.C.",
+        roadTeam: {
+          id: 145500,
+          name: "Duke",
+          record: null,
+          rank: null,
+          score: 3,
+          logoUrl: null,
+          teamUrl: "https://d1baseball.com/team/duke/schedule/",
+          searchTokens: ["duke"],
+        },
+        homeTeam: {
+          id: 145421,
+          name: "Campbell",
+          record: null,
+          rank: null,
+          score: 10,
+          logoUrl: null,
+          teamUrl: "https://d1baseball.com/team/campbell/",
+          searchTokens: ["campbell"],
+        },
+        links: [],
+        liveStatsUrl: "https://stats.statbroadcast.com/broadcast/?id=630993",
+        statbroadcastId: 630993,
+        statbroadcastQuery: {},
+      },
+    ];
+
+    applyLoadedTeamRecordsToGames(games, [duke, campbell], "20260317");
+
+    expect(games[0].roadTeam.record).toBe("1-1");
+    expect(games[0].homeTeam.record).toBe("1-0");
+    expect(games[0].roadTeam.teamUrl).toBe("https://d1baseball.com/team/duke/2026/");
+    expect(games[0].homeTeam.teamUrl).toBe("https://d1baseball.com/team/campbell/2026/");
+  });
+
   it("builds a game card from a team schedule tile with statbroadcast", () => {
     const alabama: D1TeamSeasonData = {
       id: 145427,
