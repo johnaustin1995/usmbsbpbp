@@ -595,7 +595,87 @@ describe("parseD1TeamScheduleScoresHtml", () => {
     expect(games[0].statusText).toBe("3 - 10");
     expect(games[0].inProgress).toBe(true);
     expect(games[0].isOver).toBe(false);
+    expect(games[0].roadTeam.score).toBe(3);
+    expect(games[0].homeTeam.score).toBe(10);
     expect(games[0].statbroadcastId).toBe(630993);
+  });
+
+  it("keeps non-statbroadcast box score links and derives live scores from score-only headers", () => {
+    const byu: D1TeamSeasonData = {
+      id: 144549,
+      name: "BYU",
+      slug: "byu",
+      season: "2026",
+      conference: {
+        id: 4,
+        name: "Big 12",
+        slug: "big-12",
+        url: "https://d1baseball.com/conference/big-12/",
+      },
+      overallRecord: "9-9",
+      logoUrl: "https://cdn.example.com/byu.svg",
+      teamUrl: "https://d1baseball.com/team/byu/2026/",
+      scheduleUrl: "https://d1baseball.com/team/byu/2026/schedule/",
+      statsUrl: "https://d1baseball.com/team/byu/2026/stats/",
+      schedule: [],
+      statsTables: [],
+      errors: [],
+    };
+
+    const utahTech: D1TeamSeasonData = {
+      id: 144781,
+      name: "Utah Tech",
+      slug: "utah-tech",
+      season: "2026",
+      conference: {
+        id: 33,
+        name: "WAC",
+        slug: "wac",
+        url: "https://d1baseball.com/conference/wac/",
+      },
+      overallRecord: "13-7",
+      logoUrl: "https://cdn.example.com/utah-tech.svg",
+      teamUrl: "https://d1baseball.com/team/utah-tech/2026/",
+      scheduleUrl: "https://d1baseball.com/team/utah-tech/2026/schedule/",
+      statsUrl: "https://d1baseball.com/team/utah-tech/2026/stats/",
+      schedule: [],
+      statsTables: [],
+      errors: [],
+    };
+
+    const html = `
+      <div
+        class="d1-score-tile d1-team-schedule-tile in-progress"
+        data-home-name="Utah Tech"
+        data-road-name="BYU"
+      >
+        <div class="box-score-header scoresclear">
+          <h5>7 - 3</h5>
+          <div class="box-score-links">
+            <a target="_blank" href="https://utahtechtrailblazers.com/sidearmstats/baseball/summary">Box Score</a>
+          </div>
+        </div>
+        <div class="team team-1" data-search="utah tech" data-team-id="144781">
+          <h5 class="team-location">@</h5>
+          <a class="team-title" href="https://d1baseball.com/team/utah-tech/schedule/"><h5>Utah Tech</h5></a>
+          <h5 class="team-score"><a href="/scores/?date=20260317">Tuesday, Mar 17<br>@ 8:05 PM</a></h5>
+        </div>
+        <div class="box-score-footer scoresclear">
+          <p>St. George, Bruce Hurst Field</p>
+        </div>
+      </div>
+    `;
+
+    const games = parseD1TeamScheduleScoresHtml(html, byu, "20260317", [byu, utahTech]);
+
+    expect(games).toHaveLength(1);
+    expect(games[0].roadTeam.name).toBe("BYU");
+    expect(games[0].roadTeam.score).toBe(7);
+    expect(games[0].homeTeam.name).toBe("Utah Tech");
+    expect(games[0].homeTeam.score).toBe(3);
+    expect(games[0].statusText).toBe("7 - 3");
+    expect(games[0].liveStatsUrl).toBe("https://utahtechtrailblazers.com/sidearmstats/baseball/summary");
+    expect(games[0].statbroadcastId).toBeNull();
   });
 
   it("keeps the current team record from the schedule tile when season data is unavailable", () => {

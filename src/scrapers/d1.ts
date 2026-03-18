@@ -98,6 +98,11 @@ interface ScheduleTileScore {
   opponentScore: number;
 }
 
+interface ScoreOnlyTileScore {
+  roadScore: number;
+  homeScore: number;
+}
+
 export async function getD1Scores(date: string): Promise<D1ScoresPayload> {
   const cached = cache.get(date);
   if (cached) {
@@ -708,7 +713,8 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     const tile = $(tileNode);
     const dateHref = cleanText(tile.find(".team-score a").first().attr("href"));
     const tileDate = extractDateFromScoresHref(dateHref);
-    const result = parseScheduleTileScore(tile.find(".box-score-header h5").first().text());
+    const rawStatusText = cleanText(tile.find(".box-score-header h5").first().text());
+    const result = parseScheduleTileScore(rawStatusText);
 
     if (tileDate !== date) {
       return;
@@ -726,10 +732,12 @@ function parseD1TeamScheduleScoresHtmlWithLookup(
     }
 
     const opponentName = currentSide === "home" ? roadName : homeName;
-    const derivedScore = deriveTileScores(currentSide, result);
+    const scoreOnlyLiveResult = parseScoreOnlyTileScore(rawStatusText);
+    const derivedScore = result
+      ? deriveTileScores(currentSide, result)
+      : deriveScoreOnlyTileScores(scoreOnlyLiveResult);
     const liveStatsLink = extractTeamScheduleLiveStatsUrl(tile);
     const timeLabel = cleanText(tile.find(".team-score a").first().text());
-    const rawStatusText = cleanText(tile.find(".box-score-header h5").first().text());
     const scheduledTimeText = extractScheduledTimeLabel(timeLabel);
     const parsedTileTeam = parseTeam($, tile.find(".team").first().get(0));
     const parsedCurrentTeam = snapshotMatchesTeam(parsedTileTeam, team) ? parsedTileTeam : null;
@@ -1033,6 +1041,37 @@ function deriveTileScores(
   };
 }
 
+function parseScoreOnlyTileScore(value: string): ScoreOnlyTileScore | null {
+  const clean = cleanText(value).replace(/\s+/g, " ");
+  const match = clean.match(/^(\d+)\s*-\s*(\d+)$/);
+  if (!match) {
+    return null;
+  }
+
+  return {
+    roadScore: Number.parseInt(match[1], 10),
+    homeScore: Number.parseInt(match[2], 10),
+  };
+}
+
+function deriveScoreOnlyTileScores(
+  score: ScoreOnlyTileScore | null
+): { homeScore: number | null; roadScore: number | null; isOver: boolean } {
+  if (!score) {
+    return {
+      homeScore: null,
+      roadScore: null,
+      isOver: false,
+    };
+  }
+
+  return {
+    homeScore: score.homeScore,
+    roadScore: score.roadScore,
+    isOver: false,
+  };
+}
+
 function normalizeScheduleTileStatus(
   rawStatusText: string,
   scheduledTimeText: string | null,
@@ -1320,12 +1359,16 @@ function snapshotMatchesTeam(snapshot: TeamSnapshot, team: D1TeamSeasonData): bo
 
 function extractTeamScheduleLiveStatsUrl(tile: any): {
   url: string;
-  id: number;
+  id: number | null;
   query: Record<string, string>;
 } | null {
   const links = tile.find(".box-score-links a").toArray() as Element[];
+  let fallbackHref: string | null = null;
   for (const linkNode of links) {
     const href = cleanText(linkNode.attribs?.href);
+    if (href && fallbackHref === null) {
+      fallbackHref = href;
+    }
     const statbroadcast = extractStatBroadcastInfo(href || null);
     if (href && statbroadcast) {
       return {
@@ -1334,6 +1377,14 @@ function extractTeamScheduleLiveStatsUrl(tile: any): {
         query: statbroadcast.query,
       };
     }
+  }
+
+  if (fallbackHref) {
+    return {
+      url: fallbackHref,
+      id: null,
+      query: {},
+    };
   }
 
   return null;
