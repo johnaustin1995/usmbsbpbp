@@ -19,6 +19,7 @@ import {
   DEFAULT_BASEBALL_PRINT_XSL,
   getStatBroadcastPdfJson,
 } from "./scrapers/statbroadcast-pdf";
+import { getSidearmLiveDashboard } from "./scrapers/sidearm-live";
 import { getSouthernMissScheduleText, type SouthernMissScheduleTextGame } from "./scrapers/southern-miss-schedule-text";
 import { getSouthernMissNews } from "./scrapers/southern-miss-news";
 import { getSouthernMissStats, type SouthernMissStatsPayload } from "./scrapers/southern-miss-stats";
@@ -663,6 +664,45 @@ app.get("/api/live/:id", async (req, res, next) => {
   }
 });
 
+app.get("/api/live-game/dashboard", async (req, res, next) => {
+  try {
+    const statbroadcastId = parsePositiveInteger(req.query.statbroadcastId);
+    const liveStatsUrl = cleanQueryString(req.query.liveStatsUrl);
+
+    if (statbroadcastId) {
+      const live = await buildStatBroadcastDashboardPayload(statbroadcastId);
+      res.json({
+        source: {
+          provider: "statbroadcast",
+          statbroadcastId,
+          liveStatsUrl: null,
+        },
+        live,
+      });
+      return;
+    }
+
+    if (liveStatsUrl && /\/sidearmstats\//i.test(liveStatsUrl)) {
+      const live = await buildSidearmDashboardPayload(liveStatsUrl);
+      res.json({
+        source: {
+          provider: "sidearm",
+          statbroadcastId: null,
+          liveStatsUrl,
+        },
+        live,
+      });
+      return;
+    }
+
+    res.status(400).json({
+      error: "Pass either statbroadcastId or a Sidearm liveStatsUrl.",
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get("/api/live/:id/dashboard", async (req, res, next) => {
   try {
     const id = Number.parseInt(req.params.id, 10);
@@ -671,84 +711,10 @@ app.get("/api/live/:id/dashboard", async (req, res, next) => {
       return;
     }
 
-    let summaryError: string | null = null;
-    let summary = null as Awaited<ReturnType<typeof getLiveSummary>> | null;
-    try {
-      summary = await getLiveSummary(id);
-    } catch (error) {
-      summaryError = error instanceof Error ? error.message : String(error);
-    }
-
-    let plays = [] as Array<{
-      key: string;
-      order: number;
-      inning: number | null;
-      half: "top" | "bottom" | null;
-      text: string;
-      batter: string | null;
-      pitcher: string | null;
-      scoringDecision: string | null;
-      isSubstitution: boolean;
-      outsAfterPlay: number | null;
-      awayScore: number | null;
-      homeScore: number | null;
-    }>;
-
-    let playsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
-    let lineupsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
-    let playsError: string | null = null;
-    let lineupsError: string | null = null;
-
-    if (summary) {
-      const [playsResult, lineupsResult] = await Promise.allSettled([
-        getLiveStats(id, "plays"),
-        getLiveStats(id, "lineups"),
-      ]);
-
-      if (playsResult.status === "fulfilled") {
-        playsSections = playsResult.value.sections;
-        const events = extractLivePlayEvents(playsResult.value);
-        const states = deriveLivePlayStates(events, summary);
-        plays = events.map((play) => {
-          const state = states.get(play.key);
-          return {
-            key: play.key,
-            order: play.order,
-            inning: play.inning,
-            half: play.half,
-            text: play.text,
-            batter: play.batter,
-            pitcher: play.pitcher,
-            scoringDecision: play.scoringDecision,
-            isSubstitution: play.isSubstitution,
-            outsAfterPlay: state?.outsAfterPlay ?? play.outs ?? null,
-            awayScore: state?.awayScore ?? summary.visitorScore,
-            homeScore: state?.homeScore ?? summary.homeScore,
-          };
-        });
-      } else {
-        playsError = playsResult.reason instanceof Error ? playsResult.reason.message : String(playsResult.reason);
-      }
-
-      if (lineupsResult.status === "fulfilled") {
-        lineupsSections = lineupsResult.value.sections;
-      } else {
-        lineupsError = lineupsResult.reason instanceof Error ? lineupsResult.reason.message : String(lineupsResult.reason);
-      }
-    }
-
+    const live = await buildStatBroadcastDashboardPayload(id);
     res.json({
       gameId: id,
-      live: {
-        summary,
-        summaryFrontend: summary ? normalizeLiveSummary(summary) : null,
-        summaryError,
-        plays,
-        playsSections,
-        playsError,
-        lineupsSections,
-        lineupsError,
-      },
+      live,
     });
   } catch (error) {
     next(error);
@@ -966,6 +932,103 @@ async function getScoresPayloadForDate(date: string) {
 
     throw new Error(fallbackErrors.join("; "));
   }
+}
+
+async function buildStatBroadcastDashboardPayload(id: number) {
+  let summaryError: string | null = null;
+  let summary = null as Awaited<ReturnType<typeof getLiveSummary>> | null;
+  try {
+    summary = await getLiveSummary(id);
+  } catch (error) {
+    summaryError = error instanceof Error ? error.message : String(error);
+  }
+
+  let plays = [] as Array<{
+    key: string;
+    order: number;
+    inning: number | null;
+    half: "top" | "bottom" | null;
+    text: string;
+    batter: string | null;
+    pitcher: string | null;
+    scoringDecision: string | null;
+    isSubstitution: boolean;
+    outsAfterPlay: number | null;
+    awayScore: number | null;
+    homeScore: number | null;
+  }>;
+
+  let playsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
+  let lineupsSections: Awaited<ReturnType<typeof getLiveStats>>["sections"] = [];
+  let playsError: string | null = null;
+  let lineupsError: string | null = null;
+
+  if (summary) {
+    const [playsResult, lineupsResult] = await Promise.allSettled([
+      getLiveStats(id, "plays"),
+      getLiveStats(id, "lineups"),
+    ]);
+
+    if (playsResult.status === "fulfilled") {
+      playsSections = playsResult.value.sections;
+      const events = extractLivePlayEvents(playsResult.value);
+      const states = deriveLivePlayStates(events, summary);
+      plays = events.map((play) => {
+        const state = states.get(play.key);
+        return {
+          key: play.key,
+          order: play.order,
+          inning: play.inning,
+          half: play.half,
+          text: play.text,
+          batter: play.batter,
+          pitcher: play.pitcher,
+          scoringDecision: play.scoringDecision,
+          isSubstitution: play.isSubstitution,
+          outsAfterPlay: state?.outsAfterPlay ?? play.outs ?? null,
+          awayScore: state?.awayScore ?? summary.visitorScore,
+          homeScore: state?.homeScore ?? summary.homeScore,
+        };
+      });
+    } else {
+      playsError = playsResult.reason instanceof Error ? playsResult.reason.message : String(playsResult.reason);
+    }
+
+    if (lineupsResult.status === "fulfilled") {
+      lineupsSections = lineupsResult.value.sections;
+    } else {
+      lineupsError = lineupsResult.reason instanceof Error ? lineupsResult.reason.message : String(lineupsResult.reason);
+    }
+  }
+
+  return {
+    summary,
+    summaryFrontend: summary ? normalizeLiveSummary(summary) : null,
+    summaryError,
+    plays,
+    playsSections,
+    playsError,
+    lineupsSections,
+    lineupsError,
+  };
+}
+
+async function buildSidearmDashboardPayload(liveStatsUrl: string) {
+  const dashboard = await getSidearmLiveDashboard(liveStatsUrl);
+  if (!dashboard) {
+    throw new Error("Could not load Sidearm live dashboard.");
+  }
+
+  return {
+    summary: dashboard.summary,
+    summaryFrontend: normalizeLiveSummary(dashboard.summary),
+    summaryError: null,
+    plays: dashboard.plays,
+    playsSections: dashboard.playsSections,
+    playsError: null,
+    lineupsSections: dashboard.lineupsSections,
+    lineupsError: null,
+  };
 }
 
 async function loadTeamsPayloadForScoreDate(date: string): Promise<LoadedTeamsPayload> {
