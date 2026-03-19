@@ -76,6 +76,37 @@ export interface RankingsFeed {
   entries: RankingsEntry[];
 }
 
+export interface ConferenceStandingsConference {
+  id: string;
+  name: string;
+  slug: string | null;
+  url: string;
+}
+
+export interface ConferenceStandingsEntry {
+  position: number;
+  teamName: string;
+  shortName: string | null;
+  conferenceRecord: string | null;
+  conferenceWinPct: string | null;
+  gamesBack: string | null;
+  overallRecord: string | null;
+  overallWinPct: string | null;
+  streak: string | null;
+  logoUrl: string | null;
+  teamUrl: string | null;
+}
+
+export interface ConferenceStandingsFeed {
+  sourceLabel: string;
+  sourceUrl: string;
+  updatedAt: string | null;
+  selectedConference: ConferenceStandingsConference;
+  conferences: ConferenceStandingsConference[];
+  headers: string[];
+  entries: ConferenceStandingsEntry[];
+}
+
 export interface D1ConferenceDirectoryEntry {
   id: number | null;
   name: string;

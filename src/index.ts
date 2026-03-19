@@ -10,6 +10,7 @@ import {
   getD1ScoresFromTeamsPayload,
 } from "./scrapers/d1";
 import { getRankingsFeed } from "./scrapers/rankings";
+import { getConferenceStandingsFeed } from "./scrapers/standings";
 import {
   getAvailableViewsForSport,
   getFinalGame,
@@ -660,6 +661,16 @@ app.get("/api/rankings", async (req, res, next) => {
     }
 
     const feed = await getRankingsFeed(source);
+    res.json(feed);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/standings", async (req, res, next) => {
+  try {
+    const conference = cleanQueryString(req.query.conference);
+    const feed = await getConferenceStandingsFeed(conference);
     res.json(feed);
   } catch (error) {
     next(error);
