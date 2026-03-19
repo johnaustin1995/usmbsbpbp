@@ -51,6 +51,31 @@ export interface D1RankingsPayload {
   teams: D1RankedTeam[];
 }
 
+export type RankingsSource = "d1" | "rpi" | "baseball-america" | "usa-today";
+
+export interface RankingsEntry {
+  rank: number;
+  teamName: string;
+  shortName: string | null;
+  record: string | null;
+  previousRank: string | null;
+  conference: string | null;
+  points: string | null;
+  firstPlaceVotes: string | null;
+  change: string | null;
+  highLow: string | null;
+  logoUrl: string | null;
+  teamUrl: string | null;
+}
+
+export interface RankingsFeed {
+  source: RankingsSource;
+  sourceLabel: string;
+  sourceUrl: string;
+  updatedAt: string | null;
+  entries: RankingsEntry[];
+}
+
 export interface D1ConferenceDirectoryEntry {
   id: number | null;
   name: string;

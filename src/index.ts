@@ -9,6 +9,7 @@ import {
   getD1ScoresFromTeamDirectory,
   getD1ScoresFromTeamsPayload,
 } from "./scrapers/d1";
+import { getRankingsFeed } from "./scrapers/rankings";
 import {
   getAvailableViewsForSport,
   getFinalGame,
@@ -34,6 +35,7 @@ import type {
   D1TeamScheduleGame,
   D1TeamSeasonData,
   D1TeamsDatabasePayload,
+  RankingsSource,
 } from "./types";
 
 const app = express();
@@ -642,6 +644,23 @@ app.get("/api/scores", async (req, res, next) => {
     const rankings = await rankingsPromise;
     const frontend = buildFrontendScoresFeed(date, payload.sourceUpdatedAt, gamesWithLive, rankings);
     respondByView(res, view, rawPayload, frontend);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/rankings", async (req, res, next) => {
+  try {
+    const source = parseRankingsSource(req.query.source);
+    if (!source) {
+      res.status(400).json({
+        error: 'Invalid rankings source. Use "d1", "rpi", "baseball-america", or "usa-today".',
+      });
+      return;
+    }
+
+    const feed = await getRankingsFeed(source);
+    res.json(feed);
   } catch (error) {
     next(error);
   }
@@ -2243,6 +2262,19 @@ function parseIncludeLiveMode(value: unknown): IncludeLiveMode {
   }
 
   return "none";
+}
+
+function parseRankingsSource(value: unknown): RankingsSource | null {
+  const normalized = cleanQueryString(value)?.toLowerCase();
+  switch (normalized) {
+  case "d1":
+  case "rpi":
+  case "baseball-america":
+  case "usa-today":
+    return normalized;
+  default:
+    return null;
+  }
 }
 
 function isLikelyActiveGame(game: { inProgress: boolean; isOver: boolean; statusText: string }): boolean {
