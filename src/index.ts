@@ -8,6 +8,7 @@ import {
   getD1Scores,
   getD1ScoresFromTeamDirectory,
   getD1ScoresFromTeamsPayload,
+  getD1TeamSeasonData,
 } from "./scrapers/d1";
 import { getRankingsFeed } from "./scrapers/rankings";
 import { getConferenceStandingsFeed } from "./scrapers/standings";
@@ -571,6 +572,70 @@ app.get("/api/teams", async (req, res, next) => {
       ...loaded.payload,
       file: loaded.filename,
       loadedAt: loaded.loadedAt,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/team-page", async (req, res, next) => {
+  try {
+    const teamQuery = cleanQueryString(req.query.team);
+    const season = normalizeSeason(req.query.season);
+
+    if (!teamQuery) {
+      res.status(400).json({
+        error: "Missing required query parameter: team",
+      });
+      return;
+    }
+
+    const [team, rosterCandidates] = await Promise.all([
+      getD1TeamSeasonData(teamQuery, {
+        season,
+        includeSchedule: true,
+        includeStats: true,
+      }),
+      loadRosterCandidates(),
+    ]);
+
+    const rosterMatch =
+      findBestRosterMatch(rosterCandidates, {
+        team: team.name,
+        sport: "baseball",
+        season: season ?? team.season ?? null,
+      }) ??
+      findBestRosterMatch(rosterCandidates, {
+        team: teamQuery,
+        sport: "baseball",
+        season: season ?? team.season ?? null,
+      });
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      team: {
+        id: team.id,
+        name: team.name,
+        slug: team.slug,
+        season: team.season,
+        conference: team.conference,
+        overallRecord: team.overallRecord ?? null,
+        logoUrl: team.logoUrl ?? null,
+        teamUrl: team.teamUrl,
+        scheduleUrl: team.scheduleUrl,
+        statsUrl: team.statsUrl,
+      },
+      schedule: team.schedule,
+      statsTables: team.statsTables,
+      roster: rosterMatch?.payload ?? null,
+      rosterSource: rosterMatch
+        ? {
+            file: path.basename(rosterMatch.path),
+            loadedAt: rosterMatch.loadedAt,
+            score: rosterMatch.score,
+          }
+        : null,
+      errors: team.errors,
     });
   } catch (error) {
     next(error);

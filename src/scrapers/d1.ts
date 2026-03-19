@@ -85,6 +85,7 @@ const lastSuccessfulScoresCache = new TtlCache<string, D1ScoresPayload>();
 const rankingsCache = new TtlCache<string, D1RankingsPayload>();
 const teamScheduleScoresCache = new TtlCache<string, D1ScoresPayload>();
 const directoryLookupCache = new TtlCache<string, D1TeamSeasonData[]>();
+const teamSeasonDataCache = new TtlCache<string, D1TeamSeasonData>();
 const execFileAsync = promisify(execFile);
 
 interface D1RawResponse {
@@ -138,6 +139,47 @@ export async function getD1Rankings(): Promise<D1RankingsPayload> {
   const parsed = parseD1RankingsHtml(html);
   rankingsCache.set(cacheKey, parsed, RANKINGS_CACHE_TTL_MS);
   return parsed;
+}
+
+export interface GetD1TeamSeasonDataOptions {
+  season?: string | number | null;
+  includeSchedule?: boolean;
+  includeStats?: boolean;
+}
+
+export async function getD1TeamSeasonData(
+  teamKey: string,
+  options: GetD1TeamSeasonDataOptions = {}
+): Promise<D1TeamSeasonData> {
+  const includeSchedule = options.includeSchedule ?? true;
+  const includeStats = options.includeStats ?? true;
+  const cleanTeamKey = cleanText(teamKey);
+
+  if (!cleanTeamKey) {
+    throw new Error("Missing team lookup key.");
+  }
+
+  const indexHtml = await fetchD1Html(D1_TEAMS_ENDPOINT);
+  const directory = parseD1TeamsDirectoryHtml(indexHtml);
+  const season = resolveRequestedSeason(directory.season, options.season);
+  const cacheKey = `${normalizeTeamLookupCacheKey(cleanTeamKey)}:${season ?? "current"}:${includeSchedule ? "1" : "0"}:${includeStats ? "1" : "0"}`;
+  const cached = teamSeasonDataCache.get(cacheKey);
+  if (cached) {
+    return cloneTeamSeasonData(cached);
+  }
+
+  const teams = await getScheduleLookupTeamsFromParsedDirectory(directory, season);
+  const baseTeam = findD1TeamSeasonDataByKey(teams, cleanTeamKey);
+  if (!baseTeam) {
+    throw new Error(`No D1 team matched "${teamKey}".`);
+  }
+
+  const resolvedTeam = await hydrateTeamSeasonData(baseTeam, {
+    includeSchedule,
+    includeStats,
+  });
+  teamSeasonDataCache.set(cacheKey, resolvedTeam, DIRECTORY_LOOKUP_CACHE_TTL_MS);
+  return cloneTeamSeasonData(resolvedTeam);
 }
 
 export async function getD1ScoresFromTeamsPayload(
@@ -976,6 +1018,13 @@ async function getScheduleLookupTeamsFromDirectory(date: string): Promise<D1Team
   const indexHtml = await fetchD1Html(D1_TEAMS_ENDPOINT);
   const directory = parseD1TeamsDirectoryHtml(indexHtml);
   const season = /^\d{8}$/.test(date) ? date.slice(0, 4) : directory.season;
+  return getScheduleLookupTeamsFromParsedDirectory(directory, season);
+}
+
+async function getScheduleLookupTeamsFromParsedDirectory(
+  directory: ParsedD1TeamsDirectory,
+  season: string | null
+): Promise<D1TeamSeasonData[]> {
   const cacheKey = season || "current";
   const cached = directoryLookupCache.get(cacheKey);
   if (cached) {
@@ -1001,6 +1050,115 @@ async function getScheduleLookupTeamsFromDirectory(date: string): Promise<D1Team
 
   directoryLookupCache.set(cacheKey, teams, DIRECTORY_LOOKUP_CACHE_TTL_MS);
   return teams;
+}
+
+async function hydrateTeamSeasonData(
+  baseTeam: D1TeamSeasonData,
+  options: { includeSchedule: boolean; includeStats: boolean }
+): Promise<D1TeamSeasonData> {
+  const team = cloneTeamSeasonData(baseTeam);
+
+  const schedulePromise = options.includeSchedule
+    ? fetchD1Html(team.scheduleUrl)
+        .then((html) => parseD1TeamScheduleHtml(html))
+        .catch((error: unknown) => {
+          team.errors.push(`Schedule scrape failed: ${errorToMessage(error)}`);
+          return null;
+        })
+    : Promise.resolve(null);
+
+  const statsPromise = options.includeStats
+    ? fetchD1Html(team.statsUrl)
+        .then((html) => parseD1TeamStatsHtml(html))
+        .catch((error: unknown) => {
+          team.errors.push(`Stats scrape failed: ${errorToMessage(error)}`);
+          return null;
+        })
+    : Promise.resolve(null);
+
+  const [scheduleData, statsData] = await Promise.all([schedulePromise, statsPromise]);
+
+  if (scheduleData) {
+    team.schedule = scheduleData.games;
+    team.name = scheduleData.teamName ?? team.name;
+    team.logoUrl = scheduleData.logoUrl ?? team.logoUrl;
+  }
+
+  if (statsData) {
+    team.statsTables = statsData.tables;
+    team.name = statsData.teamName ?? team.name;
+    team.logoUrl = statsData.logoUrl ?? team.logoUrl;
+  }
+
+  return team;
+}
+
+function cloneTeamSeasonData(team: D1TeamSeasonData): D1TeamSeasonData {
+  return {
+    ...team,
+    conference: team.conference ? { ...team.conference } : null,
+    schedule: Array.isArray(team.schedule) ? team.schedule.map((game) => ({ ...game, columns: { ...game.columns } })) : [],
+    statsTables: Array.isArray(team.statsTables)
+      ? team.statsTables.map((table) => ({
+          ...table,
+          headers: [...table.headers],
+          rows: table.rows.map((row) => ({
+            cells: [...row.cells],
+            values: { ...row.values },
+          })),
+        }))
+      : [],
+    errors: Array.isArray(team.errors) ? [...team.errors] : [],
+  };
+}
+
+export function findD1TeamSeasonDataByKey(
+  teams: D1TeamSeasonData[],
+  key: string
+): D1TeamSeasonData | null {
+  const normalizedKey = cleanText(key).toLowerCase();
+  if (!normalizedKey) {
+    return null;
+  }
+
+  const asId = Number.parseInt(normalizedKey, 10);
+  if (Number.isFinite(asId)) {
+    const byId = teams.find((team) => team.id === asId);
+    if (byId) {
+      return byId;
+    }
+  }
+
+  const urlSlug = extractSlug(key, "team");
+  if (urlSlug) {
+    const byUrlSlug = teams.find((team) => cleanText(team.slug ?? "").toLowerCase() === urlSlug);
+    if (byUrlSlug) {
+      return byUrlSlug;
+    }
+  }
+
+  const bySlug = teams.find((team) => cleanText(team.slug ?? "").toLowerCase() === normalizedKey);
+  if (bySlug) {
+    return bySlug;
+  }
+
+  const lookupName = normalizeTeamKey(key);
+  return teams.find((team) => normalizeTeamKey(team.name) === lookupName) ?? null;
+}
+
+function normalizeTeamLookupCacheKey(value: string): string {
+  const normalizedValue = cleanText(value);
+  const asId = Number.parseInt(normalizedValue, 10);
+  if (Number.isFinite(asId)) {
+    return `id:${asId}`;
+  }
+
+  const urlSlug = extractSlug(normalizedValue, "team");
+  if (urlSlug) {
+    return `slug:${urlSlug}`;
+  }
+
+  return `name:${normalizeTeamKey(normalizedValue)}`;
 }
 
 function toScheduleLookupTeam(
@@ -1915,7 +2073,7 @@ export function parseD1TeamStatsHtml(rawHtml: string): ParsedD1TeamStats {
   const logoUrl = cleanText($("#team-header .team-logo img").first().attr("src")) || null;
 
   const tables: D1TeamStatsTable[] = [];
-  $("#team-single-stats table").each((_, tableNode) => {
+  $("section.data-table table").each((_, tableNode) => {
     const table = $(tableNode);
     const id = cleanText(table.attr("id")) || null;
     const group =
